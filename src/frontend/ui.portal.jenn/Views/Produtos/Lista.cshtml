@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ui.portal.jenn.ViewModel.PesquisaViewModel>
+
+
+
+
+<h1>Tomografia das articulações do joelho em São Caetano do Sul - SP</h1>
+
+@foreach (var item in Model)
+{
+    @await Component.InvokeAsync("ProcedimentoLista", new { sequencia = ".NET Core 1.0|ASP.NET Core 1.0|AngularJS" })
+}

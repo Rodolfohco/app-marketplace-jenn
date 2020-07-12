@@ -1,0 +1,37 @@
+.form{
+     margin-top: toRem(55);
+     margin-left: toRem(25);
+    input{
+
+    }
+   .form-control{
+        color: #2c313b;
+        font-weight: 700;
+        font-size: toRem(28);
+        height: 60px;
+        @include input-placeholder(#2c313b);
+        padding: 0 toRem(30);
+        @include notebook{
+          font-size: 1.35rem;
+        }
+        @include mobile{
+          font-size: 1.3rem;
+          margin-bottom: 1.5rem;
+        }
+   }
+   .btn{
+     height: 60px; 
+     width: 60px;
+     background-color: $color-secondary;
+     border: none;
+     @include mobile{
+          width: 100%;
+     }
+   }
+  
+}
+.ui-menu .ui-menu-item{
+     color: #2c313b;
+     font-weight: 700;
+     font-size: toRem(28);
+   }

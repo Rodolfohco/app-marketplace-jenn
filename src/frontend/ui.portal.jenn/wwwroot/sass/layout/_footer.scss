@@ -1,0 +1,110 @@
+.footer {
+   position: absolute;
+   bottom: 0;
+   padding: 0  toRem(40) 0 toRem(120);
+   @include netbook{
+      position: relative;
+      margin-top: toRem(100);
+   }
+   @include mobile{
+      margin-top: 0;
+      padding: 0 3rem;
+   }
+   h5{
+      color: $color-white;
+      font-size: toRem(22);
+      display: block;
+      font-weight: 700;
+      @include mobile{
+         margin-bottom: 1rem;
+         font-size: 1.5rem;
+      }
+   }
+   p{
+      color: #b8d2ff;
+      font-weight: 600;
+      font-size: toRem(20);
+      margin-top: toRem(10);
+      display: block;
+      @include notebook{
+         font-size: 1rem;
+      }
+      @include mobile{
+         margin-bottom: 1rem;
+         font-size: 1.5rem;
+      }
+     
+   }
+   a{
+      display: block;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: toRem(18);
+      @include notebook{
+         font-size: 1rem;
+      }
+      @include mobile{
+         margin-bottom: 1rem;
+         font-size: 1.5rem;
+      }
+
+   }
+   .right-side{
+      @include mobile{
+         margin-top: 2rem;
+      }
+      h5{
+         color: $color-secondary;
+      }
+      .logo-footer{
+         width: 15%;
+         float: left;
+         @include mobile{
+            width: 15%;
+            float: left;
+            margin: 2rem auto;
+            display: block;
+            float: none;
+         }
+      }
+      p{
+         float: right;
+         width: 77%;
+         font-size: 10px;
+         color: #ffffff;
+         @include notebook{
+            font-size: 8px;
+         }
+         @include mobile{
+            width: 100%;
+            font-size: 1.5rem;
+            text-align: center;
+         }
+      }
+   }
+   .social{
+      display: inline-block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      padding-left: 20%;
+      text-decoration: none;
+      list-style: none;
+      @include mobile{
+         margin: 0;
+         padding: 0;
+         text-align: right;
+         display: inline-block;
+         width: 100%;
+      }
+      li{
+         float: left;
+         margin: 0 5px;
+
+         a{
+            text-decoration: none;
+         }
+      }
+   }
+}

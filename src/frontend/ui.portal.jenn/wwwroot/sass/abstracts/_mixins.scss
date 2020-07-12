@@ -1,0 +1,91 @@
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+@mixin px-to-em($size) {
+    font-size: $size / 16 + em;
+}
+
+ @mixin input-placeholder($color) {
+    &::-moz-placeholder {
+        color: $color;
+    }
+    &::-webkit-input-placeholder {
+        color: $color;
+    }
+    &:-ms-input-placeholder {
+        color: $color;
+    }
+    color: $color;
+}
+/* Media Querys */
+@mixin full {
+    @media (max-width: #{$full}) {
+      @content;
+    }
+  }
+  
+  @mixin monitor {
+    @media (max-width: #{$monitor}) {
+      @content;
+    }
+  }
+  
+  @mixin notebook {
+    @media (max-width: #{$notebook}) {
+      @content;
+    }
+  }
+  @mixin netbook {
+    @media (max-width: #{$netbook}){
+      @content;
+    }
+  }
+  
+  @mixin tabletW {
+     @media (max-width: #{$tabletW}) {
+      @content;
+    }
+  }
+  
+  @mixin tablet {
+     @media (max-width: #{$tablet}) {
+      @content;
+    }
+  }
+  
+  @mixin mobile {
+    @media (max-width: #{$mobile}) {
+      @content;
+    }
+  }
+  
+  @mixin miniMobile {
+    @media (max-width: 480px) {
+      @content;
+    }
+  }
+  
+  @mixin hMax-900{
+    @media (max-height:901px) and ( min-width: $netbook-width-min){
+      @content;
+    }
+  }
+  
+  @mixin hMax-650{
+    @media (max-height:651px) and ( min-width: $netbook-width-min) {
+      @content;
+    }
+  }

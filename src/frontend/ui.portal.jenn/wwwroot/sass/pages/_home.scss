@@ -1,0 +1,186 @@
+.home{
+    background-image: url('../img/bg-home.jpg');
+    width: 100%;
+    height: 1080px;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 207px toRem(40) 0 6.75rem;
+    @include netbook{ 
+        background-color: $color-primary;
+        background-image: none;
+        height: auto;
+
+    }
+    @include mobile{
+        padding: 70px 2rem;
+    }
+    h2{
+        font-weight: 700;
+        color: $color-secondary;
+        font-size: toRem(83);
+        margin-top: toRem(35);
+        @include notebook{
+            font-size: 4rem;
+        }
+        @include mobile{
+            font-size: 3rem;
+        }
+    }
+    h3{
+        font-size: toRem(48);
+        font-weight: 300;
+        color: $color-white;
+        padding-top: 11.25rem;
+        @include notebook{
+            padding-top: 6.25rem;
+            font-size: 2.5rem;
+        }
+        @include mobile{
+            padding-top: 2.25rem;
+            font-size: 2.5rem;
+        }
+        span{
+            background-color: $color-secondary;
+            color: $color-white;
+            font-weight: 700;
+            padding: 0 toRem(5);
+        }
+    }
+    .img-selo{
+        position: absolute;
+        top: 94px;
+        right: -13%;
+        @include notebook{
+            position: absolute;
+            top: 37px;
+            right: -37%;
+        }
+        @include mobile{
+            position: relative;
+            top: 15px;
+            right: 0;
+            margin: 0 auto;
+            width: 35%;
+            display: block;
+        }
+    }
+    .box-search{
+        width: 100%;
+    }
+    .links{
+        margin-top: toRem(37);
+        width: 80%;
+        @include mobile{
+            width: 100%;
+        }
+        a{
+            color: #b8d2ff;
+            background-color: #3862ad;
+            font-size: toRem(20);
+            padding: 0.5rem 2.5rem;
+            border-radius: 40px;
+            margin-right: 0.9375rem;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 500;
+
+        }
+    }
+    h4{
+        font-weight: 700;
+        color: $color-white;
+        font-size: toRem(30);
+        display: block;
+        margin-top: toRem(35);
+    }
+    .list-dest{
+        width: 85%;
+        @include notebook{
+            width: 90%;
+
+        }
+        @include mobile{
+            width: 100%;
+        }
+       .bx-dest{
+            border: 2px solid #eaae7d;
+            padding: toRem(10) 0;
+            width: 90%;
+            margin: 0 auto;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            height: 118px;
+            img{
+                position: absolute;
+                left: -35px;
+                bottom: 0;
+                top: 25px;
+            }
+            p{
+                padding-left: toRem(130);
+                font-size: toRem(27);
+                color: $color-white;
+                font-weight: 700;
+                margin-bottom: 0;
+                line-height: 23px;
+                &.preco{
+                    font-size: toRem(18);
+                    font-weight: 500;
+                    span{
+                        color: #eaae7d;
+                    }
+                }
+                @include notebook{
+                    padding-left: 11.125rem;
+                }
+            }
+            .btn{
+                background-color: #eaae7d;
+                color: $color-white;
+                border: none;
+                margin-left: toRem(130);
+                display: block;
+                font-size: toRem(19);
+                padding: 5px 2px;
+                font-weight: 700;
+                text-transform: uppercase;
+                width: 60%;
+                @include notebook{
+                    font-size: 1.1875rem;
+                    width: 52%;
+                }
+
+            }
+       }
+    }
+    .slick-prev:before, .slick-next:before{
+        font-size: 28px;
+        opacity: 1;
+        left: -2px;
+        position: relative;
+        color: #708ec4;
+       
+    }
+    .slick-prev, .slick-next{
+        //background: #708ec4;
+        background: #ffffff;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+    }
+    .slick-next {
+        @include mobile{
+            right: -18px;
+        }
+    }
+    .slick-prev {
+        @include mobile{
+            left: -18px;
+        }
+    }
+    .slick-initialized .slick-slide{
+        outline: none;
+    }
+}
