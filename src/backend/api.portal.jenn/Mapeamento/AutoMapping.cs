@@ -33,6 +33,17 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
 
 
+            CreateMap<DTO.UF, UFViewModel>();
+            CreateMap<UFViewModel, DTO.UF>();
+
+
+            CreateMap<DTO.Cidade, CidadeViewModel>();
+            CreateMap<CidadeViewModel, DTO.Cidade>();
+
+
+            CreateMap<RegiaoViewModel, DTO.Regiao>();
+            CreateMap<  DTO.Regiao, RegiaoViewModel>();
+
 
 
 

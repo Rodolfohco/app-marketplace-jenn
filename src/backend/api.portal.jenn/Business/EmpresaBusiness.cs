@@ -88,7 +88,7 @@ namespace api.portal.jenn.Business
             IEnumerable<Empresa> retorno = Enumerable.Empty<Empresa>();
             try
             {
-                retorno = this.repository.Get();
+                retorno = this.repository.Get(true);
             }
             catch (Exception exception)
             {

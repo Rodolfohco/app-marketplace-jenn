@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace api.portal.jenn.DTO
 {
     [Table("regiao")]
-    public class regiao
+    public class Regiao
     {
         [Key]
         [Column("cod_regiao", Order = 1)]

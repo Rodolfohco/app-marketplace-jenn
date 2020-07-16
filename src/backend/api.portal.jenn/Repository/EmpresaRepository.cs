@@ -76,8 +76,15 @@ namespace api.portal.jenn.Repository
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
-                        ctx.Empresas.AsParallel().ForAll(item => { retorno.Add(item); });
-                
+                {
+                    if (lazzLoader)
+                        ctx.Empresas.Include(c => c.ProcedimentoEmpresa).Include(c => c.Cidades) 
+                                .AsParallel().ForAll(
+                            item =>
+                            {
+                                retorno.Add(item);
+                            });
+                }
             }
             catch (Exception exception)
             {

@@ -43,5 +43,8 @@ namespace api.portal.jenn.ViewModel
         public string Cert_Empresa { get; set; }
 
         public int Ativo { get; set; }
+
+        public ICollection<ProcedimentoEmpresaViewModel> ProcedimentoEmpresa { get; set; }
+        public ICollection<CidadeViewModel> Cidades { get; set; }
     }
 }

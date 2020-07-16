@@ -24,7 +24,9 @@ namespace api.portal.jenn.Controllers
 
         private readonly ILogger<EmpresaController> _logger;
         private readonly IEmpresaBusiness repositorio;
-        public EmpresaController(ILogger<EmpresaController> logger, IEmpresaBusiness _repositorio)
+  
+
+        public EmpresaController(ILogger<EmpresaController> logger, IEmpresaBusiness _repositorio, IProcedimentoBusiness _procedimentoRepositorio)
         {
             this.repositorio = _repositorio;
             this._logger = logger;
@@ -39,6 +41,15 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
+                model.EmpresaID = Guid.NewGuid();
+
+                if (!model.Cidades.Any())
+                    model.Cidades = null;
+
+
+                if (!model.ProcedimentoEmpresa.Any())
+                    model.ProcedimentoEmpresa = null;
+
                 if (ModelState.IsValid)
                 {
                     var item = this.repositorio.Inserir(model);
@@ -117,6 +128,8 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
+                model.ProcedimentoEmpresaID = Guid.NewGuid();
+
                 if (ModelState.IsValid)
                 {
                     var item = this.repositorio.InserirProcedimento(model,EmpresaID);
