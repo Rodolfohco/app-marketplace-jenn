@@ -30,6 +30,7 @@ namespace api.portal.jenn.Config
 
             services.AddTransient<EmpresaContextFactory>();
             services.AddTransient<ConvenioContextFactory>();
+            services.AddTransient<ProcedimentoContextFactory>();
 
 
             services.AddDefaultIdentity<Logon>(options =>

@@ -23,13 +23,16 @@ namespace api.portal.jenn.Config
             services.AddSingleton<IConvenioBusiness, ConvenioBusiness>();
 
 
-            
 
+            services.AddSingleton<IProcedimentoRepository, ProcedimentoRepository>();
+            services.AddSingleton<IProcedimentoBusiness, ProcedimentoBusiness>();
 
             services.AddSingleton<IEmpresaBusiness, EmpresaBusiness>();
             services.AddSingleton<IEmpresaRepository, EmpresaRepository>();
 
             services.AddSingleton<IPlanoBusiness, PlanoBusiness>();
+            
+            
             services.AddSingleton<ITokenService, TokenService>();
 
 

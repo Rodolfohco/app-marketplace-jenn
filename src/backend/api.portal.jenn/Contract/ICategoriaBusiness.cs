@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace api.portal.jenn.Contract
 {
-    interface ICategoriaBusiness
+    public interface ICategoriaProcedimentoBusiness
     {
 
-        //#region Metodos
-        //ViewModel.ConvenioViewModel Inserir(ViewModel.ConvenioViewModel model);
-        //IEnumerable<ViewModel.ConvenioViewModel> Selecionar();
-        //IEnumerable<ViewModel.ConvenioViewModel> Selecionar(Expression<Func<DTO.Convenio, bool>> where);
-        //void Excluir(Expression<Func<DTO.Convenio, bool>> where);
-        //void Atualizar(ViewModel.ConvenioViewModel model, Guid id);
-        //ViewModel.ConvenioViewModel Detalhar(Expression<Func<DTO.Convenio, bool>> where);
-        //#endregion
+        #region Metodos
+        ViewModel.CategoriaViewModel Inserir(ViewModel.CategoriaViewModel model);
+        IEnumerable<ViewModel.CategoriaViewModel> Selecionar();
+        IEnumerable<ViewModel.CategoriaViewModel> Selecionar(Expression<Func<DTO.CategoriaProcedimento, bool>> where);
+        void Excluir(Expression<Func<DTO.CategoriaProcedimento, bool>> where);
+        void Atualizar(ViewModel.CategoriaViewModel model, Guid id);
+        ViewModel.CategoriaViewModel Detalhar(Expression<Func<DTO.CategoriaProcedimento, bool>> where);
+        #endregion
     }
 }
