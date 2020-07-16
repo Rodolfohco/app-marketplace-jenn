@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api.portal.jenn.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,6 +10,15 @@ namespace api.portal.jenn.Contract
 
     public interface IEmpresaRepository
     {
+        IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(Guid EmpresaID);
+        IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa();
+
+        DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model, Guid EmpresaID);
+
+
+
+
+
 
         DTO.Empresa Insert(DTO.Empresa model);
         IEnumerable<DTO.Empresa> Get(bool lazzLoader = false);

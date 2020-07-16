@@ -53,10 +53,11 @@ namespace api.portal.jenn.Repository
             Empresa retorno = null;
             try
             {
-
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                  
+                    if (lazzLoader)
+                        retorno = ctx.Empresas.Include(c => c.ProcedimentoEmpresa).Where(where).SingleOrDefault();
+                    else
                         retorno = ctx.Empresas.Where(where).SingleOrDefault();
                 }
             }
@@ -70,16 +71,13 @@ namespace api.portal.jenn.Repository
 
         public IEnumerable<Empresa> Get(bool lazzLoader = false)
         {
-            //this.InicializarBanco();
-
+           
             List<Empresa> retorno = new List<Empresa>();
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
-                {
-                  
                         ctx.Empresas.AsParallel().ForAll(item => { retorno.Add(item); });
-                }
+                
             }
             catch (Exception exception)
             {
@@ -108,16 +106,55 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public void InicializarBanco()
+        public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(Guid EmpresaID)
         {
-            using (var ctx = contexto.CreateDbContext(null))
+            List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
+            try
             {
-                ctx.Database.EnsureDeleted();
-                ctx.Database.EnsureCreated();
+                using (var ctx = contexto.CreateDbContext(null))
+                {
 
+                    ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Include(c => c.ProcedimentoEmpresa)
+                        .Select(c => c.ProcedimentoEmpresa).AsParallel().ForAll(
+                        item =>
+                        {
+                            retorno.AddRange(item.ToArray());
+                        });
+                }
             }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
         }
 
+        public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa()
+        {
+            List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    ctx.Empresas.Include(c => c.ProcedimentoEmpresa)
+                        .Select(c => c.ProcedimentoEmpresa).AsParallel().ForAll(
+                        item =>
+                        {
+                            retorno.AddRange(item.ToArray());
+                        });
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+      
         public Empresa Insert(Empresa model)
         {
             try
@@ -131,6 +168,33 @@ namespace api.portal.jenn.Repository
             catch (Exception exception)
             {
                 this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
+        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, Guid EmpresaID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var item = Detail(c => c.EmpresaID == EmpresaID, true);
+                    if (item != null)
+                    {
+                        item.ProcedimentoEmpresa.Add(model);
+
+
+
+
+                        ctx.Update(item);
+                        ctx.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
                 throw;
             }
             return model;

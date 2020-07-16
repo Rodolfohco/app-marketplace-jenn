@@ -156,5 +156,54 @@ namespace api.portal.jenn.Business
             }
             return this.mapper.Map<DTO.Empresa, ViewModel.EmpresaViewModel>(retorno);
         }
+
+
+
+
+        public IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa()
+        {
+            IEnumerable<ProcedimentoEmpresa> retorno = Enumerable.Empty<ProcedimentoEmpresa>();
+            try
+            {
+                retorno = this.repository.GetProcedimentoEmpresa();
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
+        }
+
+        public IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(Guid EmpresaID)
+        {
+            IEnumerable<ProcedimentoEmpresa> retorno = Enumerable.Empty<ProcedimentoEmpresa>();
+            try
+            {
+                retorno = this.repository.GetProcedimentoEmpresa(EmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
+        }
+
+        public ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID)
+        {
+            ProcedimentoEmpresa retorno = null;
+            try
+            {
+                var ProcedimentoEmpresa = this.mapper.Map<ViewModel.ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
+                retorno = this.repository.Insert(ProcedimentoEmpresa, EmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [InserirProcedimento] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.ProcedimentoEmpresa, ViewModel.ProcedimentoEmpresaViewModel>(retorno);
+        }
     }
 }

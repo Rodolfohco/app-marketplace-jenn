@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -91,6 +91,8 @@ namespace api.portal.jenn.DTO
         public virtual ICollection<Cidade> Cidades { get; set; }
         public virtual ICollection<FotoEmpresa> Fotos { get; set; }
         public virtual ICollection<Avalia> Avaliacoes { get; set; }
+
+        public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresa{ get; set; }
     }
    
 }

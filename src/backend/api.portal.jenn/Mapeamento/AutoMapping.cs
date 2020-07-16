@@ -29,6 +29,8 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<ProcedimentoViewModel, DTO.Procedimento>();
 
 
+            CreateMap<DTO.ProcedimentoEmpresa, ProcedimentoEmpresaViewModel>();
+            CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
 
 
 

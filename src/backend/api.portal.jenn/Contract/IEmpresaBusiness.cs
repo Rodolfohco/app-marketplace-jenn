@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api.portal.jenn.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -17,7 +18,12 @@ namespace api.portal.jenn.Contract
         ViewModel.EmpresaViewModel Detalhar(Expression<Func<DTO.Empresa, bool>> where);
 
 
-        IEnumerable<ViewModel.EmpresaViewModel> Selecionar(bool lazzyLoader = false);
+        IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa();
+        IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(Guid EmpresaID);
+
+        ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID);
+
+        IEnumerable<EmpresaViewModel> Selecionar(bool lazzyLoader = false);
         IEnumerable<ViewModel.EmpresaViewModel> Selecionar(Expression<Func<DTO.Empresa, bool>> where, bool lazzyLoader = false);
         ViewModel.EmpresaViewModel Detalhar(Expression<Func<DTO.Empresa, bool>> where, bool lazzyLoader = false);
         #endregion

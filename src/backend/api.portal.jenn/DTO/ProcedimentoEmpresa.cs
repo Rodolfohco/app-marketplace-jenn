@@ -82,5 +82,7 @@ namespace api.portal.jenn.DTO
         public virtual ICollection<ProcedimentoPergunta> ProcedimentoPerguntas { get; set; }
         public virtual ICollection<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresas { get; set; }
         public virtual PlanoProcedimentoEmpresa PlanoProcedimentoEmpresas { get; set; }
+        public virtual Empresa Empresa { get; set; }
+
     }
 }

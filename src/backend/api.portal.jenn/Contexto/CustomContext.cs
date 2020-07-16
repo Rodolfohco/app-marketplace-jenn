@@ -91,7 +91,9 @@ namespace api.portal.jenn.Contexto
                 entity.Property(e => e.numero).IsRequired();
                 entity.Property(e => e.bairro).IsRequired();
                 entity.Property(e => e.cep).IsRequired();
-                
+
+
+                entity.HasMany(a => a.ProcedimentoEmpresa).WithOne(b => b.Empresa);
                 entity.HasOne(a => a.Grupo).WithOne(b => b.Empresa).HasForeignKey<Grupo>(b => b.EmpresaID);
                 entity.HasMany(a => a.Cidades).WithOne(b => b.Empresa);
                 entity.HasMany(a => a.Fotos).WithOne(b => b.Empresa);
