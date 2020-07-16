@@ -56,9 +56,7 @@ namespace api.portal.jenn.Repository
 
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    if (lazzLoader)
-                        retorno = ctx.Empresas.Include(c => c.Unidade).Where(where).SingleOrDefault();
-                    else
+                  
                         retorno = ctx.Empresas.Where(where).SingleOrDefault();
                 }
             }
@@ -79,9 +77,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    if (lazzLoader)
-                        ctx.Empresas.Include(c => c.Unidade).AsParallel().ForAll(item => { retorno.Add(item); });
-                    else
+                  
                         ctx.Empresas.AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
@@ -100,9 +96,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    if (lazzLoader)
-                        ctx.Empresas.Include(c => c.Unidade).Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
-                    else
+                 
                         ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }

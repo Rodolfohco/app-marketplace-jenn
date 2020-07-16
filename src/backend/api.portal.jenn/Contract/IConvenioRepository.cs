@@ -13,7 +13,6 @@ namespace api.portal.jenn.Contract
         /// <summary>
         /// Metodo Cria e recria as tabelas do banco 
         /// </summary>
-        void InicializarBanco();
         DTO.Convenio Insert(DTO.Convenio model);
         IEnumerable<DTO.Convenio> Get(bool lazzLoader =false);
         IEnumerable<DTO.Convenio> Get(Expression<Func<DTO.Convenio, bool>> where, bool lazzLoader = false);

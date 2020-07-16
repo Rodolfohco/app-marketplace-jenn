@@ -13,12 +13,12 @@ namespace api.portal.jenn.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ConvenioPlanoController : ControllerBase
+    public class PlanoController : ControllerBase
     {
-        private readonly ILogger<ConvenioPlanoController> _logger;
+        private readonly ILogger<PlanoController> _logger;
         private readonly IPlanoBusiness repositorio;
 
-        public ConvenioPlanoController(ILogger<ConvenioPlanoController> logger, IPlanoBusiness _repositorio)
+        public PlanoController(ILogger<PlanoController> logger, IPlanoBusiness _repositorio)
         {
             this.repositorio = _repositorio;
             _logger = logger;

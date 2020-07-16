@@ -28,11 +28,7 @@ namespace api.portal.jenn.Business
             this._logger = logger;
         }
 
-        private void InicializarBanco()
-        {
-            this.repository.InicializarBanco();
-        }
-
+      
         public void Atualizar(ConvenioViewModel model, Guid id)
         {
             try

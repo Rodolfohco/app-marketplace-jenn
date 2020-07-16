@@ -29,14 +29,7 @@ namespace api.portal.jenn.Repository
         }
 
 
-        public void InicializarBanco()
-        {
-            using (var ctx = contexto.CreateDbContext(null))
-            {
-                ctx.Database.Migrate();
-            }
-        }
-
+      
         public void Delete(Expression<Func<Convenio, bool>> where)
         {
             try
@@ -132,15 +125,7 @@ namespace api.portal.jenn.Repository
         }
 
 
-
-        public void Iniciar()
-        {
-            using (var ctx = contexto.CreateDbContext(null))
-            {
-                ctx.Database.EnsureDeleted();
-                ctx.Database.EnsureCreated();
-            }
-        }
+ 
 
         public virtual Convenio Insert(Convenio model)
         {

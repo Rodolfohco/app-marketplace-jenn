@@ -19,14 +19,17 @@ namespace api.portal.jenn.Controllers
         private readonly IMemoryCache cahce;
         private readonly ILogger<ConvenioController> _logger;
         private readonly IConvenioBusiness repositorio;
-        private readonly ITokenService token;
-        public ConvenioController(ILogger<ConvenioController> logger, IConvenioBusiness _repositorio, IMemoryCache _cahce)
+        private readonly IPlanoBusiness planoRepositorio;
+        public ConvenioController(
+            ILogger<ConvenioController> logger,
+            IPlanoBusiness _planoRepositorio,
+            IConvenioBusiness _repositorio,
+            IMemoryCache _cahce)
         {
             this.repositorio = _repositorio;
             this._logger = logger;
             this.cahce = _cahce;
-
-
+            this.planoRepositorio = _planoRepositorio;
         }
 
         [HttpPost]
