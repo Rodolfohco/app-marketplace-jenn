@@ -26,8 +26,11 @@ namespace api.portal.jenn.DTO
         [StringLength(2)]
         public string UF { get; set; }
 
+
         public virtual Cliente Cliente { get; set; }
         public virtual Empresa Empresa { get; set; }
+
+
         public virtual ICollection<Regiao> Regiao { get; set; }
         public virtual ICollection<UF> Ufs { get; set; }
     }

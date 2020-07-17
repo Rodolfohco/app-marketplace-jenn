@@ -45,6 +45,8 @@ namespace api.portal.jenn.Controllers
 
                 if (!model.Cidades.Any())
                     model.Cidades = null;
+      
+
 
 
                 if (!model.ProcedimentoEmpresa.Any())
@@ -129,7 +131,6 @@ namespace api.portal.jenn.Controllers
             try
             {
                 model.ProcedimentoEmpresaID = Guid.NewGuid();
-
                 if (ModelState.IsValid)
                 {
                     var item = this.repositorio.InserirProcedimento(model,EmpresaID);
@@ -144,11 +145,8 @@ namespace api.portal.jenn.Controllers
             {
                 resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
-
             return resultado;
         }
-
-
 
         [HttpGet("ProcedimentoEmpresa/{EmpresaID}")]
         [ProducesResponseType(200)]
@@ -170,10 +168,8 @@ namespace api.portal.jenn.Controllers
             {
                 resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
-
             return resultado;
         }
-
 
         [HttpGet("ProcedimentoEmpresa")]
         [ProducesResponseType(200)]
@@ -197,8 +193,6 @@ namespace api.portal.jenn.Controllers
             }
             return resultado;
         }
-
-
 
         [HttpPut]
         [ProducesResponseType(200)]
@@ -241,10 +235,5 @@ namespace api.portal.jenn.Controllers
             }
             return resultado;
         }
-
-
-
     }
-
-
 }

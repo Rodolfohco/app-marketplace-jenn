@@ -73,9 +73,8 @@ namespace api.portal.jenn.DTO
         [StringLength(200)]
         public string Referencia { get; set; }
 
-
-        public Guid CidadeID { get; set; }
-        public virtual Cidade Cidade { get; set; }
+        
+        
         public virtual Usuario Usuario { get; set; }
 
         public virtual ICollection<Avalia> Avaliacao { get; set; }

@@ -43,5 +43,7 @@ namespace api.portal.jenn.ViewModel
 
  
         public int Ativo { get; set; }
+
+        public ICollection<ProcedimentoViewModel> Procedimento { get; set; }
     }
 }

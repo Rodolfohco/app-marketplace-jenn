@@ -21,13 +21,13 @@ namespace api.portal.jenn.Contexto
         public DbSet<Convenio> Convenios { get; set; }
         public DbSet<Plano> Planos { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
-        
+
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<DTO.Logon> logons { get; set; }
 
         public DbSet<DTO.Pais> Pais { get; set; }
 
-        
+
 
         public DbSet<DTO.CategoriaProcedimento> CategoriaProced { get; set; }
         public DbSet<DTO.TipoProcedimento> TipoProcedimento { get; set; }
@@ -56,19 +56,6 @@ namespace api.portal.jenn.Contexto
                 entity.HasMany(a => a.Ufs).WithOne(b => b.Pais);
             });
 
-
-
-            modelBuilder.Entity<Cliente>(entity =>
-            {
-                entity.HasKey(e => e.ClienteID);
-
-
-                entity.HasOne(a => a.Cidade).WithOne(b => b.Cliente).HasForeignKey<Cidade>(b => b.CidadeID);
-                entity.HasOne(a => a.Usuario).WithOne(b => b.Cliente).HasForeignKey<Usuario>(b => b.ClienteID);
-
-            });
-
-
             modelBuilder.Entity<Cidade>(entity =>
             {
                 entity.HasKey(e => e.CidadeID);
@@ -77,49 +64,59 @@ namespace api.portal.jenn.Contexto
                 entity.HasMany(a => a.Ufs).WithOne(b => b.cidade);
 
             });
-    
-                modelBuilder.Entity<Empresa>(entity =>
+
+
+            modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.HasKey(e => e.EmpresaID);
-                entity.Property(e => e.Nome).IsRequired();
-                entity.Property(e => e.cnpj).IsRequired();
-                entity.Property(e => e.Telefone1).IsRequired();
-                entity.Property(e => e.Ativo).IsRequired();
-                entity.Property(e => e.Responsavel ).IsRequired();
-                entity.Property(e => e.Logradouro).IsRequired();
-                
-                entity.Property(e => e.numero).IsRequired();
-                entity.Property(e => e.bairro).IsRequired();
-                entity.Property(e => e.cep).IsRequired();
+                entity.HasKey(e => e.ClienteID);
+                entity.HasOne(a => a.Usuario).WithOne(b => b.Cliente).HasForeignKey<Usuario>(b => b.ClienteID);
 
-
-                entity.HasMany(a => a.ProcedimentoEmpresa).WithOne(b => b.Empresa);
-                entity.HasOne(a => a.Grupo).WithOne(b => b.Empresa).HasForeignKey<Grupo>(b => b.EmpresaID);
-                entity.HasMany(a => a.Cidades).WithOne(b => b.Empresa);
-                entity.HasMany(a => a.Fotos).WithOne(b => b.Empresa);
-                entity.HasMany(a => a.Avaliacoes).WithOne(b => b.Empresa);
             });
 
 
+           
+            modelBuilder.Entity<Empresa>(entity =>
+        {
+            entity.HasKey(e => e.EmpresaID);
+            entity.Property(e => e.Nome).IsRequired();
+            entity.Property(e => e.cnpj).IsRequired();
+            entity.Property(e => e.Telefone1).IsRequired();
+            entity.Property(e => e.Ativo).IsRequired();
+            entity.Property(e => e.Responsavel).IsRequired();
+            entity.Property(e => e.Logradouro).IsRequired();
 
-                modelBuilder.Entity<ProcedimentoEmpresa>(entity =>
-            {
-                entity.HasKey(e => e.ProcedimentiID);
-                entity.Property(e => e.Nome_pers).IsRequired();
-                entity.Property(e => e.PrecoProduto).IsRequired();
-                entity.Property(e => e.Preco_contra).IsRequired();
-                entity.Property(e => e.TaxaParcelamento).IsRequired();
-                entity.Property(e => e.TaxaResultado).IsRequired();
-                entity.HasMany(a => a.Procedimentos).WithOne(b => b.ProcedimentoEmpresa);
-                entity.HasMany(a => a.ProcedimentoPerguntas).WithOne(b => b.ProcedimentoEmpresa);
-                entity.HasMany(a => a.PagamentoProcedimentoEmpresas).WithOne(b => b.ProcedimentoEmpresa);
-
-                entity.HasOne(a => a.PlanoProcedimentoEmpresas).WithOne(b => b.ProcedimentoEmpresa)
-                    .HasForeignKey<PlanoProcedimentoEmpresa>(b => b.ProcedimentoEmpresaID);
-            });
+            entity.Property(e => e.numero).IsRequired();
+            entity.Property(e => e.bairro).IsRequired();
+            entity.Property(e => e.cep).IsRequired();
 
 
-            
+            entity.HasMany(a => a.ProcedimentoEmpresa).WithOne(b => b.Empresa);
+            entity.HasOne(a => a.Grupo).WithOne(b => b.Empresa).HasForeignKey<Grupo>(b => b.EmpresaID);
+            entity.HasMany(a => a.Cidades).WithOne(b => b.Empresa);
+            entity.HasMany(a => a.Fotos).WithOne(b => b.Empresa);
+            entity.HasMany(a => a.Avaliacoes).WithOne(b => b.Empresa);
+        });
+
+
+
+            modelBuilder.Entity<ProcedimentoEmpresa>(entity =>
+        {
+            entity.HasKey(e => e.ProcedimentiID);
+            entity.Property(e => e.Nome_pers).IsRequired();
+            entity.Property(e => e.PrecoProduto).IsRequired();
+            entity.Property(e => e.Preco_contra).IsRequired();
+            entity.Property(e => e.TaxaParcelamento).IsRequired();
+            entity.Property(e => e.TaxaResultado).IsRequired();
+            entity.HasMany(a => a.Procedimentos).WithOne(b => b.ProcedimentoEmpresa);
+            entity.HasMany(a => a.ProcedimentoPerguntas).WithOne(b => b.ProcedimentoEmpresa);
+            entity.HasMany(a => a.PagamentoProcedimentoEmpresas).WithOne(b => b.ProcedimentoEmpresa);
+
+            entity.HasOne(a => a.PlanoProcedimentoEmpresas).WithOne(b => b.ProcedimentoEmpresa)
+                .HasForeignKey<PlanoProcedimentoEmpresa>(b => b.ProcedimentoEmpresaID);
+        });
+
+
+
 
 
 
@@ -218,19 +215,19 @@ namespace api.portal.jenn.Contexto
             //});
 
 
-        
+
 
 
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.UsuarioID);
-                
+
                 entity.HasOne(a => a.logon)
                 .WithOne(b => b.Usuario)
                 .HasForeignKey<Logon>(b => b.UsuarioID);
             });
 
-         
+
 
 
             base.OnModelCreating(modelBuilder);

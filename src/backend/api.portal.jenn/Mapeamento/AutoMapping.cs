@@ -45,6 +45,10 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<  DTO.Regiao, RegiaoViewModel>();
 
 
+            CreateMap<DTO.Cliente, ClienteViewModel>();
+            CreateMap<ClienteViewModel, DTO.Cliente>();
+
+
 
 
         }

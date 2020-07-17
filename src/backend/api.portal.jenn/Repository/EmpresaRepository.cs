@@ -71,14 +71,21 @@ namespace api.portal.jenn.Repository
 
         public IEnumerable<Empresa> Get(bool lazzLoader = false)
         {
-           
+
             List<Empresa> retorno = new List<Empresa>();
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Empresas.Include(c => c.ProcedimentoEmpresa).Include(c => c.Cidades) 
+                        ctx.Empresas.Include(c => c.ProcedimentoEmpresa)
+                            .ThenInclude(c=> c.Procedimentos)
+                            .ThenInclude(c=> c.TipoProcedimento)
+                            .ThenInclude(c=> c.Categoria)
+                            .Include(c => c.Cidades)
+                            .ThenInclude(c=> c.Regiao)
+                            .Include(c=> c.Cidades)
+                            .ThenInclude(c=> c.Ufs)
                                 .AsParallel().ForAll(
                             item =>
                             {
@@ -93,6 +100,32 @@ namespace api.portal.jenn.Repository
             }
             return retorno;
         }
+
+
+        //public IEnumerable<Empresa> Get(bool lazzLoader = false)
+        //{
+           
+        //    List<Empresa> retorno = new List<Empresa>();
+        //    try
+        //    {
+        //        using (var ctx = contexto.CreateDbContext(null))
+        //        {
+        //            if (lazzLoader)
+        //                ctx.Empresas.Include(c => c.ProcedimentoEmpresa).Include(c => c.Cidades) 
+        //                        .AsParallel().ForAll(
+        //                    item =>
+        //                    {
+        //                        retorno.Add(item);
+        //                    });
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+        //        throw;
+        //    }
+        //    return retorno;
+        //}
 
         public IEnumerable<Empresa> Get(Expression<Func<Empresa, bool>> where, bool lazzLoader = false)
         {
@@ -161,13 +194,16 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-      
+
         public Empresa Insert(Empresa model)
         {
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
+                    
+
+
                     ctx.Add(model);
                     ctx.SaveChanges();
                 }
