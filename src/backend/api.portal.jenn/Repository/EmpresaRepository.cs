@@ -110,8 +110,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                 
-                        ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
+                               ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)

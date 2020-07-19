@@ -83,9 +83,9 @@ namespace api.portal.jenn
             app.UseAuthentication();
             app.UseAuthorization();
 
-            customContext.Database.EnsureDeleted();
-            customContext.Database.EnsureCreated();
-            customContext.Database.Migrate();
+            //customContext.Database.EnsureDeleted();
+            //customContext.Database.EnsureCreated();
+            //customContext.Database.Migrate();
 
 
             app.ConfigureSwagger();

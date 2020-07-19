@@ -58,7 +58,12 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<ClienteViewModel, DTO.Cliente>();
 
 
+            CreateMap<DTO.FotoEmpresa, FotoEmpresaViewModel>();
+            CreateMap<FotoEmpresaViewModel, DTO.FotoEmpresa>();
 
+
+            CreateMap<DTO.Avalia, AvaliaViewModel>();
+            CreateMap<AvaliaViewModel, DTO.Avalia>();
 
         }
 

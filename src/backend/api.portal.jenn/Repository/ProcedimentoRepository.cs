@@ -85,7 +85,8 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Procedimento
+                        ctx.Procedimento.Include(x=> x.TipoProcedimento)
+                            .ThenInclude(x=> x.Categoria)
                             .Include(c => c.ProcedimentoEmpresa)
                                 .ThenInclude(c=> c.Empresa)
                                 .ThenInclude(c=> c.Cidades)

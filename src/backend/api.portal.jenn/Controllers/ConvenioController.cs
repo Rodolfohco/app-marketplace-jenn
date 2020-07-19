@@ -32,6 +32,159 @@ namespace api.portal.jenn.Controllers
             this.planoRepositorio = _planoRepositorio;
         }
 
+
+
+        [HttpGet("GetPlanosPorConvenio")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult GetPlanosPorConvenio([FromHeader] Guid ConvenioID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.planoRepositorio.Selecionar(ConvenioID);
+
+                if (item != null && item.Any())
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+
+        [HttpGet("GetPlanos")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult GetPlanos()
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.planoRepositorio.Selecionar();
+
+                if (item != null && item.Any())
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+        [HttpPost("NovoPlano") ]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovoPlano([FromHeader] Guid ConvenioID, [FromBody] PlanoViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.planoRepositorio.Inserir(model, ConvenioID);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+
+        [HttpGet("DetalharPlano/{ConvenioID}/{ConvenioPlanoID}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult DetalharPlano(Guid ConvenioID, Guid ConvenioPlanoID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.planoRepositorio.Detalhar(ConvenioPlanoID, ConvenioID);
+                if (item != null)
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+        [HttpPut("AtualizarPlano")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult AtualizarPlano([FromBody] PlanoViewModel model, [FromHeader] Guid ConvenioPlanoID, [FromHeader] Guid ConvenioID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+
+                    this.planoRepositorio.Atualizar(model, ConvenioPlanoID, ConvenioID);
+                    resultado = new CommandResult(true, "Registro Atualizado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+        [HttpDelete("DeletarPlano")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult DeletarPlano([FromHeader] Guid ConvenioID, [FromHeader] Guid ConvenioPlanoID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+
+                this.planoRepositorio.Excluir(ConvenioPlanoID, ConvenioID);
+                resultado = new CommandResult(true, "Registro Excluido Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

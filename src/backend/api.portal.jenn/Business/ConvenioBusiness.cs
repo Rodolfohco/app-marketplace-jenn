@@ -74,10 +74,12 @@ namespace api.portal.jenn.Business
             Convenio retorno = null;
             try
             {
-                var ConvenioNovo = new Convenio();
+                var ConvenioNovo = this.mapper.Map< ViewModel.ConvenioViewModel, DTO.Convenio>(model);
+
+                 
                 ConvenioNovo.Ativo = (int)Status.Ativo;
                 ConvenioNovo.Id = Guid.NewGuid();
-                ConvenioNovo.Nome = model.Nome;
+            
                 ConvenioNovo.DataInclusao = DateTime.Now;
                 retorno = this.repository.Insert(ConvenioNovo);
             }

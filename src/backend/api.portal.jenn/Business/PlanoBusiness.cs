@@ -149,5 +149,26 @@ namespace api.portal.jenn.Business
             }
             return retorno;
         }
+
+        public IEnumerable<PlanoViewModel> Selecionar()
+        {
+            IEnumerable<PlanoViewModel> retorno = null;
+            try
+            {
+                var planos = this.repository.Get(true);
+
+                if (planos != null)
+                    retorno = this.mapper.Map<IEnumerable<Plano>,
+                        IEnumerable<PlanoViewModel>>(planos.SelectMany(c => c.Planos).AsEnumerable());
+                else
+                    throw new Exception($"Plano não Localizado");
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
     }
 }
