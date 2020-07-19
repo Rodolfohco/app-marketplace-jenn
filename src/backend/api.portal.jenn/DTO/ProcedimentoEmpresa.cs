@@ -14,14 +14,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_procemp", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ProcedimentoEmpresaID { get; set; }
-
-        [Column("com_emp", Order = 1)]
-        public Guid EmpresaID { get; set; }
-
-        [Column("cod_proced", Order = 2)]
-        public Guid ProcedimentiID { get; set; }
-
+        public Guid ProcedimentoEmpresaID { get; set; } 
 
         [Column("dataincl_procemp", Order = 3)]
         public DateTime DataInclusao { get; set; }
@@ -38,9 +31,6 @@ namespace api.portal.jenn.DTO
         [Required]
         [Column("precocontra_procemp", Order = 6)]
         public float Preco_contra { get; set; }
-
-        [Column("descprod_procemp", Order = 7)]
-        public byte[] descprod_procemp { get; set; }
 
         [Required]
         [Column("txtparcel_procemp", Order = 8)]

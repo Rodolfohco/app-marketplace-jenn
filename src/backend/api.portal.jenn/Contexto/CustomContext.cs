@@ -90,7 +90,7 @@ namespace api.portal.jenn.Contexto
             entity.Property(e => e.cep).IsRequired();
 
 
-            entity.HasMany(a => a.ProcedimentoEmpresa).WithOne(b => b.Empresa);
+            entity.HasMany(a => a.ProcedimentoEmpresas).WithOne(b => b.Empresa);
             entity.HasOne(a => a.Grupo).WithOne(b => b.Empresa).HasForeignKey<Grupo>(b => b.EmpresaID);
             entity.HasMany(a => a.Cidades).WithOne(b => b.Empresa);
             entity.HasMany(a => a.Fotos).WithOne(b => b.Empresa);
@@ -101,7 +101,7 @@ namespace api.portal.jenn.Contexto
 
             modelBuilder.Entity<ProcedimentoEmpresa>(entity =>
         {
-            entity.HasKey(e => e.ProcedimentiID);
+            entity.HasKey(e => e.ProcedimentoEmpresaID);
             entity.Property(e => e.Nome_pers).IsRequired();
             entity.Property(e => e.PrecoProduto).IsRequired();
             entity.Property(e => e.Preco_contra).IsRequired();

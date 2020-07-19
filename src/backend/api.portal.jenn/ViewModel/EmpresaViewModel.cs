@@ -8,11 +8,8 @@ namespace api.portal.jenn.ViewModel
 {
     public class EmpresaViewModel
     {
-       
         public Guid EmpresaID { get; set; }
-
         public string cnpj { get; set; }
-
         public string Nome { get; set; }
 
         public Guid MatrizID { get; set; }
@@ -34,17 +31,13 @@ namespace api.portal.jenn.ViewModel
 
         public string maps { get; set; }
 
-
         public string Responsavel { get; set; }
-
         public string Id_classe { get; set; }
-
-
-        public string Cert_Empresa { get; set; }
+       public string Cert_Empresa { get; set; }
 
         public int Ativo { get; set; }
-
-        public ICollection<ProcedimentoEmpresaViewModel> ProcedimentoEmpresa { get; set; }
         public ICollection<CidadeViewModel> Cidades { get; set; }
+        public ICollection<ProcedimentoEmpresaViewModel> ProcedimentoEmpresas { get; set; }
+
     }
 }

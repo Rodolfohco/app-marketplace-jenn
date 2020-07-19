@@ -30,7 +30,7 @@ namespace ui.portal.jenn.Controllers
             return View();
         }
 
-        public IActionResult Lista()
+        public IActionResult Lista(PesquisaViewModel model)
         {
             var lista = new List<PesquisaViewModel>();
 

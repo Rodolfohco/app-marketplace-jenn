@@ -14,6 +14,7 @@ namespace api.portal.jenn.Business
     public class ProcedimentoBusiness : IProcedimentoBusiness
     {
 
+       
         private readonly IProcedimentoRepository repository;
         private readonly ILogger<ProcedimentoBusiness> _logger;
         private readonly IMapper mapper;
@@ -83,6 +84,8 @@ namespace api.portal.jenn.Business
             }
             return this.mapper.Map<DTO.Procedimento, ViewModel.ProcedimentoViewModel>(retorno);
         }
+
+       
 
         public IEnumerable<ProcedimentoViewModel> Selecionar()
         {

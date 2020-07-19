@@ -19,7 +19,7 @@ namespace api.portal.jenn.ViewModel
         public string ImgProduto_Proc { get; set; }
 
         public int Ativo { get; set; }
-        public ICollection<TipoProcedimentoViewModel> ProcedimentoEmpresa { get; set; }
+        public ICollection<TipoProcedimentoViewModel> TipoProcedimento { get; set; }
 
     }
 }

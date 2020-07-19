@@ -12,8 +12,8 @@ namespace api.portal.jenn.Mapeamento
     {
         public AutoMapping()
         {
-            CreateMap<DTO.Logon, LogonViewModel>(); 
-            CreateMap<LogonViewModel, DTO.Logon>(); 
+            CreateMap<DTO.Logon, LogonViewModel>();
+            CreateMap<LogonViewModel, DTO.Logon>();
 
             CreateMap<DTO.Convenio, ConvenioViewModel>();
             CreateMap<ConvenioViewModel, DTO.Convenio>();
@@ -28,10 +28,19 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Procedimento, ProcedimentoViewModel>();
             CreateMap<ProcedimentoViewModel, DTO.Procedimento>();
 
-
             CreateMap<DTO.ProcedimentoEmpresa, ProcedimentoEmpresaViewModel>();
             CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
 
+
+            CreateMap<DTO.ProcedimentoPergunta, ProcedimentoPerguntaViewModel>();
+            CreateMap<ProcedimentoPerguntaViewModel, DTO.ProcedimentoPergunta>();
+
+
+            CreateMap<DTO.TipoProcedimento, TipoProcedimentoViewModel>();
+            CreateMap<TipoProcedimentoViewModel, DTO.TipoProcedimento>();
+
+            CreateMap<DTO.CategoriaProcedimento, CategoriaProcedimentoViewModel>();
+            CreateMap<CategoriaProcedimentoViewModel, DTO.CategoriaProcedimento>();
 
             CreateMap<DTO.UF, UFViewModel>();
             CreateMap<UFViewModel, DTO.UF>();
@@ -42,7 +51,7 @@ namespace api.portal.jenn.Mapeamento
 
 
             CreateMap<RegiaoViewModel, DTO.Regiao>();
-            CreateMap<  DTO.Regiao, RegiaoViewModel>();
+            CreateMap<DTO.Regiao, RegiaoViewModel>();
 
 
             CreateMap<DTO.Cliente, ClienteViewModel>();

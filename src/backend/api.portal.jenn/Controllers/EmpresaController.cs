@@ -43,18 +43,11 @@ namespace api.portal.jenn.Controllers
             {
                 model.EmpresaID = Guid.NewGuid();
 
-                if (!model.Cidades.Any())
-                    model.Cidades = null;
-      
-
-
-
-                if (!model.ProcedimentoEmpresa.Any())
-                    model.ProcedimentoEmpresa = null;
-
+           
+          
                 if (ModelState.IsValid)
                 {
-                    var item = this.repositorio.Inserir(model);
+                        var item = this.repositorio.Inserir(model);
 
                     if (item != null)
                         resultado = new CommandResult(true, "Processado Com Sucesso", item,System.Net.HttpStatusCode.OK);

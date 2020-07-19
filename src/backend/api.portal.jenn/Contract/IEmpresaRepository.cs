@@ -12,7 +12,6 @@ namespace api.portal.jenn.Contract
     {
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(Guid EmpresaID);
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa();
-
         DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model, Guid EmpresaID);
 
 

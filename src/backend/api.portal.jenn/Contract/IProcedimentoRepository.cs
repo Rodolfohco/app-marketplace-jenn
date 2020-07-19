@@ -17,6 +17,9 @@ namespace api.portal.jenn.Contract
         void Delete(Expression<Func<DTO.Procedimento, bool>> where);
         void Update(DTO.Procedimento model, Guid id);
 
+
+
+
     }
 
 

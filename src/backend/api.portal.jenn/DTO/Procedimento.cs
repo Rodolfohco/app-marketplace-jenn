@@ -25,9 +25,6 @@ namespace api.portal.jenn.DTO
         [StringLength(400)]
         public string Descricao { get; set; }
 
-        public virtual TipoProcedimento TipoProcedimento { get; set; }
-        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
-
         [Required]
         [Column("imgprod_proced", Order = 3)]
         [StringLength(200)]
@@ -40,6 +37,8 @@ namespace api.portal.jenn.DTO
         public int Ativo { get; set; }
 
 
+        public virtual TipoProcedimento TipoProcedimento { get; set; }
+        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
 
     }
 }

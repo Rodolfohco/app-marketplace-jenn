@@ -92,7 +92,7 @@ namespace api.portal.jenn.DTO
         public virtual ICollection<FotoEmpresa> Fotos { get; set; }
         public virtual ICollection<Avalia> Avaliacoes { get; set; }
 
-        public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresa{ get; set; }
+        public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresas { get; set; }
     }
    
 }

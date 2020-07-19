@@ -56,7 +56,7 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        retorno = ctx.Empresas.Include(c => c.ProcedimentoEmpresa).Where(where).SingleOrDefault();
+                        retorno = ctx.Empresas.Include(c => c.ProcedimentoEmpresas).Where(where).SingleOrDefault();
                     else
                         retorno = ctx.Empresas.Where(where).SingleOrDefault();
                 }
@@ -77,8 +77,9 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
+
                     if (lazzLoader)
-                        ctx.Empresas.Include(c => c.ProcedimentoEmpresa)
+                        ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
                             .ThenInclude(c=> c.Procedimentos)
                             .ThenInclude(c=> c.TipoProcedimento)
                             .ThenInclude(c=> c.Categoria)
@@ -101,31 +102,6 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-
-        //public IEnumerable<Empresa> Get(bool lazzLoader = false)
-        //{
-           
-        //    List<Empresa> retorno = new List<Empresa>();
-        //    try
-        //    {
-        //        using (var ctx = contexto.CreateDbContext(null))
-        //        {
-        //            if (lazzLoader)
-        //                ctx.Empresas.Include(c => c.ProcedimentoEmpresa).Include(c => c.Cidades) 
-        //                        .AsParallel().ForAll(
-        //                    item =>
-        //                    {
-        //                        retorno.Add(item);
-        //                    });
-        //        }
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
-        //        throw;
-        //    }
-        //    return retorno;
-        //}
 
         public IEnumerable<Empresa> Get(Expression<Func<Empresa, bool>> where, bool lazzLoader = false)
         {
@@ -154,8 +130,8 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                    ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Include(c => c.ProcedimentoEmpresa)
-                        .Select(c => c.ProcedimentoEmpresa).AsParallel().ForAll(
+                    ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Include(c => c.ProcedimentoEmpresas)
+                        .Select(c => c.ProcedimentoEmpresas).AsParallel().ForAll(
                         item =>
                         {
                             retorno.AddRange(item.ToArray());
@@ -178,8 +154,8 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                    ctx.Empresas.Include(c => c.ProcedimentoEmpresa)
-                        .Select(c => c.ProcedimentoEmpresa).AsParallel().ForAll(
+                    ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
+                        .Select(c => c.ProcedimentoEmpresas).AsParallel().ForAll(
                         item =>
                         {
                             retorno.AddRange(item.ToArray());
@@ -201,10 +177,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    
-
-
-                    ctx.Add(model);
+                   ctx.Add(model);
                     ctx.SaveChanges();
                 }
             }
@@ -225,7 +198,7 @@ namespace api.portal.jenn.Repository
                     var item = Detail(c => c.EmpresaID == EmpresaID, true);
                     if (item != null)
                     {
-                        item.ProcedimentoEmpresa.Add(model);
+                        item.ProcedimentoEmpresas.Add(model);
 
 
 
