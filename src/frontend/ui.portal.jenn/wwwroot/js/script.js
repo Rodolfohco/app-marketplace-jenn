@@ -49,26 +49,47 @@
         });
 
         $(function () {
-            var listas = [
-                "Exame 1",
-                "Exame 2",
-                "Exame 3",
-                "Exame 5"
-            ];
             $("#lista").autocomplete({
-                source: listas
+                source: function (request, response) {
+                    $.ajax({
+                        dataType: "json",
+                        data:
+                        {
+                            produtos: request.term,
+                        },
+                        type: 'Get',
+                        url: window.location.href + "Produtos/BuscarProdutos",
+                        success: function (data) {
+                            response(data);
+                        },
+                        error: function (data) {
+                            
+                        }
+                    });
+                }
             });
         });
 
         $(function () {
-            var locais = [
-                "local 1",
-                "local 2",
-                "local 3",
-                "local 5"
-            ];
             $("#local").autocomplete({
-                source: locais
+                source: function (request, response) {
+                    $.ajax({
+                        dataType: "json",
+                        data:
+                        {
+                            localidades: request.term,
+                            produtos: $("#lista").val(),
+                        },
+                        type: 'Get',
+                        url: window.location.href + "Produtos/BuscarLocalidades",
+                        success: function (data) {
+                            response(data);
+                        },
+                        error: function (data) {
+
+                        }
+                    });
+                }
             });
         });
 

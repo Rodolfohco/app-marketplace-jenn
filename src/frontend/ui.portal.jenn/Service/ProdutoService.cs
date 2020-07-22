@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,10 +15,12 @@ namespace ui.portal.jenn.Service
     {
         private readonly string Controle;
         private readonly ServiceBase service;
-        public ProdutoService(ServiceBase _service)
+        private readonly IMemoryCache _cache;
+        public ProdutoService(ServiceBase _service, IMemoryCache memoryCache)
         {
             this.Controle = "Produto";
             this.service = _service;
+            _cache = memoryCache;
         }
 
         
@@ -103,7 +108,96 @@ namespace ui.portal.jenn.Service
             throw new NotImplementedException();
         }
 
-    
- 
+
+        public List<string> BuscarProdutos(string produtos)
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            produtos = produtos.ToLower();
+            List<Procedimento> listas = dTOEmpresa.data.Select(p=>p.procedimento).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+
+            foreach (var item in listas)
+                listaFinal.Add(item.nome);
+
+            return listaFinal;
+        }
+
+        public List<string> BuscarLocalidades(string localidades, string produtos)
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            localidades = localidades.ToLower();
+            produtos = produtos.ToLower();
+            List<Cidade> listas = new List<Cidade>();
+            
+            if(produtos != null)
+                listas = dTOEmpresa.data.Where(p=>p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).Select(e=> e.empresa).SelectMany(e => e.cidades).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
+            else
+                listas = dTOEmpresa.data.Select(e => e.empresa).SelectMany(e => e.cidades).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
+
+            foreach (var item in listas)
+                listaFinal.Add(item.nome);
+
+            return listaFinal;
+        }
+
+        public List<ProcedimentoEmpresa> BuscarProdutosDetalhes(string produto,  string localidade)
+        {
+            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+
+            string cacheKey = "DTOEmpresa";
+            DTOEmpresa dTOEmpresa = _cache.Get<DTOEmpresa>(cacheKey);
+
+            if (dTOEmpresa == null)
+            {
+                dTOEmpresa = getProcedimentoEmpresa();
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(20));
+                _cache.Set<DTOEmpresa>(cacheKey, dTOEmpresa, cacheEntryOptions);
+            }
+
+            lista = dTOEmpresa.data.ToList();
+            if (produto != null)
+                lista = dTOEmpresa.data.Where(p => p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))).ToList();
+
+
+            return lista;
+        }
+
+        private DTOEmpresa getProcedimentoEmpresa()
+        {
+            using (var client = new HttpClient())
+            {
+                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa/ProcedimentoEmpresa").Result)
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var JsonString = response.Content.ReadAsStringAsync().Result;
+                        return JsonConvert.DeserializeObject<DTOEmpresa>(JsonString);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        private DTOEmpresa BuscarEmpresas()
+        {
+            string cacheKey = "DTOEmpresa";
+            DTOEmpresa dTOEmpresa = _cache.Get<DTOEmpresa>(cacheKey);
+
+            if (dTOEmpresa == null)
+            {
+                dTOEmpresa = getProcedimentoEmpresa();
+                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(20));
+                _cache.Set<DTOEmpresa>(cacheKey, dTOEmpresa, cacheEntryOptions);
+            }
+
+            return dTOEmpresa;
+        }
+
     }
 }

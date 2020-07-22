@@ -18,6 +18,9 @@ namespace ui.portal.jenn.Service
 
         Task Atualizar(ProdutoViewModel model, Guid EmpresaID);
         Task<CommandResult> Detalhar(Guid EmpresaID);
+        List<string> BuscarProdutos(string produtos);
+        List<string> BuscarLocalidades(string localidades, string produtos);
+        List<ProcedimentoEmpresa> BuscarProdutosDetalhes(string produto, string localidade);
     }
    
 }

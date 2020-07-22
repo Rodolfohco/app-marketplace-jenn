@@ -13,5 +13,13 @@ namespace ui.portal.jenn.ViewModel
         [Required(ErrorMessage ="Campo requerido")]
         public string Produto { get; set; }
         public string Localidade { get; set; }
+        public string NomeEmpresa { get; set; }
+        public string DescricaoProcedimento { get; set; }
+        public string NomeUnidade { get; set; }
+        public string EnderecoCompleto { get; set; }
+        public string EnderecoLoja { get; set; }
+        public int Opiniao { get; set; }
+
+
     }
 }
