@@ -49,11 +49,12 @@ namespace api.portal.jenn
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureEntityFramework(this.Configuration);
             services.ConfigureBusiness();
+            services.ConfigureJWt(this.Configuration);
 
 
             services.AddMemoryCache();
 
-        
+
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -65,7 +66,7 @@ namespace api.portal.jenn
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,  CustomContext customContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CustomContext customContext)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -95,7 +96,7 @@ namespace api.portal.jenn
                 endpoints.MapControllers();
             });
 
-          
+
         }
     }
 }

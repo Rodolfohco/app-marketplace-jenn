@@ -69,9 +69,10 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
+
+
         public IEnumerable<Empresa> Get(bool lazzLoader = false)
         {
-
             List<Empresa> retorno = new List<Empresa>();
             try
             {
@@ -79,19 +80,37 @@ namespace api.portal.jenn.Repository
                 {
 
                     if (lazzLoader)
+                    {
                         ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
-                            .ThenInclude(c=> c.Procedimentos)
-                            .ThenInclude(c=> c.TipoProcedimento)
-                            .ThenInclude(c=> c.Categoria)
+                            .ThenInclude(c => c.Procedimento)
+                            .ThenInclude(c => c.TipoProcedimento)
+                            .ThenInclude(c => c.Categoria)
                             .Include(c => c.Cidades)
-                            .ThenInclude(c=> c.Regiao)
-                            .Include(c=> c.Cidades)
-                            .ThenInclude(c=> c.Ufs)
+                            .ThenInclude(c => c.Regiao)
+                            .Include(c => c.Cidades)
+                            .ThenInclude(c => c.Ufs)
                                 .AsParallel().ForAll(
                             item =>
                             {
                                 retorno.Add(item);
                             });
+                    }
+                    else
+                    {
+                        ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
+                           .ThenInclude(c => c.Procedimento)
+                           .ThenInclude(c => c.TipoProcedimento)
+                           .ThenInclude(c => c.Categoria)
+                           .Include(c => c.Cidades)
+                           .ThenInclude(c => c.Regiao)
+                           .Include(c => c.Cidades)
+                           .ThenInclude(c => c.Ufs)
+                               .AsParallel().ForAll(
+                           item =>
+                           {
+                               retorno.Add(item);
+                           });
+                    }
                 }
             }
             catch (Exception exception)
@@ -102,7 +121,7 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-
+ 
         public IEnumerable<Empresa> Get(Expression<Func<Empresa, bool>> where, bool lazzLoader = false)
         {
             List<Empresa> retorno = new List<Empresa>();
@@ -153,11 +172,15 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                    ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
-                        .Select(c => c.ProcedimentoEmpresas).AsParallel().ForAll(
+                    ctx.ProcedimentoEmpresa
+                        .Include(x => x.Procedimento)
+                        .ThenInclude(p => p.TipoProcedimento)
+                        .Include(c => c.Empresa)
+                        .ThenInclude(x => x.Cidades)
+                        .AsParallel().ForAll(
                         item =>
                         {
-                            retorno.AddRange(item.ToArray());
+                            retorno.Add(item);
                         });
                 }
             }
@@ -188,23 +211,17 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, Guid EmpresaID)
+        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, Guid EmpresaID, Guid ProcedimentoID)
         {
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var item = Detail(c => c.EmpresaID == EmpresaID, true);
-                    if (item != null)
-                    {
-                        item.ProcedimentoEmpresas.Add(model);
 
-
-
-
-                        ctx.Update(item);
-                        ctx.SaveChanges();
-                    }
+                    model.EmpresaID = EmpresaID;
+                    model.ProcedimentoID = ProcedimentoID;
+                    ctx.Add(model);
+                    ctx.SaveChanges();
                 }
             }
             catch (Exception exception)
@@ -214,7 +231,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public void Update(Empresa model, Guid id)
         {
             try

@@ -11,10 +11,8 @@ namespace api.portal.jenn.DTO
     [Table("procemp")]
     public class ProcedimentoEmpresa
     {
-        [Key]
         [Column("cod_procemp", Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ProcedimentoEmpresaID { get; set; } 
+         public Guid ProcedimentoEmpresaID { get; set; } 
 
         [Column("dataincl_procemp", Order = 3)]
         public DateTime DataInclusao { get; set; }
@@ -68,11 +66,24 @@ namespace api.portal.jenn.DTO
         [StringLength(1)]
         public int Ativo { get; set; }
 
-        public virtual ICollection<Procedimento> Procedimentos { get; set; }
+
+        [ForeignKey("cod_proced")]
+        [Column("cod_proced", Order = 15)]
+        public Guid ProcedimentoID { get; set; }
+        public virtual Procedimento Procedimento { get; set; }
+
+        [ForeignKey("cod_emp")]
+        [Column("cod_emp", Order = 0)]
+        public Guid EmpresaID { get; set; }
+        public virtual Empresa Empresa { get; set; }
+            
+
+
+
         public virtual ICollection<ProcedimentoPergunta> ProcedimentoPerguntas { get; set; }
         public virtual ICollection<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresas { get; set; }
         public virtual PlanoProcedimentoEmpresa PlanoProcedimentoEmpresas { get; set; }
-        public virtual Empresa Empresa { get; set; }
+
 
     }
 }

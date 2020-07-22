@@ -11,6 +11,9 @@ namespace api.portal.jenn.Contract
         #region Metodos
         ViewModel.ProcedimentoViewModel Inserir(ViewModel.ProcedimentoViewModel model);
         IEnumerable<ViewModel.ProcedimentoViewModel> Selecionar();
+
+
+        IEnumerable<ViewModel.CidadeViewModel> SelecionarCidades(string nomeProcedimento);
         IEnumerable<ViewModel.ProcedimentoViewModel> Selecionar(Expression<Func<DTO.Procedimento, bool>> where);
         void Excluir(Expression<Func<DTO.Procedimento, bool>> where);
         void Atualizar(ViewModel.ProcedimentoViewModel model, Guid id);

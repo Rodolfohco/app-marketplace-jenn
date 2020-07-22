@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api.portal.jenn.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace api.portal.jenn.ViewModel
 {
     public class ProcedimentoEmpresaViewModel
     {
+
+
         public Guid ProcedimentoEmpresaID { get; set; }
         public DateTime DataInclusao { get; set; }
         public string Nome_pers { get; set; }
@@ -20,7 +23,10 @@ namespace api.portal.jenn.ViewModel
         public string ImagemMain { get; set; }
         public string Video { get; set; }
         public int Ativo { get; set; }
-        public ICollection<ProcedimentoViewModel> Procedimentos { get; set; }
+        public EmpresaViewModel Empresa { get; set; }
+
+
+        public ProcedimentoViewModel  Procedimento { get; set; }
         public ICollection<ProcedimentoPerguntaViewModel> ProcedimentoPerguntas { get; set; }
 
     }

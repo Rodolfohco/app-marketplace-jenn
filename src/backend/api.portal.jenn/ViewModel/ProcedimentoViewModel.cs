@@ -22,5 +22,7 @@ namespace api.portal.jenn.ViewModel
 
         public TipoProcedimentoViewModel TipoProcedimento { get; set; }
 
+       
+
     }
 }

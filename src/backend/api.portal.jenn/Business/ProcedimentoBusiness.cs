@@ -14,6 +14,7 @@ namespace api.portal.jenn.Business
     public class ProcedimentoBusiness : IProcedimentoBusiness
     {
 
+      
        
         private readonly IProcedimentoRepository repository;
         private readonly ILogger<ProcedimentoBusiness> _logger;
@@ -22,8 +23,10 @@ namespace api.portal.jenn.Business
         public ProcedimentoBusiness(
             ILogger<ProcedimentoBusiness> logger,
             IProcedimentoRepository _repository,
+          
              IMapper _mapper)
         {
+      
             this.mapper = _mapper;
             this.repository = _repository;
             this._logger = logger;
@@ -115,6 +118,21 @@ namespace api.portal.jenn.Business
                 throw;
             }
             return this.mapper.Map<IEnumerable<DTO.Procedimento>, IEnumerable<ViewModel.ProcedimentoViewModel>>(retorno);
+        }
+
+        public IEnumerable<CidadeViewModel> SelecionarCidades(string nomeProcedimento)
+        {
+            IEnumerable<Cidade> retorno = Enumerable.Empty<Cidade>();
+            try
+            {
+        //        retorno = this.cidade_repositorio.Get(.Get(where);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Cidade>, IEnumerable<ViewModel.CidadeViewModel>>(retorno);
         }
     }
 }

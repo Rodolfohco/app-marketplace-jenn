@@ -21,7 +21,7 @@ namespace api.portal.jenn.Contract
         IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa();
         IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(Guid EmpresaID);
 
-        ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID);
+        ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID, Guid ProcedimentoID);
 
         IEnumerable<EmpresaViewModel> Selecionar(bool lazzyLoader = false);
         IEnumerable<ViewModel.EmpresaViewModel> Selecionar(Expression<Func<DTO.Empresa, bool>> where, bool lazzyLoader = false);

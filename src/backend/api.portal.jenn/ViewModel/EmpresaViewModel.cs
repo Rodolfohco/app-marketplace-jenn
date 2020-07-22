@@ -37,7 +37,7 @@ namespace api.portal.jenn.ViewModel
 
         public int Ativo { get; set; }
         public ICollection<CidadeViewModel> Cidades { get; set; }
-        public ICollection<ProcedimentoEmpresaViewModel> ProcedimentoEmpresas { get; set; }
+
 
     }
 }

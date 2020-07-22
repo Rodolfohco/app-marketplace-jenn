@@ -88,7 +88,7 @@ namespace api.portal.jenn.Business
             IEnumerable<Empresa> retorno = Enumerable.Empty<Empresa>();
             try
             {
-                retorno = this.repository.Get(true);
+                retorno = this.repository.Get();
             }
             catch (Exception exception)
             {
@@ -190,13 +190,17 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
         }
 
-        public ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID)
+        public ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID, Guid ProcedimentoID)
         {
             ProcedimentoEmpresa retorno = null;
             try
             {
-                var ProcedimentoEmpresa = this.mapper.Map<ViewModel.ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
-                retorno = this.repository.Insert(ProcedimentoEmpresa, EmpresaID);
+                var procedimentoEmpresa = this.mapper.Map<ViewModel.ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
+                procedimentoEmpresa.ProcedimentoEmpresaID = Guid.NewGuid();
+                procedimentoEmpresa.DataInclusao = DateTime.Now;
+              
+
+                retorno = this.repository.Insert(procedimentoEmpresa, EmpresaID, ProcedimentoID);
             }
             catch (Exception exception)
             {

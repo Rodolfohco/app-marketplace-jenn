@@ -87,7 +87,7 @@ namespace api.portal.jenn.Repository
                     if (lazzLoader)
                         ctx.Procedimento.Include(x=> x.TipoProcedimento)
                             .ThenInclude(x=> x.Categoria)
-                            .Include(c => c.ProcedimentoEmpresa)
+                            .Include(c => c.ProcedimentoEmpresas)
                                 .ThenInclude(c=> c.Empresa)
                                 .ThenInclude(c=> c.Cidades)
                             .AsParallel()

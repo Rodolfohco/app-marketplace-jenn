@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using api.portal.jenn.Contract;
 using api.portal.jenn.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ using Newtonsoft.Json;
 
 namespace api.portal.jenn.Controllers
 {
+ 
     [Route("api/[controller]")]
     [ApiController]
     public class EmpresaController : ControllerBase
@@ -41,9 +43,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                model.EmpresaID = Guid.NewGuid();
-
-           
+                model.EmpresaID = Guid.NewGuid();          
           
                 if (ModelState.IsValid)
                 {
@@ -68,12 +68,11 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public async Task<CommandResult> Get()
-        {
+        {   
             CommandResult resultado = null;
             try
             {
                 var item = this.repositorio.Selecionar();
-
                 if (item != null && item.Any())
                     resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
                 else
@@ -118,15 +117,18 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult NovoProcedimentoEmpresa([FromHeader] Guid EmpresaID, [FromBody] ProcedimentoEmpresaViewModel model)
+        public ICommandResult NovoProcedimentoEmpresa([FromHeader] Guid EmpresaID, [FromHeader] Guid ProcedimentoID, [FromBody] ProcedimentoEmpresaViewModel model)
         {
             CommandResult resultado = null;
             try
             {
-                model.ProcedimentoEmpresaID = Guid.NewGuid();
+            
                 if (ModelState.IsValid)
                 {
-                    var item = this.repositorio.InserirProcedimento(model,EmpresaID);
+                    model.Empresa = null;
+                    model.Procedimento = null;
+
+                    var item = this.repositorio.InserirProcedimento(model,EmpresaID, ProcedimentoID);
 
                     if (item != null)
                         resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
@@ -185,7 +187,8 @@ namespace api.portal.jenn.Controllers
                 resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
             return resultado;
-        }
+        }    
+
 
         [HttpPut]
         [ProducesResponseType(200)]

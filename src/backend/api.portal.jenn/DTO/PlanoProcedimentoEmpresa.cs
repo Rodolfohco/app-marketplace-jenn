@@ -18,8 +18,8 @@ namespace api.portal.jenn.DTO
 
 
 
-        public Guid ProcedimentoEmpresaID { get; set; }
-        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
+        //public Guid ProcedimentoEmpresaID { get; set; }
+        //public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
 
         public Guid PlanoID { get; set; }
         public virtual Plano Plano { get; set; }

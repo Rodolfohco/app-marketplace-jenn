@@ -14,10 +14,19 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_usuario", Order = 1)]
         public Guid UsuarioID { get; set; }
+
+
         [Required]
         [Column("mail_usuario", Order = 3)]
         [StringLength(100)]
         public string Email { get; set; }
+
+
+        [Required]
+        [StringLength(100)]
+        public string Nome { get; set; }
+
+
 
 
         public Guid? ClienteID { get; set; }

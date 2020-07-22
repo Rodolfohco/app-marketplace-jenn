@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using security = api.portal.jenn.Utilidade.Cryptography;
@@ -26,22 +27,28 @@ namespace api.portal.jenn.Controllers
         private readonly ILogonBusiness logon;
         private readonly SignInManager<Logon> signInManager;
         private readonly UserManager<Logon> userManager;
+        private readonly ITokenService token;
 
-        public AutorizacaoController(ILogger<AutorizacaoController> logger,
+        public AutorizacaoController(ILogger<AutorizacaoController> logger, ITokenService _token,
             ILogonBusiness _logon, SignInManager<Logon> _signInManager, UserManager<Logon> _userManager)
         {
             this.signInManager = _signInManager;
             this.userManager = _userManager;
             this.logon = _logon;
             _logger = logger;
+            this.token = _token;
         }
 
 
         [HttpPost]
         public async Task<IActionResult> login (UsuarioViewModel model)
         {
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, true, false);
-            return Ok(result);
+
+
+            return Ok(token.GenerateToken(new LogonViewModel() { Nome = model.Nome, Email = model.Email }));
+
+        
+        
         }
 
 
@@ -57,41 +64,13 @@ namespace api.portal.jenn.Controllers
                 {
                     return Ok(model);
                 }
+                else
+                    return BadRequest(result);
             }
-            return Ok(model);
+            else
+                return BadRequest();
 
         }
-        //[HttpPost]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(500)]
-        //public ICommandResult Logon(string email, string senha)
-        //{
-        //    CommandResult resultado = null;
-        //    try
-        //    {
-        //        var logon = this.logon.Detalhar(c=> c.Email == email && c.Password == security.ComputeSha256Hash(senha));
-        //        if (logon != null)
-        //        {
-        //            var tokenInf = token.GenerateToken(logon);
-        //            logon.Password = string.Empty;
 
-        //            var tokenRetorno = new
-        //            {
-        //                user = logon,
-        //                token = tokenInf
-        //            };
-        //            resultado = new CommandResult(true, "Processado Com Sucesso", tokenRetorno,System.Net.HttpStatusCode.OK);
-        //        }
-        //        else
-        //            resultado = new CommandResult(true, "Usuário ou senha inválidos", null,System.Net.HttpStatusCode.NoContent);
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        _logger.LogError($"Ocorreu o Seguinte erro na Api de Autenticação :[{exception.Message}]", exception);
-        //    }
-        //    return resultado;
-
-        //}
     }
 }
