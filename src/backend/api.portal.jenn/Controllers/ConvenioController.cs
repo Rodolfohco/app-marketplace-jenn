@@ -38,7 +38,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult GetPlanosPorConvenio([FromHeader] Guid ConvenioID)
+        public ICommandResult GetPlanosPorConvenio([FromHeader] int ConvenioID)
         {
             CommandResult resultado = null;
             try
@@ -88,7 +88,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult NovoPlano([FromHeader] Guid ConvenioID, [FromBody] PlanoViewModel model)
+        public ICommandResult NovoPlano([FromHeader] int ConvenioID, [FromBody] PlanoViewModel model)
         {
             CommandResult resultado = null;
             try
@@ -117,7 +117,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult DetalharPlano(Guid ConvenioID, Guid ConvenioPlanoID)
+        public ICommandResult DetalharPlano(int ConvenioID, int ConvenioPlanoID)
         {
             CommandResult resultado = null;
             try
@@ -140,7 +140,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult AtualizarPlano([FromBody] PlanoViewModel model, [FromHeader] Guid ConvenioPlanoID, [FromHeader] Guid ConvenioID)
+        public ICommandResult AtualizarPlano([FromBody] PlanoViewModel model, [FromHeader] int ConvenioPlanoID, [FromHeader] int ConvenioID)
         {
             CommandResult resultado = null;
             try
@@ -166,7 +166,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult DeletarPlano([FromHeader] Guid ConvenioID, [FromHeader] Guid ConvenioPlanoID)
+        public ICommandResult DeletarPlano([FromHeader] int ConvenioID, [FromHeader] int ConvenioPlanoID)
         {
             CommandResult resultado = null;
             try
@@ -233,15 +233,13 @@ namespace api.portal.jenn.Controllers
                         resultado = new CommandResult(true, "Processado Com Sucesso", null,System.Net.HttpStatusCode.NoContent);
 
 
-                    cahce.Set("data-Convenio", item);
-
+                    cahce.Set("data-Convenio", resultado);
                 }
             }
             catch (Exception e)
             {
                 resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]",System.Net.HttpStatusCode.BadRequest);
             }
-
             return resultado;
         }
 
@@ -249,7 +247,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Detalhe(Guid ConvenioID)
+        public ICommandResult Detalhe(int ConvenioID)
         {
             CommandResult resultado = null;
             try
@@ -273,7 +271,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Put([FromBody] ConvenioViewModel model, [FromHeader] Guid ConvenioID)
+        public ICommandResult Put([FromBody] ConvenioViewModel model, [FromHeader] int ConvenioID)
         {
             CommandResult resultado = null;
             try
@@ -299,7 +297,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Delete([FromHeader] Guid ConvenioID)
+        public ICommandResult Delete([FromHeader] int ConvenioID)
         {
             CommandResult resultado = null;
             try

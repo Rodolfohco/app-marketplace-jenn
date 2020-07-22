@@ -28,7 +28,7 @@ namespace api.portal.jenn.Business
             this._logger = logger;
         }
 
-        public void Atualizar(EmpresaViewModel model, Guid id)
+        public void Atualizar(EmpresaViewModel model, int id)
         {
             try
             {
@@ -72,6 +72,11 @@ namespace api.portal.jenn.Business
             Empresa retorno = null;
             try
             {
+                if (model.MatrizID.HasValue && model.MatrizID.Value <= 0)
+                    model.MatrizID = null;
+                model.Matrizes = null;
+
+
                 var EmpresaNova = this.mapper.Map<ViewModel.EmpresaViewModel, DTO.Empresa>(model);
                 retorno = this.repository.Insert(EmpresaNova);
             }
@@ -175,7 +180,7 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
         }
 
-        public IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(Guid EmpresaID)
+        public IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(int EmpresaID)
         {
             IEnumerable<ProcedimentoEmpresa> retorno = Enumerable.Empty<ProcedimentoEmpresa>();
             try
@@ -190,13 +195,13 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
         }
 
-        public ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, Guid EmpresaID, Guid ProcedimentoID)
+        public ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, int EmpresaID, int ProcedimentoID)
         {
             ProcedimentoEmpresa retorno = null;
             try
             {
                 var procedimentoEmpresa = this.mapper.Map<ViewModel.ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
-                procedimentoEmpresa.ProcedimentoEmpresaID = Guid.NewGuid();
+          
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
               
 

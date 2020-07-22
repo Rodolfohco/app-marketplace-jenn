@@ -8,7 +8,7 @@ namespace api.portal.jenn.ViewModel
     public class UFViewModel
     {
     
-        public Guid UfID { get; set; }
+        public int UfID { get; set; }
 
     
         public string Nome { get; set; }

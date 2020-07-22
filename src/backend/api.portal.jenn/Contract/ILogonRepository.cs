@@ -14,6 +14,6 @@ namespace api.portal.jenn.Contract
         IEnumerable<DTO.Logon> Get(Expression<Func<DTO.Logon, bool>> where);
         DTO.Logon Detail(Expression<Func<DTO.Logon, bool>> where);
         void Delete(Expression<Func<DTO.Logon, bool>> where);
-        void Update(DTO.Logon model, Guid id);
+        void Update(DTO.Logon model, int id);
     }
 }

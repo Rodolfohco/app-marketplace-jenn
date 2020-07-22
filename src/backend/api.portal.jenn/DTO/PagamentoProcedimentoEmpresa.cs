@@ -13,9 +13,9 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_pgtoprocemp", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PagamentoProcedimentoEmpresaID { get; set; }
+        public int PagamentoProcedimentoEmpresaID { get; set; }
 
-        public Guid PlanoID { get; set; }
+        public int PlanoID { get; set; }
         public virtual Pagamento Pagamento { get; set; }
 
         

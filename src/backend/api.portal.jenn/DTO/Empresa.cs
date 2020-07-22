@@ -15,7 +15,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_emp", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid EmpresaID { get; set; }
+        public int EmpresaID { get; set; }
 
         [Required]
         [Column("cnpj_emp", Order = 1)]
@@ -26,10 +26,8 @@ namespace api.portal.jenn.DTO
         [Column("nome_emp", Order = 2)]
         [StringLength(200)]
         public string Nome { get; set; }
-
-        [Column("cod_matriz_emp", Order = 3)]
-        public Guid MatrizID { get; set; }
-
+        
+      
         [Required]
         [Column("tel_emp1", Order = 4)]
         [StringLength(20)]
@@ -86,12 +84,16 @@ namespace api.portal.jenn.DTO
         [StringLength(1)]
         public int Ativo { get; set; }
 
-        public Guid GrupoID { get; set; }
+        public int GrupoID { get; set; }
         public virtual Grupo Grupo { get; set; }
         public virtual ICollection<Cidade> Cidades { get; set; }
         public virtual ICollection<FotoEmpresa> Fotos { get; set; }
         public virtual ICollection<Avalia> Avaliacoes { get; set; }
 
+        [Column("cod_matriz_emp", Order = 3)]
+        public int? MatrizID { get; set; }
+
+        public virtual ICollection<Empresa> Matrizes { get; set; }
         public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresas { get; set; }
     }
    

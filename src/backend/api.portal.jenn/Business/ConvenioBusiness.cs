@@ -29,7 +29,7 @@ namespace api.portal.jenn.Business
         }
 
       
-        public void Atualizar(ConvenioViewModel model, Guid id)
+        public void Atualizar(ConvenioViewModel model, int id)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace api.portal.jenn.Business
 
                  
                 ConvenioNovo.Ativo = (int)Status.Ativo;
-                ConvenioNovo.Id = Guid.NewGuid();
+          
             
                 ConvenioNovo.DataInclusao = DateTime.Now;
                 retorno = this.repository.Insert(ConvenioNovo);
@@ -96,7 +96,7 @@ namespace api.portal.jenn.Business
             IEnumerable<Convenio> retorno = Enumerable.Empty<Convenio>();
             try
             {
-                retorno = this.repository.Get();
+                retorno = this.repository.Get(true);
             }
             catch (Exception exception)
             {

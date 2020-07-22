@@ -7,9 +7,9 @@ namespace api.portal.jenn.ViewModel
 {
     public class UnidadeViewModel
     {
-        public Guid UnidadeID { get; set; }
-        public Guid EmpresaID { get; set; }
-        public Guid CidadeID { get; set; }
+        public int UnidadeID { get; set; }
+        public int EmpresaID { get; set; }
+        public int CidadeID { get; set; }
         public string Nome { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_grupo", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid GrupoID { get; set; }
+        public int GrupoID { get; set; }
 
         [Required]
         [Column("nom_grupo", Order = 1)]
@@ -22,7 +22,7 @@ namespace api.portal.jenn.DTO
 
 
 
-        public Guid EmpresaID { get; set; }
+        public int EmpresaID { get; set; }
         public virtual Empresa Empresa { get; set; }
 
 

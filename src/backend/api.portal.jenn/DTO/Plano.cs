@@ -14,7 +14,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_plano", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PlanoID { get; set; }
+        public int PlanoID { get; set; }
 
      
         [Required]

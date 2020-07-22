@@ -22,27 +22,27 @@ namespace api.portal.jenn.Business
             this._logger = logger;
         }
 
-        public void Delete(Guid CidadeID)
+        public void Delete(int CidadeID)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Detail(Guid EmpresaID, Guid CidadeID)
+        public Cidade Detail(int EmpresaID, int CidadeID)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Cidade> Get(Guid EmpresaID)
+        public IEnumerable<Cidade> Get(int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Insert(Cidade model, Guid EmpresaID)
+        public Cidade Insert(Cidade model, int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Cidade model, Guid CidadeID, Guid EmpresaID)
+        public void Update(Cidade model, int CidadeID, int EmpresaID)
         {
             throw new NotImplementedException();
         }

@@ -26,7 +26,7 @@ namespace api.portal.jenn.Business
             this.repository = _repository;
             this._logger = logger;
         }
-        public void Atualizar(CategoriaViewModel model, Guid id)
+        public void Atualizar(CategoriaViewModel model, int id)
         {
             throw new NotImplementedException();
         }

@@ -15,7 +15,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_cliente", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ClienteID { get; set; }
+        public int ClienteID { get; set; }
 
         [Required]
         [Column("nom_cliente", Order = 2)]

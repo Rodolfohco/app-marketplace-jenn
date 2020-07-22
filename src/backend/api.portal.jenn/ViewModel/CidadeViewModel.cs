@@ -9,7 +9,7 @@ namespace api.portal.jenn.ViewModel
     public class CidadeViewModel
     {
         
-        public Guid CidadeID { get; set; }
+        public int CidadeID { get; set; }
         public string Nome { get; set; }
         public string UF { get; set; }
       

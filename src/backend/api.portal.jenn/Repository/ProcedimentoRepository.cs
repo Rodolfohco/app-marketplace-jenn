@@ -144,7 +144,7 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public virtual void Update(Procedimento model, Guid id)
+        public virtual void Update(Procedimento model, int id)
         {
             try
             {

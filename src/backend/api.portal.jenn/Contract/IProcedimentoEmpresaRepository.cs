@@ -14,7 +14,7 @@ namespace api.portal.jenn.Contract
         IEnumerable<DTO.ProcedimentoEmpresa> Get(Expression<Func<DTO.ProcedimentoEmpresa, bool>> where, bool lazzLoader = false);
         DTO.ProcedimentoEmpresa Detail(Expression<Func<DTO.ProcedimentoEmpresa, bool>> where, bool lazzLoader = false);
         void Delete(Expression<Func<DTO.ProcedimentoEmpresa, bool>> where);
-        void Update(DTO.ProcedimentoEmpresa model, Guid id);
+        void Update(DTO.ProcedimentoEmpresa model, int id);
 
     }
 }

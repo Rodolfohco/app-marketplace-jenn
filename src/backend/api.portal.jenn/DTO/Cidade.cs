@@ -14,7 +14,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_cidade", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid CidadeID { get; set; }
+        public int CidadeID { get; set; }
 
         [Required]
         [Column("nom_cid", Order = 3)]

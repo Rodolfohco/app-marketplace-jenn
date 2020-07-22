@@ -7,14 +7,14 @@ namespace api.portal.jenn.ViewModel
 {
     public class ProdutoViewModel
     {
-        public Guid ProdutoID { get; set; }
+        public int ProdutoID { get; set; }
 
         public string Nome { get; set; }
 
-        public Guid? Cidade { get; set; }
+        public int? Cidade { get; set; }
 
-        public Guid? Unidade { get; set; }
+        public int? Unidade { get; set; }
 
-        public Guid? PlanoUnidade { get; set; }
+        public int? PlanoUnidade { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                model.EmpresaID = Guid.NewGuid();          
+      
           
                 if (ModelState.IsValid)
                 {
@@ -91,7 +91,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Get([FromHeader] Guid EmpresaID)
+        public ICommandResult Get([FromHeader] int EmpresaID)
         {
             CommandResult resultado = null;
             try
@@ -117,7 +117,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult NovoProcedimentoEmpresa([FromHeader] Guid EmpresaID, [FromHeader] Guid ProcedimentoID, [FromBody] ProcedimentoEmpresaViewModel model)
+        public ICommandResult NovoProcedimentoEmpresa([FromHeader] int EmpresaID, [FromHeader] int ProcedimentoID, [FromBody] ProcedimentoEmpresaViewModel model)
         {
             CommandResult resultado = null;
             try
@@ -147,7 +147,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult ProcedimentoEmpresa(Guid EmpresaID)
+        public ICommandResult ProcedimentoEmpresa(int EmpresaID)
         {
             CommandResult resultado = null;
             try
@@ -194,7 +194,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Put([FromBody] EmpresaViewModel model, [FromHeader]  Guid EmpresaID)
+        public ICommandResult Put([FromBody] EmpresaViewModel model, [FromHeader]  int EmpresaID)
         {
             CommandResult resultado = null;
             try
@@ -217,7 +217,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Delete([FromHeader] Guid EmpresaID )
+        public ICommandResult Delete([FromHeader] int EmpresaID )
         {
             CommandResult resultado = null;
             try

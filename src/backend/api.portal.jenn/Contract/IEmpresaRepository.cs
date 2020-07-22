@@ -10,9 +10,9 @@ namespace api.portal.jenn.Contract
 
     public interface IEmpresaRepository
     {
-        IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(Guid EmpresaID);
+        IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID);
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa();
-        DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model, Guid EmpresaID, Guid ProcedimentoID);
+        DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model, int EmpresaID, int ProcedimentoID);
 
 
 
@@ -24,7 +24,7 @@ namespace api.portal.jenn.Contract
         IEnumerable<DTO.Empresa> Get(Expression<Func<DTO.Empresa, bool>> where, bool lazzLoader = false);
         DTO.Empresa Detail(Expression<Func<DTO.Empresa, bool>> where, bool lazzLoader = false);
         void Delete(Expression<Func<DTO.Empresa, bool>> where);
-        void Update(DTO.Empresa model, Guid id);
+        void Update(DTO.Empresa model, int id);
     }
 
  

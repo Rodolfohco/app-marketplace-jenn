@@ -14,7 +14,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_pgto", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PagamentoID { get; set; }
+        public int PagamentoID { get; set; }
 
         [Required]
         [Column("nom_pgto", Order = 1)]

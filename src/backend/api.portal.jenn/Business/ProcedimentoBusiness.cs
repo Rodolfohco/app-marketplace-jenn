@@ -33,7 +33,7 @@ namespace api.portal.jenn.Business
         }
 
 
-        public void Atualizar(ProcedimentoViewModel model, Guid id)
+        public void Atualizar(ProcedimentoViewModel model, int id)
         {
             try
             {

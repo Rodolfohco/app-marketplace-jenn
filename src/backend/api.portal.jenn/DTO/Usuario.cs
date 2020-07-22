@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
     {
         [Key]
         [Column("cod_usuario", Order = 1)]
-        public Guid UsuarioID { get; set; }
+        public int UsuarioID { get; set; }
 
 
         [Required]
@@ -29,7 +29,7 @@ namespace api.portal.jenn.DTO
 
 
 
-        public Guid? ClienteID { get; set; }
+        public int? ClienteID { get; set; }
         public virtual Cliente Cliente { get; set; }
 
         public virtual Logon logon { get; set; }

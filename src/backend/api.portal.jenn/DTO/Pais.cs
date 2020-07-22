@@ -15,7 +15,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_pais", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PaisID { get; set; }
+        public int PaisID { get; set; }
 
         [Required]
         [Column("nom_pais", Order = 3)]

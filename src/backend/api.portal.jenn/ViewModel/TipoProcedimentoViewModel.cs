@@ -9,7 +9,7 @@ namespace api.portal.jenn.ViewModel
 
     public class TipoProcedimentoViewModel
     {
-        public Guid TipoProcedimentoID { get; set; }
+        public int TipoProcedimentoID { get; set; }
         public string Nome { get; set; }
         public virtual CategoriaProcedimentoViewModel Categoria { get; set; }
     }

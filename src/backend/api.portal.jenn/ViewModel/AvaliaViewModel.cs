@@ -7,7 +7,7 @@ namespace api.portal.jenn.ViewModel
 {
     public class AvaliaViewModel
     {
-        public Guid AvaliaID { get; set; }
+        public int AvaliaID { get; set; }
 
         public string Avaliacao { get; set; }
 public string Observacao { get; set; }

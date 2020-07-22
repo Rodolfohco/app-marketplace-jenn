@@ -26,47 +26,47 @@ namespace api.portal.jenn.Repository
             this.contexto = _context;
         }
 
-        public void Delete(Guid CidadeID)
+        public void Delete(int CidadeID)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Detail(Guid UnidadeID, Guid EmpresaID, Guid CidadeID)
+        public Cidade Detail(int UnidadeID, int EmpresaID, int CidadeID)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Detail(Guid EmpresaID, Guid CidadeID)
+        public Cidade Detail(int EmpresaID, int CidadeID)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Cidade> Get(Guid UnidadeID, Guid EmpresaID)
+        public IEnumerable<Cidade> Get(int UnidadeID, int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Cidade> Get(Guid EmpresaID)
+        public IEnumerable<Cidade> Get(int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Insert(Cidade model, Guid UnidadeID, Guid EmpresaID)
+        public Cidade Insert(Cidade model, int UnidadeID, int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Insert(Cidade model, Guid EmpresaID)
+        public Cidade Insert(Cidade model, int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Cidade model, Guid CidadeID, Guid UnidadeID, Guid EmpresaID)
+        public void Update(Cidade model, int CidadeID, int UnidadeID, int EmpresaID)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Cidade model, Guid CidadeID, Guid EmpresaID)
+        public void Update(Cidade model, int CidadeID, int EmpresaID)
         {
             throw new NotImplementedException();
         }

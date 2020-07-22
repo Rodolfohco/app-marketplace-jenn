@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_uf", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid UfID { get; set; }
+        public int UfID { get; set; }
 
         [Required]
         [Column("nom_uf", Order = 3)]

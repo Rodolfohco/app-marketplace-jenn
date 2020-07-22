@@ -7,7 +7,7 @@ namespace api.portal.jenn.ViewModel
 {
     public class ConvenioViewModel
     { 
-        public Guid Id { get; set; }        
+        public int Id { get; set; }        
         public string Nome { get; set; }
         public DateTime DataInclusao { get; set; }       
         public int Ativo { get; set; }

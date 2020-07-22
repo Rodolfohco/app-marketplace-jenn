@@ -14,7 +14,7 @@ namespace api.portal.jenn.Contract
         IEnumerable<ViewModel.CategoriaViewModel> Selecionar();
         IEnumerable<ViewModel.CategoriaViewModel> Selecionar(Expression<Func<DTO.CategoriaProcedimento, bool>> where);
         void Excluir(Expression<Func<DTO.CategoriaProcedimento, bool>> where);
-        void Atualizar(ViewModel.CategoriaViewModel model, Guid id);
+        void Atualizar(ViewModel.CategoriaViewModel model, int id);
         ViewModel.CategoriaViewModel Detalhar(Expression<Func<DTO.CategoriaProcedimento, bool>> where);
         #endregion
     }

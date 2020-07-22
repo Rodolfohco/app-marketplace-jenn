@@ -127,7 +127,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Detalhe(Guid ProcedimentoID)
+        public ICommandResult Detalhe(int ProcedimentoID)
         {
             CommandResult resultado = null;
             try
@@ -151,7 +151,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Put([FromBody] ProcedimentoViewModel model, [FromHeader] Guid ProcedimentoID)
+        public ICommandResult Put([FromBody] ProcedimentoViewModel model, [FromHeader] int ProcedimentoID)
         {
             CommandResult resultado = null;
             try
@@ -177,7 +177,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Delete([FromHeader] Guid ProcedimentoID)
+        public ICommandResult Delete([FromHeader] int ProcedimentoID)
         {
             CommandResult resultado = null;
             try

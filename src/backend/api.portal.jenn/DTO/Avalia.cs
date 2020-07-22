@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_avalia", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid AvaliaID { get; set; }
+        public int AvaliaID { get; set; }
 
         [Required]
         [Column("nps_avalia", Order = 2)]

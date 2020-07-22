@@ -8,7 +8,7 @@ namespace api.portal.jenn.ViewModel
     public class CategoriaViewModel
     {
       
-        public Guid CategoriaID { get; set; }
+        public int CategoriaID { get; set; }
         public string Nome { get; set; }
     }
 }

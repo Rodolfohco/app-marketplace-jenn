@@ -7,7 +7,7 @@ namespace api.portal.jenn.ViewModel
 {
     public class ProcedimentoPerguntaViewModel
     {
-        public Guid ProcedimentoPerguntaID { get; set; }
+        public int ProcedimentoPerguntaID { get; set; }
 
         public string titulo { get; set; }
 

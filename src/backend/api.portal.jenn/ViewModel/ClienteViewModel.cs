@@ -8,7 +8,7 @@ namespace api.portal.jenn.ViewModel
     public class ClienteViewModel
     {
 
-            public Guid ClienteID { get; set; }
+            public int ClienteID { get; set; }
             public string Nome { get; set; }
 
             public string sobrenome { get; set; }

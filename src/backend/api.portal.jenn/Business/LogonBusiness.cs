@@ -37,7 +37,7 @@ namespace api.portal.jenn.Business
             this.repository.Iniciar();
 
         }
-        public void Atualizar(LogonViewModel model, Guid id)
+        public void Atualizar(LogonViewModel model, int id)
         {
             try
             {

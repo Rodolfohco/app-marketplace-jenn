@@ -8,7 +8,7 @@ namespace api.portal.jenn.ViewModel
     public class RegiaoViewModel
     {
     
-        public Guid UfID { get; set; }     
+        public int UfID { get; set; }     
         public string Nome { get; set; }
          
     }

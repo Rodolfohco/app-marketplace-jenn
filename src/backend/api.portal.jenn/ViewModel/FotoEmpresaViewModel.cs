@@ -8,7 +8,7 @@ namespace api.portal.jenn.ViewModel
     public class FotoEmpresaViewModel
     {
 
-        public Guid FotoID { get; set; }
+        public int FotoID { get; set; }
 
         public string path { get; set; }
 

@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_foto", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid FotoID { get; set; }
+        public int FotoID { get; set; }
 
         [Required]
         [Column("path_emp", Order = 1)]

@@ -13,14 +13,14 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_categoria", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid CategoriaID { get; set; }
+        public int CategoriaID { get; set; }
         
         [Required]
         [Column("nom_categoria", Order = 1)]
         [StringLength(200)]
         public string Nome { get; set; }
 
-        public Guid TipoProcedimentoID { get; set; }
+        public int TipoProcedimentoID { get; set; }
         public virtual TipoProcedimento TipoCategoria { get; set; }
 
     }

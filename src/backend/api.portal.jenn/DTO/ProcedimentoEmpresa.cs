@@ -12,7 +12,7 @@ namespace api.portal.jenn.DTO
     public class ProcedimentoEmpresa
     {
         [Column("cod_procemp", Order = 0)]
-         public Guid ProcedimentoEmpresaID { get; set; } 
+         public int ProcedimentoEmpresaID { get; set; } 
 
         [Column("dataincl_procemp", Order = 3)]
         public DateTime DataInclusao { get; set; }
@@ -69,12 +69,12 @@ namespace api.portal.jenn.DTO
 
         [ForeignKey("cod_proced")]
         [Column("cod_proced", Order = 15)]
-        public Guid ProcedimentoID { get; set; }
+        public int ProcedimentoID { get; set; }
         public virtual Procedimento Procedimento { get; set; }
 
         [ForeignKey("cod_emp")]
         [Column("cod_emp", Order = 0)]
-        public Guid EmpresaID { get; set; }
+        public int EmpresaID { get; set; }
         public virtual Empresa Empresa { get; set; }
             
 

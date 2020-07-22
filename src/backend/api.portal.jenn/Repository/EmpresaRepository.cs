@@ -140,7 +140,7 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(Guid EmpresaID)
+        public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID)
         {
             List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
             try
@@ -211,7 +211,7 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, Guid EmpresaID, Guid ProcedimentoID)
+        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, int EmpresaID, int ProcedimentoID)
         {
             try
             {
@@ -231,7 +231,7 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-        public void Update(Empresa model, Guid id)
+        public void Update(Empresa model, int id)
         {
             try
             {

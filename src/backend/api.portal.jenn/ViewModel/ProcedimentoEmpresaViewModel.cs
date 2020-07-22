@@ -11,7 +11,7 @@ namespace api.portal.jenn.ViewModel
     {
 
 
-        public Guid ProcedimentoEmpresaID { get; set; }
+        public int ProcedimentoEmpresaID { get; set; }
         public DateTime DataInclusao { get; set; }
         public string Nome_pers { get; set; }
         public float PrecoProduto { get; set; }
