@@ -1,11 +1,20 @@
-﻿@model IEnumerable<ui.portal.jenn.ViewModel.PesquisaViewModel>
+﻿@model IEnumerable<ProcedimentoEmpresa>
 
 
 
 
-<h1>Tomografia das articulações do joelho em São Caetano do Sul - SP</h1>
+    <h1>@ViewBag.Produto em @ViewBag.Localidade</h1>
 
 @foreach (var item in Model)
 {
-    @await Component.InvokeAsync("ProcedimentoLista", new { sequencia = ".NET Core 1.0|ASP.NET Core 1.0|AngularJS" })
+    ui.portal.jenn.ViewModel.PesquisaViewModel pesquisaViewModel = new ui.portal.jenn.ViewModel.PesquisaViewModel();
+    pesquisaViewModel.NomeEmpresa = "???";
+    pesquisaViewModel.Localidade = item.empresa != null? item.empresa.logradouro : "";
+    pesquisaViewModel.DescricaoProcedimento = "???";
+    pesquisaViewModel.Opiniao = 9999999;
+    pesquisaViewModel.NomeUnidade = item.empresa != null ? item.empresa.nome : "";
+    pesquisaViewModel.EnderecoCompleto = item.empresa != null ? item.empresa.logradouro : "";
+    pesquisaViewModel.EnderecoLoja = "???";
+
+    @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

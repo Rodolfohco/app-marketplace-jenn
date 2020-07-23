@@ -43,13 +43,14 @@ namespace ui.portal.jenn
                 //c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
             });
 
-
-            services.AddMemoryCache();
             services.AddSingleton<IEmpresaService, EmpresaService>();
             services.AddSingleton<IProdutoService, ProdutoService>();
         
             services.AddControllersWithViews();
             services.AddSingleton<ControleCache>();
+
+            services.AddMvc();
+            services.AddMemoryCache();
 
         }
 
@@ -90,6 +91,7 @@ namespace ui.portal.jenn
                 endpoints.MapControllerRoute(
                 name: "produto",
                 pattern: "{controller=Produto}/{action=Lista}");
+
 
                 endpoints.MapControllerRoute(
                    name: "default",
