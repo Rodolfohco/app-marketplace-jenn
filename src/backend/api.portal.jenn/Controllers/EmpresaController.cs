@@ -187,7 +187,35 @@ namespace api.portal.jenn.Controllers
                 resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
             return resultado;
-        }    
+        }
+
+
+
+
+
+        [HttpGet("FiliaisEmpresa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult FiliaisEmpresa()
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.repositorio.SelecionarFiliais();
+
+                if (item != null)
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+
 
 
         [HttpPut]

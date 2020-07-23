@@ -17,6 +17,7 @@ namespace api.portal.jenn.Contract
 
 
 
+        IEnumerable<DTO.Empresa> GetFiliais(bool lazzLoader = false);
 
 
         DTO.Empresa Insert(DTO.Empresa model);

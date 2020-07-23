@@ -56,7 +56,17 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        retorno = ctx.Empresas.Include(c => c.ProcedimentoEmpresas).Where(where).SingleOrDefault();
+                    {
+                        retorno = ctx.Empresas
+                            .Include(c => c.ProcedimentoEmpresas)
+                           .ThenInclude(c => c.Procedimento)
+                           .ThenInclude(c => c.TipoProcedimento)
+                           .ThenInclude(c => c.Categoria)
+                           .Include(c => c.Cidades)
+                           .ThenInclude(c => c.Regiao)
+                           .Include(c => c.Cidades)
+                           .ThenInclude(c => c.Ufs).Where(where).SingleOrDefault();
+                    }
                     else
                         retorno = ctx.Empresas.Where(where).SingleOrDefault();
                 }
@@ -130,6 +140,37 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                                ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+        public IEnumerable<Empresa> GetFiliais(bool lazzLoader = false)
+        {
+            List<Empresa> retorno = new List<Empresa>();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                        ctx.Empresas.SelectMany(c=> c.Filiais)
+                            .Include(c=> c.Cidades)
+                            .ThenInclude(c=> c.Ufs)
+                            .Include(c=> c.ProcedimentoEmpresas)
+                            .ThenInclude(c => c.Procedimento)
+                            .ThenInclude(c=> c.TipoProcedimento)
+                            .Include(c=> c.Fotos)
+                            .AsParallel().ForAll(
+                            item =>
+                            {
+                                retorno.Add(item);
+                            });
+                   
                 }
             }
             catch (Exception exception)

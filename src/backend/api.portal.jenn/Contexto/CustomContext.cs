@@ -108,7 +108,7 @@ namespace api.portal.jenn.Contexto
             entity.Property(e => e.Responsavel).IsRequired();
             entity.Property(e => e.Logradouro).IsRequired();
             
-            entity.HasMany(k => k.Matrizes)
+            entity.HasMany(k => k.Filiais)
               .WithOne()
               .HasForeignKey(k => k.MatrizID)
               .HasPrincipalKey(k => k.EmpresaID);
