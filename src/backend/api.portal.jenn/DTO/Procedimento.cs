@@ -36,7 +36,6 @@ namespace api.portal.jenn.DTO
         [StringLength(1)]
         public int Ativo { get; set; }
 
-
         public virtual TipoProcedimento TipoProcedimento { get; set; }
  
         public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresas{ get; set; }

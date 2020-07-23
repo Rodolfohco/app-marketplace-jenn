@@ -96,8 +96,10 @@ namespace api.portal.jenn.DTO
         [Column("cod_matriz_emp", Order = 3)]
         public int? MatrizID { get; set; }
 
+
+        public virtual Empresa Matriz { get; set; }
         
-        public virtual ICollection<Empresa> Filiais { get; set; }
+        //public virtual ICollection<Empresa> Filiais { get; set; }
         public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresas { get; set; }
     }
    

@@ -73,6 +73,19 @@ namespace api.portal.jenn.Contexto
 
             });
 
+
+            modelBuilder.Entity<TipoProcedimento>(entity =>
+            {
+
+            //    entity.HasOne(a => a.Procedimento )
+               
+            //.WithOne(b => b.Procedimento)
+            //.HasForeignKey<TipoProcedimento>(c => c.TipoProcedimentoID)
+            //.OnDelete(DeleteBehavior.SetNull);
+
+            });
+
+
             modelBuilder.Entity<Procedimento>(entity =>
             {
                 entity.HasKey(e => e.ProcedimentiID);
@@ -80,9 +93,6 @@ namespace api.portal.jenn.Contexto
                 entity.Property(e => e.Descricao).IsRequired();
                 entity.Property(e => e.Ativo).IsRequired();
                 entity.Property(e => e.ImgProduto_Proc).IsRequired();
-                entity.HasOne(a => a.TipoProcedimento)
-                .WithOne(b => b.Procedimento)
-                .HasForeignKey<TipoProcedimento>(b => b.ProcedimentoID);
             });
 
 
@@ -107,12 +117,10 @@ namespace api.portal.jenn.Contexto
             entity.Property(e => e.Ativo).IsRequired();
             entity.Property(e => e.Responsavel).IsRequired();
             entity.Property(e => e.Logradouro).IsRequired();
-            
-            entity.HasMany(k => k.Filiais)
-              .WithOne()
-              .HasForeignKey(k => k.MatrizID)
-              .HasPrincipalKey(k => k.EmpresaID);
 
+            entity.HasOne(k => k.Matriz)
+              .WithOne();
+        
 
             entity.Property(e => e.numero).IsRequired();
             entity.Property(e => e.bairro).IsRequired();

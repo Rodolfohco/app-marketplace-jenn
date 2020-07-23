@@ -19,11 +19,6 @@ namespace api.portal.jenn.DTO
         [Column("nom_tipproced", Order = 1)]
         [StringLength(200)]
         public string Nome { get; set; }
-
-        public virtual Procedimento Procedimento { get; set; }
-        public int ProcedimentoID { get; set; }
-
-        public int CategoriaID { get; set; }
         public virtual CategoriaProcedimento Categoria { get; set; }
     }
 }

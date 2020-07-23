@@ -76,12 +76,14 @@ namespace api.portal.jenn.Business
             try
             {
                 var TipoProcedimento = this.mapper.Map<ViewModel.TipoProcedimentoViewModel, DTO.TipoProcedimento>(model);
+
+                //TipoProcedimento.Procedimento = null;
                 retorno = this.repository.Insert(TipoProcedimento);
             }
             catch (Exception exception)
             {
                 this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
-                throw;
+                throw;  
             }
             return this.mapper.Map<DTO.TipoProcedimento, ViewModel.TipoProcedimentoViewModel>(retorno);
         }

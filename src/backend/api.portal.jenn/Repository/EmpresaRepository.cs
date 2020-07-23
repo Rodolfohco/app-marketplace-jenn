@@ -158,7 +158,7 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                        ctx.Empresas.SelectMany(c=> c.Filiais)
+                        ctx.Empresas.Select(c=> c.Matriz)
                             .Include(c=> c.Cidades)
                             .ThenInclude(c=> c.Ufs)
                             .Include(c=> c.ProcedimentoEmpresas)
@@ -217,6 +217,7 @@ namespace api.portal.jenn.Repository
                         .Include(x => x.Procedimento)
                         .ThenInclude(p => p.TipoProcedimento)
                         .Include(c => c.Empresa)
+                        .ThenInclude(c=> c.Matriz)
                         .ThenInclude(x => x.Cidades)
                         .AsParallel().ForAll(
                         item =>

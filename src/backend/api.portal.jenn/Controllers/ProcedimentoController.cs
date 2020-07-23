@@ -69,10 +69,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                if (cahce.TryGetValue("data-procedimento", out IEnumerable<ViewModel.ProcedimentoViewModel> convenio))
-                    resultado = new CommandResult(true, "Processado Com Sucesso", convenio, System.Net.HttpStatusCode.OK);
-                else
-                {
+               
                     var item = this.repositorio.Selecionar();
 
                     if (item != null && item.Any())
@@ -80,10 +77,8 @@ namespace api.portal.jenn.Controllers
                     else
                         resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
 
-
-                    cahce.Set("data-procedimento", item);
-
-                }
+ 
+                 
             }
             catch (Exception e)
             {
@@ -228,6 +223,33 @@ namespace api.portal.jenn.Controllers
         }
 
 
+
+        [HttpPost("NovoTipoProcedimento")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovoTipoProcedimento([FromBody] TipoProcedimentoViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.tipoProcedimento.Inserir(model);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
     }
 }
  

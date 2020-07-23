@@ -20,7 +20,6 @@ namespace api.portal.jenn.DTO
         [StringLength(200)]
         public string Nome { get; set; }
 
-        public int TipoProcedimentoID { get; set; }
         public virtual TipoProcedimento TipoCategoria { get; set; }
 
     }
