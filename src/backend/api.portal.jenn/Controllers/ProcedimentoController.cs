@@ -18,12 +18,16 @@ namespace api.portal.jenn.Controllers
         private readonly IMemoryCache cahce;
         private readonly ILogger<ProcedimentoController> _logger;
         private readonly IProcedimentoBusiness repositorio;
-         
+        private readonly ITipoProcedimentoBusiness tipoProcedimento; 
+
         public ProcedimentoController(
             ILogger<ProcedimentoController> logger,
             IProcedimentoBusiness _repositorio,
+             ITipoProcedimentoBusiness _tipoProcedimento,
             IMemoryCache _cahce)
         {
+            this.tipoProcedimento = _tipoProcedimento;
+
             this.repositorio = _repositorio;
             this._logger = logger;
             this.cahce = _cahce;
@@ -192,6 +196,38 @@ namespace api.portal.jenn.Controllers
 
             return resultado;
         }
+
+
+        [HttpGet("TipoProcedimento")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult TipoProcedimento()
+        {
+            CommandResult resultado = null;
+            try
+            {
+                    var item = this.tipoProcedimento.Selecionar();
+
+                    if (item != null && item.Any())
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+
+
+                    cahce.Set("data-procedimento", item);
+
+              
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
     }
 }
  
