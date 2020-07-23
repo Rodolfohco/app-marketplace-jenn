@@ -53,11 +53,10 @@ namespace api.portal.jenn.Repository
             Empresa retorno = null;
             try
             {
-
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        retorno = ctx.Empresas.Include(c => c.Unidade).Where(where).SingleOrDefault();
+                        retorno = ctx.Empresas.Include(c => c.ProcedimentoEmpresas).Where(where).SingleOrDefault();
                     else
                         retorno = ctx.Empresas.Where(where).SingleOrDefault();
                 }
@@ -70,19 +69,48 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
+
+
         public IEnumerable<Empresa> Get(bool lazzLoader = false)
         {
-            //this.InicializarBanco();
-
             List<Empresa> retorno = new List<Empresa>();
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
+
                     if (lazzLoader)
-                        ctx.Empresas.Include(c => c.Unidade).AsParallel().ForAll(item => { retorno.Add(item); });
+                    {
+                        ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
+                            .ThenInclude(c => c.Procedimento)
+                            .ThenInclude(c => c.TipoProcedimento)
+                            .ThenInclude(c => c.Categoria)
+                            .Include(c => c.Cidades)
+                            .ThenInclude(c => c.Regiao)
+                            .Include(c => c.Cidades)
+                            .ThenInclude(c => c.Ufs)
+                                .AsParallel().ForAll(
+                            item =>
+                            {
+                                retorno.Add(item);
+                            });
+                    }
                     else
-                        ctx.Empresas.AsParallel().ForAll(item => { retorno.Add(item); });
+                    {
+                        ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
+                           .ThenInclude(c => c.Procedimento)
+                           .ThenInclude(c => c.TipoProcedimento)
+                           .ThenInclude(c => c.Categoria)
+                           .Include(c => c.Cidades)
+                           .ThenInclude(c => c.Regiao)
+                           .Include(c => c.Cidades)
+                           .ThenInclude(c => c.Ufs)
+                               .AsParallel().ForAll(
+                           item =>
+                           {
+                               retorno.Add(item);
+                           });
+                    }
                 }
             }
             catch (Exception exception)
@@ -93,6 +121,7 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
+ 
         public IEnumerable<Empresa> Get(Expression<Func<Empresa, bool>> where, bool lazzLoader = false)
         {
             List<Empresa> retorno = new List<Empresa>();
@@ -100,10 +129,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    if (lazzLoader)
-                        ctx.Empresas.Include(c => c.Unidade).Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
-                    else
-                        ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
+                               ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
@@ -114,15 +140,58 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public void InicializarBanco()
+        public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID)
         {
-            using (var ctx = contexto.CreateDbContext(null))
+            List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
+            try
             {
-                ctx.Database.EnsureDeleted();
-                ctx.Database.EnsureCreated();
+                using (var ctx = contexto.CreateDbContext(null))
+                {
 
+                    ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Include(c => c.ProcedimentoEmpresas)
+                        .Select(c => c.ProcedimentoEmpresas).AsParallel().ForAll(
+                        item =>
+                        {
+                            retorno.AddRange(item.ToArray());
+                        });
+                }
             }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
         }
+
+        public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa()
+        {
+            List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    ctx.ProcedimentoEmpresa
+                        .Include(x => x.Procedimento)
+                        .ThenInclude(p => p.TipoProcedimento)
+                        .Include(c => c.Empresa)
+                        .ThenInclude(x => x.Cidades)
+                        .AsParallel().ForAll(
+                        item =>
+                        {
+                            retorno.Add(item);
+                        });
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
 
         public Empresa Insert(Empresa model)
         {
@@ -130,7 +199,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    ctx.Add(model);
+                   ctx.Add(model);
                     ctx.SaveChanges();
                 }
             }
@@ -142,7 +211,27 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public void Update(Empresa model, Guid id)
+        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, int EmpresaID, int ProcedimentoID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    model.EmpresaID = EmpresaID;
+                    model.ProcedimentoID = ProcedimentoID;
+                    ctx.Add(model);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+        public void Update(Empresa model, int id)
         {
             try
             {

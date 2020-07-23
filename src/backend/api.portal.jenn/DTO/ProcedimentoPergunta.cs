@@ -16,7 +16,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_procperg", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ProcedimentoPerguntaID { get; set; }
+        public int ProcedimentoPerguntaID { get; set; }
 
         [Required]
         [Column("titulo_procperg", Order = 1)]

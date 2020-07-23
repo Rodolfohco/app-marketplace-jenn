@@ -7,9 +7,10 @@ namespace api.portal.jenn.ViewModel
 {
     public class PlanoViewModel
     {
-        public Guid PlanoID { get; set; }
-        public Guid ConvenioID { get; set; }
+        public int PlanoID { get; set; }
+      
         public string Nome { get; set; }
 
+        public int  ConvenioID { get; set; }
     }
 }

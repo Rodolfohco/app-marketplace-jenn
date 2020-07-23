@@ -29,7 +29,7 @@ namespace api.portal.jenn.Business
             this._logger = logger;
         }
 
-        public void Atualizar(PlanoViewModel model, Guid PlanoID, Guid ConvenioID)
+        public void Atualizar(PlanoViewModel model, int PlanoID, int ConvenioID)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace api.portal.jenn.Business
                 throw;
             }
         }
-        public PlanoViewModel Detalhar(Guid PlanoID, Guid ConvenioID)
+        public PlanoViewModel Detalhar(int PlanoID, int ConvenioID)
         {
             PlanoViewModel retorno = null;
             try
@@ -80,7 +80,7 @@ namespace api.portal.jenn.Business
             return retorno;
         }
 
-        public void Excluir(Guid PlanoID, Guid ConvenioID)
+        public void Excluir(int PlanoID, int ConvenioID)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace api.portal.jenn.Business
             }
         }
 
-        public PlanoViewModel Inserir(PlanoViewModel model, Guid ConvenioID)
+        public PlanoViewModel Inserir(PlanoViewModel model, int ConvenioID)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace api.portal.jenn.Business
 
         }
 
-        public IEnumerable<PlanoViewModel> Selecionar(Guid ConvenioID)
+        public IEnumerable<PlanoViewModel> Selecionar(int ConvenioID)
         {
             IEnumerable<PlanoViewModel> retorno = null;
             try
@@ -141,6 +141,27 @@ namespace api.portal.jenn.Business
                     retorno = this.mapper.Map<IEnumerable<Plano>, IEnumerable<PlanoViewModel>>(convenio.Planos.AsEnumerable());
                 else
                     throw new Exception($"Convenio não Localizado: id do Convenio [{ConvenioID}]");
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+        public IEnumerable<PlanoViewModel> Selecionar()
+        {
+            IEnumerable<PlanoViewModel> retorno = null;
+            try
+            {
+                var planos = this.repository.Get(true);
+
+                if (planos != null)
+                    retorno = this.mapper.Map<IEnumerable<Plano>,
+                        IEnumerable<PlanoViewModel>>(planos.SelectMany(c => c.Planos).AsEnumerable());
+                else
+                    throw new Exception($"Plano não Localizado");
             }
             catch (Exception exception)
             {

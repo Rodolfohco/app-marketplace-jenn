@@ -12,8 +12,8 @@ namespace api.portal.jenn.Mapeamento
     {
         public AutoMapping()
         {
-            CreateMap<DTO.Logon, LogonViewModel>(); 
-            CreateMap<LogonViewModel, DTO.Logon>(); 
+            CreateMap<DTO.Logon, LogonViewModel>();
+            CreateMap<LogonViewModel, DTO.Logon>();
 
             CreateMap<DTO.Convenio, ConvenioViewModel>();
             CreateMap<ConvenioViewModel, DTO.Convenio>();
@@ -24,13 +24,46 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Empresa, EmpresaViewModel>();
             CreateMap<EmpresaViewModel, DTO.Empresa>();
 
-            CreateMap<DTO.Unidade, UnidadeViewModel>();
-            CreateMap<UnidadeViewModel, DTO.Unidade>();
+
+            CreateMap<DTO.Procedimento, ProcedimentoViewModel>();
+            CreateMap<ProcedimentoViewModel, DTO.Procedimento>();
+
+            CreateMap<DTO.ProcedimentoEmpresa, ProcedimentoEmpresaViewModel>();
+            CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
 
 
- 
+            CreateMap<DTO.ProcedimentoPergunta, ProcedimentoPerguntaViewModel>();
+            CreateMap<ProcedimentoPerguntaViewModel, DTO.ProcedimentoPergunta>();
 
 
+            CreateMap<DTO.TipoProcedimento, TipoProcedimentoViewModel>();
+            CreateMap<TipoProcedimentoViewModel, DTO.TipoProcedimento>();
+
+            CreateMap<DTO.CategoriaProcedimento, CategoriaProcedimentoViewModel>();
+            CreateMap<CategoriaProcedimentoViewModel, DTO.CategoriaProcedimento>();
+
+            CreateMap<DTO.UF, UFViewModel>();
+            CreateMap<UFViewModel, DTO.UF>();
+
+
+            CreateMap<DTO.Cidade, CidadeViewModel>();
+            CreateMap<CidadeViewModel, DTO.Cidade>();
+
+
+            CreateMap<RegiaoViewModel, DTO.Regiao>();
+            CreateMap<DTO.Regiao, RegiaoViewModel>();
+
+
+            CreateMap<DTO.Cliente, ClienteViewModel>();
+            CreateMap<ClienteViewModel, DTO.Cliente>();
+
+
+            CreateMap<DTO.FotoEmpresa, FotoEmpresaViewModel>();
+            CreateMap<FotoEmpresaViewModel, DTO.FotoEmpresa>();
+
+
+            CreateMap<DTO.Avalia, AvaliaViewModel>();
+            CreateMap<AvaliaViewModel, DTO.Avalia>();
 
         }
 

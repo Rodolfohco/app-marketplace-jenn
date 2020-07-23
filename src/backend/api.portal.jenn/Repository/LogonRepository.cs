@@ -159,7 +159,7 @@ namespace api.portal.jenn.Repository
         //    return model;
         //}
 
-        //public virtual void Update(Logon model, Guid id)
+        //public virtual void Update(Logon model, int id)
         //{
         //    try
         //    {
@@ -204,7 +204,7 @@ namespace api.portal.jenn.Repository
             throw new NotImplementedException();
         }
 
-        public void Update(Logon model, Guid id)
+        public void Update(Logon model, int id)
         {
             throw new NotImplementedException();
         }

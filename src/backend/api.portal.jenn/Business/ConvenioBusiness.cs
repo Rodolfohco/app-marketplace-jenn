@@ -28,12 +28,8 @@ namespace api.portal.jenn.Business
             this._logger = logger;
         }
 
-        private void InicializarBanco()
-        {
-            this.repository.InicializarBanco();
-        }
-
-        public void Atualizar(ConvenioViewModel model, Guid id)
+      
+        public void Atualizar(ConvenioViewModel model, int id)
         {
             try
             {
@@ -78,10 +74,12 @@ namespace api.portal.jenn.Business
             Convenio retorno = null;
             try
             {
-                var ConvenioNovo = new Convenio();
+                var ConvenioNovo = this.mapper.Map< ViewModel.ConvenioViewModel, DTO.Convenio>(model);
+
+                 
                 ConvenioNovo.Ativo = (int)Status.Ativo;
-                ConvenioNovo.Id = Guid.NewGuid();
-                ConvenioNovo.Nome = model.Nome;
+          
+            
                 ConvenioNovo.DataInclusao = DateTime.Now;
                 retorno = this.repository.Insert(ConvenioNovo);
             }
@@ -98,7 +96,7 @@ namespace api.portal.jenn.Business
             IEnumerable<Convenio> retorno = Enumerable.Empty<Convenio>();
             try
             {
-                retorno = this.repository.Get();
+                retorno = this.repository.Get(true);
             }
             catch (Exception exception)
             {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using api.portal.jenn.Contract;
 using api.portal.jenn.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,6 +18,7 @@ using Newtonsoft.Json;
 
 namespace api.portal.jenn.Controllers
 {
+ 
     [Route("api/[controller]")]
     [ApiController]
     public class EmpresaController : ControllerBase
@@ -24,7 +26,9 @@ namespace api.portal.jenn.Controllers
 
         private readonly ILogger<EmpresaController> _logger;
         private readonly IEmpresaBusiness repositorio;
-        public EmpresaController(ILogger<EmpresaController> logger, IEmpresaBusiness _repositorio)
+  
+
+        public EmpresaController(ILogger<EmpresaController> logger, IEmpresaBusiness _repositorio, IProcedimentoBusiness _procedimentoRepositorio)
         {
             this.repositorio = _repositorio;
             this._logger = logger;
@@ -39,9 +43,11 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
+      
+          
                 if (ModelState.IsValid)
                 {
-                    var item = this.repositorio.Inserir(model);
+                        var item = this.repositorio.Inserir(model);
 
                     if (item != null)
                         resultado = new CommandResult(true, "Processado Com Sucesso", item,System.Net.HttpStatusCode.OK);
@@ -62,12 +68,11 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public async Task<CommandResult> Get()
-        {
+        {   
             CommandResult resultado = null;
             try
             {
                 var item = this.repositorio.Selecionar();
-
                 if (item != null && item.Any())
                     resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
                 else
@@ -86,7 +91,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Get([FromHeader] Guid EmpresaID)
+        public ICommandResult Get([FromHeader] int EmpresaID)
         {
             CommandResult resultado = null;
             try
@@ -106,11 +111,90 @@ namespace api.portal.jenn.Controllers
             return resultado;
         }
 
+
+
+        [HttpPost("NovoProcedimentoEmpresa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovoProcedimentoEmpresa([FromHeader] int EmpresaID, [FromHeader] int ProcedimentoID, [FromBody] ProcedimentoEmpresaViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+            
+                if (ModelState.IsValid)
+                {
+                    model.Empresa = null;
+                    model.Procedimento = null;
+
+                    var item = this.repositorio.InserirProcedimento(model,EmpresaID, ProcedimentoID);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+
+        [HttpGet("ProcedimentoEmpresa/{EmpresaID}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult ProcedimentoEmpresa(int EmpresaID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.repositorio.SelecionarProcedimentoEmpresa(EmpresaID);
+
+                if (item != null)
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+
+        [HttpGet("ProcedimentoEmpresa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult ProcedimentoEmpresa()
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.repositorio.SelecionarProcedimentoEmpresa();
+
+                if (item != null)
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }    
+
+
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Put([FromBody] EmpresaViewModel model, [FromHeader]  Guid EmpresaID)
+        public ICommandResult Put([FromBody] EmpresaViewModel model, [FromHeader]  int EmpresaID)
         {
             CommandResult resultado = null;
             try
@@ -133,7 +217,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Delete([FromHeader] Guid EmpresaID )
+        public ICommandResult Delete([FromHeader] int EmpresaID )
         {
             CommandResult resultado = null;
             try
@@ -147,10 +231,5 @@ namespace api.portal.jenn.Controllers
             }
             return resultado;
         }
-
-
-
     }
-
-
 }

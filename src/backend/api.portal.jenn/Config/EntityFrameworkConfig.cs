@@ -30,16 +30,17 @@ namespace api.portal.jenn.Config
 
             services.AddTransient<EmpresaContextFactory>();
             services.AddTransient<ConvenioContextFactory>();
+            services.AddTransient<ProcedimentoContextFactory>();
 
 
             services.AddDefaultIdentity<Logon>(options =>
             {
-                //options.Password.RequiredLength = 10;
-                //options.Password.RequiredUniqueChars = 3;
-                //options.Password.RequireDigit = true;
-                //options.Password.RequireNonAlphanumeric = true;
-                //options.Password.RequireUppercase = false;
-                //options.Password.RequireLowercase = false;
+                options.Password.RequiredLength = 10;
+                options.Password.RequiredUniqueChars = 3;
+                options.Password.RequireDigit = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
 
             }).AddEntityFrameworkStores<CustomContext>()
          .AddDefaultTokenProviders();

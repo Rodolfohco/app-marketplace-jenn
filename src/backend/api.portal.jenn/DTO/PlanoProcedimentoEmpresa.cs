@@ -14,14 +14,14 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_planoprocemp", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid PlanoProcedimentoEmpresaID { get; set; }
+        public int PlanoProcedimentoEmpresaID { get; set; }
 
 
 
-        public Guid ProcedimentoEmpresaID { get; set; }
-        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
+        //public int ProcedimentoEmpresaID { get; set; }
+        //public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
 
-        public Guid PlanoID { get; set; }
+        public int PlanoID { get; set; }
         public virtual Plano Plano { get; set; }
     }
 }

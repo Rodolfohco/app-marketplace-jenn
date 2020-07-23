@@ -14,7 +14,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("cod_conv", Order = 0)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("nom_conv", Order = 1)]

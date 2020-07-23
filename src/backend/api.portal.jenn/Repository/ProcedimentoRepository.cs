@@ -1,42 +1,44 @@
 ﻿using api.portal.jenn.Contract;
 using api.portal.jenn.DTO;
 using api.portal.jenn.factory;
+ 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace api.portal.jenn.Repository
 {
-    public class ProdutoRepository : IProdutoRepository
+    public class ProcedimentoRepository : IProcedimentoRepository
     {
-        readonly ILogger<ProdutoRepository>  logger;
-      
-
-        readonly EmpresaContextFactory contexto;
-        public ProdutoRepository( 
-            EmpresaContextFactory _contextFactory, 
-            ILogger<ProdutoRepository> _logger)
+        private readonly ProcedimentoContextFactory contexto;
+        private readonly ILogger<ProcedimentoRepository> logger;
+        private readonly IConfiguration configuration;
+        public ProcedimentoRepository(
+            IConfiguration _configuration,
+            ILogger<ProcedimentoRepository> _logger,
+            ProcedimentoContextFactory _context)
         {
-            this.contexto = _contextFactory;
+            this.configuration = _configuration;
             this.logger = _logger;
+            this.contexto = _context;
         }
-        public void Delete(Guid ProdutoID)
+
+
+
+        public void Delete(Expression<Func<Procedimento, bool>> where)
         {
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var item = Detail(ProdutoID);
+                    var item = Detail(where);
                     if (item != null)
-                    {
-                        ctx.Produtos.Remove(item);
-                        ctx.SaveChanges();
-                    }
-                    else
-                        throw new Exception($"Registro não localizado [{ProdutoID}]");
+                        ctx.Procedimento.Remove(item);
                 }
             }
             catch (Exception exception)
@@ -46,19 +48,14 @@ namespace api.portal.jenn.Repository
             }
         }
 
-        public Produto Detail(Guid ProdutoID, bool lazzLoader = false)
+        public virtual Procedimento Detail(Expression<Func<Procedimento, bool>> where, bool lazzLoader = false)
         {
-            Produto retorno = null;
+            Procedimento retorno = null;
             try
             {
-
                 using (var ctx = contexto.CreateDbContext(null))
-                {
-                    if (lazzLoader)
-                        retorno = ctx.Produtos.Include(c => c.UnidadeProdutos).Where(c=> c.ProdutoID == ProdutoID).SingleOrDefault();
-                    else
-                        retorno = ctx.Produtos.Where(c => c.ProdutoID == ProdutoID).SingleOrDefault();
-                }
+                        retorno = ctx.Procedimento.Where(where).SingleOrDefault();
+                
             }
             catch (Exception exception)
             {
@@ -68,17 +65,38 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public IEnumerable<Produto> Get(Guid UnidadeID, bool lazzLoader = false)
+        public void Dispose()
         {
-            List<Produto> retorno = new List<Produto>();
+            try
+            {
+                GC.SuppressFinalize(this);
+            }
+            finally
+            {
+
+            }
+        }
+
+        public virtual IEnumerable<Procedimento> Get(bool lazzLoader = false)
+        {
+            List<Procedimento> retorno = new List<Procedimento>();
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Unidades.Where(x=>x.UnidadeID == UnidadeID).Include(c => c.Produtos).AsParallel().ForAll(item => { retorno.AddRange(item.Produtos.ToArray()); });
+                        ctx.Procedimento.Include(x=> x.TipoProcedimento)
+                            .ThenInclude(x=> x.Categoria)
+                            .Include(c => c.ProcedimentoEmpresas)
+                                .ThenInclude(c=> c.Empresa)
+                                .ThenInclude(c=> c.Cidades)
+                            .AsParallel()
+                            .ForAll(
+                            item => {
+                                retorno.Add(item); 
+                            });
                     else
-                        ctx.Produtos.AsParallel().ForAll(item => { retorno.Add(item); });
+                        ctx.Procedimento.AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
@@ -89,18 +107,13 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public IEnumerable<Produto> GetAll(bool lazzLoader = false)
+        public virtual IEnumerable<Procedimento> Get(Expression<Func<Procedimento, bool>> where, bool lazzLoader = false)
         {
-            List<Produto> retorno = new List<Produto>();
+            List<Procedimento> retorno = new List<Procedimento>();
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
-                {
-                    if (lazzLoader)
-                        ctx.Unidades.Include(c => c.Produtos).AsParallel().ForAll(item => { retorno.AddRange(item.Produtos.ToArray()); });
-                    else
-                        ctx.Produtos.AsParallel().ForAll(item => { retorno.Add(item); });
-                }
+                        ctx.Procedimento.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
             }
             catch (Exception exception)
             {
@@ -110,7 +123,10 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public Produto Insert(Produto model, Guid UnidadeID, Guid EmpresaID)
+
+
+
+        public virtual Procedimento Insert(Procedimento model)
         {
             try
             {
@@ -128,17 +144,16 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public void Update(Produto model, Guid ProdutoID)
+        public virtual void Update(Procedimento model, int id)
         {
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var item = ctx.Produtos.Where(x => x.ProdutoID == ProdutoID).SingleOrDefault();
+                    var item = Detail(c => c.ProcedimentiID == id);
                     if (item != null)
                     {
-                        model.Unidade = item.Unidade;
-
+                        model.ProcedimentiID = id;
                         ctx.Update(model);
                         ctx.SaveChanges();
                     }
@@ -150,5 +165,7 @@ namespace api.portal.jenn.Repository
                 throw;
             }
         }
+         
     }
 }
+ 

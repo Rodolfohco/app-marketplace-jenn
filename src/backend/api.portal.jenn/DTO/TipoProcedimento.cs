@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_tipproced", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid TipoProcedimentoID { get; set; }
+        public int TipoProcedimentoID { get; set; }
 
         [Required]
         [Column("nom_tipproced", Order = 1)]
@@ -21,9 +21,9 @@ namespace api.portal.jenn.DTO
         public string Nome { get; set; }
 
         public virtual Procedimento Procedimento { get; set; }
-        public Guid ProcedimentoID { get; set; }
+        public int ProcedimentoID { get; set; }
 
-        public Guid CategoriaID { get; set; }
+        public int CategoriaID { get; set; }
         public virtual CategoriaProcedimento Categoria { get; set; }
     }
 }

@@ -29,14 +29,7 @@ namespace api.portal.jenn.Repository
         }
 
 
-        public void InicializarBanco()
-        {
-            using (var ctx = contexto.CreateDbContext(null))
-            {
-                ctx.Database.Migrate();
-            }
-        }
-
+      
         public void Delete(Expression<Func<Convenio, bool>> where)
         {
             try
@@ -132,15 +125,7 @@ namespace api.portal.jenn.Repository
         }
 
 
-
-        public void Iniciar()
-        {
-            using (var ctx = contexto.CreateDbContext(null))
-            {
-                ctx.Database.EnsureDeleted();
-                ctx.Database.EnsureCreated();
-            }
-        }
+ 
 
         public virtual Convenio Insert(Convenio model)
         {
@@ -160,7 +145,7 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public virtual void Update(Convenio model, Guid id)
+        public virtual void Update(Convenio model, int id)
         {
             try
             {
@@ -182,7 +167,7 @@ namespace api.portal.jenn.Repository
             }
         }
 
-        public  Plano Insert( Plano model, Guid ConvenioID)
+        public  Plano Insert( Plano model, int ConvenioID)
         {
              Plano retorno = null;
             try
@@ -204,7 +189,7 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public IEnumerable<Plano> Get(Guid ConvenioID)
+        public IEnumerable<Plano> Get(int ConvenioID)
         {
             IEnumerable<Plano> retorno = null;
             try
@@ -223,7 +208,7 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
-        public void Delete(Guid ConvenioPlanoID, Guid ConvenioID)
+        public void Delete(int ConvenioPlanoID, int ConvenioID)
         {
             try
             {
@@ -243,7 +228,7 @@ namespace api.portal.jenn.Repository
 
         }
 
-        public void Update( Plano model, Guid ConvenioPlanoID, Guid ConvenioID)
+        public void Update( Plano model, int ConvenioPlanoID, int ConvenioID)
         {
             try
             {
@@ -262,7 +247,7 @@ namespace api.portal.jenn.Repository
             }
         }
 
-        public  Plano Detail(Guid ConvenioPlanoID, Guid ConvenioID)
+        public  Plano Detail(int ConvenioPlanoID, int ConvenioID)
         {
              Plano retorno = null;
             try

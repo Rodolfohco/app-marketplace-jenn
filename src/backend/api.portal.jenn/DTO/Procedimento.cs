@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_proced", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid ProcedimentiID { get; set; }
+        public int ProcedimentiID { get; set; }
 
         [Required]
         [Column("nom_proced", Order = 1)]
@@ -24,9 +24,6 @@ namespace api.portal.jenn.DTO
         [Column("desc_proced", Order = 2)]
         [StringLength(400)]
         public string Descricao { get; set; }
-
-        public virtual TipoProcedimento TipoProcedimento { get; set; }
-        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
 
         [Required]
         [Column("imgprod_proced", Order = 3)]
@@ -40,6 +37,9 @@ namespace api.portal.jenn.DTO
         public int Ativo { get; set; }
 
 
+        public virtual TipoProcedimento TipoProcedimento { get; set; }
+ 
+        public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresas{ get; set; }
 
     }
 }
