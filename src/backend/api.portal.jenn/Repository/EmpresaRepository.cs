@@ -217,13 +217,14 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
+
                     ctx.ProcedimentoEmpresa
                         .Include(x => x.Procedimento)
                         .ThenInclude(p => p.TipoProcedimento)
                         .Include(c => c.Empresa)
-                        .ThenInclude(c=> c.Matriz)
+                        .ThenInclude(c => c.Matriz)
                         .ThenInclude(x => x.Cidades)
-                        .AsParallel().ForAll(
+                        .ToList().ForEach(
                         item =>
                         {
                             retorno.Add(item);

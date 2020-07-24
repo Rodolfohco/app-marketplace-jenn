@@ -137,9 +137,6 @@ namespace api.portal.jenn.Contexto
 
             modelBuilder.Entity<ProcedimentoEmpresa>(entity =>
             {
-              
-                
-         
 
                 entity.Property(e => e.Nome_pers).IsRequired();
                 entity.Property(e => e.PrecoProduto).IsRequired();

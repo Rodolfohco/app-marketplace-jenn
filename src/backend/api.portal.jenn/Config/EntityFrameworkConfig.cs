@@ -25,6 +25,8 @@ namespace api.portal.jenn.Config
                  {
                      options.UseLazyLoadingProxies().UseMySql(Configuration.GetValue<string>("DataBase:MySqlConnection"));
                      options.EnableDetailedErrors();
+
+                     //options.UseSqlServer(Configuration.GetValue<string>("DataBase:Connection"));
                  }
             );
 

@@ -9,9 +9,6 @@ namespace api.portal.jenn.ViewModel
 {
     public class ProcedimentoEmpresaViewModel
     {
-
-
-        public int ProcedimentoEmpresaID { get; set; }
         public DateTime DataInclusao { get; set; }
         public string Nome_pers { get; set; }
         public float PrecoProduto { get; set; }
