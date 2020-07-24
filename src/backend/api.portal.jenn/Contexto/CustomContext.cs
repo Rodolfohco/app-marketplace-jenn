@@ -88,7 +88,7 @@ namespace api.portal.jenn.Contexto
 
             modelBuilder.Entity<Procedimento>(entity =>
             {
-                entity.HasKey(e => e.ProcedimentiID);
+                entity.HasKey(e => e.ProcedimentoID);
                 entity.Property(e => e.Nome).IsRequired();
                 entity.Property(e => e.Descricao).IsRequired();
                 entity.Property(e => e.Ativo).IsRequired();
@@ -137,25 +137,21 @@ namespace api.portal.jenn.Contexto
 
             modelBuilder.Entity<ProcedimentoEmpresa>(entity =>
             {
-            entity.HasKey(e => e.ProcedimentoEmpresaID);
-            entity.HasKey(sc => new { sc.EmpresaID, sc.ProcedimentoID });
+              
+                
+         
 
-            entity.Property(e => e.Nome_pers).IsRequired();
-            entity.Property(e => e.PrecoProduto).IsRequired();
-            entity.Property(e => e.Preco_contra).IsRequired();
-            entity.Property(e => e.TaxaParcelamento).IsRequired();
-            entity.Property(e => e.TaxaResultado).IsRequired();
+                entity.Property(e => e.Nome_pers).IsRequired();
+                entity.Property(e => e.PrecoProduto).IsRequired();
+                entity.Property(e => e.Preco_contra).IsRequired();
+                entity.Property(e => e.TaxaParcelamento).IsRequired();
+                entity.Property(e => e.TaxaResultado).IsRequired();
 
-
-
-                entity.HasOne<Procedimento>(sc => sc.Procedimento)
-                .WithMany(s => s.ProcedimentoEmpresas)
-                .HasForeignKey(sc => sc.ProcedimentoID);
-
-
-                entity.HasOne<Empresa>(sc => sc.Empresa)
-                .WithMany(s => s.ProcedimentoEmpresas)
-                .HasForeignKey(sc => sc.EmpresaID);
+                
+                
+                entity.HasKey(sc => new { sc.EmpresaID, sc.ProcedimentoID });
+                entity.HasOne<Procedimento>(sc => sc.Procedimento).WithMany(s => s.ProcedimentoEmpresas).HasForeignKey(sc => sc.ProcedimentoID);
+                entity.HasOne<Empresa>(sc => sc.Empresa).WithMany(s => s.ProcedimentoEmpresas).HasForeignKey(sc => sc.EmpresaID);
 
 
 

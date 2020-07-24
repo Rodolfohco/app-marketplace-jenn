@@ -87,7 +87,7 @@ namespace api.portal.jenn
             //customContext.Database.EnsureDeleted();
             //customContext.Database.EnsureCreated();
             //customContext.Database.Migrate();
-            
+
             app.ConfigureSwagger();
 
             app.UseEndpoints(endpoints =>

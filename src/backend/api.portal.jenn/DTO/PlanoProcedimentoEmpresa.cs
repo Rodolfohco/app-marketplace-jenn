@@ -18,10 +18,14 @@ namespace api.portal.jenn.DTO
 
 
 
-        //public int ProcedimentoEmpresaID { get; set; }
-        //public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
+        public int ProcedimentoEmpresaID { get; set; }
+        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
+
+
 
         public int PlanoID { get; set; }
         public virtual Plano Plano { get; set; }
+
+
     }
 }

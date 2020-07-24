@@ -34,6 +34,7 @@ namespace api.portal.jenn.DTO
         public int Ativo { get; set; }
 
 
+
         public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
 
     }

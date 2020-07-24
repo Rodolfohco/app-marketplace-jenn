@@ -150,10 +150,10 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var item = Detail(c => c.ProcedimentiID == id);
+                    var item = Detail(c => c.ProcedimentoID == id);
                     if (item != null)
                     {
-                        model.ProcedimentiID = id;
+                        model.ProcedimentoID = id;
                         ctx.Update(model);
                         ctx.SaveChanges();
                     }

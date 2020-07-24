@@ -24,8 +24,19 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Empresa, EmpresaViewModel>();
             CreateMap<EmpresaViewModel, DTO.Empresa>();
 
-            CreateMap<DTO.Empresa, ViewModel.FilialViewModel>();
- 
+            CreateMap<DTO.Pagamento, PagamentoViewModel>();
+            CreateMap<PagamentoViewModel, DTO.Pagamento>();
+
+
+            CreateMap<DTO.PagamentoProcedimentoEmpresa, PagamentoProcedimentoEmpresaViewModel>();
+            CreateMap<PagamentoProcedimentoEmpresaViewModel, DTO.PagamentoProcedimentoEmpresa>();
+
+
+
+            CreateMap<DTO.PlanoProcedimentoEmpresa, PlanoProcedimentoEmpresaViewModel>();
+            CreateMap<PlanoProcedimentoEmpresaViewModel, DTO.PlanoProcedimentoEmpresa>();
+
+
 
             CreateMap<DTO.Procedimento, ProcedimentoViewModel>();
             CreateMap<ProcedimentoViewModel, DTO.Procedimento>();

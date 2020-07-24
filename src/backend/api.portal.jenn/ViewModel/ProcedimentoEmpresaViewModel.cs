@@ -24,10 +24,14 @@ namespace api.portal.jenn.ViewModel
         public string Video { get; set; }
         public int Ativo { get; set; }
         public EmpresaViewModel Empresa { get; set; }
+        public ProcedimentoViewModel Procedimento { get; set; }
 
 
-        public ProcedimentoViewModel  Procedimento { get; set; }
         public ICollection<ProcedimentoPerguntaViewModel> ProcedimentoPerguntas { get; set; }
 
+        public ICollection<PagamentoProcedimentoEmpresaViewModel> PagamentoProcedimentoEmpresas { get; set; }
+        //public ICollection<PlanoProcedimentoEmpresaViewModel> PlanoProcedimentoEmpresas { get; set; }
     }
+
+
 }
