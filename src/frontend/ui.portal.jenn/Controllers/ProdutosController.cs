@@ -60,7 +60,21 @@ namespace ui.portal.jenn.Controllers
 
             return View("Lista",lista);
         }
+
+        public IActionResult ListarPorBairros(List<string> model)
+        {
+
+            ViewBag.Produto = "";
+            ViewBag.Localidade = "";
+
+
+            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            lista = produtoService.BuscarBairroPorDetalhes(model);
+
+            return View("Lista", lista);
+        }
         
+
 
         public IActionResult Busca(string Produto)
         {

@@ -1,0 +1,93 @@
+﻿@model List<string>
+
+    <div class="content-select">
+        <div class="search">
+            <input onkeyup="pesquisarBairros()" id="pesquisabairro" type="text" placeholder="Pesquisar" />
+        </div>
+        <div class="list-check">
+            @if (Model.Any())
+            {
+                int i = 0;
+                @foreach (var item in Model)
+                {
+                    <div class="content-list">
+                        <input onclick="apliqueCount()" id="checkbairro_@i" class="form-check-input" type="checkbox" value="" data-bairro="@item.ToLower()">
+                        <label class="form-check-label" for="defaultCheck1">
+                            @item
+                        </label>
+                    </div>
+                    i++;
+                }
+
+                <div class="action-list">
+                    <a href="" class="link">
+                        Cancelar
+                    </a>
+                    <a  onclick="buscarBairros()" id="apliqueBairro"  class="btn btn-secondary">
+                        Aplique(0)
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+
+<script>
+    function apliqueCount() {
+        var count = $("[id*='checkbairro_']:checked").length;
+        $("#apliqueBairro").html("Aplique(" + count + ")");
+
+        if (count == 0)
+            $("#apliqueBairro").css("background", "#eaae7d");
+        else
+            $("#apliqueBairro").css("background", "#f36d00");
+
+    }
+
+    function pesquisarBairros() {
+        var bairro = $("#pesquisabairro").val();
+        bairro = bairro.toLowerCase();
+        console.log(bairro)
+        if (bairro) {
+            $("[id*='checkbairro_']").parents(".content-list").hide();
+            $("[data-bairro*='" + bairro + "']").parents(".content-list").show();            
+        } else {
+            $("[id*='checkbairro_']").parents(".content-list").show();
+        }
+    }
+
+    function buscarBairros() {
+        var count = $("[id*='checkbairro_']:checked").length;
+
+        if (count == 0)
+            return;
+
+        var param = "";
+        var model = [];
+        var i = 0;
+        $("[id*='checkbairro_']:checked").each(function () {
+            model.push($(this).attr("data-bairro"));
+
+            if (i > 0)
+                param += "&";
+
+            param += "model[" + i + "]=" + $(this).attr("data-bairro");
+            i++;
+        });
+
+        window.open("https://" + window.location.host + "/Produtos/ListarPorBairros?" + param)
+        /*
+        $.ajax({
+            dataType: "json",         
+            type: 'Get',
+            url: window.location.host + "/Produtos/ListarPorBairros?" + model,
+            success: function (data) {
+                response(data);
+            },
+            error: function (data) {
+
+            }
+        });
+        */
+    }
+
+</script>
