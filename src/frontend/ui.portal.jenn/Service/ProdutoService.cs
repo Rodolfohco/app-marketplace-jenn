@@ -147,16 +147,8 @@ namespace ui.portal.jenn.Service
         {
             List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
 
-            string cacheKey = "DTOEmpresa";
-            DTOEmpresa dTOEmpresa = _cache.Get<DTOEmpresa>(cacheKey);
-
-            if (dTOEmpresa == null)
-            {
-                dTOEmpresa = getProcedimentoEmpresa();
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(20));
-                _cache.Set<DTOEmpresa>(cacheKey, dTOEmpresa, cacheEntryOptions);
-            }
-
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+                 
             lista = dTOEmpresa.data.ToList();
             if (produto != null)
                 lista = dTOEmpresa.data.Where(p => p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))).ToList();
@@ -197,6 +189,37 @@ namespace ui.portal.jenn.Service
             }
 
             return dTOEmpresa;
+        }
+
+
+        public List<ProcedimentoEmpresa> BuscarTipoProdutosDetalhes(string tipoproduto)
+        {
+            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();                 
+
+            lista = dTOEmpresa.data.ToList();
+            if (tipoproduto != null)
+                lista = dTOEmpresa.data.Where(p => p.procedimento.tipoProcedimento.nome==tipoproduto).ToList();
+
+            return lista;
+        }
+
+
+        public List<TipoProcedimentoViewModel> BuscarTipoProdutos()
+        {
+            List<TipoProcedimentoViewModel> listaFinal = new List<TipoProcedimentoViewModel>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Tipoprocedimento> listas = dTOEmpresa.data.Select(p => p.procedimento).Select(a=>a.tipoProcedimento).Take(10).ToList();
+
+            foreach (var item in listas)
+            {
+                TipoProcedimentoViewModel tipoProcedimento = new  TipoProcedimentoViewModel();
+                tipoProcedimento.Nome = item.nome;
+                listaFinal.Add(tipoProcedimento);
+            }
+               
+            return listaFinal;
         }
 
     }

@@ -2,7 +2,7 @@
 <div class="card card-exame">
     <div class="row">
         <div class="col-xl-3 col-md-6 col-12">
-            <img src="~/img/exames/imagem.jpg" alt="" width="400" height="232" />
+            <img src="@Model.UrlImagem" alt="" width="400" height="232" />
         </div>
         <div class="col-xl-6 col-md-6 col-12">
             <h3>@Model.NomeEmpresa <img src="~/img/icon-check.png" /> </h3>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="content-info">
                     <h4>@Model.NomeUnidade</h4>
-                    <p>@Model.EnderecoCompleto <a href="" target="_blank">Mapa</a></p>
+                    <p>@Model.EnderecoCompleto <a href="@Model.UrlMaps" target="_blank">Mapa</a></p>
                 </div>
             </div>
             <div class="btn-content">

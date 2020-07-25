@@ -48,6 +48,19 @@ namespace ui.portal.jenn.Controllers
             return View(lista);
         }
 
+        public IActionResult ListaTipoProduto(string TipoProduto)
+        {
+           
+            ViewBag.Produto = TipoProduto;
+            ViewBag.Localidade = "Todos as localidades";          
+
+
+            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            lista = produtoService.BuscarTipoProdutosDetalhes(TipoProduto);
+
+            return View("Lista",lista);
+        }
+        
 
         public IActionResult Busca(string Produto)
         {
@@ -65,5 +78,7 @@ namespace ui.portal.jenn.Controllers
         {
             return produtoService.BuscarLocalidades(localidades, produtos);
         }
+
+
     }
 }
