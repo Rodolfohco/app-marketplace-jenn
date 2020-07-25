@@ -17,15 +17,19 @@ namespace api.portal.jenn.Repository
         private readonly EmpresaContextFactory contexto;
         private readonly ILogger<EmpresaRepository> logger;
         private readonly IConfiguration configuration;
+        private readonly IProcedimentoRepository procedimento;
 
 
         public EmpresaRepository(
-            IConfiguration _configuration,
+            IProcedimentoRepository _procedimento,
+        IConfiguration _configuration,
             ILogger<EmpresaRepository> _logger,
             EmpresaContextFactory _context)
         {
             this.configuration = _configuration;
             this.logger = _logger;
+
+            this.procedimento = _procedimento;
             this.contexto = _context;
         }
 
@@ -213,13 +217,14 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
+
                     ctx.ProcedimentoEmpresa
                         .Include(x => x.Procedimento)
                         .ThenInclude(p => p.TipoProcedimento)
                         .Include(c => c.Empresa)
-                        .ThenInclude(c=> c.Matriz)
+                        .ThenInclude(c => c.Matriz)
                         .ThenInclude(x => x.Cidades)
-                        .AsParallel().ForAll(
+                        .ToList().ForEach(
                         item =>
                         {
                             retorno.Add(item);
@@ -257,13 +262,36 @@ namespace api.portal.jenn.Repository
         {
             try
             {
+
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-
-                    model.EmpresaID = EmpresaID;
+                    
+                    var empresa = ctx.Empresas.Include(c => c.ProcedimentoEmpresas).Where(c => c.EmpresaID == EmpresaID).FirstOrDefault();
+                    model.Procedimento = this.procedimento.Detail(c => c.ProcedimentoID == ProcedimentoID);
                     model.ProcedimentoID = ProcedimentoID;
-                    ctx.Add(model);
+                    model.EmpresaID = EmpresaID;
+
+                    empresa.ProcedimentoEmpresas.Add(model);
+
+                    ctx.Empresas.Update(empresa);
                     ctx.SaveChanges();
+
+
+                    //model.Empresa.MatrizID = null;
+                    //model.Procedimento = this.procedimento.Detail(c => c.ProcedimentoID == ProcedimentoID);
+                    //model.Empresa = this.Detail(c => c.EmpresaID == EmpresaID);
+                    //ctx.ProcedimentoEmpresa.Add(model);
+                    //ctx.SaveChanges();
+
+
+                    //if (model.Empresa != null)
+                    //    model.Empresa.MatrizID = null;
+
+
+                    //model.EmpresaID = EmpresaID;
+                    //model.ProcedimentoID = ProcedimentoID;
+                    //ctx.ProcedimentoEmpresa.Add(model);
+                    //ctx.SaveChanges();
                 }
             }
             catch (Exception exception)

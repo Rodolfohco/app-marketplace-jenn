@@ -7,5 +7,9 @@ namespace api.portal.jenn.ViewModel
 {
     public class PagamentoProcedimentoEmpresaViewModel
     {
+        public int PagamentoProcedimentoEmpresaID { get; set; }
+
+        public virtual PagamentoViewModel Pagamento { get; set; }
+        public virtual ProcedimentoEmpresaViewModel ProcedimentoEmpresa { get; set; }
     }
 }

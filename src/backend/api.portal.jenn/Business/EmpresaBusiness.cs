@@ -74,7 +74,7 @@ namespace api.portal.jenn.Business
             {
                 if (model.MatrizID.HasValue && model.MatrizID.Value <= 0)
                     model.MatrizID = null;
-                model.Matrizes = null;
+                model.Matriz = null;
 
 
                 var EmpresaNova = this.mapper.Map<ViewModel.EmpresaViewModel, DTO.Empresa>(model);
@@ -201,11 +201,12 @@ namespace api.portal.jenn.Business
             try
             {
                 var procedimentoEmpresa = this.mapper.Map<ViewModel.ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
-
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
 
 
                 retorno = this.repository.Insert(procedimentoEmpresa, EmpresaID, ProcedimentoID);
+
+              
             }
             catch (Exception exception)
             {
@@ -214,30 +215,7 @@ namespace api.portal.jenn.Business
             }
             return this.mapper.Map<DTO.ProcedimentoEmpresa, ViewModel.ProcedimentoEmpresaViewModel>(retorno);
         }
-
-        public IEnumerable<FilialViewModel> SelecionarFiliais()
-        {
-            List<FilialViewModel> lstFilial = new List<FilialViewModel>();
-
-            IEnumerable<Empresa> retorno = Enumerable.Empty<Empresa>();
-            try
-            {
-                retorno = this.repository.GetFiliais();
-
-                retorno.AsParallel().ForAll(item =>
-                {
-                    var filial = this.mapper.Map<DTO.Empresa, ViewModel.FilialViewModel>(item);
-                    filial.Matriz = this.Detalhar(x => x.EmpresaID.Equals(item.MatrizID), true);
-                    lstFilial.Add(filial);
-
-                });
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
-                throw;
-            }
-            return lstFilial ;
-        }
+ 
+     
     }
 }

@@ -11,7 +11,7 @@ namespace api.portal.jenn.ViewModel
     public class ProcedimentoViewModel
     {
 
-        public int ProcedimentiID { get; set; }
+        public int ProcedimentoID { get; set; }
 
         public string Nome { get; set; }
         public string Descricao { get; set; }

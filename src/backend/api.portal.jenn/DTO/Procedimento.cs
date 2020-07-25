@@ -13,7 +13,7 @@ namespace api.portal.jenn.DTO
         [Key]
         [Column("cod_proced", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ProcedimentiID { get; set; }
+        public int ProcedimentoID { get; set; }
 
         [Required]
         [Column("nom_proced", Order = 1)]

@@ -15,11 +15,7 @@ namespace api.portal.jenn.DTO
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PagamentoProcedimentoEmpresaID { get; set; }
 
-        public int PlanoID { get; set; }
         public virtual Pagamento Pagamento { get; set; }
-
-        
-
         public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
     }
 }

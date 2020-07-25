@@ -11,19 +11,17 @@ namespace api.portal.jenn.DTO
     [Table("procemp")]
     public class ProcedimentoEmpresa
     {
-        [Column("cod_procemp", Order = 0)]
-         public int ProcedimentoEmpresaID { get; set; } 
-
-        [Column("dataincl_procemp", Order = 3)]
+       
+        [Column("dataincl_procemp", Order = 1)]
         public DateTime DataInclusao { get; set; }
 
         [Required]
-        [Column("nompers_procemp", Order = 4)]
+        [Column("nompers_procemp", Order = 2)]
         [StringLength(100)]
         public string Nome_pers { get; set; }
 
         [Required]
-        [Column("precoprod_procemp", Order = 5)]
+        [Column("precoprod_procemp", Order = 3)]
         public float PrecoProduto { get; set; }
 
         [Required]
@@ -61,10 +59,9 @@ namespace api.portal.jenn.DTO
         [StringLength(100)]
         public string Video { get; set; }
 
-        [Required]
-        [Column("atv_proced", Order = 14)]
-        [StringLength(1)]
+        [Column("atv_proced", Order = 14)]        
         public int Ativo { get; set; }
+
 
 
         [ForeignKey("cod_proced")]
@@ -72,18 +69,15 @@ namespace api.portal.jenn.DTO
         public int ProcedimentoID { get; set; }
         public virtual Procedimento Procedimento { get; set; }
 
+
         [ForeignKey("cod_emp")]
-        [Column("cod_emp", Order = 0)]
+        [Column("cod_emp", Order = 16)]
         public int EmpresaID { get; set; }
         public virtual Empresa Empresa { get; set; }
-            
-
-
-
+      
+        
         public virtual ICollection<ProcedimentoPergunta> ProcedimentoPerguntas { get; set; }
         public virtual ICollection<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresas { get; set; }
-        public virtual PlanoProcedimentoEmpresa PlanoProcedimentoEmpresas { get; set; }
-
 
     }
 }

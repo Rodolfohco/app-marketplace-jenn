@@ -131,7 +131,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                var item = this.repositorio.Detalhar(c => c.ProcedimentiID == ProcedimentoID);
+                var item = this.repositorio.Detalhar(c => c.ProcedimentoID == ProcedimentoID);
 
                 if (item != null)
                     resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
@@ -181,7 +181,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                this.repositorio.Excluir(c => c.ProcedimentiID == ProcedimentoID);
+                this.repositorio.Excluir(c => c.ProcedimentoID == ProcedimentoID);
                 resultado = new CommandResult(true, "Registro Excluido Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception e)
