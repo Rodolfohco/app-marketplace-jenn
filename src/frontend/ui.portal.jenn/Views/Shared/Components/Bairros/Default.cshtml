@@ -73,13 +73,14 @@
             param += "model[" + i + "]=" + $(this).attr("data-bairro");
             i++;
         });
-
+/*
         window.open("https://" + window.location.host + "/Produtos/ListarPorBairros?" + param)
-        /*
+           */
         $.ajax({
-            dataType: "json",         
-            type: 'Get',
-            url: window.location.host + "/Produtos/ListarPorBairros?" + model,
+            dataType: "json",   
+            data: model,
+            type: 'Post',
+            url: "https://" + window.location.host + "/Produtos/ListarPorBairros",
             success: function (data) {
                 response(data);
             },
@@ -87,7 +88,7 @@
 
             }
         });
-        */
+     
     }
 
 </script>
