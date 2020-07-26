@@ -19,41 +19,55 @@ namespace api.portal.jenn.Config
     {
         public static void ConfigureEntityFramework(this IServiceCollection services, IConfiguration Configuration)
         {
-            services.AddDbContext<CustomContext>
-            (
-                 options =>
-                 {
-                     options.UseLazyLoadingProxies().UseMySql(Configuration.GetValue<string>("DataBase:MySqlConnection"));
-                     options.EnableDetailedErrors();
 
-                     //options.UseSqlServer(Configuration.GetValue<string>("DataBase:Connection"));
-                 }
-            );
+            var connectionString = string.Empty;
+
+            if (Configuration.GetValue<string>("BancoPrincipal") == "SQLServer")
+            {
+                services.AddDbContext<CustomContext>
+                (
+                     options =>
+                     {
+                         options.UseSqlServer(Configuration.GetValue<string>("DataBase:SQLConnection"), options => options.EnableRetryOnFailure());
+                     }
+                );
+            }
+            else if (Configuration.GetValue<string>("BancoPrincipal") == "MySQL")
+            {
+                services.AddDbContext<CustomContext>
+                 (
+                    options =>
+                    {
+                        options.UseLazyLoadingProxies().UseMySql(Configuration.GetValue<string>("DataBase:MySqlConnection"), options => options.EnableRetryOnFailure());
+                        options.EnableDetailedErrors();
+                    }
+                  );
+            }
 
             services.AddTransient<EmpresaContextFactory>();
             services.AddTransient<ConvenioContextFactory>();
             services.AddTransient<ProcedimentoContextFactory>();
 
 
-            services.AddDefaultIdentity<Logon>(options =>
-            {
-                options.Password.RequiredLength = 10;
-                options.Password.RequiredUniqueChars = 3;
-                options.Password.RequireDigit = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
+            //   services.AddDefaultIdentity<Logon>(options =>
+            //   {
+            //       options.Password.RequiredLength = 10;
+            //       options.Password.RequiredUniqueChars = 3;
+            //       options.Password.RequireDigit = true;
+            //       options.Password.RequireNonAlphanumeric = true;
+            //       options.Password.RequireUppercase = false;
+            //       options.Password.RequireLowercase = false;
 
-            }).AddEntityFrameworkStores<CustomContext>()
-         .AddDefaultTokenProviders();
+            //   }).AddEntityFrameworkStores<CustomContext>()
+            //.AddDefaultTokenProviders();
 
         }
-        
+
         public static void ConfigureEntityFramework(this IApplicationBuilder app)
         {
-      
 
-        } 
+
+        }
 
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace api.portal.jenn.DTO
 {
 
-    [Table("cidade")]
+     [Table("cidade")]
     public class Cidade
     {
         [Key]
@@ -21,22 +21,11 @@ namespace api.portal.jenn.DTO
         [StringLength(200)]
         public string Nome { get; set; }
 
-        [Required]
-        [Column("cod_uf", Order = 3)]
-        [StringLength(2)]
-        public string UF { get; set; }
-
-
-        public virtual Cliente Cliente { get; set; }
-        public virtual Empresa Empresa { get; set; }
-
+ 
 
         public virtual ICollection<Regiao> Regiao { get; set; }
         public virtual ICollection<UF> Ufs { get; set; }
     }
-
-   
-
 
     
 

@@ -11,21 +11,23 @@ namespace api.portal.jenn.ViewModel
 
         public string Nome { get; set; }
 
-       public ConvenioViewModel Convenio { get; set; }
+        public ConsultaConvenioViewModel Convenio { get; set; }
     }
 
 
+
+    //public class PlanoProcedimentoEmpresaViewModel
+    //{
+    //    public int PlanoProcedimentoEmpresaID { get; set; }
+    //    public virtual ProcedimentoEmpresaViewModel ProcedimentoEmpresa { get; set; }
+    //    public virtual PlanoViewModel Plano { get; set; }
+
+    //}
 
 
 
     public class PlanoProcedimentoEmpresaViewModel
     {
-        public int PlanoProcedimentoEmpresaID { get; set; }
-       
-        public int ProcedimentoEmpresaID { get; set; }
-        public virtual ProcedimentoEmpresaViewModel ProcedimentoEmpresa { get; set; }
-
-        public int PlanoID { get; set; }
         public virtual PlanoViewModel Plano { get; set; }
 
     }

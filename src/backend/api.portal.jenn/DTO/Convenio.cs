@@ -7,14 +7,14 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
-{
-    [Table("conv")]
+{   
+   [Table("conv")]
     public class Convenio
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("cod_conv", Order = 0)]
-        public int Id { get; set; }
+        public int ConvenioId { get; set; }
 
         [Required]
         [Column("nom_conv", Order = 1)]

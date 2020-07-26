@@ -89,38 +89,6 @@ namespace api.portal.jenn.Controllers
         }
 
 
-        [HttpGet("CidadesProcedimento/{nomeProcedimento}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public ICommandResult CidadesProcedimento(string nomeProcedimento)
-        {
-            CommandResult resultado = null;
-            try
-            {
-                if (cahce.TryGetValue("data-procedimento", out IEnumerable<ViewModel.ProcedimentoViewModel> convenio))
-                    resultado = new CommandResult(true, "Processado Com Sucesso", convenio, System.Net.HttpStatusCode.OK);
-                else
-                {
-                    var item = this.repositorio.Selecionar();
-
-                    if (item != null && item.Any())
-                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
-                    else
-                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
-
-
-                    cahce.Set("data-procedimento", item);
-
-                }
-            }
-            catch (Exception e)
-            {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
-            }
-
-            return resultado;
-        }
 
         [HttpGet("Detalhe/{ProcedimentoID}")]
         [ProducesResponseType(200)]

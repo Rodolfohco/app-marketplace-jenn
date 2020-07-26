@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-
-    [Table("cliente")]
+   [Table("cliente")]
     public class Cliente
     {
 
@@ -76,6 +75,8 @@ namespace api.portal.jenn.DTO
         
         
         public virtual Usuario Usuario { get; set; }
+
+       public virtual Cidade Cidade{get;set;}
 
         public virtual ICollection<Avalia> Avaliacao { get; set; }
     }

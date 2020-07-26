@@ -151,10 +151,10 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var item = Detail(c => c.Id == id);
+                    var item = Detail(c => c.ConvenioId  == id);
                     if (item != null)
                     {
-                        model.Id = id;
+                        model.ConvenioId = id;
                         ctx.Update(model);
                         ctx.SaveChanges();
                     }
@@ -174,7 +174,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var convenio = ctx.Convenios.Where(c => c.Id == ConvenioID).SingleOrDefault();
+                    var convenio = ctx.Convenios.Where(c => c.ConvenioId == ConvenioID).SingleOrDefault();
                     model.Convenio = convenio;
 
                     ctx.Planos.Add(model);
@@ -196,7 +196,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var convenio = ctx.Convenios.Where(c => c.Id == ConvenioID).SingleOrDefault();
+                    var convenio = ctx.Convenios.Where(c => c.ConvenioId == ConvenioID).SingleOrDefault();
                     retorno = convenio.Planos.AsEnumerable();
                 }
             }
@@ -214,7 +214,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var convenio = ctx.Convenios.Where(c => c.Id == ConvenioID).SingleOrDefault();
+                    var convenio = ctx.Convenios.Where(c => c.ConvenioId == ConvenioID).SingleOrDefault();
                     var convenioPlano = convenio.Planos.Where(c => c.PlanoID == ConvenioID).SingleOrDefault();
                     ctx.Planos.Remove(convenioPlano);
                     ctx.SaveChanges();
@@ -234,7 +234,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var convenio = ctx.Convenios.Where(c => c.Id == ConvenioID).SingleOrDefault();
+                    var convenio = ctx.Convenios.Where(c => c.ConvenioId == ConvenioID).SingleOrDefault();
                     var convenioPlano = convenio.Planos.Where(c => c.PlanoID == ConvenioID).SingleOrDefault();
                     ctx.Planos.Update(model);
                     ctx.SaveChanges();
@@ -254,7 +254,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var convenio = ctx.Convenios.Where(c=> c.Id == ConvenioID).SingleOrDefault();
+                    var convenio = ctx.Convenios.Where(c=> c.ConvenioId == ConvenioID).SingleOrDefault();
                     retorno = convenio.Planos.Where(c => c.PlanoID == ConvenioID).SingleOrDefault();
                 }
             }

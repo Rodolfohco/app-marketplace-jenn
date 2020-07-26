@@ -15,15 +15,7 @@ namespace api.portal.jenn.DTO
         [Column("cod_planoprocemp", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PlanoProcedimentoEmpresaID { get; set; }
-
-
-
-        public int ProcedimentoEmpresaID { get; set; }
         public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
-
-
-
-        public int PlanoID { get; set; }
         public virtual Plano Plano { get; set; }
 
 

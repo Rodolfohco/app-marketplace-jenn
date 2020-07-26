@@ -32,6 +32,6 @@ namespace api.portal.jenn.DTO
         public int? ClienteID { get; set; }
         public virtual Cliente Cliente { get; set; }
 
-        public virtual Logon logon { get; set; }
+      
     }
 }

@@ -12,7 +12,15 @@ namespace api.portal.jenn.Contract
     {
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID);
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa();
-        DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model, int EmpresaID, int ProcedimentoID);
+        DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model);
+
+        DTO.PagamentoProcedimentoEmpresa Insert(DTO.PagamentoProcedimentoEmpresa model, int ProcedimentoID);
+
+        DTO.PlanoProcedimentoEmpresa Insert(DTO.PlanoProcedimentoEmpresa model);
+
+        DTO.FotoEmpresa Insert(DTO.FotoEmpresa model, int EmpresaID);
+        DTO.Grupo Insert(DTO.Grupo model, int EmpresaID);
+
 
 
 

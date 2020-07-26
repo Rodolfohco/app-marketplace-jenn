@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-    [Table("proced")]
+   [Table("proced")]
     public class Procedimento
     {
         [Key]

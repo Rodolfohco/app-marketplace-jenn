@@ -33,7 +33,7 @@ namespace api.portal.jenn.Business
         {
             try
             {
-                var convenio = this.repository.Detail(c => c.Id == ConvenioID);
+                var convenio = this.repository.Detail(c => c.ConvenioId == ConvenioID);
                 if (convenio != null)
                 {
                     var plano = this.mapper.Map<PlanoViewModel, Plano>(model);
@@ -58,7 +58,7 @@ namespace api.portal.jenn.Business
             PlanoViewModel retorno = null;
             try
             {
-                var convenio = this.repository.Detail(c => c.Id == ConvenioID, true);
+                var convenio = this.repository.Detail(c => c.ConvenioId == ConvenioID, true);
 
                 if (convenio != null)
                 {
@@ -84,7 +84,7 @@ namespace api.portal.jenn.Business
         {
             try
             {
-                var convenio = this.repository.Detail(c => c.Id == ConvenioID);
+                var convenio = this.repository.Detail(c => c.ConvenioId == ConvenioID);
                 if (convenio != null)
                 {
                     var Plano = convenio.Planos.Where(x => x.PlanoID == PlanoID).SingleOrDefault();
@@ -106,7 +106,7 @@ namespace api.portal.jenn.Business
         {
             try
             {
-                var convenio = this.repository.Detail(c => c.Id == ConvenioID);
+                var convenio = this.repository.Detail(c => c.ConvenioId == ConvenioID);
                 if (convenio != null)
                 {
 
@@ -135,7 +135,7 @@ namespace api.portal.jenn.Business
             IEnumerable<PlanoViewModel> retorno = null;
             try
             {
-                var convenio = this.repository.Detail(c => c.Id == ConvenioID, true);
+                var convenio = this.repository.Detail(c => c.ConvenioId == ConvenioID, true);
 
                 if (convenio != null)
                     retorno = this.mapper.Map<IEnumerable<Plano>, IEnumerable<PlanoViewModel>>(convenio.Planos.AsEnumerable());

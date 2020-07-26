@@ -19,12 +19,5 @@ namespace api.portal.jenn.DTO
         [Column("nom_grupo", Order = 1)]
         [StringLength(100)]
         public string Nome { get; set; }
-
-
-
-        public int EmpresaID { get; set; }
-        public virtual Empresa Empresa { get; set; }
-
-
-    }
+           }
 }

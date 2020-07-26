@@ -86,12 +86,12 @@ namespace api.portal.jenn.Business
             Logon retorno = null;
             try
             {
-                model.Password = Security.ComputeSha256Hash(model.Password);
-                var novo = new Logon();
-                novo = this.mapper.Map< ViewModel.LogonViewModel, DTO.Logon>(model);
-                novo.Ativo = (int)Status.Ativo;
-                novo.DataInclusao = DateTime.Now;
-                retorno = this.repository.Insert(novo);
+                //model.Password = Security.ComputeSha256Hash(model.Password);
+                //var novo = new Logon();
+                //novo = this.mapper.Map< ViewModel.LogonViewModel, DTO.Logon>(model);
+                //novo.Ativo = (int)Status.Ativo;
+                //novo.DataInclusao = DateTime.Now;
+                //retorno = this.repository.Insert(novo);
             }
             catch (Exception exception)
             {

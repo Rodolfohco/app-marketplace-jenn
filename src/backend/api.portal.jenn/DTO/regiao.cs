@@ -19,6 +19,6 @@ namespace api.portal.jenn.DTO
         [Column("nom_reg", Order = 3)]
         [StringLength(200)]
         public string Nome { get; set; }
-        public virtual Cidade cidade { get; set; }
+
     }
 }
