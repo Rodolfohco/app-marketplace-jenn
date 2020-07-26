@@ -147,20 +147,14 @@ namespace ui.portal.jenn.Service
         {
             List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
 
-            string cacheKey = "DTOEmpresa";
-            DTOEmpresa dTOEmpresa = _cache.Get<DTOEmpresa>(cacheKey);
-
-            if (dTOEmpresa == null)
-            {
-                dTOEmpresa = getProcedimentoEmpresa();
-                var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(20));
-                _cache.Set<DTOEmpresa>(cacheKey, dTOEmpresa, cacheEntryOptions);
-            }
-
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+                 
             lista = dTOEmpresa.data.ToList();
             if (produto != null)
                 lista = dTOEmpresa.data.Where(p => p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))).ToList();
 
+            if (localidade != null)
+                lista = dTOEmpresa.data.Where(p => p.empresa.cidades.Count() > 0 &&   p.empresa.cidades.FirstOrDefault().nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidade))).ToList();
 
             return lista;
         }
@@ -199,5 +193,64 @@ namespace ui.portal.jenn.Service
             return dTOEmpresa;
         }
 
+
+        public List<ProcedimentoEmpresa> BuscarTipoProdutosDetalhes(string tipoproduto)
+        {
+            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();                 
+
+            lista = dTOEmpresa.data.ToList();
+            if (tipoproduto != null)
+                lista = dTOEmpresa.data.Where(p => p.procedimento.tipoProcedimento.nome==tipoproduto).ToList();
+
+            return lista;
+        }
+
+
+        public List<TipoProcedimentoViewModel> BuscarTipoProdutos()
+        {
+            List<TipoProcedimentoViewModel> listaFinal = new List<TipoProcedimentoViewModel>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Tipoprocedimento> listas = dTOEmpresa.data.Select(p => p.procedimento).Select(a=>a.tipoProcedimento).Take(10).ToList();
+
+            foreach (var item in listas)
+            {
+                TipoProcedimentoViewModel tipoProcedimento = new  TipoProcedimentoViewModel();
+                tipoProcedimento.Nome = item.nome;
+                if(listaFinal.Where(t => t.TipoProcedimentoID == tipoProcedimento.TipoProcedimentoID).Count() == 0)
+                    listaFinal.Add(tipoProcedimento);
+            }
+               
+            return listaFinal;
+        }
+
+        public List<string> BuscarBairros()
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.Select(p => p.empresa).ToList();
+
+            foreach (var item in listas)
+                listaFinal.Add(item.bairro);
+
+            return listaFinal;
+
+        }
+
+        public List<ProcedimentoEmpresa> BuscarBairroPorDetalhes(List<string> bairros)
+        {
+            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            for (int i = 0; i < bairros.Count; i++)
+            {
+                lista.AddRange(dTOEmpresa.data.Where(p => p.empresa.bairro.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bairros[i]))).ToList());
+            }
+               
+
+            return lista;
+        }
     }
 }

@@ -8,13 +8,21 @@
 @foreach (var item in Model)
 {
     ui.portal.jenn.ViewModel.PesquisaViewModel pesquisaViewModel = new ui.portal.jenn.ViewModel.PesquisaViewModel();
-    pesquisaViewModel.NomeEmpresa = "???";
+    pesquisaViewModel.NomeEmpresa = item.empresa != null ? item.empresa.matriz.nome : "";
     pesquisaViewModel.Localidade = item.empresa != null? item.empresa.logradouro : "";
-    pesquisaViewModel.DescricaoProcedimento = "???";
-    pesquisaViewModel.Opiniao = 9999999;
+
+    pesquisaViewModel.DescricaoProcedimento = "";
+    IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = Model.Where(x => x.empresa.empresaID == item.empresa.empresaID).ToList();
+    foreach (var itemEmp in procedimentoEmpresas)
+        pesquisaViewModel.DescricaoProcedimento += itemEmp.procedimento.tipoProcedimento.nome + " ";
+
+
+        pesquisaViewModel.Opiniao = 9999999;
     pesquisaViewModel.NomeUnidade = item.empresa != null ? item.empresa.nome : "";
-    pesquisaViewModel.EnderecoCompleto = item.empresa != null ? item.empresa.logradouro : "";
+    pesquisaViewModel.EnderecoCompleto = item.empresa != null ? item.empresa.logradouro + ", " + item.empresa.numero + " - " + item.empresa.bairro: "";
     pesquisaViewModel.EnderecoLoja = "???";
+    pesquisaViewModel.UrlImagem = item.empresa != null ? item.empresa.imgemFrontEmpresa : "";
+    pesquisaViewModel.UrlMaps = item.empresa != null ? item.empresa.maps : "";
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

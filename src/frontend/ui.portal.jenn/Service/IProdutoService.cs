@@ -21,6 +21,10 @@ namespace ui.portal.jenn.Service
         List<string> BuscarProdutos(string produtos);
         List<string> BuscarLocalidades(string localidades, string produtos);
         List<ProcedimentoEmpresa> BuscarProdutosDetalhes(string produto, string localidade);
+        List<ProcedimentoEmpresa> BuscarTipoProdutosDetalhes(string tipoproduto);
+        List<TipoProcedimentoViewModel> BuscarTipoProdutos();
+        List<string> BuscarBairros();
+        List<ProcedimentoEmpresa> BuscarBairroPorDetalhes(List<string> bairros);
     }
    
 }

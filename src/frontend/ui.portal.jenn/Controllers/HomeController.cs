@@ -60,7 +60,10 @@ namespace ui.portal.jenn.Controllers
 
         public IActionResult Inicio()
         {
-            return View();
+            PesquisaViewModel pesquisaViewModel = new PesquisaViewModel();
+            pesquisaViewModel.tipoProcedimentoViewModels = produtoService.BuscarTipoProdutos();
+
+            return View(pesquisaViewModel);
         }
  
 

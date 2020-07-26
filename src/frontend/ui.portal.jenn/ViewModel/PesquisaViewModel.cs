@@ -19,6 +19,10 @@ namespace ui.portal.jenn.ViewModel
         public string EnderecoCompleto { get; set; }
         public string EnderecoLoja { get; set; }
         public int Opiniao { get; set; }
+        public string UrlImagem { get; set; }
+        public string UrlMaps { get; set; }
+
+        public List<TipoProcedimentoViewModel> tipoProcedimentoViewModels { get; set; }
 
 
     }
