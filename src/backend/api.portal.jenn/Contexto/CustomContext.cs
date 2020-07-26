@@ -18,6 +18,8 @@ namespace api.portal.jenn.Contexto
 
 
         public DbSet<FotoEmpresa> FotoEmpresas { get; set; }
+
+        public DbSet<Logon> Logon { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresa { get; set; }
         public DbSet<Domicilio> Domicilios { get; set; }
