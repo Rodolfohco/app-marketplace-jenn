@@ -163,7 +163,7 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa/ProcedimentoEmpresa").Result)
+                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa").Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {

@@ -16,6 +16,16 @@ namespace api.portal.jenn.ViewModel
 
 
 
+    public class ConsultaPlanoViewModel
+    {
+        public int PlanoID { get; set; }
+
+        public string Nome { get; set; }
+
+ 
+    }
+
+
     //public class PlanoProcedimentoEmpresaViewModel
     //{
     //    public int PlanoProcedimentoEmpresaID { get; set; }
@@ -24,6 +34,12 @@ namespace api.portal.jenn.ViewModel
 
     //}
 
+    public class NovoPlanoProcedimentoEmpresaViewModel
+    {
+        public virtual PlanoViewModel Plano { get; set; }
+        public virtual ConsultaProcedimentoEmpresaViewModel ProcedimentoEmpresa { get; set; }
+
+    }
 
 
     public class PlanoProcedimentoEmpresaViewModel

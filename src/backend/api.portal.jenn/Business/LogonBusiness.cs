@@ -32,19 +32,15 @@ namespace api.portal.jenn.Business
    
         }
 
-        public void InicializarBanco()
-        {
-            this.repository.Iniciar();
-
-        }
-        public void Atualizar(LogonViewModel model, int id)
+     
+        public void Atualizar(NovoLogonViewModel model, int id)
         {
             try
             {
                 model.Password = Security.ComputeSha256Hash(model.Password);
 
                 this.repository.Update(
-                   this.mapper.Map<ViewModel.LogonViewModel, DTO.Logon>(model), id);
+                   this.mapper.Map<ViewModel.NovoLogonViewModel, DTO.Logon>(model), id);
             }
             catch (Exception exception)
             {
@@ -54,7 +50,7 @@ namespace api.portal.jenn.Business
 
 
 
-        public LogonViewModel Detalhar(Expression<Func<DTO.Logon, bool>> where)
+        public ConsultaLogonViewModel Detalhar(Expression<Func<DTO.Logon, bool>> where)
         {
             Logon retorno = null;
             try
@@ -65,71 +61,32 @@ namespace api.portal.jenn.Business
             {
                 this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
             }
-            return this.mapper.Map<DTO.Logon, ViewModel.LogonViewModel>(retorno);
+            return this.mapper.Map<DTO.Logon, ViewModel.ConsultaLogonViewModel>(retorno);
         }
 
-        public void Excluir(Expression<Func<DTO.Logon, bool>> where)
-        {
-            try
-            {
-                this.repository.Delete(where);
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Excluir] [{exception.Message}] ;", exception);
-            }
-
-        }
-
-        public LogonViewModel Inserir(LogonViewModel model)
+        public ConsultaLogonViewModel Inserir(NovoLogonViewModel model)
         {
             Logon retorno = null;
             try
             {
-                //model.Password = Security.ComputeSha256Hash(model.Password);
-                //var novo = new Logon();
-                //novo = this.mapper.Map< ViewModel.LogonViewModel, DTO.Logon>(model);
-                //novo.Ativo = (int)Status.Ativo;
-                //novo.DataInclusao = DateTime.Now;
-                //retorno = this.repository.Insert(novo);
+                model.Password = Security.ComputeSha256Hash(model.Password);
+                var novo = new Logon();
+                novo = this.mapper.Map<ViewModel.NovoLogonViewModel, DTO.Logon>(model);
+               
+
+                novo.Ativo = (int)Status.Ativo;
+                novo.DataInclusao = DateTime.Now;
+               
+                retorno = this.repository.Insert(novo);
             }
             catch (Exception exception)
             {
                 this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<DTO.Logon, ViewModel.LogonViewModel>(retorno);
+            return this.mapper.Map<DTO.Logon, ViewModel.ConsultaLogonViewModel>(retorno);
         }
 
-        public IEnumerable<LogonViewModel> Selecionar()
-        {
-            IEnumerable<Logon> retorno = Enumerable.Empty<Logon>();
-            try
-            {
-                retorno = this.repository.Get();
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
-                throw;
-            }
-            return this.mapper.Map<IEnumerable<DTO.Logon>, IEnumerable<ViewModel.LogonViewModel>>(retorno);
-        }
-
-        public IEnumerable<LogonViewModel> Selecionar(Expression<Func<DTO.Logon, bool>> where)
-        {
-            IEnumerable<Logon> retorno = Enumerable.Empty<Logon>();
-            try
-            {
-                retorno = this.repository.Get(where);
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
-                throw;
-            }
-            return this.mapper.Map<IEnumerable<DTO.Logon>, IEnumerable<ViewModel.LogonViewModel>>(retorno);
-
-        }
+   
     }
 }
