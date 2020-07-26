@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-   [Table("pgtoprocemp")]
-    public class PagamentoProcedimentoEmpresa
+    [Table("domic")]
+    public class Domicilio
     {
         [Key]
-        [Column("cod_pgtoprocemp", Order = 0)]
+        [Column("cod_domic", Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PagamentoProcedimentoEmpresaID { get; set; }
+        public int DomicilioID { get; set; }
 
-        public virtual Pagamento Pagamento { get; set; }
+       
+        [Column("precodom_domic", Order = 2)]
+        [StringLength(4)]
+        public float PrecoDomicilio { get; set; }
+
+        public virtual Cidade Cidade { get; set; }
         public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
+
     }
 }

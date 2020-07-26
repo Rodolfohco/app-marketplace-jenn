@@ -38,7 +38,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Post([FromBody] EmpresaViewModel model)
+        public ICommandResult Post([FromBody] NovaEmpresaViewModel model)
         {
             CommandResult resultado = null;
             try
@@ -112,90 +112,6 @@ namespace api.portal.jenn.Controllers
         }
 
 
-
-        [HttpPost("NovoProcedimentoEmpresa")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public ICommandResult NovoProcedimentoEmpresa([FromHeader] int EmpresaID, [FromHeader] int ProcedimentoID, [FromBody] ProcedimentoEmpresaViewModel model)
-        {
-            CommandResult resultado = null;
-            try
-            {
-            
-                if (ModelState.IsValid)
-                {
-                  
-
-                    var item = this.repositorio.InserirProcedimento(model,EmpresaID, ProcedimentoID);
-
-                    if (item != null)
-                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
-                    else
-                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
-                }
-            }
-            catch (Exception e)
-            {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
-            }
-            return resultado;
-        }
-
-        [HttpGet("ProcedimentoEmpresa/{EmpresaID}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public ICommandResult ProcedimentoEmpresa(int EmpresaID)
-        {
-            CommandResult resultado = null;
-            try
-            {
-                var item = this.repositorio.SelecionarProcedimentoEmpresa(EmpresaID);
-
-                if (item != null)
-                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
-                else
-                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
-            }
-            catch (Exception e)
-            {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
-            }
-            return resultado;
-        }
-
-        [HttpGet("ProcedimentoEmpresa")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        public ICommandResult ProcedimentoEmpresa()
-        {
-            CommandResult resultado = null;
-            try
-            {
-                var item = this.repositorio.SelecionarProcedimentoEmpresa();
-
-                if (item != null)
-                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
-                else
-                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
-            }
-            catch (Exception e)
-            {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
-            }
-            return resultado;
-        }
-
-
-
-
-
-   
-
-
-
         [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -237,5 +153,145 @@ namespace api.portal.jenn.Controllers
             }
             return resultado;
         }
+
+
+        [HttpPost("NovaFilial")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovaFilial([FromBody] NovaFilialViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+
+
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.InserirFilial(model);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+        [HttpGet("GetFiliais")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<CommandResult> GetFiliais()
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.repositorio.SelecionarFilial();
+                if (item != null && item.Any())
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+        [HttpGet("DetalhaFilial")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult DetalhaFilial(  int EmpresaID, int FilialID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                var item = this.repositorio.DetalharFilial(EmpresaID, FilialID);
+
+                if (item != null)
+                    resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                else
+                    resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+
+        [HttpPost("NovaFotoEmpresa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovaFotoEmpresa([FromBody] FotoEmpresaViewModel model, int EmpresaID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+
+
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.Inserir(model, EmpresaID);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+        [HttpPost("GrupoEmpresa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult GrupoEmpresa([FromBody] GrupoViewModel model, int EmpresaID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+
+
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.Inserir(model, EmpresaID);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
     }
 }

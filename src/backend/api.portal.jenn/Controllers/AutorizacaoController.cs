@@ -58,14 +58,14 @@ namespace api.portal.jenn.Controllers
         {
             if (ModelState.IsValid)
             {
-                Logon user = new Logon { UserName = model.Nome, Email = model.Email };
-                var result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    return Ok(model);
-                }
-                else
-                    return BadRequest(result);
+                //Logon user = new Logon { UserName = model.Nome, Email = model.Email };
+                //var result = await userManager.CreateAsync(user, model.Password);
+                //if (result.Succeeded)
+                //{
+                //    return Ok(model);
+                //}
+                //else
+                  return BadRequest();
             }
             else
                 return BadRequest();

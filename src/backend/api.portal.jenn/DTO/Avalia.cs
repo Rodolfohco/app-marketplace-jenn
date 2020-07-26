@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-    [Table("Avalia")]
+ 
+  [Table("avalia")]
     public class Avalia
     {
         [Key]
@@ -36,5 +37,6 @@ namespace api.portal.jenn.DTO
         public virtual Cliente Cliente { get; set; }
 
 
+    
     }
 }

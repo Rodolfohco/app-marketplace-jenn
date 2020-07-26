@@ -10,6 +10,21 @@ namespace api.portal.jenn.ViewModel
         public int PagamentoProcedimentoEmpresaID { get; set; }
 
         public virtual PagamentoViewModel Pagamento { get; set; }
-        public virtual ProcedimentoEmpresaViewModel ProcedimentoEmpresa { get; set; }
+        public virtual ConsultaProcedimentoEmpresaViewModel ProcedimentoEmpresa { get; set; }
+    }
+    public class ConsultaPagamentoProcedimentoEmpresaViewModel
+    {
+        public int PagamentoProcedimentoEmpresaID { get; set; }
+
+        public virtual PagamentoViewModel Pagamento { get; set; }
+     
+    }
+
+
+    public class NovoPagamentoProcedimentoEmpresaViewModel
+    {
+ 
+        public virtual PagamentoViewModel Pagamento { get; set; }
+        public virtual int ProcedimentoEmpresaID { get; set; }
     }
 }

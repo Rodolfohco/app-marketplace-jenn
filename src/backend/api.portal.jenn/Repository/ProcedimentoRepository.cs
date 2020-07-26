@@ -89,7 +89,7 @@ namespace api.portal.jenn.Repository
                             .ThenInclude(x=> x.Categoria)
                             .Include(c => c.ProcedimentoEmpresas)
                                 .ThenInclude(c=> c.Empresa)
-                                .ThenInclude(c=> c.Cidades)
+                                .ThenInclude(c=> c.Cidade)
                             .AsParallel()
                             .ForAll(
                             item => {

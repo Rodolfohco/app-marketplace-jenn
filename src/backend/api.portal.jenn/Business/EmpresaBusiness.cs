@@ -67,28 +67,9 @@ namespace api.portal.jenn.Business
             }
         }
 
-        public EmpresaViewModel Inserir(EmpresaViewModel model)
-        {
-            Empresa retorno = null;
-            try
-            {
-                if (model.MatrizID.HasValue && model.MatrizID.Value <= 0)
-                    model.MatrizID = null;
-                model.Matriz = null;
+      
 
-
-                var EmpresaNova = this.mapper.Map<ViewModel.EmpresaViewModel, DTO.Empresa>(model);
-                retorno = this.repository.Insert(EmpresaNova);
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
-                throw;
-            }
-            return this.mapper.Map<DTO.Empresa, ViewModel.EmpresaViewModel>(retorno);
-        }
-
-        public IEnumerable<EmpresaViewModel> Selecionar()
+        public IEnumerable<ConsultaEmpresaViewModel> Selecionar()
         {
             IEnumerable<Empresa> retorno = Enumerable.Empty<Empresa>();
             try
@@ -100,10 +81,10 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<IEnumerable<DTO.Empresa>, IEnumerable<ViewModel.EmpresaViewModel>>(retorno);
+            return this.mapper.Map<IEnumerable<DTO.Empresa>, IEnumerable<ViewModel.ConsultaEmpresaViewModel>>(retorno);
         }
 
-        public IEnumerable<EmpresaViewModel> Selecionar(Expression<Func<Empresa, bool>> where)
+        public IEnumerable<ConsultaEmpresaViewModel> Selecionar(Expression<Func<Empresa, bool>> where)
         {
             IEnumerable<Empresa> retorno = Enumerable.Empty<Empresa>();
             try
@@ -115,7 +96,7 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<IEnumerable<DTO.Empresa>, IEnumerable<ViewModel.EmpresaViewModel>>(retorno);
+            return this.mapper.Map<IEnumerable<DTO.Empresa>, IEnumerable<ViewModel.ConsultaEmpresaViewModel>>(retorno);
         }
 
         public IEnumerable<EmpresaViewModel> Selecionar(bool lazzyLoader = false)
@@ -165,7 +146,7 @@ namespace api.portal.jenn.Business
 
 
 
-        public IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa()
+        public IEnumerable<ConsultaProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa()
         {
             IEnumerable<ProcedimentoEmpresa> retorno = Enumerable.Empty<ProcedimentoEmpresa>();
             try
@@ -177,10 +158,10 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ConsultaProcedimentoEmpresaViewModel>>(retorno);
         }
 
-        public IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(int EmpresaID)
+        public IEnumerable<ConsultaProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(int EmpresaID)
         {
             IEnumerable<ProcedimentoEmpresa> retorno = Enumerable.Empty<ProcedimentoEmpresa>();
             try
@@ -192,19 +173,19 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ProcedimentoEmpresaViewModel>>(retorno);
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoEmpresa>, IEnumerable<ViewModel.ConsultaProcedimentoEmpresaViewModel>>(retorno);
         }
 
-        public ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, int EmpresaID, int ProcedimentoID)
+        public ConsultaProcedimentoEmpresaViewModel InserirProcedimento(NovoProcedimentoEmpresaViewModel model)
         {
             ProcedimentoEmpresa retorno = null;
             try
             {
-                var procedimentoEmpresa = this.mapper.Map<ViewModel.ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
+                var procedimentoEmpresa = this.mapper.Map<ViewModel.NovoProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>(model);
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
 
 
-                retorno = this.repository.Insert(procedimentoEmpresa, EmpresaID, ProcedimentoID);
+                retorno = this.repository.Insert(procedimentoEmpresa);
 
               
             }
@@ -213,9 +194,151 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [InserirProcedimento] [{exception.Message}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<DTO.ProcedimentoEmpresa, ViewModel.ProcedimentoEmpresaViewModel>(retorno);
+            return this.mapper.Map<DTO.ProcedimentoEmpresa, ViewModel.ConsultaProcedimentoEmpresaViewModel>(retorno);
         }
- 
-     
+
+        public EmpresaViewModel Inserir(NovaEmpresaViewModel model)
+        {
+            Empresa retorno = null;
+            try
+            {
+                var EmpresaNova = this.mapper.Map<ViewModel.NovaEmpresaViewModel, DTO.Empresa>(model);
+                retorno = this.repository.Insert(EmpresaNova);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Empresa, ViewModel.EmpresaViewModel>(retorno);
+        }
+
+        public FilialViewModel InserirFilial(NovaFilialViewModel model)
+        {
+            Empresa retorno = null;
+            try
+            {
+                var EmpresaNova = this.mapper.Map<ViewModel.NovaFilialViewModel, DTO.Empresa>(model);
+                retorno = this.repository.Insert(EmpresaNova);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Empresa, ViewModel.FilialViewModel>(retorno);
+        }
+
+        public IEnumerable<FilialViewModel> SelecionarFilial()
+        {
+            throw new NotImplementedException();
+        }
+
+        public  FilialViewModel DetalharFilial(int EmpresaID, int FilialID)
+        {
+       Empresa  retorno =null;
+            try
+            {
+                retorno = this.repository.Detail(c=> c.EmpresaID== FilialID && c.MatrizID == EmpresaID , true);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Empresa, ViewModel.FilialViewModel>(retorno);
+        }
+
+        public void ExcluirFilial(Expression<Func<Empresa, bool>> where)
+        {
+            try
+            {
+                this.repository.Delete(where);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+            }
+        }
+
+        public void AtualizarFilial(FilialViewModel model, int id)
+        {
+            try
+            {
+                this.repository.Update(
+                   this.mapper.Map<ViewModel.FilialViewModel, DTO.Empresa>(model), id);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+            }
+        }
+
+    
+        public PagamentoProcedimentoEmpresaViewModel InserirPagamentoProcedimentoEmpresa(NovoPagamentoProcedimentoEmpresaViewModel model)
+        {
+            PagamentoProcedimentoEmpresa retorno = null;
+            try
+            {
+                var novoPagamentoProcedimentoEmpresaViewModel = this.mapper.Map<ViewModel.NovoPagamentoProcedimentoEmpresaViewModel, DTO.PagamentoProcedimentoEmpresa>(model);
+                retorno = this.repository.Insert(novoPagamentoProcedimentoEmpresaViewModel, model.ProcedimentoEmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.PagamentoProcedimentoEmpresa, ViewModel.PagamentoProcedimentoEmpresaViewModel>(retorno);
+        }
+
+        public PlanoProcedimentoEmpresaViewModel InserirPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresaViewModel model)
+        {
+            PlanoProcedimentoEmpresa retorno = null;
+            try
+            {
+                var EmpresaNova = this.mapper.Map<ViewModel.PlanoProcedimentoEmpresaViewModel, DTO.PlanoProcedimentoEmpresa>(model);
+                retorno = this.repository.Insert(EmpresaNova);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.PlanoProcedimentoEmpresa, ViewModel.PlanoProcedimentoEmpresaViewModel>(retorno);
+        }
+
+        public FotoEmpresaViewModel Inserir(FotoEmpresaViewModel model, int EmpresaID)
+        {
+            FotoEmpresa retorno = null;
+            try
+            {
+                var EmpresaNova = this.mapper.Map<ViewModel.FotoEmpresaViewModel, DTO.FotoEmpresa>(model);
+
+              
+                retorno = this.repository.Insert(EmpresaNova, EmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.FotoEmpresa, ViewModel.FotoEmpresaViewModel>(retorno);
+        }
+
+        public GrupoViewModel Inserir(GrupoViewModel model, int EmpresaID)
+        {
+            Grupo retorno = null;
+            try
+            {
+                var EmpresaNova = this.mapper.Map<ViewModel.GrupoViewModel, DTO.Grupo>(model);
+                retorno = this.repository.Insert(EmpresaNova, EmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Grupo, ViewModel.GrupoViewModel>(retorno);
+        }
     }
 }

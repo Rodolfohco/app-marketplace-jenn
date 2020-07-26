@@ -7,6 +7,21 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.ViewModel
 {
+    public class NovoProcedimentoViewModel
+    {
+
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+
+        public string ImgProduto_Proc { get; set; }
+
+        public int Ativo { get; set; }
+
+        public int  TipoProcedimentoId { get; set; }
+    }
+
+
+
 
     public class ProcedimentoViewModel
     {
@@ -21,8 +36,5 @@ namespace api.portal.jenn.ViewModel
         public int Ativo { get; set; }
 
         public TipoProcedimentoViewModel TipoProcedimento { get; set; }
-
-       
-
     }
 }

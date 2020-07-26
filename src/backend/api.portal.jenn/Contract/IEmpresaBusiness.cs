@@ -1,4 +1,5 @@
-﻿using api.portal.jenn.ViewModel;
+﻿using api.portal.jenn.DTO;
+using api.portal.jenn.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +11,46 @@ namespace api.portal.jenn.Contract
     public interface IEmpresaBusiness
     {
         #region Metodos
-        ViewModel.EmpresaViewModel Inserir(ViewModel.EmpresaViewModel model);
-        IEnumerable<ViewModel.EmpresaViewModel> Selecionar();
+        EmpresaViewModel Inserir(ViewModel.NovaEmpresaViewModel model);
+        FotoEmpresaViewModel Inserir(ViewModel.FotoEmpresaViewModel model, int EmpresaID);
+        GrupoViewModel Inserir(ViewModel.GrupoViewModel model, int EmpresaID);
+        IEnumerable<ViewModel.ConsultaEmpresaViewModel> Selecionar();
  
-        IEnumerable<ViewModel.EmpresaViewModel> Selecionar(Expression<Func<DTO.Empresa, bool>> where);
+        IEnumerable<ViewModel.ConsultaEmpresaViewModel> Selecionar(Expression<Func<DTO.Empresa, bool>> where);
         void Excluir(Expression<Func<DTO.Empresa, bool>> where);
         void Atualizar(ViewModel.EmpresaViewModel model, int id);
         ViewModel.EmpresaViewModel Detalhar(Expression<Func<DTO.Empresa, bool>> where);
 
 
-        
-        IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa();
-        IEnumerable<ProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(int EmpresaID);
 
-        ProcedimentoEmpresaViewModel InserirProcedimento(ProcedimentoEmpresaViewModel model, int EmpresaID, int ProcedimentoID);
+
+
+        ViewModel.FilialViewModel InserirFilial(ViewModel.NovaFilialViewModel model);
+        IEnumerable<ViewModel.FilialViewModel> SelecionarFilial();
+
+        ViewModel.FilialViewModel DetalharFilial(int EmpresaID, int FilialID);
+        void ExcluirFilial(Expression<Func<DTO.Empresa, bool>> where);
+        void AtualizarFilial(ViewModel.FilialViewModel model, int id);
+
+
+
+
+
+        IEnumerable<ConsultaProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa();
+        IEnumerable<ConsultaProcedimentoEmpresaViewModel> SelecionarProcedimentoEmpresa(int EmpresaID);
+
+        ConsultaProcedimentoEmpresaViewModel InserirProcedimento(NovoProcedimentoEmpresaViewModel model);
 
         IEnumerable<EmpresaViewModel> Selecionar(bool lazzyLoader = false);
         IEnumerable<ViewModel.EmpresaViewModel> Selecionar(Expression<Func<DTO.Empresa, bool>> where, bool lazzyLoader = false);
         ViewModel.EmpresaViewModel Detalhar(Expression<Func<DTO.Empresa, bool>> where, bool lazzyLoader = false);
+
+
+        ViewModel.PlanoProcedimentoEmpresaViewModel InserirPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresaViewModel model);
+
+        ViewModel.PagamentoProcedimentoEmpresaViewModel InserirPagamentoProcedimentoEmpresa(ViewModel.NovoPagamentoProcedimentoEmpresaViewModel model);
+
+
         #endregion
     }
 }

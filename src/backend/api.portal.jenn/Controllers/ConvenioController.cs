@@ -252,7 +252,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                var item = this.repositorio.Detalhar(c => c.Id == ConvenioID);
+                var item = this.repositorio.Detalhar(c => c.ConvenioId == ConvenioID);
 
                 if (item != null)
                     resultado = new CommandResult(true, "Processado Com Sucesso", item,System.Net.HttpStatusCode.OK);
@@ -302,7 +302,7 @@ namespace api.portal.jenn.Controllers
             CommandResult resultado = null;
             try
             {
-                this.repositorio.Excluir(c => c.Id == ConvenioID);
+                this.repositorio.Excluir(c => c.ConvenioId == ConvenioID);
                 resultado = new CommandResult(true, "Registro Excluido Com Sucesso", null,System.Net.HttpStatusCode.NoContent);
             }
             catch (Exception e)

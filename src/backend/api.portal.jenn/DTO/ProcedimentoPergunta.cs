@@ -10,7 +10,7 @@ namespace api.portal.jenn.DTO
 
 
 
-    [Table("procperg")]
+ [Table("procperg")]
     public class ProcedimentoPergunta
     {
         [Key]

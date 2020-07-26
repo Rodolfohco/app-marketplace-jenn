@@ -12,8 +12,43 @@ namespace api.portal.jenn.Mapeamento
     {
         public AutoMapping()
         {
-            CreateMap<DTO.Logon, LogonViewModel>();
-            CreateMap<LogonViewModel, DTO.Logon>();
+
+            
+
+            CreateMap<DTO.PagamentoProcedimentoEmpresa, NovoPagamentoProcedimentoEmpresaViewModel>();
+            CreateMap<NovoPagamentoProcedimentoEmpresaViewModel, DTO.PagamentoProcedimentoEmpresa>();
+
+            CreateMap<DTO.PagamentoProcedimentoEmpresa, ConsultaPagamentoProcedimentoEmpresaViewModel>();
+            CreateMap<ConsultaPagamentoProcedimentoEmpresaViewModel, DTO.PagamentoProcedimentoEmpresa>();
+
+
+            CreateMap<DTO.Grupo, GrupoViewModel>();
+            CreateMap<GrupoViewModel, DTO.Grupo>();
+
+
+
+            CreateMap<DTO.Empresa, NovaEmpresaViewModel>();
+            CreateMap<NovaEmpresaViewModel, DTO.Empresa>();
+
+            CreateMap<DTO.Empresa, ConsultaEmpresaViewModel>();
+            CreateMap<ConsultaEmpresaViewModel, DTO.Empresa>();
+
+            
+
+            CreateMap<DTO.Empresa, FilialViewModel>();
+            CreateMap<FilialViewModel, DTO.Empresa>();
+
+            CreateMap<DTO.Empresa, NovaFilialViewModel>();
+            CreateMap<NovaFilialViewModel, DTO.Empresa>();
+
+
+
+            
+
+
+
+            CreateMap<DTO.Convenio, ConsultaConvenioViewModel>();
+            CreateMap<ConsultaConvenioViewModel, DTO.Convenio>();
 
             CreateMap<DTO.Convenio, ConvenioViewModel>();
             CreateMap<ConvenioViewModel, DTO.Convenio>();
@@ -43,6 +78,16 @@ namespace api.portal.jenn.Mapeamento
 
             CreateMap<DTO.ProcedimentoEmpresa, ProcedimentoEmpresaViewModel>();
             CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
+
+            CreateMap<DTO.ProcedimentoEmpresa, ConsultaProcedimentoEmpresaViewModel>();
+            CreateMap<ConsultaProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
+
+
+            CreateMap<DTO.ProcedimentoEmpresa, NovoProcedimentoEmpresaViewModel>();
+            CreateMap<NovoProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
+
+
+            
 
 
             CreateMap<DTO.ProcedimentoPergunta, ProcedimentoPerguntaViewModel>();

@@ -9,7 +9,7 @@ namespace api.portal.jenn.DTO
 {
 
 
-    [Table("pais")]
+  [Table("pais")]
     public class Pais
     {
         [Key]

@@ -1,15 +1,19 @@
 ﻿using api.portal.jenn.Contract;
 using api.portal.jenn.DTO;
+using api.portal.jenn.Mapeamento;
+using api.portal.jenn.Repository;
+using api.portal.jenn.ViewModel;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace api.portal.jenn.Business
 {
-    public class CidadeBusiness : ICidadeRepository
+    public class CidadeBusiness : ICidadeBusiness
     {
         private readonly ICidadeRepository repository;
         private readonly ILogger<CidadeBusiness> _logger;
@@ -22,29 +26,133 @@ namespace api.portal.jenn.Business
             this._logger = logger;
         }
 
-        public void Delete(int CidadeID)
+        public void AtualizarCidadeCliente(CidadeViewModel model, int ClienteID )
+        {
+            try
+            {
+                this.repository.UpdateCidadeCliente(
+                   this.mapper.Map<ViewModel.CidadeViewModel, DTO.Cidade>(model),model.CidadeID, ClienteID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+            }
+        }
+
+        public void AtualizarCidadeEmpresa(CidadeViewModel model, int EmpresaId)
+        {
+            try
+            {
+                this.repository.UpdateCidadeEmpresa(
+                   this.mapper.Map<ViewModel.CidadeViewModel, DTO.Cidade>(model), model.CidadeID, EmpresaId);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+            }
+        }
+
+        public CidadeViewModel Detalhar(Expression<Func<Cidade, bool>> where)
+        {
+            throw new NotImplementedException();
+
+        }
+
+        public void Excluir(Expression<Func<Cidade, bool>> where)
         {
             throw new NotImplementedException();
         }
 
-        public Cidade Detail(int EmpresaID, int CidadeID)
+        public CidadeViewModel InserirCidadeCliente(CidadeViewModel model, int ClienteID)
         {
-            throw new NotImplementedException();
+            Cidade retorno = null;
+            try
+            {
+                var NovaCidade = this.mapper.Map<ViewModel.CidadeViewModel, DTO.Cidade>(model);
+                retorno = this.repository.InsertCidadeCliente(NovaCidade, ClienteID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Cidade, ViewModel.CidadeViewModel>(retorno);
         }
 
-        public IEnumerable<Cidade> Get(int EmpresaID)
+        public CidadeViewModel InserirCidadeEmpresa(CidadeViewModel model, int EmpresaID)
         {
-            throw new NotImplementedException();
+            Cidade retorno = null;
+            try
+            {
+                var NovaCidade = this.mapper.Map<ViewModel.CidadeViewModel, DTO.Cidade>(model);
+                retorno = this.repository.InsertCidadeEmpresa(NovaCidade, EmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Cidade, ViewModel.CidadeViewModel>(retorno);
         }
 
-        public Cidade Insert(Cidade model, int EmpresaID)
+        public IEnumerable<CidadeViewModel> SelecionarCidadeCliente(Expression<Func<Cidade, bool>> where, int ClienteID)
         {
-            throw new NotImplementedException();
+            IEnumerable<Cidade> retorno = Enumerable.Empty<Cidade>();
+            try
+            {
+                retorno = this.repository.GetCidadeCliente(ClienteID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Cidade>, IEnumerable<ViewModel.CidadeViewModel>>(retorno);
         }
 
-        public void Update(Cidade model, int CidadeID, int EmpresaID)
+        public IEnumerable<CidadeViewModel> SelecionarCidadeCliente()
         {
-            throw new NotImplementedException();
+            IEnumerable<Cidade> retorno = Enumerable.Empty<Cidade>();
+            try
+            {
+                retorno = this.repository.GetCidadeEmpresa();
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Cidade>, IEnumerable<ViewModel.CidadeViewModel>>(retorno);
+        }
+
+        public IEnumerable<CidadeViewModel> SelecionarCidadeEmpresa(Expression<Func<Cidade, bool>> where, int EmpresaID)
+        {
+            IEnumerable<Cidade> retorno = Enumerable.Empty<Cidade>();
+            try
+            {
+                retorno = this.repository.GetCidadeEmpresa(EmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Cidade>, IEnumerable<ViewModel.CidadeViewModel>>(retorno);
+        }
+
+        public IEnumerable<CidadeViewModel> SelecionarCidadeEmpresa()
+        {
+            IEnumerable<Cidade> retorno = Enumerable.Empty<Cidade>();
+            try
+            {
+                retorno = this.repository.GetCidadeEmpresa();
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Cidade>, IEnumerable<ViewModel.CidadeViewModel>>(retorno);
         }
     }
 }

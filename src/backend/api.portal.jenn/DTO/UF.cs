@@ -7,21 +7,19 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-    [Table("uf")]
+   [Table("uf")]
     public class UF
     {
         [Key]
-        [Column("cod_uf", Order = 1)]
+        [Column("cod_uf", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UfID { get; set; }
 
         [Required]
-        [Column("nom_uf", Order = 3)]
+        [Column("nom_uf", Order = 1)]
         [StringLength(200)]
         public string Nome { get; set; }
-        public virtual Cidade cidade { get; set; }
-
+ 
         public virtual Pais Pais { get; set; }
-
     }
 }

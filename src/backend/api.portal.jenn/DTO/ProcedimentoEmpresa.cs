@@ -11,6 +11,10 @@ namespace api.portal.jenn.DTO
     [Table("procemp")]
     public class ProcedimentoEmpresa
     {
+        [Key]
+        [Column("cod_procemp", Order = 16)]
+        public int ProcedimentoEmpresaID { get; set; }
+
        
         [Column("dataincl_procemp", Order = 1)]
         public DateTime DataInclusao { get; set; }
@@ -74,8 +78,7 @@ namespace api.portal.jenn.DTO
         [Column("cod_emp", Order = 16)]
         public int EmpresaID { get; set; }
         public virtual Empresa Empresa { get; set; }
-      
-        
+          public virtual ICollection<PlanoProcedimentoEmpresa> PlanoProcedimentoEmpresas { get; set; }
         public virtual ICollection<ProcedimentoPergunta> ProcedimentoPerguntas { get; set; }
         public virtual ICollection<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresas { get; set; }
 

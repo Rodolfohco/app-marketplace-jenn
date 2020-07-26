@@ -66,9 +66,9 @@ namespace api.portal.jenn.Repository
                            .ThenInclude(c => c.Procedimento)
                            .ThenInclude(c => c.TipoProcedimento)
                            .ThenInclude(c => c.Categoria)
-                           .Include(c => c.Cidades)
+                           .Include(c => c.Cidade)
                            .ThenInclude(c => c.Regiao)
-                           .Include(c => c.Cidades)
+                           .Include(c => c.Cidade)
                            .ThenInclude(c => c.Ufs).Where(where).SingleOrDefault();
                     }
                     else
@@ -93,38 +93,30 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                    if (lazzLoader)
-                    {
-                        ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
-                            .ThenInclude(c => c.Procedimento)
-                            .ThenInclude(c => c.TipoProcedimento)
-                            .ThenInclude(c => c.Categoria)
-                            .Include(c => c.Cidades)
-                            .ThenInclude(c => c.Regiao)
-                            .Include(c => c.Cidades)
-                            .ThenInclude(c => c.Ufs)
-                                .AsParallel().ForAll(
-                            item =>
-                            {
-                                retorno.Add(item);
-                            });
-                    }
-                    else
-                    {
-                        ctx.Empresas.Include(c => c.ProcedimentoEmpresas)
-                           .ThenInclude(c => c.Procedimento)
-                           .ThenInclude(c => c.TipoProcedimento)
-                           .ThenInclude(c => c.Categoria)
-                           .Include(c => c.Cidades)
-                           .ThenInclude(c => c.Regiao)
-                           .Include(c => c.Cidades)
-                           .ThenInclude(c => c.Ufs)
-                               .AsParallel().ForAll(
-                           item =>
-                           {
-                               retorno.Add(item);
-                           });
-                    }
+                    ctx.Empresas
+                                .Include(c => c.Fotos)
+                                .Include(c => c.Grupo)
+                                .Include(c => c.ProcedimentoEmpresas)
+                                .ThenInclude(c=> c.PagamentoProcedimentoEmpresas)
+                                .ThenInclude(c=> c.Pagamento)
+                                .Include(c => c.ProcedimentoEmpresas)
+                                .ThenInclude(c => c.PlanoProcedimentoEmpresas)
+                                .ThenInclude(c => c.Plano)
+                                .ThenInclude(c => c.Convenio)
+                                .Include(c => c.ProcedimentoEmpresas)
+                                .ThenInclude(c => c.Procedimento)
+                                .ThenInclude(c => c.TipoProcedimento)
+                                .ThenInclude(c => c.Categoria)
+                                .Include(c => c.Cidade)
+                                .ThenInclude(c => c.Regiao)
+                                .Include(c => c.Cidade)
+                                .ThenInclude(c => c.Ufs)
+                            .AsParallel().ForAll(
+                        item =>
+                        {
+                            retorno.Add(item);
+                        });
+
                 }
             }
             catch (Exception exception)
@@ -163,7 +155,7 @@ namespace api.portal.jenn.Repository
                 {
 
                         ctx.Empresas.Select(c=> c.Matriz)
-                            .Include(c=> c.Cidades)
+                            .Include(c=> c.Cidade)
                             .ThenInclude(c=> c.Ufs)
                             .Include(c=> c.ProcedimentoEmpresas)
                             .ThenInclude(c => c.Procedimento)
@@ -223,7 +215,7 @@ namespace api.portal.jenn.Repository
                         .ThenInclude(p => p.TipoProcedimento)
                         .Include(c => c.Empresa)
                         .ThenInclude(c => c.Matriz)
-                        .ThenInclude(x => x.Cidades)
+                        .ThenInclude(x => x.Cidade)
                         .ToList().ForEach(
                         item =>
                         {
@@ -258,40 +250,14 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
-        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model, int EmpresaID, int ProcedimentoID)
+        public ProcedimentoEmpresa Insert(ProcedimentoEmpresa model)
         {
             try
             {
-
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    
-                    var empresa = ctx.Empresas.Include(c => c.ProcedimentoEmpresas).Where(c => c.EmpresaID == EmpresaID).FirstOrDefault();
-                    model.Procedimento = this.procedimento.Detail(c => c.ProcedimentoID == ProcedimentoID);
-                    model.ProcedimentoID = ProcedimentoID;
-                    model.EmpresaID = EmpresaID;
-
-                    empresa.ProcedimentoEmpresas.Add(model);
-
-                    ctx.Empresas.Update(empresa);
+                    ctx.ProcedimentoEmpresa.Add(model);
                     ctx.SaveChanges();
-
-
-                    //model.Empresa.MatrizID = null;
-                    //model.Procedimento = this.procedimento.Detail(c => c.ProcedimentoID == ProcedimentoID);
-                    //model.Empresa = this.Detail(c => c.EmpresaID == EmpresaID);
-                    //ctx.ProcedimentoEmpresa.Add(model);
-                    //ctx.SaveChanges();
-
-
-                    //if (model.Empresa != null)
-                    //    model.Empresa.MatrizID = null;
-
-
-                    //model.EmpresaID = EmpresaID;
-                    //model.ProcedimentoID = ProcedimentoID;
-                    //ctx.ProcedimentoEmpresa.Add(model);
-                    //ctx.SaveChanges();
                 }
             }
             catch (Exception exception)
@@ -301,6 +267,98 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
+
+        public PagamentoProcedimentoEmpresa Insert(PagamentoProcedimentoEmpresa model, int ProcedimentoID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    var procedimento = ctx.ProcedimentoEmpresa.Where(c => c.ProcedimentoEmpresaID ==  ProcedimentoID).Include(c => c.PagamentoProcedimentoEmpresas).SingleOrDefault();
+                    procedimento.PagamentoProcedimentoEmpresas.Add(model);
+                    ctx.Entry(procedimento).State = EntityState.Modified;
+
+                  
+
+                    ctx.ProcedimentoEmpresa.Update(procedimento);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
+
+
+
+        public PlanoProcedimentoEmpresa Insert(PlanoProcedimentoEmpresa model)
+        {
+
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    ctx.PlanoProcedimentoEmpresas.Add(model);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
+        public FotoEmpresa Insert(FotoEmpresa model, int EmpresaID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var empresa = ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Include(c => c.Fotos).SingleOrDefault();
+                    empresa.Fotos.Add(model);
+                    ctx.Entry(empresa).State = EntityState.Modified;
+
+                    ctx.Empresas.Update(empresa);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
+        public Grupo Insert(Grupo model, int EmpresaID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var empresa = ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Include(c => c.Grupo).SingleOrDefault();
+                    empresa.Grupo = model;
+                    ctx.Entry(empresa).State = EntityState.Modified;
+
+                    ctx.Empresas.Update(empresa);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
         public void Update(Empresa model, int id)
         {
             try

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace api.portal.jenn.DTO
 {
 
+  
     [Table("pgto")]
     public class Pagamento
     {

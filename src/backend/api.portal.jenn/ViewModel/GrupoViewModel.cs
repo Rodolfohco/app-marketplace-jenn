@@ -5,14 +5,10 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.ViewModel
 {
-    public class FotoEmpresaViewModel
+    public class GrupoViewModel
     {
-
-        public int FotoID { get; set; }
-
-        public string path { get; set; }
-
+        public int GrupoID { get; set; }
         public string Nome { get; set; }
- 
+     
     }
 }

@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Business\LogonBusiness.cs" />
     <Compile Remove="Contexto\ConvenioContext.cs" />
     <Compile Remove="Contexto\EmpresaContext.cs" />
     <Compile Remove="Contexto\LogonContext.cs" />
+    <Compile Remove="Contract\ILogonBusiness.cs" />
+    <Compile Remove="Contract\ILogonRepository.cs" />
+    <Compile Remove="Controllers\AutorizacaoController.cs" />
+    <Compile Remove="Controllers\LogonController.cs" />
   </ItemGroup>
 
   <ItemGroup>

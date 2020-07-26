@@ -23,10 +23,20 @@ namespace api.portal.jenn.factory
         public CustomContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<CustomContext>();
-            var connectionString = config.GetValue<string>("DataBase:MySqlConnection");
+            var connectionString = string.Empty;
 
-            builder.UseMySql(connectionString);
+            if (config.GetValue<string>("BancoPrincipal") == "SQLServer")
+            {
+                connectionString = config.GetValue<string>("DataBase:SQLConnection");
+                builder.UseSqlServer(connectionString);
+            }
+            else if (config.GetValue<string>("BancoPrincipal") == "MySQL")
+            {
+                connectionString = config.GetValue<string>("DataBase:MySqlConnection");
+                builder.UseMySql(connectionString);
+            }
             return new CustomContext(builder.Options);
+
         }
     }
 }
