@@ -19,27 +19,19 @@ namespace api.portal.jenn.Contexto
 
         public DbSet<FotoEmpresa> FotoEmpresas { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-
         public DbSet<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresa { get; set; }
-
+        public DbSet<Domicilio> Domicilios { get; set; }
         public DbSet<PlanoProcedimentoEmpresa> PlanoProcedimentoEmpresas { get; set; }
         public DbSet<Convenio> Convenios { get; set; }
         public DbSet<Plano> Planos { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
-
         public DbSet<Cidade> Cidades { get; set; }
-
-
         public DbSet<DTO.Pais> Pais { get; set; }
-
-
 
         public DbSet<DTO.CategoriaProcedimento> CategoriaProced { get; set; }
         public DbSet<DTO.TipoProcedimento> TipoProcedimento { get; set; }
         public DbSet<DTO.Procedimento> Procedimento { get; set; }
         public DbSet<DTO.ProcedimentoEmpresa> ProcedimentoEmpresa { get; set; }
-
-
         public DbSet<DTO.FotoEmpresa> FotoEmpresa { get; set; }
         public DbSet<DTO.Grupo> Grupo { get; set; }
 
