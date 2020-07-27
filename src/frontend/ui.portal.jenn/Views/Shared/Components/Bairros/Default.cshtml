@@ -76,16 +76,19 @@
 /*
         window.open("https://" + window.location.host + "/Produtos/ListarPorBairros?" + param)
            */
+        var dados = {};
+        dados.Bairros = model;
+        var data = JSON.stringify(dados);
         $.ajax({
-            dataType: "json",   
-            data: model,
-            type: 'Post',
+            dataType: "json",
+            data: { model: model },
+            type: 'POST',
             url: "https://" + window.location.host + "/Produtos/ListarPorBairros",
             success: function (data) {
-                response(data);
+                $("#parcialpesquisa").html(data);
             },
             error: function (data) {
-
+                console.log(data)
             }
         });
      

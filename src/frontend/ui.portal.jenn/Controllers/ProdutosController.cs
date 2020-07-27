@@ -42,7 +42,7 @@ namespace ui.portal.jenn.Controllers
                 ViewBag.Localidade = model.Localidade;
 
 
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarProdutosDetalhes(model.Produto, model.Localidade);
 
             return View(lista);
@@ -55,12 +55,11 @@ namespace ui.portal.jenn.Controllers
             ViewBag.Localidade = "Todos as localidades";          
 
 
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarTipoProdutosDetalhes(TipoProduto);
 
             return View("Lista",lista);
         }
-
         [HttpPost]
         public IActionResult ListarPorBairros(List<string> model)
         {
@@ -69,7 +68,7 @@ namespace ui.portal.jenn.Controllers
             ViewBag.Localidade = "";
 
 
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarBairroPorDetalhes(model);
 
             return View("Lista", lista);
