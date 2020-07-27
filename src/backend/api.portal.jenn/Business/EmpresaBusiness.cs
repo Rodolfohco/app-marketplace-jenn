@@ -229,9 +229,19 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.Empresa, ViewModel.FilialViewModel>(retorno);
         }
 
-        public IEnumerable<FilialViewModel> SelecionarFilial()
+        public IEnumerable<ConsultaFilialViewModel> SelecionarFilial()
         {
-            throw new NotImplementedException();
+            IEnumerable<Empresa> retorno = Enumerable.Empty<Empresa>();
+            try
+            {
+                retorno = this.repository.GetFiliais(true);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Empresa>, IEnumerable<ViewModel.ConsultaFilialViewModel>>(retorno);
         }
 
         public  FilialViewModel DetalharFilial(int EmpresaID, int FilialID)

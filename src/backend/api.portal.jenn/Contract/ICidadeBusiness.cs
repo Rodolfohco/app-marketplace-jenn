@@ -9,12 +9,17 @@ namespace api.portal.jenn.Contract
    public interface ICidadeBusiness
     {
         #region Metodos
-        ViewModel.CidadeViewModel InserirCidadeEmpresa(ViewModel.CidadeViewModel model, int EmpresaID);
-        ViewModel.CidadeViewModel InserirCidadeCliente(ViewModel.CidadeViewModel model, int ClienteID);
+        ViewModel.CidadeViewModel InserirCidadeEmpresa(ViewModel.NovaCidadeViewModel model, int EmpresaID);
+        ViewModel.CidadeViewModel InserirCidadeCliente(ViewModel.NovaCidadeViewModel model, int ClienteID);
 
 
 
-        IEnumerable<ViewModel.CidadeViewModel> SelecionarCidadeCliente();
+      bool VincularEmpresaCidade(int CidadeID, int EmpresaID);
+        bool VincularClienteCidade(int CidadeID, int ClienteID);
+
+        ViewModel.CidadeViewModel InserirCidade(ViewModel.NovaCidadeViewModel model);
+
+       IEnumerable<ViewModel.CidadeViewModel> SelecionarCidadeCliente();
         IEnumerable<ViewModel.CidadeViewModel> SelecionarCidadeEmpresa();
         IEnumerable<ViewModel.CidadeViewModel> SelecionarCidadeCliente(Expression<Func<DTO.Cidade, bool>> where, int ClienteID);
         IEnumerable<ViewModel.CidadeViewModel> SelecionarCidadeEmpresa(Expression<Func<DTO.Cidade, bool>> where, int EmpresaID);

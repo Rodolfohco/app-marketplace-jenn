@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ui.portal.jenn.Handler;
 using ui.portal.jenn.ViewModel;
@@ -115,9 +116,14 @@ namespace ui.portal.jenn.Service
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
             produtos = produtos.ToLower();
-            List<Procedimento> listas = dTOEmpresa.data.Select(p=>p.procedimento).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+            //List<Empresa> listas = dTOEmpresa.data.Select(p=>p.procedimentoEmpresas.Select(c=>c.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos)))).ToList();
 
-            foreach (var item in listas)
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+
+            foreach (var item in procedimentos)
                 listaFinal.Add(item.nome);
 
             return listaFinal;
@@ -130,16 +136,22 @@ namespace ui.portal.jenn.Service
 
             localidades = localidades.ToLower();
             produtos = produtos.ToLower();
-            List<Cidade> listas = new List<Cidade>();
-            
-            if(produtos != null)
+            List<Cidade> listasCidades = new List<Cidade>();
+            /*
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            listas = listas.Select(pe => pe.procedimentoEmpresas).Select(p => p.procedimento).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+
+
+
+            if (produtos != null)
                 listas = dTOEmpresa.data.Where(p=>p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).Select(e=> e.empresa).SelectMany(e => e.cidades).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
             else
                 listas = dTOEmpresa.data.Select(e => e.empresa).SelectMany(e => e.cidades).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
 
             foreach (var item in listas)
                 listaFinal.Add(item.nome);
-
+           */
             return listaFinal;
         }
 
@@ -148,14 +160,14 @@ namespace ui.portal.jenn.Service
             List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
 
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-                 
+                 /*
             lista = dTOEmpresa.data.ToList();
             if (produto != null)
                 lista = dTOEmpresa.data.Where(p => p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))).ToList();
 
             if (localidade != null)
                 lista = dTOEmpresa.data.Where(p => p.empresa.cidades.Count() > 0 &&   p.empresa.cidades.FirstOrDefault().nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidade))).ToList();
-
+                 */
             return lista;
         }
 
@@ -163,7 +175,11 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
+<<<<<<< HEAD
                 using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa").Result)
+=======
+                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+>>>>>>> a6244138870ba5ca2aeaab8f54ce3ea73698a84f
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -198,11 +214,11 @@ namespace ui.portal.jenn.Service
         {
             List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();                 
-
+            /*
             lista = dTOEmpresa.data.ToList();
             if (tipoproduto != null)
                 lista = dTOEmpresa.data.Where(p => p.procedimento.tipoProcedimento.nome==tipoproduto).ToList();
-
+            */
             return lista;
         }
 
@@ -211,7 +227,7 @@ namespace ui.portal.jenn.Service
         {
             List<TipoProcedimentoViewModel> listaFinal = new List<TipoProcedimentoViewModel>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-
+            /*
             List<Tipoprocedimento> listas = dTOEmpresa.data.Select(p => p.procedimento).Select(a=>a.tipoProcedimento).Take(10).ToList();
 
             foreach (var item in listas)
@@ -221,7 +237,7 @@ namespace ui.portal.jenn.Service
                 if(listaFinal.Where(t => t.TipoProcedimentoID == tipoProcedimento.TipoProcedimentoID).Count() == 0)
                     listaFinal.Add(tipoProcedimento);
             }
-               
+               */
             return listaFinal;
         }
 
@@ -229,12 +245,12 @@ namespace ui.portal.jenn.Service
         {
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-
+            /*
             List<Empresa> listas = dTOEmpresa.data.Select(p => p.empresa).ToList();
 
             foreach (var item in listas)
                 listaFinal.Add(item.bairro);
-
+            */
             return listaFinal;
 
         }
@@ -243,12 +259,12 @@ namespace ui.portal.jenn.Service
         {
             List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-
+            /*
             for (int i = 0; i < bairros.Count; i++)
             {
                 lista.AddRange(dTOEmpresa.data.Where(p => p.empresa.bairro.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bairros[i]))).ToList());
             }
-               
+               */
 
             return lista;
         }

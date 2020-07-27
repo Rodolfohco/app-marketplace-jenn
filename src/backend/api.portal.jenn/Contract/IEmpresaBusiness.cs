@@ -26,7 +26,7 @@ namespace api.portal.jenn.Contract
 
 
         ViewModel.FilialViewModel InserirFilial(ViewModel.NovaFilialViewModel model);
-        IEnumerable<ViewModel.FilialViewModel> SelecionarFilial();
+        IEnumerable<ViewModel.ConsultaFilialViewModel> SelecionarFilial();
 
         ViewModel.FilialViewModel DetalharFilial(int EmpresaID, int FilialID);
         void ExcluirFilial(Expression<Func<DTO.Empresa, bool>> where);

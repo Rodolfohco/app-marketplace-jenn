@@ -61,6 +61,7 @@ namespace ui.portal.jenn.Controllers
             return View("Lista",lista);
         }
 
+        [HttpPost]
         public IActionResult ListarPorBairros(List<string> model)
         {
 

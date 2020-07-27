@@ -14,8 +14,8 @@ namespace api.portal.jenn.Business
     public class ProcedimentoBusiness : IProcedimentoBusiness
     {
 
-      
-       
+
+        private readonly ITipoProcedimentoRepository tipoProcedimentoRepository;
         private readonly IProcedimentoRepository repository;
         private readonly ILogger<ProcedimentoBusiness> _logger;
         private readonly IMapper mapper;
@@ -23,10 +23,11 @@ namespace api.portal.jenn.Business
         public ProcedimentoBusiness(
             ILogger<ProcedimentoBusiness> logger,
             IProcedimentoRepository _repository,
-          
+           ITipoProcedimentoRepository _tipoProcedimentoRepository,
              IMapper _mapper)
         {
-      
+
+            this.tipoProcedimentoRepository = _tipoProcedimentoRepository;
             this.mapper = _mapper;
             this.repository = _repository;
             this._logger = logger;
@@ -72,12 +73,15 @@ namespace api.portal.jenn.Business
             }
         }
 
-        public ProcedimentoViewModel Inserir(ProcedimentoViewModel model)
+        public ProcedimentoViewModel Inserir(NovoProcedimentoViewModel model)
         {
             Procedimento retorno = null;
             try
             {
-                var EmpresaNova = this.mapper.Map<ViewModel.ProcedimentoViewModel, DTO.Procedimento>(model);
+                var EmpresaNova = this.mapper.Map<ViewModel.NovoProcedimentoViewModel, DTO.Procedimento>(model);
+
+                EmpresaNova.TipoProcedimento = this.tipoProcedimentoRepository.Detail(c => c.TipoProcedimentoID == model.TipoProcedimentoId);
+
                 retorno = this.repository.Insert(EmpresaNova);
             }
             catch (Exception exception)
@@ -95,7 +99,7 @@ namespace api.portal.jenn.Business
             IEnumerable<Procedimento> retorno = Enumerable.Empty<Procedimento>();
             try
             {
-                retorno = this.repository.Get();
+                retorno = this.repository.Get(true);
             }
             catch (Exception exception)
             {

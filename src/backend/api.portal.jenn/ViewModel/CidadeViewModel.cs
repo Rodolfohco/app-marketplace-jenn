@@ -11,8 +11,16 @@ namespace api.portal.jenn.ViewModel
         
         public int CidadeID { get; set; }
         public string Nome { get; set; }
-        public string UF { get; set; }
-      
+     
+        public virtual ICollection<RegiaoViewModel> Regiao { get; set; }
+        public virtual ICollection<UFViewModel> Ufs { get; set; }
+    }
+
+    public class NovaCidadeViewModel
+    {
+
+        public string Nome { get; set; }
+
         public virtual ICollection<RegiaoViewModel> Regiao { get; set; }
         public virtual ICollection<UFViewModel> Ufs { get; set; }
     }

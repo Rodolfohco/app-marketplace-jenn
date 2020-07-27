@@ -22,6 +22,10 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Logon, ConsultaLogonViewModel>();
             CreateMap<ConsultaLogonViewModel, DTO.Logon>();
 
+                CreateMap<DTO.Empresa, ConsultaFilialViewModel>();
+            CreateMap<ConsultaFilialViewModel, DTO.Empresa>();
+
+
 
 
             CreateMap<DTO.PagamentoProcedimentoEmpresa, NovoPagamentoProcedimentoEmpresaViewModel>();
@@ -52,8 +56,12 @@ namespace api.portal.jenn.Mapeamento
 
             CreateMap<DTO.Roles, RolesViewModel>();
             CreateMap<RolesViewModel, DTO.Roles>();
-             
 
+
+            
+
+                            CreateMap<DTO.Cidade, NovaCidadeViewModel>();
+            CreateMap<NovaCidadeViewModel, DTO.Cidade>();
 
 
             CreateMap<DTO.Convenio, ConsultaConvenioViewModel>();
@@ -84,6 +92,10 @@ namespace api.portal.jenn.Mapeamento
 
             CreateMap<DTO.Procedimento, ProcedimentoViewModel>();
             CreateMap<ProcedimentoViewModel, DTO.Procedimento>();
+
+            CreateMap<DTO.Procedimento, NovoProcedimentoViewModel>();
+            CreateMap<NovoProcedimentoViewModel, DTO.Procedimento>();
+            
 
             CreateMap<DTO.ProcedimentoEmpresa, ProcedimentoEmpresaViewModel>();
             CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();

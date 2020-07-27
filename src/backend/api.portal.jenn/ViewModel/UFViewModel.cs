@@ -7,10 +7,7 @@ namespace api.portal.jenn.ViewModel
 {
     public class UFViewModel
     {
-    
         public int UfID { get; set; }
-
-    
         public string Nome { get; set; }
     }
 }
