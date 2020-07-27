@@ -102,18 +102,18 @@ namespace api.portal.jenn.Controllers
         }
 
 
-        [HttpPost("PagamentoProcedimentoEmpresa")]
+        [HttpPost("PlanoProcedimentoEmpresas")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult PagamentoProcedimentoEmpresa([FromBody] NovoPagamentoProcedimentoEmpresaViewModel model)
+        public ICommandResult PlanoProcedimentoEmpresas([FromBody] PlanoProcedimentoEmpresaViewModel model)
         {
             CommandResult resultado = null;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var item = this.repositorio.InserirPagamentoProcedimentoEmpresa(model);
+                    var item = this.repositorio.InserirPlanoProcedimentoEmpresa(model);
 
                     if (item != null)
                         resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
@@ -126,9 +126,37 @@ namespace api.portal.jenn.Controllers
                 resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
             return resultado;
+
+
         }
 
+            [HttpPost("PagamentoProcedimentoEmpresa")]
+            [ProducesResponseType(200)]
+            [ProducesResponseType(400)]
+            [ProducesResponseType(500)]
+            public ICommandResult PagamentoProcedimentoEmpresa([FromBody] NovoPagamentoProcedimentoEmpresaViewModel model)
+            {
+                CommandResult resultado = null;
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        var item = this.repositorio.InserirPagamentoProcedimentoEmpresa(model);
 
-    }
+                        if (item != null)
+                            resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                        else
+                            resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                    }
+                }
+                catch (Exception e)
+                {
+                    resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+                }
+                return resultado;
+            }
+
+
+        }
 
 }

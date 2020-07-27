@@ -37,7 +37,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Post([FromBody] ProcedimentoViewModel model)
+        public ICommandResult Post( NovoProcedimentoViewModel model)
         {
             CommandResult resultado = null;
             try

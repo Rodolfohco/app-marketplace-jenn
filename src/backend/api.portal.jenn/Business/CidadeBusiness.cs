@@ -63,12 +63,28 @@ namespace api.portal.jenn.Business
             throw new NotImplementedException();
         }
 
-        public CidadeViewModel InserirCidadeCliente(CidadeViewModel model, int ClienteID)
+        public CidadeViewModel InserirCidade(NovaCidadeViewModel model)
         {
             Cidade retorno = null;
             try
             {
-                var NovaCidade = this.mapper.Map<ViewModel.CidadeViewModel, DTO.Cidade>(model);
+                var NovaCidade = this.mapper.Map<ViewModel.NovaCidadeViewModel, DTO.Cidade>(model);
+                retorno = this.repository.InsertCidade(NovaCidade);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Cidade, ViewModel.CidadeViewModel>(retorno);
+        }
+
+        public CidadeViewModel InserirCidadeCliente(NovaCidadeViewModel model, int ClienteID)
+        {
+            Cidade retorno = null;
+            try
+            {
+                var NovaCidade = this.mapper.Map<ViewModel.NovaCidadeViewModel, DTO.Cidade>(model);
                 retorno = this.repository.InsertCidadeCliente(NovaCidade, ClienteID);
             }
             catch (Exception exception)
@@ -79,12 +95,12 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.Cidade, ViewModel.CidadeViewModel>(retorno);
         }
 
-        public CidadeViewModel InserirCidadeEmpresa(CidadeViewModel model, int EmpresaID)
+        public CidadeViewModel InserirCidadeEmpresa(NovaCidadeViewModel model, int EmpresaID)
         {
             Cidade retorno = null;
             try
             {
-                var NovaCidade = this.mapper.Map<ViewModel.CidadeViewModel, DTO.Cidade>(model);
+                var NovaCidade = this.mapper.Map<ViewModel.NovaCidadeViewModel, DTO.Cidade>(model);
                 retorno = this.repository.InsertCidadeEmpresa(NovaCidade, EmpresaID);
             }
             catch (Exception exception)
@@ -145,7 +161,7 @@ namespace api.portal.jenn.Business
             IEnumerable<Cidade> retorno = Enumerable.Empty<Cidade>();
             try
             {
-                retorno = this.repository.GetCidadeEmpresa();
+                retorno = this.repository.GetCidadeEmpresa(true);
             }
             catch (Exception exception)
             {
@@ -153,6 +169,34 @@ namespace api.portal.jenn.Business
                 throw;
             }
             return this.mapper.Map<IEnumerable<DTO.Cidade>, IEnumerable<ViewModel.CidadeViewModel>>(retorno);
+        }
+
+        public bool VincularEmpresaCidade(int CidadeID, int EmpresaID)
+        {
+            var retorno = false;
+            try
+            {
+                retorno = this.repository.VincularCidadeEmpresa(CidadeID, EmpresaID) > 0;
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+            }
+            return retorno;
+        }
+
+        public bool VincularClienteCidade(int CidadeID, int ClienteID)
+        {
+            var retorno = false;
+            try
+            {
+                retorno = this.repository.VincularCidadeCliente(CidadeID, ClienteID) > 0;
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+            }
+            return retorno;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace api.portal.jenn.Contract
 {
     public interface ICidadeRepository
     {
-
+        DTO.Cidade InsertCidade(DTO.Cidade model);
         DTO.Cidade InsertCidadeCliente(DTO.Cidade model, int ClienteID);
         DTO.Cidade InsertCidadeEmpresa(DTO.Cidade model, int EmpresaID);
 
@@ -21,6 +21,9 @@ namespace api.portal.jenn.Contract
 
         void UpdateCidadeCliente(DTO.Cidade model, int CidadeID, int ClienteID);
         void UpdateCidadeEmpresa(DTO.Cidade model, int CidadeID, int EmpresaID);
+
+        int VincularCidadeCliente( int CidadeID, int ClienteID);
+        int VincularCidadeEmpresa(int CidadeID, int EmpresaID);
 
         DTO.Cidade Detail( int CidadeID, bool lazzLoader = false);
         

@@ -36,58 +36,62 @@ namespace api.portal.jenn.Controllers
 
         }
 
-
-
-
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public   ICommandResult  Post([FromBody] LogonViewModel model)
+        public ICommandResult Post([FromBody] AutenticarLogonViewModel model)
         {
             CommandResult resultado = null;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var item =   this.logon.Inserir(model);
+                    var item = this.logon.Detalhar(c => c.Email == model.Email && c.Password == security.ComputeSha256Hash(model.Password));
 
                     if (item != null)
-                        resultado = new CommandResult(true, "Processado Com Sucesso", item,System.Net.HttpStatusCode.OK);
+                        resultado = new CommandResult(true, "Usuário Autenticado com Sucesso", this.token.GenerateToken(item), System.Net.HttpStatusCode.OK);
                     else
-                        resultado = new CommandResult(true, "Processado Com Sucesso", null,System.Net.HttpStatusCode.NoContent);
+                        resultado = new CommandResult(true, "Usuário ou senha Invalido", null, System.Net.HttpStatusCode.NoContent);
                 }
             }
             catch (Exception e)
             {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]",System.Net.HttpStatusCode.BadRequest);
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
 
             return resultado;
         }
-        
-        [HttpGet]
+
+
+        [HttpPost("CriarLogon")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public  ICommandResult  Get()
+        public ICommandResult CriarLogon([FromBody] NovoLogonViewModel model)
         {
             CommandResult resultado = null;
             try
             {
-                var item = this.logon.Selecionar();
+                if (ModelState.IsValid)
+                {
+                    var item = this.logon.Inserir(model);
 
-                if (item != null && item.Any())
-                    resultado = new CommandResult(true, "Processado Com Sucesso", item,System.Net.HttpStatusCode.OK);
-                else
-                    resultado = new CommandResult(true, "Processado Com Sucesso", null,System.Net.HttpStatusCode.NoContent);
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
             }
             catch (Exception e)
             {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]" ,System.Net.HttpStatusCode.BadRequest);
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
             }
 
             return resultado;
         }
+
+
+
     }
 }

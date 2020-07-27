@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.ViewModel
 {
-    public class RegiaoViewModel
+    public class RolesViewModel
     {
-    
-        public int RegiaoID { get; set; }     
-        public string Nome { get; set; }
-         
+        public string Role { get; set; }
     }
 }

@@ -154,19 +154,23 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                        ctx.Empresas.Select(c=> c.Matriz)
-                            .Include(c=> c.Cidade)
-                            .ThenInclude(c=> c.Ufs)
-                            .Include(c=> c.ProcedimentoEmpresas)
-                            .ThenInclude(c => c.Procedimento)
-                            .ThenInclude(c=> c.TipoProcedimento)
-                            .Include(c=> c.Fotos)
-                            .AsParallel().ForAll(
-                            item =>
-                            {
-                                retorno.Add(item);
-                            });
-                   
+                    retorno = (from p in ctx.Empresas
+                                  join e in ctx.Empresas
+                                  on p.EmpresaID equals e.MatrizID
+                                  select e)
+                                  .Include(c => c.Cidade)
+                                  .ThenInclude(c=> c.Regiao)
+                                  .Include(c=> c.Cidade)
+                                  .ThenInclude(c=> c.Regiao)
+                                  .Include(c=> c.ProcedimentoEmpresas)
+                                  .ThenInclude(c=> c.Procedimento)
+                                  .ThenInclude(c=> c.TipoProcedimento)
+                                  .Include(c => c.ProcedimentoEmpresas)
+                                  .ThenInclude(c=> c.PagamentoProcedimentoEmpresas)
+                                  .ThenInclude(c => c.Pagamento)
+
+                                  .ToList();
+                 
                 }
             }
             catch (Exception exception)

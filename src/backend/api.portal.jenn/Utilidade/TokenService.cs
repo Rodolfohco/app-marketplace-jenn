@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System; 
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -18,7 +19,7 @@ namespace api.portal.jenn.Utilidade
         {
             this.Configuration = _configuration;
         }
-        public string GenerateToken(LogonViewModel model)
+        public string GenerateToken(ConsultaLogonViewModel model)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("JwtConfig:Secret"));
@@ -27,11 +28,13 @@ namespace api.portal.jenn.Utilidade
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+
+              
+
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, model.Nome.ToString()),
-                    new Claim(ClaimTypes.Email, model.Email.ToString()),
-                    new Claim(ClaimTypes.Role, "usuario" )
+                    new Claim(ClaimTypes.Role, model.Papeis.SingleOrDefault().Role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Double.Parse(expirationInMinutes)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

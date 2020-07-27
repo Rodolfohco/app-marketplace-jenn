@@ -139,9 +139,9 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Empresas.Select(c => c.Cidade).Include(c => c.Ufs).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
+                        ctx.Cidades.Include(c => c.Ufs).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
                     else
-                        ctx.Empresas.Select(c => c.Cidade).AsParallel().ForAll(item => { retorno.Add(item); });
+                        ctx.Cidades.AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
@@ -150,6 +150,24 @@ namespace api.portal.jenn.Repository
                 throw;
             }
             return retorno;
+        }
+
+        public Cidade InsertCidade(Cidade model)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    ctx.Cidades.Add(model);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
         }
 
         public Cidade InsertCidadeCliente(Cidade model, int ClienteID)
@@ -232,13 +250,9 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     var item = Detail(CidadeID);
-                    if (item != null)
-                    {
-
+                    if (item != null)                   {
                         model.CidadeID = CidadeID;
-
                         ctx.Entry(item).State = EntityState.Modified;
-
                         ctx.Update(model);
                         ctx.SaveChanges();
                     }
@@ -249,6 +263,63 @@ namespace api.portal.jenn.Repository
                 this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
                 throw;
             }
+        }
+
+        public int VincularCidadeCliente(int CidadeID, int ClienteID)
+        {
+            var retorno = 0;
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var item = Detail(CidadeID);
+                    if (item != null)
+                    {
+                        var clie = ctx.Clientes.Where(c => c.ClienteID == ClienteID).SingleOrDefault();
+                        if (clie != null)
+                        {
+                            ctx.Entry(clie).State = EntityState.Modified;
+                            clie.Cidade = item;
+                            ctx.Clientes.Update(clie);
+                            retorno = ctx.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+        public int VincularCidadeEmpresa(int CidadeID, int EmpresaID)
+        {
+            var retorno = 0;
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var item = Detail(CidadeID);
+                    if (item != null)
+                    {
+                        var emp = ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).SingleOrDefault();
+                        if (emp != null)
+                        {
+                            ctx.Entry(emp).State = EntityState.Modified;
+                            emp.Cidade = item;
+                            ctx.Empresas.Update(emp);
+                            retorno = ctx.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
         }
     }
 }

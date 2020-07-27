@@ -16,9 +16,8 @@ namespace api.portal.jenn.Config
         public static void ConfigureBusiness(this IServiceCollection services)
         {
 
-            //services.AddSingleton<ILogonRepository, LogonRepository>();
-            //services.AddSingleton<ILogonBusiness, LogonBusiness>();
-
+            services.AddSingleton<ILogonRepository, LogonRepository>();
+            services.AddSingleton<ILogonBusiness, LogonBusiness>();
 
 
             services.AddSingleton<ICidadeBusiness, CidadeBusiness>();

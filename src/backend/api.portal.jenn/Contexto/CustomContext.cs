@@ -91,7 +91,7 @@ namespace api.portal.jenn.Contexto
                 entity.Property(e => e.Ativo).IsRequired();
                 entity.Property(e => e.Responsavel).IsRequired();
                 entity.Property(e => e.Logradouro).IsRequired();
-                entity.HasOne(k => k.Matriz).WithOne();
+                entity.HasOne(k => k.Matriz);
                 entity.Property(e => e.numero).IsRequired();
                 entity.Property(e => e.bairro).IsRequired();
                 entity.Property(e => e.cep).IsRequired();

@@ -8,6 +8,6 @@ namespace api.portal.jenn.Contract
 {
    public interface ITokenService
     {
-        string GenerateToken(LogonViewModel model);
+        string GenerateToken(ConsultaLogonViewModel model);
     }
 }
