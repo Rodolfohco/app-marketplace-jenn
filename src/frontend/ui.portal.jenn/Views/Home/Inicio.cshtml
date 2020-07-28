@@ -30,8 +30,8 @@
             <div class="col-xl-6 col-lg-4 col-md-5 col-6">
                 <h1>
                     <div class="header__background">
-                        <a href="index.html" title="Jenn"></a>
-                        <img class="header__background--logo" src="img/logo-jenn.png" alt="Logotipo Jenn" />
+                        <a href="@Url.Action("Inicio", "Home")" title="Jenn">
+                            <img class="header__background--logo" src="img/logo-jenn.png" alt="Logotipo Jenn" />
                         </a>
                     </div>
                 </h1>
@@ -41,6 +41,17 @@
             </div>
         </div>
     </header>
+    @if (ViewBag.Message != null)
+    {
+        <div class="col-xl-9 col-lg-7 col-md-7 col-6">
+            <div class="row">
+                <label class="form-check-label" for="defaultCheck2">
+                    @ViewBag.Message
+                </label>
+
+            </div>
+        </div>
+    }
 
     <main class="main">
         <section class="home">
@@ -85,44 +96,8 @@
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12">
                             <h4>Destaques para você</h4>
-                            <div class="list-dest slider">
-                                <div>
-                                    <div class="bx-dest">
-                                        <img src="img/icones/icone-corona.png" alt="">
-                                        <p>Testes para Covid-19 </p>
-                                        <p class="preco">A partir de <span>R$ 0,00</span></p>
-                                        <a href="" title="Ver mais Preços" class="btn btn-primary">Ver mais Preços</a>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div class="bx-dest">
-                                        <img src="img/icones/icone-sexagem.png" alt="">
-                                        <p>Testes para Covid-19 </p>
-                                        <p class="preco">A partir de <span>R$ 0,00</span></p>
-                                        <a href="" title="Ver mais Preços" class="btn btn-primary">Ver mais Preços</a>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div class="bx-dest">
-                                        <img src="img/icones/icone-toxicologico.png" alt="">
-                                        <p>Testes para Covid-19 </p>
-                                        <p class="preco">A partir de <span>R$ 0,00</span></p>
-                                        <a href="" title="Ver mais Preços" class="btn btn-primary">Ver mais Preços</a>
-                                    </div>
-
-                                </div>
-                                <div>
-                                    <div class="bx-dest">
-                                        <img src="img/icones/icone-corona.png" alt="">
-                                        <p>Testes para Covid-19 </p>
-                                        <p class="preco">A partir de <span>R$ 0,00</span></p>
-                                        <a href="" title="Ver mais Preços" class="btn btn-primary">Ver mais Preços</a>
-                                    </div>
-
-                                </div>
-                            </div>
+                            @await Component.InvokeAsync("ListaDestaqueTelaInicial" )
+                          
                         </div>
                     </div>
                 </div>

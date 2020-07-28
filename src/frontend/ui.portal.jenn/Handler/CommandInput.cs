@@ -9,6 +9,7 @@ namespace ui.portal.jenn.Handler
 {
     public class CommandInput : ICommandInput
     {
+        public string Token { get; set; }
         public bool Success { get; set; }
         public string Message { get; set; }
         public string UrlAction { get; set; }

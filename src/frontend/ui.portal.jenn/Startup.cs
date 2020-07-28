@@ -54,10 +54,17 @@ namespace ui.portal.jenn
               });
 
             services.AddSingleton<IEmpresaService, EmpresaService>();
+            services.AddSingleton<IProcedimentoEmpresaService, ProcedimentoEmpresaService>();
+
+        
             services.AddSingleton<IProdutoService, ProdutoService>();
 
             services.AddSingleton<ILogonService, LogonService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
+            services.AddSingleton<IContatoService, ContatoService>();
+           
 
             services.AddControllersWithViews();
             services.AddSingleton<ControleCache>();

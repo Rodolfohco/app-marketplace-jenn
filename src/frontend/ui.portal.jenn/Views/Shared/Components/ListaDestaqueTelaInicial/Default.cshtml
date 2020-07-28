@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ui.portal.jenn.ViewModel.ProcedimentoEmpresaViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="list-dest slider">
+        @foreach (var item in Model)
+        {
+            <div>
+                <div class="bx-dest">
+                    <img src="img/icones/icone-corona.png" alt="">
+
+                    <img src="@item.imagemMain" alt="@item.procedimentoEmpresaID">
+                    <p> @item.nome_pers</p>
+                    <p class="preco">A partir de <span>@item.preco_contra.ToString("C")</span></p>
+                    <a href="@item.procedimentoEmpresaID" title="Ver mais Preços" class="btn btn-primary">Ver mais Preços</a>
+                </div>
+
+            </div>
+
+        }
+    </div>
+}
+
+ 
