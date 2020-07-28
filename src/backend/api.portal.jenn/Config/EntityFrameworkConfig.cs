@@ -43,7 +43,7 @@ namespace api.portal.jenn.Config
                     }
                   );
             }
-
+            services.AddTransient<ClienteContextFactory>();
             services.AddTransient<EmpresaContextFactory>();
             services.AddTransient<ConvenioContextFactory>();
             services.AddTransient<ProcedimentoContextFactory>();

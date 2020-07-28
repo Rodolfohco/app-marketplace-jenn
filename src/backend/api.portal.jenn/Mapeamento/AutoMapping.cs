@@ -12,6 +12,14 @@ namespace api.portal.jenn.Mapeamento
     {
         public AutoMapping()
         {
+
+
+
+            CreateMap<NovoContatoViewModel, DTO.Contato>();
+
+            CreateMap<ContatoViewModel, DTO.Contato>();
+            CreateMap<DTO.Contato, ContatoViewModel>();
+
             CreateMap<DTO.Logon, NovoLogonViewModel>();
             CreateMap<NovoLogonViewModel, DTO.Logon>();
 

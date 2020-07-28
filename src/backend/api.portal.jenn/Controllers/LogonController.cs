@@ -40,17 +40,17 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult Post([FromBody] AutenticarLogonViewModel model)
+        public async Task<ICommandResult> Post([FromBody] AutenticarLogonViewModel model)
         {
             CommandResult resultado = null;
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var item = this.logon.Detalhar(c => c.Email == model.Email && c.Password == security.ComputeSha256Hash(model.Password));
+                    var item = await this.logon.DetalharAsync(model.Email, model.Password);
 
                     if (item != null)
-                        resultado = new CommandResult(true, "Usuário Autenticado com Sucesso", this.token.GenerateToken(item), System.Net.HttpStatusCode.OK);
+                        resultado = new CommandResult(true, "Usuário Autenticado com Sucesso", this.token.GenerateToken(item), item, System.Net.HttpStatusCode.OK);
                     else
                         resultado = new CommandResult(true, "Usuário ou senha Invalido", null, System.Net.HttpStatusCode.NoContent);
                 }

@@ -28,8 +28,7 @@ namespace api.portal.jenn.Business
         {
             this.mapper = _mapper;
             this.repository = _repository;
-            this._logger = logger;
-   
+            this._logger = logger;   
         }
 
      
@@ -48,14 +47,17 @@ namespace api.portal.jenn.Business
             }
         }
 
+        //public ConsultaLogonViewModel Detalhar(string usuario, string password)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-
-        public ConsultaLogonViewModel Detalhar(Expression<Func<DTO.Logon, bool>> where)
+        public async Task<ConsultaLogonViewModel> DetalharAsync(string usuario, string password)
         {
             Logon retorno = null;
             try
             {
-                retorno = this.repository.Detail(where);
+                retorno = await this.repository.DetailAsync(c => c.Email == usuario && c.Password == password);
             }
             catch (Exception exception)
             {

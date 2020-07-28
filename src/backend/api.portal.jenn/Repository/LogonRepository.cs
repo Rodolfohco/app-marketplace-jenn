@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace api.portal.jenn.Repository
 {
@@ -31,12 +32,12 @@ namespace api.portal.jenn.Repository
 
         public Logon Detail(Expression<Func<Logon, bool>> where)
         {
-            {
+           
                 Logon retorno = null;
                 try
                 {
                     using (var ctx = contexto.CreateDbContext(null))
-                    {
+                    { 
                         retorno = ctx.Logon.Include(c=> c.Papeis).Where(where).SingleOrDefault();
                     }
                 }
@@ -46,9 +47,25 @@ namespace api.portal.jenn.Repository
                     throw;
                 }
                 return retorno;
-            }
+           
         }
 
+        public async Task<Logon> DetailAsync(Expression<Func<Logon, bool>> where)
+        {
+
+            Logon retorno = null;
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                    retorno = await ctx.Logon.Include(c => c.Papeis).Where(where).FirstOrDefaultAsync();
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
 
         public void Dispose()
         {

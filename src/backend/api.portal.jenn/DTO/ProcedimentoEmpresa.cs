@@ -66,6 +66,8 @@ namespace api.portal.jenn.DTO
         [Column("atv_proced", Order = 14)]        
         public int Ativo { get; set; }
 
+        [Column("dest_proced")]
+        public int? Destaque { get; set; }
 
 
         [ForeignKey("cod_proced")]

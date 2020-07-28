@@ -306,8 +306,8 @@ namespace api.portal.jenn.Business
             PlanoProcedimentoEmpresa retorno = null;
             try
             {
-                var EmpresaNova = this.mapper.Map<ViewModel.PlanoProcedimentoEmpresaViewModel, DTO.PlanoProcedimentoEmpresa>(model);
-                retorno = this.repository.Insert(EmpresaNova);
+                var PlanoNovo = this.mapper.Map<ViewModel.PlanoProcedimentoEmpresaViewModel, DTO.PlanoProcedimentoEmpresa>(model);
+                retorno = this.repository.InsertPlanoProcedimentoEmpresa(PlanoNovo, model.ProcedimentoEmpresaID);
             }
             catch (Exception exception)
             {

@@ -11,6 +11,8 @@ namespace api.portal.jenn.Contract
 
         #region Metodos
         ViewModel.PlanoViewModel Inserir(ViewModel.PlanoViewModel model, int ConvenioID);
+
+  
         IEnumerable<ViewModel.PlanoViewModel> Selecionar();
         IEnumerable<ViewModel.PlanoViewModel> Selecionar(int ConvenioID);
         void Excluir(int ConvenioPlanoID, int ConvenioID);

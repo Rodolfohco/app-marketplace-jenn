@@ -363,6 +363,31 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
+        public PlanoProcedimentoEmpresa InsertPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresa model, int ProcedimentoID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var procedimentoEmpresa = ctx.ProcedimentoEmpresa.Include(x=> x.PlanoProcedimentoEmpresas).Where(x => x.ProcedimentoEmpresaID == ProcedimentoID).FirstOrDefault();
+                    procedimentoEmpresa.PlanoProcedimentoEmpresas.Add(model);
+
+                    ctx.Entry(procedimentoEmpresa).State = EntityState.Modified;
+
+                    ctx.ProcedimentoEmpresa.Update(procedimentoEmpresa);
+
+
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
         public void Update(Empresa model, int id)
         {
             try

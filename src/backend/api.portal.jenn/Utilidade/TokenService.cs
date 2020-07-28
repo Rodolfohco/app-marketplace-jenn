@@ -28,13 +28,10 @@ namespace api.portal.jenn.Utilidade
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-
-              
-
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, model.Nome.ToString()),
-                    new Claim(ClaimTypes.Role, model.Papeis.SingleOrDefault().Role)
+                    new Claim(ClaimTypes.Role,(model.Papeis!= null && model.Papeis.Any()) ? model.Papeis.SingleOrDefault().Role:"")
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(Double.Parse(expirationInMinutes)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

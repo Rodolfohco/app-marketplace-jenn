@@ -9,7 +9,7 @@ namespace api.portal.jenn.Contract
 {
     public interface ILogonRepository
     {
-     
+        Task<DTO.Logon> DetailAsync(Expression<Func<DTO.Logon, bool>> where);
         DTO.Logon Insert(DTO.Logon model, Cliente cliente);
         DTO.Logon Insert(DTO.Logon model);
         DTO.Logon Detail(Expression<Func<DTO.Logon, bool>> where);

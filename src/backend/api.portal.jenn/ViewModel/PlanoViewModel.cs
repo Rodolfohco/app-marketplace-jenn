@@ -46,5 +46,7 @@ namespace api.portal.jenn.ViewModel
     {
         public virtual PlanoViewModel Plano { get; set; }
 
+        public int ProcedimentoEmpresaID { get; set; }
+
     }
 }

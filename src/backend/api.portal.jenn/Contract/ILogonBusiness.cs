@@ -13,9 +13,12 @@ namespace api.portal.jenn.Contract
 
         #region Metodos
         ViewModel.ConsultaLogonViewModel Inserir(ViewModel.NovoLogonViewModel model);
-   
+  
         void Atualizar(ViewModel.NovoLogonViewModel model, int id);
-        ViewModel.ConsultaLogonViewModel Detalhar(Expression<Func<DTO.Logon, bool>> where);
+        //ViewModel.ConsultaLogonViewModel Detalhar(string usuario, string password);
+        Task<ConsultaLogonViewModel> DetalharAsync(string usuario, string password);
+
+
         #endregion
     }
 }
