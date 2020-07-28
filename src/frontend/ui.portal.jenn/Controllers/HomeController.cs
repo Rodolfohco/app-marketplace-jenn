@@ -26,21 +26,19 @@ namespace ui.portal.jenn.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IProdutoService produtoService;
         private readonly ILogonService logonService;
+        private readonly IContatoService contatoService;
         private readonly IMemoryCache cache;
-        private readonly ICommandResult resultado;
-        public HomeController(ILogger<HomeController> logger, IProdutoService _produtoService, ILogonService _logonService, ControleCache _cache)
+
+        public HomeController(ILogger<HomeController> logger, IProdutoService _produtoService, ILogonService _logonService, IContatoService _contatoService, ControleCache _cache)
         {
             this._logger = logger;
             this.produtoService = _produtoService;
             this.cache = _cache.Cache;
             this.logonService = _logonService;
-
-      
-
-
+            this.contatoService = _contatoService;
         }
 
-      
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -71,19 +69,13 @@ namespace ui.portal.jenn.Controllers
 
             return View(pesquisaViewModel);
         }
- 
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
-
-
-
-
 
 
         #region Metodos Logon / Central Ajuda
@@ -113,14 +105,14 @@ namespace ui.portal.jenn.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Autenticar(AutenticarLogonViewModel model)
+        public IActionResult Autenticar(AutenticarLogonViewModel model)
         {
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                    var autenticacao =   logonService.LocalizarUsuario(model);
+                    var autenticacao = logonService.LocalizarUsuario(model);
                     var retorno = autenticacao.Result;
 
                     AutenticacaoViewModel autenticado = new AutenticacaoViewModel(retorno);
@@ -142,10 +134,10 @@ namespace ui.portal.jenn.Controllers
                         var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
 
 
-                          HttpContext.SignInAsync(
-                         CookieAuthenticationDefaults.AuthenticationScheme,
-                         new ClaimsPrincipal(claimsIdentity),
-                         authProperties).Wait();
+                        HttpContext.SignInAsync(
+                       CookieAuthenticationDefaults.AuthenticationScheme,
+                       new ClaimsPrincipal(claimsIdentity),
+                       authProperties).Wait();
 
 
                         return RedirectToActionPermanent("MeuPainel", "Home");
@@ -170,12 +162,29 @@ namespace ui.portal.jenn.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Inicio", "Home");            
+            return RedirectToAction("Inicio", "Home");
         }
-       public async Task<IActionResult> AccessDenied()
+        public IActionResult AccessDenied()
         {
             return View();
+        }
 
+
+        public IActionResult QuemSomos()
+        {
+            return View();
+        }
+
+
+        public IActionResult TermosCondicoes()
+        {
+            return View();
+        }
+
+
+        public IActionResult SegurancaInformacao()
+        {
+            return View();
         }
 
 
@@ -186,11 +195,16 @@ namespace ui.portal.jenn.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Contato(ContatoViewModel model)
+        public async Task<IActionResult> Contato(ContatoViewModel model)
         {
             if (ModelState.IsValid)
             {
+                var contato = await contatoService.Novo(model);
 
+                if (contato != null && contato.Success)
+                    return RedirectToAction("Inicio");
+                else
+                    ModelState.AddModelError("Erro", contato.Message);
             }
             return View(model);
         }

@@ -3,7 +3,7 @@
 <div class="col-xl-12 col-lg-12 col-md-12">
     <div class="links">
 
-        @if (Model.Any())
+        @if (Model != null && Model.Any())
         {
             @foreach (var item in Model)
             {

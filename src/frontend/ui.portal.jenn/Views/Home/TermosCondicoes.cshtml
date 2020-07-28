@@ -2,7 +2,6 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +23,7 @@
     <title>Jenn</title>
 </head>
 
-<body class="page page-contato ">
+<body class="page page-termos">
     <div class="splash-left"></div>
     <div class="splash-right"></div>
     <header class="header">
@@ -39,32 +38,43 @@
             <div class="col-xl-9 col-lg-7 col-md-7 col-6">
                 <div clSass="header__top">
                     <div class="page-name">
-                        <h1>Entre em Contato</h1>
+                        <h1>Termos e Condicões</h1>
                     </div>
                     <div class="menu-header">
                         @await Component.InvokeAsync("TopoControleLink")
                     </div>
 
                 </div>
+
             </div>
-            </div>
-        </header>
+        </div>
+
+
+    </header>
+
     <main class="main">
-        <section class="contato page-interna">
+        <section class="termos page-interna">
             <div class="row">
                 <div class="col-xl-12">
                     <div class="content-page">
-                            @await Component.InvokeAsync("Contato")
+                        <p>Lorem ipsum sapien euismod ultricies pretium molestie commodo suspendisse nulla dui aenean conubia accumsan aenean porta, fermentum donec sapien purus arcu est quis lectus consectetur dapibus orci scelerisque cras diam. etiam a dictum metus cras et fusce lacinia lorem, ut libero massa senectus praesent id libero, dictumst consequat nec senectus ultrices augue turpis. risus blandit fames mollis scelerisque semper tellus enim suscipit malesuada, est ultrices lacus vestibulum ipsum fermentum convallis augue euismod felis, inceptos id inceptos quam ut curabitur turpis rutrum. venenatis tempor ligula cursus euismod tempor hendrerit placerat hendrerit vitae fames, platea cras volutpat auctor donec lectus elementum ante eros nec, quisque praesent non ultrices aptent porttitor eget sapien ornare.</p>
+                        <p>Vivamus curabitur enim sollicitudin ante luctus torquent lectus lacus facilisis turpis tempus, rhoncus risus pharetra torquent phasellus et viverra sollicitudin vitae suscipit bibendum viverra, commodo amet himenaeos amet lacinia platea nullam taciti sit ut. consectetur libero varius sapien torquent enim a aptent pharetra, adipiscing dictumst ac nostra sit tristique quisque iaculis, vitae sapien sagittis ultrices lorem vulputate lorem. enim ipsum pulvinar dictum torquent sodales etiam rhoncus ad, dapibus velit enim sit sagittis condimentum..</p>
+                        <p>Iaculis curabitur blandit ornare malesuada quis elit ipsum vitae curabitur, platea tortor condimentum interdum nulla et eros curabitur, at tincidunt odio posuere lorem egestas odio magna. vulputate felis luctus aptent cras odio donec praesent, platea inceptos orci mollis aenean vel, habitasse litora cursus sollicitudin nibh purus. netus malesuada consectetur iaculis urna habitasse conubia cras venenatis id, etiam pellentesque auctor accumsan inceptos erat mauris sem aliquam himenaeos, nisi libero eu dictumst aliquam euismod odio blandit. pharetra odio convallis nullam conubia augue interdum primis dictumst morbi proin primis justo sit, aliquet senectus ultricies vestibulum sagittis gravida tempus per iaculis diam viverra convallis euismod, nisi euismod accumsan dictum metus et malesuada ac pulvinar massa erat turpis.</p>
+
                     </div>
+
+
                 </div>
             </div>
         </section>
     </main>
 
+
     <footer class="footer">
         <div class="row">
             <div class="col-xl-6 col-lg-12 col-md-12">
                 @await Component.InvokeAsync("FooterParte1")
+
             </div>
             <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
                 @await Component.InvokeAsync("FooterParte2")

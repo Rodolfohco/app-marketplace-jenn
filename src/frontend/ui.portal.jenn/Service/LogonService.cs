@@ -83,25 +83,8 @@ namespace ui.portal.jenn.Service
         }
 
        
-
-        public Task<CommandResult> Detalhar(ConsultaLogonViewModel logon)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<CommandResult> Detalhar(ContatoViewModel contato)
-        {
-            try
-            {
-                var retorno = await this.service.DetailAsync(this.Converter(HttpMethod.Get, "",  contato));
-                return retorno;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
+ 
+     
         public async Task<CommandResult> LocalizarUsuario(AutenticarLogonViewModel model)
         {
             try
@@ -114,22 +97,6 @@ namespace ui.portal.jenn.Service
                 throw e;
             }
         }
-
-        public async Task<CommandResult> Novo(ContatoViewModel model)
-        {
-            try
-            {
-              
-
-                var retorno = await this.service.PostAsync(this.Converter(HttpMethod.Post, "/api/Logon/CriarLogon", model));
-                return retorno;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
         public async Task<CommandResult> Novo(NovoLogonViewModel model) 
         { 
          try

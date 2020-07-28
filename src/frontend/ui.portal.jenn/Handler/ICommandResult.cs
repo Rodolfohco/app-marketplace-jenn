@@ -18,7 +18,7 @@ namespace ui.portal.jenn.Handler
 
     public interface ICommandInput 
     {
-
+        string Token { get; set; }
         bool Success { get; set; }
         string Message { get; set; }
         string UrlAction { get; set; }

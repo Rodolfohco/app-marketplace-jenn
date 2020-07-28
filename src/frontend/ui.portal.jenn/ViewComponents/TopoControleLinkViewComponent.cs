@@ -26,11 +26,12 @@ namespace ui.portal.jenn.ViewComponents
         {
             _accessor = accessor;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync( )
         {
             InformacaoTopo model = new InformacaoTopo();
             model.Logado = false;
-            
+         
+
             if (GetClaimsIdentity().FirstOrDefault() != null)
             {
                 List<string> lst = _accessor.HttpContext.User.Identity.Name.ToString().Split(" ").ToList();
