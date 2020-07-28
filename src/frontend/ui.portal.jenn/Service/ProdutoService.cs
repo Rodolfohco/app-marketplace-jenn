@@ -116,15 +116,17 @@ namespace ui.portal.jenn.Service
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
             produtos = produtos.ToLower();
-            //List<Empresa> listas = dTOEmpresa.data.Select(p=>p.procedimentoEmpresas.Select(c=>c.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos)))).ToList();
-
 
             List<Empresa> listas = dTOEmpresa.data.ToList();
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
 
             foreach (var item in procedimentos)
-                listaFinal.Add(item.nome);
+            {
+                if (listaFinal.Find(n => n == item.nome) == null)
+                    listaFinal.Add(item.nome);
+            }
+                
 
             return listaFinal;
         }
@@ -145,11 +147,16 @@ namespace ui.portal.jenn.Service
                 {
                     if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))) != null)
                     {
-                        if (empresa.cidade.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades)))
-                        {
-                            if (listasCidades.Find(n=> n.nome.Contains(empresa.cidade.nome)) == null)
-                                listasCidades.Add(empresa.cidade);
+                        if (empresa.cidade != null)
+                        {   
+                            if (empresa.cidade.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades)))
+                            {
+                                if (listasCidades.Find(n=> n.nome.Contains(empresa.cidade.nome)) == null)
+                                    listasCidades.Add(empresa.cidade);
+                            }
+
                         }
+                        
                     }
                 }));
             }
@@ -182,16 +189,20 @@ namespace ui.portal.jenn.Service
                 {
                     if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))) != null)
                     {
-                        if (empresa.cidade.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidade)))
+                        if (empresa.cidade != null)
                         {
-                            if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
-                                listasEmpresas.Add(empresa);
+                            if (empresa.cidade.nome.Contains(localidade))
+                            {
+                                if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
+                                    listasEmpresas.Add(empresa);
+                            }
                         }
                     }
                 }));
             }
             else if(localidade != null)
             {
+                localidade = localidade.ToLower();
                 listasEmpresas = lista.Where(c => c.cidade.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidade))).ToList();
             }
             else
@@ -208,11 +219,7 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-<<<<<<< HEAD
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa").Result)
-=======
                 using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
->>>>>>> a6244138870ba5ca2aeaab8f54ce3ea73698a84f
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -317,5 +324,91 @@ namespace ui.portal.jenn.Service
 
             return lista;
         }
+
+        public List<string> BuscarProcedimentos()
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
+
+            foreach (var item in procedimentos)
+            {
+                if (listaFinal.Find(n => n == item.nome) == null)
+                    listaFinal.Add(item.nome);
+            }
+
+
+            return listaFinal;
+        }
+
+        public List<string> BuscarPagamentos()
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            List<PagamentoProcedimentoEmpresa> pagamentoProcedimentoEmpresas = procedimentoEmpresas.SelectMany(p => p.pagamentoProcedimentoEmpresas).ToList();
+
+            foreach (var item in pagamentoProcedimentoEmpresas)
+            {
+                if(item.pagamento != null)
+                    if (listaFinal.Find(n => n == item.pagamento.nome) == null)
+                        listaFinal.Add(item.pagamento.nome);
+            }
+
+            return listaFinal;
+        }
+
+        public List<Empresa> BuscarServicosPorDetalhes(List<string> servicos)
+        {
+            List<Empresa> lista = new List<Empresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
+            {
+                if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
+                {
+                    for (int i = 0; i < servicos.Count; i++)
+                    {
+                        if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.ToLower().Contains(servicos[i])).Count() > 0)
+                        {                           
+                            if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
+                                lista.Add(empresa);                               
+                        }
+                    }
+                }      
+            }));
+
+            return lista;
+        }
+
+ 
+        public List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos)
+        {
+            List<Empresa> lista = new List<Empresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
+            {
+                if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
+                {
+                    for (int i = 0; i < pagamentos.Count; i++)
+                    {
+                        if (empresa.procedimentoEmpresas.SelectMany(x => x.pagamentoProcedimentoEmpresas).Select(x => x.pagamento).Where(c => c.nome.ToLower().Contains(pagamentos[i])).Count() > 0)
+                        {
+                            if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
+                                lista.Add(empresa);
+                        }
+                    }
+                }
+            }));
+
+            return lista;
+        }
+         
     }
 }
