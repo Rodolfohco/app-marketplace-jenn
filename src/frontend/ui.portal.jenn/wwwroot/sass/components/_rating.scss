@@ -1,0 +1,43 @@
+.rating {
+    border: 0;
+    line-height: 1.8rem;
+    display: flex;
+    a{
+        color: #acb2bd;
+        text-decoration: none;
+        margin-left: 2%;
+        font-weight: 500;
+        font-size: 1.4rem;
+    }
+  }
+
+ 
+  .rating input, 
+  .rating label > span {
+      position: absolute !important;
+      height: 1px; 
+      width: 1px;
+      overflow: hidden;
+      clip: rect(1px, 1px, 1px, 1px);
+      white-space: nowrap;
+  }
+  .rating span label:before {
+    content: '\01F7CA';
+    display: inline-block;
+    font-size: 1.8rem;
+    width: 1.4rem;
+    text-align: center;
+    color: #71dda1; /* All stars start out with color */
+  }
+  .rating span label:hover:before {
+  
+  }
+  .rating input:checked ~ label:before {
+    color: #919191; /* Grey out stars after the checked option */
+  }
+  .rating > span:hover > label:before {
+    color: #71dda1; /* Recolor all stars on the parent span's hover */
+  }
+  .rating input:hover ~ label:before {
+    color: #919191; /* Grey out stars after the hovered star */
+  }

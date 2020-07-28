@@ -1,0 +1,159 @@
+﻿@model ui.portal.jenn.ViewModel.NovoLogonViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/icon-font.css">
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" type="/image/png" href="/img/favicon.png">
+
+    <title>Jenn</title>
+</head>
+
+<body class="page page-contato ">
+    <div class="splash-left"></div>
+    <div class="splash-right"></div>
+    <header class="header">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-6">
+                <div class="header__background">
+                    <a href="index.html" title="Jenn"></a>
+                    <img class="header__background--logo" src="/img/logo-jenn.png" alt="Logotipo Jenn" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-7 col-md-7 col-6">
+                <div clSass="header__top">
+                    <div class="menu-header">
+                        @await Component.InvokeAsync("TopoControleLink")
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+
+    <main class="main">
+        <section class="contato cadastro page-interna">
+            <div class="content-page">
+                <h1>Crie sua conta</h1>
+                <p>Você sempre pode fazer o login com <a href="" title="">Facebook</a> ou acessar com <a href="" title="">Google</a></p>
+                <div class="line"></div>
+                <span class="or">ou</span>
+                <form asp-action="Cadastrar" method="post" asp-antiforgery="true" class="f-pages">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="InputNome">Nome Completo*</label>
+                                <input asp-for="Nome" type="text" class="form-control" id="InputNome" aria-describedby="emailHelp" placeholder="Digite seu nome completo" required>
+
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Endereço de Email*</label>
+                                <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Digite seu endereço email" required>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group">
+                                <label for="InputPassword">Crie uma senha*</label>
+                                <input asp-for="Password" class="form-control" id="InputPassword" aria-describedby="emailHelp" required />
+                                <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" class="icon-eye"></i></button>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group">
+                                <label for="InputPassword2">Repita a senha*</label>
+                                <input asp-for="ConfirmaPassword" class="form-control" id="InputPassword2" aria-describedby="emailHelp" required />
+
+                                <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" class="icon-eye"></i></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" asp-for="Concordo" for="gridCheck">
+                                    Eu aceito os <a href="" title="">termos e condições </a> e a <a href="" title="">política de privacidade.</a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button disabled id="subButon" type="submit" class="btn btn-primary">Enviar</button>
+
+                    <p class="txt-p">* Campo Obrigatório</p>
+                    <div class="validation-summary-valid" data-valmsg-summary="true">
+                        <div class="txt-p" asp-validation-summary="All"></div>*
+                    </div>
+
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="row">
+            <div class="col-xl-6 col-lg-12 col-md-12">
+                @await Component.InvokeAsync("FooterParte1")
+
+            </div>
+            <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
+                @await Component.InvokeAsync("FooterParte2")
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/js/script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#subButon").attr("disabled", true);
+            $("#gridCheck").change(function () {
+                if ($(this).prop("checked") == true) {
+                    $("#subButon").removeAttr("disabled");
+                }
+                else {
+                    $("#subButon").attr("disabled", true);
+                }
+            }
+            );
+        });
+
+    </script>
+</body>
+</html> 

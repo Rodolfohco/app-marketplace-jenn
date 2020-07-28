@@ -52,7 +52,7 @@ namespace ui.portal.jenn.Service
                     retorno =  JsonConvert.DeserializeObject<CommandResult>(responseStream);
                 }
                 else
-                    retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(), null,
+                    retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(),"", null,
                         httpResponse.StatusCode);
             }
             return retorno;
@@ -73,7 +73,7 @@ namespace ui.portal.jenn.Service
                         retorno = JsonConvert.DeserializeObject<CommandResult>(responseStream);
                     }
                     else
-                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(), null, HttpStatusCode.BadRequest);
+                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(),"", null, HttpStatusCode.BadRequest);
                 }
             }
             catch (Exception exception)
@@ -101,7 +101,7 @@ namespace ui.portal.jenn.Service
                             retorno = JsonConvert.DeserializeObject<CommandResult>(responseStream);
                     }
                     else
-                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(), null, HttpStatusCode.BadRequest );
+                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(),"", null, HttpStatusCode.BadRequest );
                 }
             }
             catch (Exception exception)

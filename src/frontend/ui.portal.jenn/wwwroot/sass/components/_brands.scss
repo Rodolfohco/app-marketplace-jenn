@@ -1,0 +1,48 @@
+.brands{
+    margin-top: 3.5rem;
+    float: left;
+    width: 55%;
+    padding-left: 7px;
+
+    @include notebook{    
+        margin-top: 3.5rem;
+        width: 49%;
+    }
+    @include netbook{
+        margin-top: 2.5rem;
+        width: 43%;
+    }
+    @include tablet{
+        display: none;
+    }
+    .nav{
+        li{
+            padding-right: toRem(40);
+            position: relative;
+            a{
+                color: $color-white;
+                font-size: toRem(22);
+                font-weight: 500;
+                text-transform: uppercase;
+                @include notebook{
+                    font-size: 1.1rem;
+                }
+            }
+            &:after{
+                content: '';
+                background-image: url('../img/bullets-brands.png');
+                width: 7px;
+                height: 7px;
+                top: 1rem;
+                display: block;
+                position: absolute;
+                right: 1rem;
+            }
+            &:last-child{
+                &:after{
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@
    padding: toRem(5) 0 toRem(5) toRem(30) ;
    border-radius: 40px;
    max-width: 600px;
-   @include mobile{
+   @include tablet{
        display: none;
     
    }
@@ -15,6 +15,10 @@
             font-size: toRem(20);
             text-transform: uppercase;
             padding: toRem(15) toRem(20);
+            @include notebook{
+                font-size: 1.1rem;
+                padding: 0.9375rem 1rem;
+            }
        }
        &.last-nav{
             background-color: $color-primary;  
@@ -36,13 +40,17 @@
     width:35px;
     position:absolute;
     margin:2rem;
-    right:0;
-    top:0;
+    right:20px;
+    top:40px;
     z-index:9999;
     display: none;
    
-    @include mobile{
+    @include tablet{
         display: block;
+    }
+    @include mobile{
+        top: 0;
+        right: 0;
     }
     cursor:pointer;
     width:35px;

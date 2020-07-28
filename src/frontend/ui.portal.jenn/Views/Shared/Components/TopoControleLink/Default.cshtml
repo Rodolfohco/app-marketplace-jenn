@@ -1,0 +1,42 @@
+﻿
+@model ui.portal.jenn.ViewModel.InformacaoTopo
+
+<form method="post" asp-controller="Home" id="form_topo" asp-action="Logout">
+    <ul class="nav navigation">
+
+        <li class="nav-item"><a class="nav-link" href="@Url.Action( "CentralAjuda", "Home")" title="Precisa de ajuda">Precisa de ajuda</a></li>
+
+        @if (Model.Logado)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="#" onClick="document.getElementById('form_topo').submit();" title="Sair">
+                    Sair
+
+                </a>
+            </li>
+            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Olá,  @Model.Nome</a></li>
+           
+        }
+        else
+        {
+            <li class="nav-item"><a class="nav-link" href="@Url.Action( "Cadastrar", "Home")" title="Cadastrar">Cadastrar</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action("Autenticar", "Home")" title="Entrar">Entrar</a></li>
+            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Você presta serviços</a></li>
+        }
+    </ul>
+    <div class="mobile-nav-button">
+        <div class="mobile-nav-button__line"></div>
+        <div class="mobile-nav-button__line"></div>
+        <div class="mobile-nav-button__line"></div>
+    </div>
+
+    <nav class="mobile-menu">
+        <ul>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action(  "CentralAjuda", "Home")" title="Precisa de ajuda">Precisa de ajuda</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action(  "Cadastrar", "Home")" title="Cadastrar">Cadastrar</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action(  "Autenticar", "Home")" title="Entrar">Entrar</a></li>
+            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Você presta serviços</a></li>
+        </ul>
+    </nav>
+
+</form>

@@ -1,160 +1,154 @@
 .card {
-
-    // FUNCTIONALITY
-    perspective: 150rem;
-    -moz-perspective: 150rem;
-    position: relative;
-    height: 52rem;
-    
-    &__side {
-        height: 52rem;
-        transition: all .8s ease;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        backface-visibility: hidden;
-        border-radius: 3px;
-        overflow: hidden;
-        box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
-
-        &--front {
-            background-color: $color-white;
+    background-color: $color-white;
+    width: 100%;
+    padding: toRem(15);
+    border-radius: 10px;
+    img{
+        border-radius: 10px;
+        max-width: 100%;
+    }
+    h3{
+        color: #2c313b;
+        font-size: toRem(38);
+        font-weight: 700;
+        margin-top: toRem(20);
+        img{
+            margin-left: 2%;
         }
-
-        &--back {
-            transform: rotateY(180deg);
-
-            &-1 {
-                background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
+    }
+    p{
+        color: #2c313b;
+        font-weight: 500;
+    }
+    .info{
+        display: flex;
+        align-content: center;
+        margin-top: toRem(20);
+        .ico{
+            margin-right: 2%;
+        }
+        .content-info{
+            h4{
+                color: #2c313b;
+                font-size: toRem(25);
+                font-weight: 700;
+                margin: 0;
+                padding: 0;
             }
-
-            &-2 {
-                background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
-            }
-
-            &-3 {
-                background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark);
-            }
-        }
-    }
-  
-
-    &:hover &__side--front {
-        transform: rotateY(-180deg);
-    }
-
-    &:hover &__side--back {
-        transform: rotateY(0);
-    }
-
-
-    // FRONT SIDE STYLING
-    &__picture {
-        background-size: cover;
-        height: 23rem;
-        background-blend-mode: screen;
-        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        
-        &--1 {
-            background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark), 
-            url(../img/nat-5.jpg);
-        }
-
-        &--2 {
-            background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark), 
-            url(../img/nat-6.jpg);
-        }
-
-        &--3 {
-            background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark), 
-            url(../img/nat-7.jpg);
-        }
-    }
-
-    &__heading {
-        font-size: 2.8rem;
-        font-weight: 300;
-        text-transform: uppercase;
-        text-align: right;
-        color: $color-white;
-        position: absolute;
-        top: 12rem;
-        right: 2rem;
-        width: 75%;
-    
-    }
-
-    &__heading-span {
-        padding: 1rem 1.5rem;
-        -webkit-box-decoration-break: clone;
-        box-decoration-break: clone;
-
-        &--1 {
-            background-image: linear-gradient(to right bottom, 
-            rgba($color-secondary-light, .85), 
-            rgba($color-secondary-dark, .85));
-        }
-
-        &--2 {
-            background-image: linear-gradient(to right bottom, 
-            rgba($color-primary-light, .85), 
-            rgba($color-primary-dark, .85));
-        }
-
-        &--3 {
-            background-image: linear-gradient(to right bottom, 
-            rgba($color-tertiary-light, .85), 
-            rgba($color-tertiary-dark, .85));
-        }
-    }
-
-    &__details {
-        padding: 3rem;
-
-        ul {
-            list-style: none;
-            width: 80%;
-            margin: 0 auto;
-
-            li {
-                text-align: center;
-                font-size: 1.5rem;
-                padding: 1rem;
-
-                &:not(:last-child) {
-                    border-bottom: 1px solid $color-grey-light-2;
-                }
+            a{
+                color: #71dda1;
+                text-decoration: underline;
             }
         }
     }
-
-    // FRONT SIDE STYLING
-    &__cta {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+    .calendar{
         width: 90%;
-        text-align: center;
+        margin: 0 auto;
+        @include notebook{
+            width: 100%;;
+        }
+        h4{
+            color: #2c313b;
+            font-size: toRem(28);
+            font-weight: 700;
+            margin: 0;
+            padding: 2rem 0 0 0; 
+            @include notebook{
+                padding: 1rem 0 0 0;
+            }
+        }
+        p{
+            font-size: toRem(20);
+        }
+        span{
+            display: block;
+            width: 96%;
+            background: #c8ccd4;
+            margin: 4%;
+            font-size: 1.25rem;
+            text-align: center;
+            padding: 3px;
+            font-weight: 500;
+            &.active{
+                background-color: #71dda1;
+                color: #ffffff;
+            }
+        }
+        .slick-next {
+            right: -18px;
+            top: 13px;
+            @include notebook{
+                right: 0px;
+            }
+        }
+        .slick-prev {
+            left: -18px;
+            top: 13px;
+            @include notebook{
+                left: 0px;
+            }
+        }
+        .slick-prev:before, .slick-next:before{
+            color: #000;
+        }
     }
+    &.card-exame{
+        margin: 0 auto toRem(50) auto;
+        width: 80%;
+        @include notebook{
+            width: 98%;
+        }
+        .btn-content{
+            position: relative;
+            .btn-ativo{
+                background: #eaae7d;
+            }
+            .box-convenios{ 
+                border: 5px solid #eaae7d;
+                background: #ffffff;
+                padding: 2rem;
+                position: absolute;
+                width: 350px;
+                left: 132px;
+                top: 66px;
+                border-radius: 5px;
+                z-index: 99;
+                display: none;
+                @include mobile{
+                    left: 0;
+                    width: 100%;
+                    top: 128px;
+                }
+                .form-group{
+                    position: relative;
+                    &:after{
+                        content: '';
+                        background-image: url('../img/exames/icon-lupa.png');
+                        width: 17px;
+                        height: 16px;
+                        top: 1.2rem;
+                        display: block;
+                        position: absolute;
+                        right: 1rem;
+                      }
+                }
+                .form-control{
+                    font-weight: 700;
+                    font-size: 1.1rem;
+                    height: 40px;
+                    color: rgb(44, 49, 59);
+                    padding: 0px 1.875rem;
+                    border: 1px solid #eaae7d;
+                    border-radius: 5px;
+                    position: relative;
+                   
+                }
+                &.box-ativo{
+                    display: block;
+                }
 
-    &__price-box {
-        text-align: center;
-        color: $color-white;
-        margin-bottom: 8rem;
-    }
-
-    &__price-only {
-        font-size: 1.4rem;
-        text-transform: uppercase;
-    }
-
-    &__price-value {
-        font-size: 6rem;
-        font-weight: 100;
+            }
+        }
+       
     }
 }

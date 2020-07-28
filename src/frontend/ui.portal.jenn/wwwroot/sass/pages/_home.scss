@@ -93,6 +93,7 @@
         font-size: toRem(30);
         display: block;
         margin-top: toRem(35);
+        margin-bottom: 2rem;
     }
     .list-dest{
         width: 85%;
@@ -112,6 +113,9 @@
             position: relative;
             overflow: hidden;
             height: 118px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             img{
                 position: absolute;
                 left: -35px;
@@ -149,6 +153,7 @@
                 width: 60%;
                 @include notebook{
                     font-size: 1.1875rem;
+                    margin-left: 11.125rem;
                     width: 52%;
                 }
 
@@ -180,7 +185,5 @@
             left: -18px;
         }
     }
-    .slick-initialized .slick-slide{
-        outline: none;
-    }
+   
 }

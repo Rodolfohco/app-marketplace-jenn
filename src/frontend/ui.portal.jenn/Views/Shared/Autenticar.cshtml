@@ -1,0 +1,129 @@
+﻿
+@model ui.portal.jenn.ViewModel.AutenticarLogonViewModel
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/icon-font.css">
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+
+    <title>Jenn</title>
+</head>
+
+<body class="page page-contato ">
+    <div class="splash-left"></div>
+    <div class="splash-right"></div>
+    <header class="header">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-6">
+                <div class="header__background">
+                    <a href="index.html" title="Jenn"></a>
+                    <img class="header__background--logo" src="/img/logo-jenn.png" alt="Logotipo Jenn" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-7 col-md-7 col-6">
+                <div clSass="header__top">
+                    <div class="menu-header">
+                        @await Component.InvokeAsync("TopoControleLink")
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="main">
+        <section class="contato cadastro page-interna">
+            <div class="content-page">
+                <h1>Login</h1>
+                <p>Para continuar, inicie a sessão com sua conta.</p>
+
+
+                <form asp-action="Autenticar" method="post" asp-antiforgery="true" class="f-pages">
+                    <div class="row">
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Endereço de Email</label>
+                                <input asp-for="Email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seu Email" required>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Senha</label>
+                                <input asp-for="Password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Sua senha" required>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </form>
+                <h2>@ViewData["Message"]</h2>
+                <p class="txt-p"><a href="" title="">Esqueçeu a senha? </a></p>
+                <div class="line"></div>
+                <span class="or">ou</span>
+                <div class="login-social">
+                    <div class="content-login-social c-f">
+                        <a href="" title="">
+                            <img src="/img/contato/icon-facebook.png" />
+                            <span>Fazer login com o Facebook</span>
+                        </a>
+                    </div>
+                    <div class="content-login-social c-g">
+                        <a href="" title="">
+                            <img src="/img/contato//icon-gmail.png" />
+                            <span>Fazer login com o Google</span>
+                        </a>
+                    </div>
+                </div>
+                <p class="txt-p">Ainda não tem conta? <a href="Cadastrar" title="">Faça seu cadastro</a></p>
+
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="row">
+            <div class="col-xl-6 col-lg-12 col-md-12">
+                @await Component.InvokeAsync("FooterParte1")
+
+            </div>
+            <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
+                @await Component.InvokeAsync("FooterParte2")
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/js/script.js"></script>
+</body>
+</html>

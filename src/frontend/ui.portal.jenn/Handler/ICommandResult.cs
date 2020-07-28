@@ -10,6 +10,7 @@ namespace ui.portal.jenn.Handler
     public interface ICommandResult
     {
         HttpStatusCode Status { get; set; }
+        string Token { get; set; }
         bool Success { get; set; }
         string Message { get; set; }
         object Data { get; set; }
@@ -17,6 +18,7 @@ namespace ui.portal.jenn.Handler
 
     public interface ICommandInput 
     {
+
         bool Success { get; set; }
         string Message { get; set; }
         string UrlAction { get; set; }

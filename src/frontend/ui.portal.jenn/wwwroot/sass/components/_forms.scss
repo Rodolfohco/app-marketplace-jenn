@@ -1,10 +1,10 @@
 .form{
      margin-top: toRem(55);
      margin-left: toRem(25);
-    input{
-
+    .btn{
+      margin-top: 0!important;
     }
-   .form-control{
+   .form-control,select{
         color: #2c313b;
         font-weight: 700;
         font-size: toRem(28);
@@ -35,3 +35,224 @@
      font-weight: 700;
      font-size: toRem(28);
    }
+
+   .col-select{
+    width: 19%;
+    float: left;
+    margin: 0 0.5%;
+    margin-top: -143px;
+    position: relative;
+    @include tablet{
+          margin-top: -58px;
+          
+    }
+    @include tablet{
+      margin-top: 40px;
+      width: 45%;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+    }
+    @include mobile{
+      width: 100%;
+    }
+    .disabled{
+      pointer-events: none;
+      color: #ccc;
+
+        &:after{
+          color: #ccc;
+          opacity: 0.5;
+
+        }
+      
+    }
+   }
+  .item-select{
+    display: block;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    font-weight: 700;
+    font-size: 1.55rem;
+    padding: 1rem 0 1rem 0;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    @include notebook{
+      font-size: 1.25rem;
+    }
+    @include mobile{
+      width: 85%;
+      margin: 0 auto;
+    }
+    &:after{
+      content: '';
+      background-image: url('../img/exames/icon-select.png');
+      width: 11px;
+      height: 9px;
+      top: 1.8rem;
+      display: block;
+      position: absolute;
+      right: 1rem;
+    }
+    span{
+      padding: 0 1rem;
+      @include notebook{
+        
+        padding: 0 0 0 1rem;
+
+      }
+    }
+    &.item-filtro{
+      text-align: center;
+      &:before{
+        content: '';
+        background-image: url('../img/exames/icon-filtros.png');
+        width: 15px;
+        height: 13px;
+        top: 1.4rem;
+        display: block;
+        position: absolute;
+        left: 1rem;
+      }
+    }
+}
+.content-select{
+  background: #ffffff;
+  padding: 1.5rem 0 0 0;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  z-index: 999;
+  top: 60px;
+  display: none;
+  
+  @include mobile{
+    width: 100%;
+  }
+   
+   .search{
+      margin: 0 0 1rem 0;
+      padding: 0 1.2rem;
+   }
+   input[type='text']{
+    width: 100%;
+    display: block;
+    border: 2px solid #71dda1;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    color: #71dda1;
+    @include input-placeholder(#71dda1);
+   }
+   .list-check{
+   
+     .content-list{
+      font-weight: 500;
+      font-size: 1.5rem;
+      color: #2c313b !important;
+      margin-left: 0;
+      top: 3px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0 1.2rem;
+      input{
+        margin: 0;
+      }
+      label{
+        margin-left: 20px;
+      }
+     }
+   }
+   .action-list{
+      padding:  2rem 1rem;
+      margin-top: toRem(30);
+      background-color: #eceef2;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .link{
+        color: #2c313b;
+        text-decoration: underline;
+      }
+      .btn-secondary{
+        background: #eaae7d;
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+      .link{
+        font-size: 1.2rem;
+        font-weight: 700;
+        
+      }
+   }
+}
+
+
+.accordion{
+	transform: translateZ(0);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.accordion > .accordion-toggle{
+	position: absolute;
+	opacity: 0;
+	display: none;
+}
+
+.accordion > label{
+	position: relative;
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 20px;
+	font-size: 14px;
+	font-weight: 700;
+	border-top: 1px solid #ddd;
+	background: #fff;
+	cursor: pointer;
+}
+
+.accordion > label:after {
+   content: '';
+      background-image: url('../img/exames/icon-select.png');
+      width: 11px;
+      height: 9px;
+      top: 1.8rem;
+      display: block;
+      position: absolute;
+      right: 1rem;
+
+  transition: .3s transform;
+}
+
+.accordion > section{
+	height: 0;
+	transition: .3s all;
+	overflow: hidden;
+}
+
+.accordion > .accordion-toggle:checked ~ label:after{
+ transform: rotate(180deg);
+}
+
+.accordion > .accordion-toggle:checked ~ section{
+  height: 200px;
+}
+
+.accordion > section p {
+  margin: 15px 0;
+  padding: 0 20px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+.form-group{
+  label{
+    
+  }
+}

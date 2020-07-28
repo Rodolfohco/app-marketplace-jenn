@@ -1,0 +1,80 @@
+/* Accordion styles */
+.tabs {
+    margin-top: toRem(60);
+    overflow: hidden;
+    input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+      }
+    label{
+        margin:0;
+    }
+  }
+  .tab {
+    width: 100%;
+    color: white;
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    &-label {
+      display: flex;
+      justify-content: space-between;  
+      padding: 1em 5rem;
+      background: $midnight;
+      font-weight: 700;
+      border-radius: 10px;
+      font-size: toRem(30);
+      cursor: pointer;
+      /* Icon */
+      &:hover {
+        background: darken($midnight, 10%);
+      }
+      &::after {
+        content: "\276F";
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        transition: all .35s;
+        position: absolute;
+        left: 30px;
+        color: #eaae7d;
+      }
+    }
+    &-content {
+      max-height: 0;
+      padding: 0 1em;
+      background: $midnight;
+      transition: all .35s;
+      color: $color-white;
+      font-weight: 500;
+    
+    }
+    &-close {
+      display: flex;
+      justify-content: flex-end;
+      padding: 1em;
+      font-size: 0.75em;
+      background: $midnight;
+      cursor: pointer;
+      &:hover {
+        background: darken($midnight, 10%);
+      }
+    }
+  }
+  
+  // :checked
+  input:checked {
+    + .tab-label {
+      background: darken($midnight, 10%);
+      &::after {
+        transform: rotate(90deg);
+      }
+    }
+    ~ .tab-content {
+      max-height: 100vh;
+      padding: 1em 5rem;
+      position: relative;
+      top: -8px;
+    }
+  }

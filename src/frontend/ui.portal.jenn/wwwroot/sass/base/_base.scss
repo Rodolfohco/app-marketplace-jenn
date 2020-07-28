@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: inherit;
+    outline: none;
 }
 
 html {
@@ -14,6 +15,7 @@ html {
 body {
     box-sizing: border-box;
     position: relative;
+    background-color: $color-primary;
     @include netbook{
         background-color: $color-primary;
     }
@@ -21,4 +23,69 @@ body {
         overflow-x: hidden;
     }
   
+}
+.slick-initialized .slick-slide{
+    outline: none;
+}
+.page{
+    
+    .footer{
+        position: relative;
+    }
+}
+.ativo{
+    display: block!important;
+}
+.f-pages{
+    margin-top: toRem(45);
+    label{
+        color: #fff;
+        font-size: toRem(30);
+        font-weight: 500;
+        margin-bottom: toRem(10);
+    }
+    input,textarea{
+        padding: 2.25rem;
+        height: 50px;
+        font-size: 17px;
+        border-radius: 10px;
+        color: #c8ccd4;
+        @include input-placeholder(#c8ccd4);
+        position: relative;
+        
+    }
+    textarea{
+        height: 150px;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .btn{
+        width: 100%;
+        border-radius:0;
+        background: #71dda1;
+        font-size: 1.875rem!important;
+    }
+}
+.icon-eye{
+    background-image: url('../img/contato/icon-eye.png');
+    width: 26px;
+    height: 14px;
+    position: absolute;
+}
+#btnToggle{
+    background: #fff;
+    width: 50px;
+    height: 47px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #ccc;
+    position: absolute;
+    top: 39px;
+    right: 20px;
+    outline: none;
 }
