@@ -39,47 +39,32 @@
             <div class="col-xl-9 col-lg-7 col-md-7 col-6">
                 <div clSass="header__top">
                     <div class="page-name">
-                        <h1>Entre em Contato</h1>
+                        <h1>Central de Ajuda</h1>
                     </div>
                     <div class="menu-header">
-                        <ul class="nav navigation">
-                            <li class="nav-item"><a class="nav-link" href="" title="Precisa de ajuda">Precisa de ajuda</a></li>
-                            <li class="nav-item"><a class="nav-link" href="" title="Cadastrar">Cadastrar</a></li>
-                            <li class="nav-item"><a class="nav-link" href="" title="Entrar">Entrar</a></li>
-                            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Você presta serviços</a></li>
-                        </ul>
-                        <div class="mobile-nav-button">
-                            <div class="mobile-nav-button__line"></div>
-                            <div class="mobile-nav-button__line"></div>
-                            <div class="mobile-nav-button__line"></div>
-                        </div>
-
-                        <nav class="mobile-menu">
-                            <ul>
-                                <li class="nav-item"><a class="nav-link" href="" title="Precisa de ajuda">Precisa de ajuda</a></li>
-                                <li class="nav-item"><a class="nav-link" href="" title="Cadastrar">Cadastrar</a></li>
-                                <li class="nav-item"><a class="nav-link" href="" title="Entrar">Entrar</a></li>
-                                <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Você presta serviços</a></li>
-                            </ul>
-                        </nav>
+                        @await Component.InvokeAsync("TopoControleLink")
                     </div>
 
                 </div>
-
             </div>
-        </div>
-
-
-    </header>
+            </div>
+        </header>
     <main class="main">
-        @await Component.InvokeAsync("Contato")
+        <section class="contato page-interna">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="content-page">
+                            @await Component.InvokeAsync("Contato")
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
         <div class="row">
             <div class="col-xl-6 col-lg-12 col-md-12">
                 @await Component.InvokeAsync("FooterParte1")
-
             </div>
             <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
                 @await Component.InvokeAsync("FooterParte2")
@@ -96,6 +81,6 @@
     <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
 </body>
 </html>
