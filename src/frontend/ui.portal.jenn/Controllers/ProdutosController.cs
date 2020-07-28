@@ -42,7 +42,7 @@ namespace ui.portal.jenn.Controllers
                 ViewBag.Localidade = model.Localidade;
 
 
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarProdutosDetalhes(model.Produto, model.Localidade);
 
             return View(lista);
@@ -55,21 +55,20 @@ namespace ui.portal.jenn.Controllers
             ViewBag.Localidade = "Todos as localidades";          
 
 
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarTipoProdutosDetalhes(TipoProduto);
 
             return View("Lista",lista);
         }
 
-        [HttpPost]
         public IActionResult ListarPorBairros(List<string> model)
         {
 
-            ViewBag.Produto = "";
-            ViewBag.Localidade = "";
+            ViewBag.Produto = "Todos os produtos";
+            ViewBag.Localidade = "Bairros";
 
 
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarBairroPorDetalhes(model);
 
             return View("Lista", lista);
@@ -94,6 +93,32 @@ namespace ui.portal.jenn.Controllers
             return produtoService.BuscarLocalidades(localidades, produtos);
         }
 
+        public IActionResult ListarPorServicos(List<string> model)
+        {
 
+            ViewBag.Produto = "Produtos";
+            ViewBag.Localidade = "Todas a localidades";
+
+
+            List<Empresa> lista = new List<Empresa>();
+            lista = produtoService.BuscarServicosPorDetalhes(model);
+
+            return View("Lista", lista);
+        }
+
+        public IActionResult ListarPorPagamentos(List<string> model)
+        {
+
+            ViewBag.Produto = "Pagamentos";
+            ViewBag.Localidade = "Todas a localidades";
+
+
+            List<Empresa> lista = new List<Empresa>();
+            lista = produtoService.BuscarPagamentosPorDetalhes(model);
+
+            return View("Lista", lista);
+        }
+
+        
     }
 }

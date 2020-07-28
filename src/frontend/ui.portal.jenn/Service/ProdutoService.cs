@@ -116,15 +116,17 @@ namespace ui.portal.jenn.Service
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
             produtos = produtos.ToLower();
-            //List<Empresa> listas = dTOEmpresa.data.Select(p=>p.procedimentoEmpresas.Select(c=>c.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos)))).ToList();
-
 
             List<Empresa> listas = dTOEmpresa.data.ToList();
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
 
             foreach (var item in procedimentos)
-                listaFinal.Add(item.nome);
+            {
+                if (listaFinal.Find(n => n == item.nome) == null)
+                    listaFinal.Add(item.nome);
+            }
+                
 
             return listaFinal;
         }
@@ -135,51 +137,89 @@ namespace ui.portal.jenn.Service
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
             localidades = localidades.ToLower();
-            produtos = produtos.ToLower();
             List<Cidade> listasCidades = new List<Cidade>();
-            /*
             List<Empresa> listas = dTOEmpresa.data.ToList();
-            listas = listas.Select(pe => pe.procedimentoEmpresas).Select(p => p.procedimento).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
-            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
 
+            if(produtos != null)
+            {
+                produtos = produtos.ToLower();
+                listas.ForEach(new Action<Empresa>(delegate (Empresa empresa)
+                {
+                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))) != null)
+                    {
+                        if (empresa.cidade != null)
+                        {   
+                            if (empresa.cidade.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades)))
+                            {
+                                if (listasCidades.Find(n=> n.nome.Contains(empresa.cidade.nome)) == null)
+                                    listasCidades.Add(empresa.cidade);
+                            }
 
-
-            if (produtos != null)
-                listas = dTOEmpresa.data.Where(p=>p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).Select(e=> e.empresa).SelectMany(e => e.cidades).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
+                        }
+                        
+                    }
+                }));
+            }
             else
-                listas = dTOEmpresa.data.Select(e => e.empresa).SelectMany(e => e.cidades).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
+            {
+                listasCidades = listas.Select(c => c.cidade).Where(p => p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
+            }
 
-            foreach (var item in listas)
-                listaFinal.Add(item.nome);
-           */
+            foreach (var item in listasCidades)
+                if (listaFinal.IndexOf(item.nome) == -1)
+                    listaFinal.Add(item.nome);
+
             return listaFinal;
+
+
         }
 
-        public List<ProcedimentoEmpresa> BuscarProdutosDetalhes(string produto,  string localidade)
+        public List<Empresa> BuscarProdutosDetalhes(string produto,  string localidade)
         {
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
-
+            List<Empresa> lista = new List<Empresa>();
+            List<Empresa> listasEmpresas = new List<Empresa>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-                 /*
-            lista = dTOEmpresa.data.ToList();
-            if (produto != null)
-                lista = dTOEmpresa.data.Where(p => p.procedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))).ToList();
 
-            if (localidade != null)
-                lista = dTOEmpresa.data.Where(p => p.empresa.cidades.Count() > 0 &&   p.empresa.cidades.FirstOrDefault().nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidade))).ToList();
-                 */
-            return lista;
+            lista = dTOEmpresa.data.ToList();
+
+            if (produto != null)
+            {
+                produto = produto.ToLower();
+                lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
+                {
+                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))) != null)
+                    {
+                        if (empresa.cidade != null)
+                        {
+                            if (empresa.cidade.nome.Contains(localidade))
+                            {
+                                if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
+                                    listasEmpresas.Add(empresa);
+                            }
+                        }
+                    }
+                }));
+            }
+            else if(localidade != null)
+            {
+                localidade = localidade.ToLower();
+                listasEmpresas = lista.Where(c => c.cidade.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidade))).ToList();
+            }
+            else
+            {
+                listasEmpresas = lista;
+            }
+           
+            
+
+            return listasEmpresas;
         }
 
         private DTOEmpresa getProcedimentoEmpresa()
         {
             using (var client = new HttpClient())
             {
-<<<<<<< HEAD
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa").Result)
-=======
                 using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
->>>>>>> a6244138870ba5ca2aeaab8f54ce3ea73698a84f
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -210,15 +250,27 @@ namespace ui.portal.jenn.Service
         }
 
 
-        public List<ProcedimentoEmpresa> BuscarTipoProdutosDetalhes(string tipoproduto)
+        public List<Empresa> BuscarTipoProdutosDetalhes(string tipoproduto)
         {
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
+            List<Empresa> listasEmpresas = new List<Empresa>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();                 
-            /*
+            
             lista = dTOEmpresa.data.ToList();
+
             if (tipoproduto != null)
-                lista = dTOEmpresa.data.Where(p => p.procedimento.tipoProcedimento.nome==tipoproduto).ToList();
-            */
+            {
+                tipoproduto = tipoproduto.ToLower();
+                lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
+                {
+                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.tipoProcedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tipoproduto))) != null)
+                    {                        
+                        if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
+                            listasEmpresas.Add(empresa);                       
+                    }
+                }));
+            }
+
             return lista;
         }
 
@@ -227,17 +279,21 @@ namespace ui.portal.jenn.Service
         {
             List<TipoProcedimentoViewModel> listaFinal = new List<TipoProcedimentoViewModel>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-            /*
-            List<Tipoprocedimento> listas = dTOEmpresa.data.Select(p => p.procedimento).Select(a=>a.tipoProcedimento).Take(10).ToList();
 
-            foreach (var item in listas)
+            //List<Tipoprocedimento> listas = dTOEmpresa.data.Select(p => p.procedimento).Select(a=>a.tipoProcedimento).Take(10).ToList();
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
+
+
+            foreach (var item in procedimentos)
             {
                 TipoProcedimentoViewModel tipoProcedimento = new  TipoProcedimentoViewModel();
-                tipoProcedimento.Nome = item.nome;
+                tipoProcedimento.Nome = item.tipoProcedimento.nome;
                 if(listaFinal.Where(t => t.TipoProcedimentoID == tipoProcedimento.TipoProcedimentoID).Count() == 0)
                     listaFinal.Add(tipoProcedimento);
             }
-               */
+              
             return listaFinal;
         }
 
@@ -245,28 +301,114 @@ namespace ui.portal.jenn.Service
         {
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-            /*
-            List<Empresa> listas = dTOEmpresa.data.Select(p => p.empresa).ToList();
+            
+            List<Empresa> listas = dTOEmpresa.data.Where(e=>e.matriz != null).ToList();
 
             foreach (var item in listas)
                 listaFinal.Add(item.bairro);
-            */
+            
             return listaFinal;
 
         }
 
-        public List<ProcedimentoEmpresa> BuscarBairroPorDetalhes(List<string> bairros)
+        public List<Empresa> BuscarBairroPorDetalhes(List<string> bairros)
         {
-            List<ProcedimentoEmpresa> lista = new List<ProcedimentoEmpresa>();
+            List<Empresa> lista = new List<Empresa>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-            /*
+            
             for (int i = 0; i < bairros.Count; i++)
             {
-                lista.AddRange(dTOEmpresa.data.Where(p => p.empresa.bairro.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bairros[i]))).ToList());
+                lista.AddRange(dTOEmpresa.data.Where(p => p.bairro.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bairros[i]))).ToList());
             }
-               */
+              
 
             return lista;
         }
+
+        public List<string> BuscarProcedimentos()
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
+
+            foreach (var item in procedimentos)
+            {
+                if (listaFinal.Find(n => n == item.nome) == null)
+                    listaFinal.Add(item.nome);
+            }
+
+
+            return listaFinal;
+        }
+
+        public List<string> BuscarPagamentos()
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            List<PagamentoProcedimentoEmpresa> pagamentoProcedimentoEmpresas = procedimentoEmpresas.SelectMany(p => p.pagamentoProcedimentoEmpresas).ToList();
+
+            foreach (var item in pagamentoProcedimentoEmpresas)
+            {
+                if(item.pagamento != null)
+                    if (listaFinal.Find(n => n == item.pagamento.nome) == null)
+                        listaFinal.Add(item.pagamento.nome);
+            }
+
+            return listaFinal;
+        }
+
+        public List<Empresa> BuscarServicosPorDetalhes(List<string> servicos)
+        {
+            List<Empresa> lista = new List<Empresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
+            {
+                if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
+                {
+                    for (int i = 0; i < servicos.Count; i++)
+                    {
+                        if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.ToLower().Contains(servicos[i])).Count() > 0)
+                        {                           
+                            if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
+                                lista.Add(empresa);                               
+                        }
+                    }
+                }      
+            }));
+
+            return lista;
+        }
+
+ 
+        public List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos)
+        {
+            List<Empresa> lista = new List<Empresa>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
+            {
+                if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
+                {
+                    for (int i = 0; i < pagamentos.Count; i++)
+                    {
+                        if (empresa.procedimentoEmpresas.SelectMany(x => x.pagamentoProcedimentoEmpresas).Select(x => x.pagamento).Where(c => c.nome.ToLower().Contains(pagamentos[i])).Count() > 0)
+                        {
+                            if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
+                                lista.Add(empresa);
+                        }
+                    }
+                }
+            }));
+
+            return lista;
+        }
+         
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProcedimentoEmpresa>
+﻿@model IEnumerable<Empresa>
 
 
 
@@ -8,8 +8,8 @@
 @foreach (var item in Model)
 {
     ui.portal.jenn.ViewModel.PesquisaViewModel pesquisaViewModel = new ui.portal.jenn.ViewModel.PesquisaViewModel();
-    //pesquisaViewModel.NomeEmpresa = item.empresa != null ? item.empresa.matriz.nome : "";
-    //pesquisaViewModel.Localidade = item.empresa != null? item.empresa.logradouro : "";
+    pesquisaViewModel.NomeEmpresa = item.matriz != null ? item.matriz.nome : "";
+    pesquisaViewModel.Localidade = item.logradouro;
 
     pesquisaViewModel.DescricaoProcedimento = "";
    // IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = Model.Where(x => x.empresa.empresaID == item.empresa.empresaID).ToList();
@@ -18,11 +18,11 @@
 
 
         pesquisaViewModel.Opiniao = 9999999;
-    //pesquisaViewModel.NomeUnidade = item.empresa != null ? item.empresa.nome : "";
-    //pesquisaViewModel.EnderecoCompleto = item.empresa != null ? item.empresa.logradouro + ", " + item.empresa.numero + " - " + item.empresa.bairro: "";
+    pesquisaViewModel.NomeUnidade =  item.nome;
+    pesquisaViewModel.EnderecoCompleto =  item.logradouro + ", " + item.numero + " - " + item.bairro;
     pesquisaViewModel.EnderecoLoja = "???";
-    //pesquisaViewModel.UrlImagem = item.empresa != null ? item.empresa.imgemFrontEmpresa : "";
-    //pesquisaViewModel.UrlMaps = item.empresa != null ? item.empresa.maps : "";
+    pesquisaViewModel.UrlImagem =  item.imgemFrontEmpresa;
+    pesquisaViewModel.UrlMaps = item.maps;
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

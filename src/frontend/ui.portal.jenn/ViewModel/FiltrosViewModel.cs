@@ -7,6 +7,6 @@ namespace ui.portal.jenn.ViewModel
 {
     public class FiltrosViewModel
     {
-        public List<string> Bairros { get; set; }
+        public string[] Bairros { get; set; }
     }
 }

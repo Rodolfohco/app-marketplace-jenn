@@ -20,11 +20,15 @@ namespace ui.portal.jenn.Service
         Task<CommandResult> Detalhar(Guid EmpresaID);
         List<string> BuscarProdutos(string produtos);
         List<string> BuscarLocalidades(string localidades, string produtos);
-        List<ProcedimentoEmpresa> BuscarProdutosDetalhes(string produto, string localidade);
-        List<ProcedimentoEmpresa> BuscarTipoProdutosDetalhes(string tipoproduto);
+        List<Empresa> BuscarProdutosDetalhes(string produto, string localidade);
+        List<Empresa> BuscarTipoProdutosDetalhes(string tipoproduto);
         List<TipoProcedimentoViewModel> BuscarTipoProdutos();
         List<string> BuscarBairros();
-        List<ProcedimentoEmpresa> BuscarBairroPorDetalhes(List<string> bairros);
+        List<Empresa> BuscarBairroPorDetalhes(List<string> bairros);
+        List<string> BuscarProcedimentos();
+        List<string> BuscarPagamentos();
+        List<Empresa> BuscarServicosPorDetalhes(List<string> servicos);
+        List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos);
     }
    
 }

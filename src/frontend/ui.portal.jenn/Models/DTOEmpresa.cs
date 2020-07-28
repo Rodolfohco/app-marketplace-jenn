@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
- 
+
 
 public class DTOEmpresa
 {
+    public object token { get; set; }
     public bool success { get; set; }
     public string message { get; set; }
     public Empresa[] data { get; set; }
@@ -43,14 +44,13 @@ public class Cidade
 {
     public int cidadeID { get; set; }
     public string nome { get; set; }
-    public object uf { get; set; }
     public Regiao[] regiao { get; set; }
     public Uf[] ufs { get; set; }
 }
 
 public class Regiao
 {
-    public int ufID { get; set; }
+    public int regiaoID { get; set; }
     public string nome { get; set; }
 }
 
@@ -84,9 +84,8 @@ public class Matriz
     public object[] fotos { get; set; }
     public object[] avaliacoes { get; set; }
     public object matriz { get; set; }
-    public object[] procedimentoEmpresas { get; set; }
+    public ProcedimentoEmpresa[] procedimentoEmpresas { get; set; }
 }
-
 
 
 public class ProcedimentoEmpresa
@@ -106,7 +105,7 @@ public class ProcedimentoEmpresa
     public Procedimento procedimento { get; set; }
     public object[] planoProcedimentoEmpresas { get; set; }
     public object[] procedimentoPerguntas { get; set; }
-    public object[] pagamentoProcedimentoEmpresas { get; set; }
+    public PagamentoProcedimentoEmpresa[] pagamentoProcedimentoEmpresas { get; set; }
 }
 
 public class Procedimento
@@ -116,10 +115,10 @@ public class Procedimento
     public string descricao { get; set; }
     public string imgProduto_Proc { get; set; }
     public int ativo { get; set; }
-    public Tipoprocedimento tipoProcedimento { get; set; }
+    public TipoProcedimento tipoProcedimento { get; set; }
 }
 
-public class Tipoprocedimento
+public class TipoProcedimento
 {
     public int tipoProcedimentoID { get; set; }
     public string nome { get; set; }
@@ -129,5 +128,17 @@ public class Tipoprocedimento
 public class Categoria
 {
     public int categoriaID { get; set; }
+    public string nome { get; set; }
+}
+
+public class PagamentoProcedimentoEmpresa
+{
+    public int pagamentoProcedimentoEmpresaID { get; set; }
+    public Pagamento pagamento { get; set; }
+}
+
+public class Pagamento
+{
+    public int pagamentoID { get; set; }
     public string nome { get; set; }
 }
