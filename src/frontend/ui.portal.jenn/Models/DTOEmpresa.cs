@@ -103,7 +103,7 @@ public class ProcedimentoEmpresa
     public string video { get; set; }
     public int ativo { get; set; }
     public Procedimento procedimento { get; set; }
-    public object[] planoProcedimentoEmpresas { get; set; }
+    public PlanoProcedimentoEmpresa[] planoProcedimentoEmpresas { get; set; }
     public object[] procedimentoPerguntas { get; set; }
     public PagamentoProcedimentoEmpresa[] pagamentoProcedimentoEmpresas { get; set; }
 }
@@ -141,4 +141,26 @@ public class Pagamento
 {
     public int pagamentoID { get; set; }
     public string nome { get; set; }
+}
+
+
+public class PlanoProcedimentoEmpresa
+{
+    public Plano plano { get; set; }
+    public int procedimentoEmpresaID { get; set; }
+}
+
+public class Plano
+{
+    public int planoID { get; set; }
+    public string nome { get; set; }
+    public Convenio convenio { get; set; }
+}
+
+public class Convenio
+{
+    public int convenioId { get; set; }
+    public string nome { get; set; }
+    public DateTime dataInclusao { get; set; }
+    public int ativo { get; set; }
 }

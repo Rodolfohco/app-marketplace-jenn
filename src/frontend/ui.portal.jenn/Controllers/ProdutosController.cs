@@ -119,6 +119,20 @@ namespace ui.portal.jenn.Controllers
             return View("Lista", lista);
         }
 
-        
+        public IActionResult ListarPorConvenio(List<string> model)
+        {
+
+            ViewBag.Produto = "Convenios";
+            ViewBag.Localidade = "Todas a localidades";
+
+
+            List<Empresa> lista = new List<Empresa>();
+            lista = produtoService.BuscarConvenioPorDetalhes(model);
+
+            return View("Lista", lista);
+        }
+
+         
+
     }
 }

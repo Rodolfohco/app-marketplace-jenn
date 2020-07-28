@@ -12,17 +12,19 @@
     pesquisaViewModel.Localidade = item.logradouro;
 
     pesquisaViewModel.DescricaoProcedimento = "";
-   // IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = Model.Where(x => x.empresa.empresaID == item.empresa.empresaID).ToList();
-   // foreach (var itemEmp in procedimentoEmpresas)
-   //     pesquisaViewModel.DescricaoProcedimento += itemEmp.procedimento.tipoProcedimento.nome + " ";
+    // IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = Model.Where(x => x.empresa.empresaID == item.empresa.empresaID).ToList();
+    // foreach (var itemEmp in procedimentoEmpresas)
+    //     pesquisaViewModel.DescricaoProcedimento += itemEmp.procedimento.tipoProcedimento.nome + " ";
 
 
-        pesquisaViewModel.Opiniao = 9999999;
+    pesquisaViewModel.Opiniao = item.avaliacoes.Count();
     pesquisaViewModel.NomeUnidade =  item.nome;
     pesquisaViewModel.EnderecoCompleto =  item.logradouro + ", " + item.numero + " - " + item.bairro;
     pesquisaViewModel.EnderecoLoja = "???";
     pesquisaViewModel.UrlImagem =  item.imgemFrontEmpresa;
     pesquisaViewModel.UrlMaps = item.maps;
+
+    pesquisaViewModel.Convenios = item.procedimentoEmpresas.SelectMany(p => p.planoProcedimentoEmpresas).Select(c => c.plano.convenio).ToList();
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

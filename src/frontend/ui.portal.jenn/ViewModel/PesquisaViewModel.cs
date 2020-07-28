@@ -24,6 +24,7 @@ namespace ui.portal.jenn.ViewModel
 
         public List<TipoProcedimentoViewModel> tipoProcedimentoViewModels { get; set; }
 
+        public List<Convenio> Convenios { get; set; }
 
     }
 }

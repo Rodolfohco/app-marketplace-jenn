@@ -41,11 +41,17 @@
                     <form>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-xl-12">
-                                    <input type="text" class="form-control" id="lista" placeholder="Pesquisar..." />
+                                <div class="col-xl-12 divconvenio">
+                                    <input onkeyup="autocompleteConvenio(this)" type="text" class="form-control" placeholder="Pesquisar..." />
+                                    @foreach (var item in Model.Convenios)
+                                    {
+                                        <div onclick="selecionarConvenio('@item.nome', this)" href="#" class="convenio" style="display:none; padding: 3%;" data-convenio="@item.nome.ToLower()">@item.nome</div>
+                                    }
                                 </div>
                             </div>
                         </div>
+                        
+
                     </form>
                 </div>
             </div>
@@ -135,3 +141,6 @@
         </div>
     </div>
 </div>
+
+
+<script src="/js/general.js"></script>

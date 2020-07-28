@@ -29,6 +29,8 @@ namespace ui.portal.jenn.Service
         List<string> BuscarPagamentos();
         List<Empresa> BuscarServicosPorDetalhes(List<string> servicos);
         List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos);
+        List<string> BuscarConvenios();
+        List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios);
     }
    
 }

@@ -19,3 +19,24 @@ function pesquisar(id, idcheck, dataid) {
         $("[id*='" + idcheck + "']").parents(".content-list").show();
     }
 }
+
+function autocompleteConvenio(element) {
+    var valor = $(element).val();
+    valor = valor.toLowerCase();
+    var divconvenio = $(element).parent(".divconvenio")
+    
+    if (valor) {
+        $(divconvenio).find(".convenio").hide();
+        $(divconvenio).find(".convenio[data-convenio*='" + valor + "']").show();
+    } else {
+        $(divconvenio).find(".convenio").hide();
+    }
+}
+
+
+function selecionarConvenio(valor, elementos) {
+
+    var divconvenio = $(elementos).parents(".divconvenio");
+    var input = $(divconvenio).find("input");
+    $(input).val(valor);
+}

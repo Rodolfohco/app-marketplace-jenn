@@ -1,0 +1,37 @@
+﻿@model List<string>
+
+<div class="content-select">
+    <div class="search">
+        <input onkeyup="pesquisar('pesquisaconveniopesquisas', 'checkconveniopesquisas_','data-conveniopesquisas')" id="pesquisaconveniopesquisas" type="text" placeholder="Pesquisar" />
+    </div>
+    <div class="list-check">
+        @if (Model.Any())
+        {
+            int i = 0;
+            @foreach (var item in Model)
+            {
+                <div class="content-list">
+                    <input onclick="apliqueCount('checkconveniopesquisas_','apliqueconveniopesquisas')" id="checkconveniopesquisas_@i" class="form-check-input" type="checkbox" value="" data-conveniopesquisas="@item.ToLower()">
+                    <label class="form-check-label" for="defaultCheck1">
+                        @item
+                    </label>
+                </div>
+                i++;
+            }
+
+            <div class="action-list">
+                <a href="" class="link">
+                    Cancelar
+                </a>
+                <a onclick="buscarporconveniopesquisas()" id="apliqueconveniopesquisas" class="btn btn-secondary">
+                    Aplique(0)
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script src="/js/general.js"></script>
+<script src="/js/conveniopesquisas.js"></script>
+
