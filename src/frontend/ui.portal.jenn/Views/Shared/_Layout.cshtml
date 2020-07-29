@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,16 +39,7 @@
             <div class="col-xl-9 col-lg-7 col-md-7 col-6">
                 <div class="row">
                     <div class="col-xl-6">
-                        <div class="brands">
-                            <nav>
-                                <ul class="nav">
-                                    <li><a href="" title="Clícicas ">Clícicas </a></li>
-                                    <li><a href="" title="Exames de imagem   ">Exames de imagem   </a></li>
-                                    <li><a href="" title="Tomografia">Tomografia</a></li>
-                                    <li><a href="" title=" São Caetano do Sul - SP"> São Caetano do Sul - SP</a></li>
-                                </ul>
-                            </nav>
-                        </div>
+                        @await Component.InvokeAsync("TopoLink")
                     </div>
                     <div class="col-xl-6">
                         @await Component.InvokeAsync("TopoControleLink")
