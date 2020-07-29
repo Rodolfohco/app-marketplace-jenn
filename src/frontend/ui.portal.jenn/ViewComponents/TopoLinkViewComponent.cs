@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,15 @@ namespace ui.portal.jenn.ViewComponents
 {
     public class TopoLinkViewComponent : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(PesquisaViewModel model)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var MODELO = model;
-            return View();
+ 
+            PesquisaViewModel model =   JsonConvert.DeserializeObject<PesquisaViewModel>(HttpContext.Session.GetString("filtroPesquisa"));
+
+            if (model != null)
+                return View(model);
+            else
+                return View(new PesquisaViewModel());
         }
 
     }
