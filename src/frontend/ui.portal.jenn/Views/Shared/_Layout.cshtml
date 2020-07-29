@@ -18,8 +18,9 @@
 
     <title>Jenn</title>
 </head>
-
-<body class="page">
+<body class="page page-exame">
+    <div class="splash-left"></div>
+    <div class="splash-right"></div>
 
 
     <header class="header">
@@ -27,8 +28,8 @@
             <div class="col-xl-3 col-lg-4 col-md-5 col-6">
                 <h1>
                     <div class="header__background">
-                        <a href="index.html" title="Jenn"></a>
-                        <img class="header__background--logo" src="~/img/logo-jenn.png" alt="Logotipo Jenn" />
+                        <a href="@Url.Action("Inicio", "Home")" title="Jenn">
+                            <img class="header__background--logo" src="~/img/logo-jenn.png" alt="Logotipo Jenn" />
                         </a>
                     </div>
                 </h1>
@@ -185,7 +186,7 @@
         <div class="row">
             <div class="col-xl-6 col-lg-12 col-md-12">
                 @await Component.InvokeAsync("FooterParte1")
-           
+
             </div>
             <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
                 @await Component.InvokeAsync("FooterParte2")

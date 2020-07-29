@@ -3,9 +3,6 @@
 @{
     Layout = null;
 }
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/icon-font.css">
+    <link rel="stylesheet" href="/css/icon-font.css">
     <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/css/main.css">
@@ -34,8 +31,8 @@
         <div class="row">
             <div class="col-xl-3 col-lg-4 col-md-5 col-6">
                 <div class="header__background">
-                    <a href="index.html" title="Jenn"></a>
-                    <img class="header__background--logo" src="/img/logo-jenn.png" alt="Logotipo Jenn" />
+                    <a href="@Url.Action("Inicio", "Home")" title="Jenn">
+                        <img class="header__background--logo" src="/img/logo-jenn.png" alt="Logotipo Jenn" />
                     </a>
                 </div>
             </div>
@@ -63,14 +60,14 @@
                     <div class="row">
                         <div class="col-xl-6 col-12">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Endereço de Email</label>
-                                <input asp-for="Email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seu Email" required>
+                                <label for="InputEmail">Endereço de Email</label>
+                                <input asp-for="Email" type="text" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Seu Email" required>
                             </div>
                         </div>
                         <div class="col-xl-6 col-12">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Senha</label>
-                                <input asp-for="Password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Sua senha" required>
+                                <label for="InputPassword">Senha</label>
+                                <input asp-for="Password" type="password" class="form-control" id="InputPassword" aria-describedby="emailHelp" placeholder="Sua senha" required>
                             </div>
                         </div>
 
@@ -85,13 +82,13 @@
                 <div class="login-social">
                     <div class="content-login-social c-f">
                         <a href="" title="">
-                            <img src="/img/contato/icon-facebook.png" />
+                            <img src="/img/contato/icon-facebook.png" />    
                             <span>Fazer login com o Facebook</span>
                         </a>
                     </div>
                     <div class="content-login-social c-g">
                         <a href="" title="">
-                            <img src="/img/contato//icon-gmail.png" />
+                            <img src="/img/contato/icon-gmail.png" />
                             <span>Fazer login com o Google</span>
                         </a>
                     </div>
