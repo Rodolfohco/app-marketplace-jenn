@@ -33,53 +33,38 @@ namespace ui.portal.jenn
         public void ConfigureServices(IServiceCollection services)
         {
             var urlBase = new Uri(this.Configuration.GetValue<string>("urlBaseApi"));
-
             services.AddHttpContextAccessor();
-
             services.AddHttpClient<ServiceBase>(c =>
             {
                 c.BaseAddress = urlBase;
                 c.Timeout = TimeSpan.FromSeconds(5);
-                //c.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
-                //c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
             });
-
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(config =>
               {
                   config.Cookie.Name = "UserLoginCookie";
-                  config.LoginPath = "/Home/UserLogin";
+                  config.LoginPath = "/Home/Autenticar";
                   config.AccessDeniedPath = "/Home/AccessDenied";
               });
 
             services.AddSingleton<IEmpresaService, EmpresaService>();
-            services.AddSingleton<IProcedimentoEmpresaService, ProcedimentoEmpresaService>();
-
-        
+            services.AddSingleton<IProcedimentoEmpresaService, ProcedimentoEmpresaService>();        
             services.AddSingleton<IProdutoService, ProdutoService>();
-
             services.AddSingleton<ILogonService, LogonService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-
             services.AddSingleton<IContatoService, ContatoService>();
-           
-
             services.AddControllersWithViews();
             services.AddSingleton<ControleCache>();
-
             services.AddMvc();
             services.AddMemoryCache();
-
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var cookiePolicyOptions = new CookiePolicyOptions
             {
-                MinimumSameSitePolicy = SameSiteMode.Strict,
+                MinimumSameSitePolicy = SameSiteMode.Unspecified,
             };
 
             if (env.IsDevelopment())

@@ -6,6 +6,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -19,8 +21,6 @@ using ui.portal.jenn.ViewModel;
 namespace ui.portal.jenn.Controllers
 {
 
-
-
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,8 +28,10 @@ namespace ui.portal.jenn.Controllers
         private readonly ILogonService logonService;
         private readonly IContatoService contatoService;
         private readonly IMemoryCache cache;
-
-        public HomeController(ILogger<HomeController> logger, IProdutoService _produtoService, ILogonService _logonService, IContatoService _contatoService, ControleCache _cache)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IProdutoService _produtoService,
+            ILogonService _logonService, IContatoService _contatoService, ControleCache _cache)
         {
             this._logger = logger;
             this.produtoService = _produtoService;
@@ -37,7 +39,6 @@ namespace ui.portal.jenn.Controllers
             this.logonService = _logonService;
             this.contatoService = _contatoService;
         }
-
 
 
         [HttpPost]
@@ -52,6 +53,7 @@ namespace ui.portal.jenn.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult MeuPainel()
         {
             return View();
@@ -94,6 +96,7 @@ namespace ui.portal.jenn.Controllers
                 model.Papeis.Add(new RolesViewModel() { Role = "Cliente" });
 
                 var autenticacao = await logonService.Novo(model);
+                return RedirectToAction("Inicio", "Home");
             }
             return View(model);
         }
@@ -102,18 +105,19 @@ namespace ui.portal.jenn.Controllers
         {
             return View();
         }
+ 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Autenticar(AutenticarLogonViewModel model)
+        public async Task<IActionResult> Autenticar(AutenticarLogonViewModel model)
         {
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                    var autenticacao = logonService.LocalizarUsuario(model);
-                    var retorno = autenticacao.Result;
+                    var autenticacao = await logonService.LocalizarUsuario(model);
+                    var retorno = autenticacao;
 
                     AutenticacaoViewModel autenticado = new AutenticacaoViewModel(retorno);
 
@@ -157,6 +161,7 @@ namespace ui.portal.jenn.Controllers
             }
 
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()

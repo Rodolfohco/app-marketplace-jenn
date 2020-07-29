@@ -46,17 +46,14 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
             }
         }
-
-        //public ConsultaLogonViewModel Detalhar(string usuario, string password)
-        //{
-        //    throw new NotImplementedException();
-        //}
+ 
 
         public async Task<ConsultaLogonViewModel> DetalharAsync(string usuario, string password)
         {
             Logon retorno = null;
             try
             {
+                password = Security.ComputeSha256Hash(password);
                 retorno = await this.repository.DetailAsync(c => c.Email == usuario && c.Password == password);
             }
             catch (Exception exception)

@@ -35,14 +35,10 @@ namespace ui.portal.jenn.ViewComponents
             if (GetClaimsIdentity().FirstOrDefault() != null)
             {
                 List<string> lst = _accessor.HttpContext.User.Identity.Name.ToString().Split(" ").ToList();
-
-
                 model.Nome = lst.FirstOrDefault();
                 model.Email = GetClaimsIdentity().FirstOrDefault(a => a.Type == ClaimTypes.Email)?.Value;
                 model.Logado = true;
             }
-         
-
             return View(model);
         }       
 

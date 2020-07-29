@@ -20,7 +20,8 @@ namespace ui.portal.jenn.ViewModel
         public string imagemMain { get; set; }
         public string video { get; set; }
         public int ativo { get; set; }
-        
-      
+        public int? destaque { get; set; }
+
     }
+
 }
