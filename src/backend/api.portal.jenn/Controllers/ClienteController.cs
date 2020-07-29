@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.portal.jenn.Contract;
 using api.portal.jenn.ViewModel;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace api.portal.jenn.Controllers
 {
@@ -19,12 +21,15 @@ namespace api.portal.jenn.Controllers
         private readonly ILogger<ClienteController> _logger;
         private readonly IClienteBusiness repositorio;
 
-        public ClienteController(
+        private readonly IEmailSender _emailSender;
+        
+        public ClienteController(IEmailSender emailSender,
+            IHostingEnvironment env,
             ILogger<ClienteController> logger,
-
             IClienteBusiness _repositorio,
             IMemoryCache _cahce)
         {
+            this._emailSender = emailSender;
             this.repositorio = _repositorio;
             this._logger = logger;
             this.cahce = _cahce;
@@ -68,12 +73,9 @@ namespace api.portal.jenn.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var item = this.repositorio.InseriContato(model);
+                    var corpo = JsonConvert.SerializeObject(model);
 
-                    if (item != null)
-                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
-                    else
-                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                    _emailSender.SendEmailAsync(model.Email, "Socilitação de Contato", corpo, "Jenn Solicitação de Contato", "Jenn").Wait();
                 }
             }
             catch (Exception e)
