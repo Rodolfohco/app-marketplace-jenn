@@ -18,40 +18,32 @@
 
     <title>Jenn</title>
 </head> 
-    <body class="page page-exame">
-        <div class="splash-left"></div>
-        <div class="splash-right"></div>
-        <header class="header">
-            <div class="row">
-                <div class="col-xl-3 col-lg-4 col-md-5 col-6">
+<body class="page page-exame">
+    <div class="splash-left"></div>
+    <div class="splash-right"></div>
+    <header class="header">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5 col-6">
+                <h1>
                     <div class="header__background">
-                        <a  href="@Url.Action("Inicio", "Home")" title="Jenn">
-                        <img class="header__background--logo" src="/img/logo-jenn.png" alt="Logotipo Jenn" />
+                        <a href="@Url.Action("Inicio", "Home")" title="Jenn">
+                            <img class="header__background--logo" src="~/img/logo-jenn.png" alt="Logotipo Jenn" />
                         </a>
                     </div>
-                </div>
-                <div class="col-xl-9 col-lg-7 col-md-7 col-6">
-                    <div clSass="header__top">
-                        <div class="brands">
-                            <nav>
-                                <ul class="nav">
-                                    <li><a href="" title="Clícicas ">Clícicas </a></li>
-                                    <li><a href="" title="Exames de imagem">Exames de imagem   </a></li>
-                                    <li><a href="" title="Tomografia">Tomografia</a></li>
-                                    <li><a href="" title=" São Caetano do Sul - SP"> São Caetano do Sul - SP</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <div class="menu-header">
-                            
-                                @await Component.InvokeAsync("TopoControleLink")
-                   
-                        </div>
-
-                    </div>
-
-                </div>
+                </h1>
             </div>
+            <div class="col-xl-9 col-lg-7 col-md-7 col-6">
+                <div class="row">
+                    <div class="col-xl-6">
+                        @await Component.InvokeAsync("TopoLink")
+                    </div>
+                    <div class="col-xl-6">
+                        @await Component.InvokeAsync("TopoControleLink")
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
     </header>
@@ -122,121 +114,121 @@
                         </div>
                         <div class="content-select">
 
-                                <div class="accordion">
-                                    <input id="toggle1" type="radio" class="accordion-toggle" name="toggle" />
-                                    <label for="toggle1">Convênios</label>
-                                    <section>
-                                        <div class="search">
-                                            <input type="text" placeholder="Pesquisar" />
+                            <div class="accordion">
+                                <input id="toggle1" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle1">Convênios</label>
+                                <section>
+                                    <div class="search">
+                                        <input type="text" placeholder="Pesquisar" />
+                                    </div>
+                                    <div class="list-check">
+                                        <div class="content-list">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
                                         </div>
-                                        <div class="list-check">
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-
+                                        <div class="content-list">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
                                         </div>
-                                    </section>
-                                </div>
-
-                                <div class="accordion">
-                                    <input id="toggle2" type="radio" class="accordion-toggle" name="toggle" />
-                                    <label for="toggle2">Bairro</label>
-                                    <section>
-                                        <div class="search">
-                                            <input type="text" placeholder="Pesquisar" />
+                                        <div class="content-list">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
                                         </div>
-                                        <div class="list-check">
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
 
-                                        </div>
-                                    </section>
-                                </div>
-
-                                <div class="action-list">
-                                    <a href="" class="link">
-                                        Cancelar
-                                    </a>
-                                    <a href="" class="btn btn-secondary">
-                                        Aplique(22)
-                                    </a>
-                                </div>
-
+                                    </div>
+                                </section>
                             </div>
 
+                            <div class="accordion">
+                                <input id="toggle2" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle2">Bairro</label>
+                                <section>
+                                    <div class="search">
+                                        <input type="text" placeholder="Pesquisar" />
+                                    </div>
+                                    <div class="list-check">
+                                        <div class="content-list">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
+                                        </div>
+                                        <div class="content-list">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
+                                        </div>
+                                        <div class="content-list">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                                Default checkbox
+                                            </label>
+                                        </div>
 
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div class="action-list">
+                                <a href="" class="link">
+                                    Cancelar
+                                </a>
+                                <a href="" class="btn btn-secondary">
+                                    Aplique(22)
+                                </a>
+                            </div>
 
                         </div>
+
+
+
                     </div>
-                </div>
-
-                <main role="main" class="pb-3">
-                    <div class="col-12">
-                        <div id="parcialpesquisa" class="row">
-                            @RenderBody()
-                        </div>
-                    </div>
-                </main>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <div class="row">
-                <div class="col-xl-6 col-lg-12 col-md-12">
-                    @await Component.InvokeAsync("FooterParte1")
-
-                </div>
-                <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
-                    @await Component.InvokeAsync("FooterParte2")
                 </div>
             </div>
-        </footer>
+
+            <main role="main" class="pb-3">
+                <div class="col-12">
+                    <div id="parcialpesquisa" class="row">
+                        @RenderBody()
+                    </div>
+                </div>
+            </main>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="row">
+            <div class="col-xl-6 col-lg-12 col-md-12">
+                @await Component.InvokeAsync("FooterParte1")
+
+            </div>
+            <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
+                @await Component.InvokeAsync("FooterParte2")
+            </div>
+        </div>
+    </footer>
 
 
-        <script src="https://code.jquery.com/jquery-3.2.1.js"
-                integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-                crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-        <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        <script type="text/javascript" src="~/js/script.js" asp-append-version="true"></script>
-        <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/script.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
 
-        @RenderSection("Scripts", required: false)
-    </body>
+    @RenderSection("Scripts", required: false)
+</body>
 </html>
 
