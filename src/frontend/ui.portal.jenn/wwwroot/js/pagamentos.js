@@ -1,5 +1,5 @@
 ﻿function buscarporpagamentos() {
-    var count = $("[id*='checkpagamento_']:checked").length;
+    var count = $("[class*='checkpagamento_']:checked").length;
 
     if (count == 0)
         return;
@@ -7,13 +7,24 @@
     var param = "";
     var model = [];
     var i = 0;
-    $("[id*='checkpagamento_']:checked").each(function () {
-        model.push($(this).attr("data-pagamento"));
+    var contador = $("[class*='checkpagamento_']:checked").length;
 
-        if (i > 0)
-            param += "&";
+    if (contador > 0)
+        contador = (contador / 2) - 1;
 
-        param += "model[" + i + "]=" + $(this).attr("data-pagamento");
+    $("[class*='checkpagamento_']:checked").each(function () {
+        if (i <= contador) {
+            model.push($(this).attr("data-pagamento"));
+
+            if (i > 0)
+                param += "&";
+
+            
+            param += "pagamento[" + i + "]=" + $(this).attr("data-pagamento");
+
+        }
+           
+        
         i++;
     });
 

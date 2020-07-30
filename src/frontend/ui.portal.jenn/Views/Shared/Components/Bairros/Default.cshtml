@@ -1,8 +1,9 @@
 ﻿@model List<string>
+@using System.Text.RegularExpressions;
 
 <div class="content-select">
     <div class="search">
-        <input onkeyup="pesquisar('pesquisabairro', 'checkbairro_','data-bairro')" id="pesquisabairro" type="text" placeholder="Pesquisar" />
+        <input onkeyup="pesquisar(this, 'checkbairro_','data-bairro')" class="pesquisabairro" type="text" placeholder="Pesquisar" />
     </div>
     <div class="list-check">
         @if (Model.Any())
@@ -11,7 +12,7 @@
             @foreach (var item in Model)
             {
                 <div class="content-list">
-                    <input onclick="apliqueCount('checkbairro_','apliqueBairro')" id="checkbairro_@i" class="form-check-input" type="checkbox" value="" data-bairro="@item.ToLower()">
+                    <input data-controller="bairro" onclick="apliqueCount('checkbairro_','apliqueBairro',this)"  class="form-check-input checkbairro_@i" type="checkbox" value="" data-bairro="@item.ToLower()" data-bairro-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
                     <label class="form-check-label" for="defaultCheck1">
                         @item
                     </label>
@@ -19,11 +20,11 @@
                 i++;
             }
 
-            <div class="action-list">
+            <div class="action-list botoesfiltro">
                 <a href="" class="link">
                     Cancelar
                 </a>
-                <a onclick="buscarBairros()" id="apliqueBairro" class="btn btn-secondary">
+                <a  data-count="0" onclick="buscarBairros()"  class="btn btn-secondary apliqueBairro">
                     Aplique(0)
                 </a>
             </div>

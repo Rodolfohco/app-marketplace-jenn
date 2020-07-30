@@ -1,8 +1,9 @@
 ﻿@model List<string>
+@using System.Text.RegularExpressions;
 
 <div class="content-select">
     <div class="search">
-        <input onkeyup="pesquisar('pesquisaconveniopesquisas', 'checkconveniopesquisas_','data-conveniopesquisas')" id="pesquisaconveniopesquisas" type="text" placeholder="Pesquisar" />
+        <input onkeyup="pesquisar(this, 'checkconveniopesquisas_','data-conveniopesquisas')" class="pesquisaconveniopesquisas" type="text" placeholder="Pesquisar" />
     </div>
     <div class="list-check">
         @if (Model.Any())
@@ -11,7 +12,7 @@
             @foreach (var item in Model)
             {
                 <div class="content-list">
-                    <input onclick="apliqueCount('checkconveniopesquisas_','apliqueconveniopesquisas')" id="checkconveniopesquisas_@i" class="form-check-input" type="checkbox" value="" data-conveniopesquisas="@item.ToLower()">
+                    <input  data-controller="conveniopesquisas"  onclick="apliqueCount('checkconveniopesquisas_','apliqueconveniopesquisas', this)"   class="form-check-input checkconveniopesquisas_@i" type="checkbox" value="" data-conveniopesquisas="@item.ToLower()" data-conveniopesquisas-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
                     <label class="form-check-label" for="defaultCheck1">
                         @item
                     </label>
@@ -19,11 +20,11 @@
                 i++;
             }
 
-            <div class="action-list">
+            <div class="action-list botoesfiltro">
                 <a href="" class="link">
                     Cancelar
                 </a>
-                <a onclick="buscarporconveniopesquisas()" id="apliqueconveniopesquisas" class="btn btn-secondary">
+                <a  data-count="0" onclick="buscarporconveniopesquisas()"  class="btn btn-secondary apliqueconveniopesquisas">
                     Aplique(0)
                 </a>
             </div>

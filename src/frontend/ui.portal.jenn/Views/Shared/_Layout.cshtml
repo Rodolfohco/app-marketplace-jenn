@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="~/css/main.css">
     <link rel="shortcut icon" type="image/x-icon" href="~/img/icones/favicon.ico">
 
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
     <title>Jenn</title>
 </head> 
     <body class="page page-exame">
@@ -64,39 +67,7 @@
                         <div class="item-select">
                             <span>Convênios</span>
                         </div>
-                        <div class="content-select">
-                            <div class="search">
-                                <input type="text" placeholder="Pesquisar" />
-                            </div>
-                            <div class="list-check">
-                                <div class="content-list">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        Default checkbox
-                                    </label>
-                                </div>
-                                <div class="content-list">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                                    <label class="form-check-label" for="defaultCheck2">
-                                        Default checkbox
-                                    </label>
-                                </div>
-                                <div class="content-list">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
-                                    <label class="form-check-label" for="defaultCheck3">
-                                        Default checkbox
-                                    </label>
-                                </div>
-                                <div class="action-list">
-                                    <a href="" class="link">
-                                        Cancelar
-                                    </a>
-                                    <a href="" class="btn btn-secondary">
-                                        Aplique(22)
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("ConvenioPesquisas")
                     </div>
                     <div class="col-select">
                         <div class="item-select">
@@ -116,84 +87,51 @@
                         </div>
                         @await Component.InvokeAsync("Pagamentos")
                     </div>
-                    <div class="col-select">
+                    <div id="todosfiltros" class="col-select">
                         <div class="item-select item-filtro">
                             <span>Todos os filtros</span>
                         </div>
-                        <div class="content-select">
+                        <div class="content-select" style="width: 100%;">
 
-                                <div class="accordion">
-                                    <input id="toggle1" type="radio" class="accordion-toggle" name="toggle" />
-                                    <label for="toggle1">Convênios</label>
-                                    <section>
-                                        <div class="search">
-                                            <input type="text" placeholder="Pesquisar" />
-                                        </div>
-                                        <div class="list-check">
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-
-                                        </div>
-                                    </section>
-                                </div>
-
-                                <div class="accordion">
-                                    <input id="toggle2" type="radio" class="accordion-toggle" name="toggle" />
-                                    <label for="toggle2">Bairro</label>
-                                    <section>
-                                        <div class="search">
-                                            <input type="text" placeholder="Pesquisar" />
-                                        </div>
-                                        <div class="list-check">
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-                                            <div class="content-list">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
-                                                </label>
-                                            </div>
-
-                                        </div>
-                                    </section>
-                                </div>
-
-                                <div class="action-list">
-                                    <a href="" class="link">
-                                        Cancelar
-                                    </a>
-                                    <a href="" class="btn btn-secondary">
-                                        Aplique(22)
-                                    </a>
-                                </div>
-
+                            <div class="accordion">
+                                <input id="toggle1" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle1">Convênios</label>
+                                <section>
+                                    @await Component.InvokeAsync("ConvenioPesquisas")
+                                </section>
                             </div>
+
+                            <div class="accordion">
+                                <input id="toggle2" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle2">Bairro</label>
+                                <section>
+                                    @await Component.InvokeAsync("Bairros")
+                                </section>
+                            </div>
+
+                            <div class="accordion">
+                                <input id="toggle3" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle3">Serviços</label>
+                                <section>
+                                    @await Component.InvokeAsync("Servicos")
+                                </section>
+                            </div>
+
+                            <div class="accordion">
+                                <input id="toggle4" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle4">Método de pagamento</label>
+                                <section>
+                                    @await Component.InvokeAsync("Pagamentos")
+                                </section>
+                            </div>
+
+                            <div style="padding-top: 50%;" class="action-list">
+                                <a onclick="filtrarTodos()" id="botaofiltrartodos" href="" class="btn btn-secondary">
+                                    Aplique(0)
+                                </a>
+                            </div>
+
+                    </div>
 
 
 
@@ -224,9 +162,6 @@
         </footer>
 
 
-        <script src="https://code.jquery.com/jquery-3.2.1.js"
-                integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-                crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 

@@ -61,7 +61,7 @@ namespace ui.portal.jenn.Controllers
             return View("Lista",lista);
         }
 
-        public IActionResult ListarPorBairros(List<string> model)
+        public IActionResult ListarPorBairros(List<string> bairro)
         {
 
             ViewBag.Produto = "Todos os produtos";
@@ -69,7 +69,7 @@ namespace ui.portal.jenn.Controllers
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarBairroPorDetalhes(model);
+            lista = produtoService.BuscarBairroPorDetalhes(bairro);
 
             return View("Lista", lista);
         }
@@ -93,7 +93,7 @@ namespace ui.portal.jenn.Controllers
             return produtoService.BuscarLocalidades(localidades, produtos);
         }
 
-        public IActionResult ListarPorServicos(List<string> model)
+        public IActionResult ListarPorServicos(List<string> procedimento)
         {
 
             ViewBag.Produto = "Produtos";
@@ -101,12 +101,12 @@ namespace ui.portal.jenn.Controllers
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarServicosPorDetalhes(model);
+            lista = produtoService.BuscarServicosPorDetalhes(procedimento);
 
             return View("Lista", lista);
         }
 
-        public IActionResult ListarPorPagamentos(List<string> model)
+        public IActionResult ListarPorPagamentos(List<string> pagamento)
         {
 
             ViewBag.Produto = "Pagamentos";
@@ -114,12 +114,12 @@ namespace ui.portal.jenn.Controllers
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarPagamentosPorDetalhes(model);
+            lista = produtoService.BuscarPagamentosPorDetalhes(pagamento);
 
             return View("Lista", lista);
         }
 
-        public IActionResult ListarPorConvenio(List<string> model)
+        public IActionResult ListarPorConvenio(List<string> conveniopesquisas)
         {
 
             ViewBag.Produto = "Convenios";
@@ -127,12 +127,48 @@ namespace ui.portal.jenn.Controllers
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarConvenioPorDetalhes(model);
+            lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas);
 
             return View("Lista", lista);
         }
 
-         
+         public IActionResult ListarPorFiltros(List<string> bairro = null, List<string> procedimento = null, List<string> pagamento = null, List<string> conveniopesquisas = null)
+        {
+
+            List<Empresa> lista = new List<Empresa>();
+            string produtos = "";
+            string localidades = "";
+
+            if (conveniopesquisas.Count() > 0)
+            {
+                lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas);
+                produtos += " Convenios ";
+            }
+                
+            if (pagamento.Count() > 0)
+            {
+                lista = produtoService.BuscarPagamentosPorDetalhes(pagamento, lista);
+                produtos += " Pagamentos ";
+            }
+               
+            if (procedimento.Count() > 0)
+            {
+                lista = produtoService.BuscarServicosPorDetalhes(procedimento, lista);
+                produtos += " Serviços ";
+            }
+                
+
+            if (bairro.Count() > 0)
+            {
+                lista = produtoService.BuscarBairroPorDetalhes(bairro, lista);
+                localidades = "Bairros";
+            }               
+
+            ViewBag.Produto = produtos == "" ? ViewBag.Produto = "Filtros" : ViewBag.Produto = produtos; ;
+            ViewBag.Localidade = localidades == ""? ViewBag.Localidade = "Todas as Localidades": ViewBag.Localidade = localidades;
+
+            return View("Lista", lista);
+        }
 
     }
 }

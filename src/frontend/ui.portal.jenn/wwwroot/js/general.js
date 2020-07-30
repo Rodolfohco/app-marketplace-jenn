@@ -1,22 +1,52 @@
 ﻿
-function apliqueCount(id, idaplique) {
-    var count = $("[id*='" + id + "']:checked").length;
-    $("#" + idaplique).html("Aplique(" + count + ")");
+function apliqueCount(id, idaplique, elemento) {
+    var valor = elemento.checked;
+    var classe = $(elemento).attr("class");
+    var classelemento = $("." + classe.replace(" ", "."))
 
-    if (count == 0)
-        $("#" + idaplique).css("background", "#eaae7d");
-    else
-        $("#" + idaplique).css("background", "#f36d00");
+    for (var i = 0; i < classelemento.length; i++) {
+        $(classelemento)[i].checked = valor;
+    }
+
+    var count = $("[class*='" + id + "']:checked").length;
+
+
+    if (count == 0) {
+        $("." + idaplique).css("background", "#eaae7d");
+    }
+    else {
+        $("." + idaplique).css("background", "#f36d00");
+        count = count / 2;
+    }
+       
+    $("." + idaplique).html("Aplique(" + count + ")");
+    $("." + idaplique).attr("data-count", count);
+
+    $("#todosfiltros .botoesfiltro").remove();
+    var contador = 0;
+
+    for (var i = 0; i < $("[data-count]").length; i++) {
+        contador += parseInt($($("[data-count]")[i]).attr("data-count"));
+    }
+    
+    if (contador == 0) {
+        $("#botaofiltrartodos").css("background", "#eaae7d");
+    }
+    else {
+        $("#botaofiltrartodos").css("background", "#f36d00");
+    }
+
+    $("#botaofiltrartodos").html("Aplique(" + contador + ")");
 }
 
-function pesquisar(id, idcheck, dataid) {
-    var valor = $("#" + id).val();
+function pesquisar(elemento, idcheck, dataid) {
+    var valor = $(elemento).val();
     valor = valor.toLowerCase();
     if (valor) {
-        $("[id*='" + idcheck + "']").parents(".content-list").hide();
+        $("[class*='" + idcheck + "']").parents(".content-list").hide();
         $("[" + dataid + "*='" + valor + "']").parents(".content-list").show();
     } else {
-        $("[id*='" + idcheck + "']").parents(".content-list").show();
+        $("[class*='" + idcheck + "']").parents(".content-list").show();
     }
 }
 

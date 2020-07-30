@@ -19,7 +19,7 @@ namespace ui.portal.jenn.ViewComponents
         
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var  procedimento = await this.procedimentoEmpresaService.ListaProcedimentoEmpresa();
+              var  procedimento = await this.procedimentoEmpresaService.ListaProcedimentoEmpresa();
             //        return View(procedimento.Where(c => (c.destaque.HasValue ? c.destaque > 0 : false)).ToList());
             return View(procedimento);
 

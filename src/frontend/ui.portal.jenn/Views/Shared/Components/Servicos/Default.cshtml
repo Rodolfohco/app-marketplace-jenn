@@ -1,8 +1,9 @@
 ﻿@model List<string>
+@using System.Text.RegularExpressions;
 
 <div class="content-select">
     <div class="search">
-        <input onkeyup="pesquisar('pesquisaprocedimento', 'checkprocedimento_','data-procedimento')" id="pesquisaprocedimento" type="text" placeholder="Pesquisar" />
+        <input onkeyup="pesquisar(this, 'checkprocedimento_','data-procedimento')" class="pesquisaprocedimento" type="text" placeholder="Pesquisar" />
     </div>
     <div class="list-check">
         @if (Model.Any())
@@ -11,7 +12,7 @@
             @foreach (var item in Model)
             {
                 <div class="content-list">
-                    <input onclick="apliqueCount('checkprocedimento_','apliqueprocedimento')" id="checkprocedimento_@i" class="form-check-input" type="checkbox" value="" data-procedimento="@item.ToLower()">
+                    <input  data-controller="procedimento"  onclick="apliqueCount('checkprocedimento_','apliqueprocedimento', this)"  class="form-check-input checkprocedimento_@i" type="checkbox" value="" data-procedimento="@item.ToLower()" data-procedimento-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
                     <label class="form-check-label" for="defaultCheck1">
                         @item
                     </label>
@@ -19,11 +20,11 @@
                 i++;
             }
 
-            <div class="action-list">
+            <div class="action-list botoesfiltro">
                 <a href="" class="link">
                     Cancelar
                 </a>
-                <a onclick="buscarprocedimentos()" id="apliqueprocedimento" class="btn btn-secondary">
+                <a  data-count="0" onclick="buscarprocedimentos()"   class="btn btn-secondary apliqueprocedimento">
                     Aplique(0)
                 </a>
             </div>

@@ -311,11 +311,18 @@ namespace ui.portal.jenn.Service
 
         }
 
-        public List<Empresa> BuscarBairroPorDetalhes(List<string> bairros)
+        public List<Empresa> BuscarBairroPorDetalhes(List<string> bairros, List<Empresa> empresas = null)
         {
             List<Empresa> lista = new List<Empresa>();
-            DTOEmpresa dTOEmpresa = BuscarEmpresas();
-            
+            DTOEmpresa dTOEmpresa = new DTOEmpresa();
+
+            if (empresas != null && empresas.Count() > 0)
+                dTOEmpresa.data = empresas;
+            else
+                dTOEmpresa = BuscarEmpresas();
+
+
+
             for (int i = 0; i < bairros.Count; i++)
             {
                 lista.AddRange(dTOEmpresa.data.Where(p => p.bairro.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bairros[i]))).ToList());
@@ -363,10 +370,16 @@ namespace ui.portal.jenn.Service
             return listaFinal;
         }
 
-        public List<Empresa> BuscarServicosPorDetalhes(List<string> servicos)
+        public List<Empresa> BuscarServicosPorDetalhes(List<string> servicos, List<Empresa> empresas = null)
         {
             List<Empresa> lista = new List<Empresa>();
-            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+            DTOEmpresa dTOEmpresa = new DTOEmpresa();
+
+            if (empresas != null && empresas.Count() > 0)
+                dTOEmpresa.data = empresas;
+            else
+                dTOEmpresa = BuscarEmpresas();
+
 
             dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
             {
@@ -387,10 +400,16 @@ namespace ui.portal.jenn.Service
         }
 
  
-        public List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos)
+        public List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null)
         {
             List<Empresa> lista = new List<Empresa>();
-            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+            DTOEmpresa dTOEmpresa = new DTOEmpresa();
+
+            if (empresas != null && empresas.Count() > 0)
+                dTOEmpresa.data = empresas;
+            else
+                dTOEmpresa = BuscarEmpresas();
+
 
             dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
             {
@@ -432,10 +451,17 @@ namespace ui.portal.jenn.Service
         }
 
 
-        public List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios)
+        public List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null)
         {
             List<Empresa> lista = new List<Empresa>();
-            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+            DTOEmpresa dTOEmpresa = new DTOEmpresa();
+
+            if (empresas != null && empresas.Count() > 0)
+                dTOEmpresa.data = empresas;
+            else
+                dTOEmpresa = BuscarEmpresas();
+
+
 
             dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
             {

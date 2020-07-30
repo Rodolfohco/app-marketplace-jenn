@@ -9,7 +9,7 @@ public class DTOEmpresa
     public object token { get; set; }
     public bool success { get; set; }
     public string message { get; set; }
-    public Empresa[] data { get; set; }
+    public List<Empresa> data { get; set; }
     public int status { get; set; }
 }
 
