@@ -37,7 +37,7 @@ namespace api.portal.jenn.Contexto
         public DbSet<DTO.FotoEmpresa> FotoEmpresa { get; set; }
         public DbSet<DTO.Grupo> Grupo { get; set; }
 
-
+        public DbSet<DTO.Agenda> Agenda { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
