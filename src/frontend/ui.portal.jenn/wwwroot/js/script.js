@@ -205,3 +205,13 @@ function filtrarTodos() {
 
 
 }
+
+$(".item-select").click(function () {
+    var elements = $(".item-select")
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i] != this)
+            $(elements[i]).parent(".col-select").find(".content-select").removeClass("ativo");
+    }
+
+        
+});

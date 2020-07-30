@@ -209,8 +209,8 @@ namespace ui.portal.jenn.Service
             {
                 listasEmpresas = lista;
             }
-           
-            
+
+            listasEmpresas = listasEmpresas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
 
             return listasEmpresas;
         }
@@ -263,7 +263,7 @@ namespace ui.portal.jenn.Service
                 tipoproduto = tipoproduto.ToLower();
                 lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
                 {
-                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.tipoProcedimento.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(tipoproduto))) != null)
+                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.tipoProcedimento.nome.ToLower().Contains(tipoproduto)).Count() > 0)
                     {                        
                         if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
                             listasEmpresas.Add(empresa);                       
@@ -271,7 +271,9 @@ namespace ui.portal.jenn.Service
                 }));
             }
 
-            return lista;
+            listasEmpresas = listasEmpresas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
+
+            return listasEmpresas;
         }
 
 
@@ -290,7 +292,7 @@ namespace ui.portal.jenn.Service
             {
                 TipoProcedimentoViewModel tipoProcedimento = new  TipoProcedimentoViewModel();
                 tipoProcedimento.Nome = item.tipoProcedimento.nome;
-                if(listaFinal.Where(t => t.TipoProcedimentoID == tipoProcedimento.TipoProcedimentoID).Count() == 0)
+                if(listaFinal.Where(t => t.Nome == tipoProcedimento.Nome).Count() == 0)
                     listaFinal.Add(tipoProcedimento);
             }
               
@@ -303,9 +305,10 @@ namespace ui.portal.jenn.Service
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
             
             List<Empresa> listas = dTOEmpresa.data.Where(e=>e.matriz != null).ToList();
-
+            listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             foreach (var item in listas)
-                listaFinal.Add(item.bairro);
+                if (listaFinal.IndexOf(item.bairro) == -1)
+                    listaFinal.Add(item.bairro);
             
             return listaFinal;
 
@@ -325,9 +328,10 @@ namespace ui.portal.jenn.Service
 
             for (int i = 0; i < bairros.Count; i++)
             {
-                lista.AddRange(dTOEmpresa.data.Where(p => p.bairro.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(bairros[i]))).ToList());
+                lista.AddRange(dTOEmpresa.data.Where(p => p.bairro.ToLower().Contains(bairros[i])).ToList());
             }
-              
+
+            lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
 
             return lista;
         }
@@ -396,6 +400,8 @@ namespace ui.portal.jenn.Service
                 }      
             }));
 
+            lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
+
             return lista;
         }
 
@@ -425,6 +431,7 @@ namespace ui.portal.jenn.Service
                     }
                 }
             }));
+            lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
 
             return lista;
         }
@@ -480,7 +487,7 @@ namespace ui.portal.jenn.Service
                     }
                 }
             }));
-
+            lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             return lista;
         }
     }

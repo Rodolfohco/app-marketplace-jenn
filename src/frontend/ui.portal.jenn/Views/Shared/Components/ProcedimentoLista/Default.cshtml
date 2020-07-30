@@ -37,6 +37,7 @@
             <div class="btn-content">
                 <a href="@Model.EnderecoLoja" class="btn btn-primary" title="">PARTICULAR</a>
                 <a href="" class="btn btn-primary btn-convenio" title="">CONVÊNIOS</a>
+                <h4 style="display: inline-block; padding: 2%;" class="h3convenio"></h4>
                 <div class="box-convenios">
                     <form>
                         <div class="form-group">
@@ -45,7 +46,8 @@
                                     <input onkeyup="autocompleteConvenio(this)" type="text" class="form-control" placeholder="Pesquisar..." />
                                     @foreach (var item in Model.Convenios)
                                     {
-                                        <div onclick="selecionarConvenio('@item.nome', this)" href="#" class="convenio" style="display:none; padding: 3%;" data-convenio="@item.nome.ToLower()">@item.nome</div>
+                                        <a onclick="selecionarConvenio('@item.nome', this)" href="#" class="convenio"  padding: 3%;" data-convenio="@item.nome.ToLower()">@item.nome</a>
+                                        <br>
                                     }
                                 </div>
                             </div>

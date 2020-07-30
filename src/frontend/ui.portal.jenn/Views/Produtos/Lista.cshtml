@@ -12,9 +12,24 @@
     pesquisaViewModel.Localidade = item.logradouro;
 
     pesquisaViewModel.DescricaoProcedimento = "";
-    // IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = Model.Where(x => x.empresa.empresaID == item.empresa.empresaID).ToList();
-    // foreach (var itemEmp in procedimentoEmpresas)
-    //     pesquisaViewModel.DescricaoProcedimento += itemEmp.procedimento.tipoProcedimento.nome + " ";
+    IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = item.procedimentoEmpresas.ToList();
+    int i = 0;
+    foreach (var itemEmp in procedimentoEmpresas)
+    {
+        string operador = "";
+        if(i > 0)
+        {
+            if(i + 1 == procedimentoEmpresas.Count())
+                operador = " e ";
+            else
+                operador = ", ";
+        }
+
+        pesquisaViewModel.DescricaoProcedimento += operador + itemEmp.procedimento.tipoProcedimento.nome;
+
+        i++;
+    }
+
 
 
     pesquisaViewModel.Opiniao = item.avaliacoes.Count();

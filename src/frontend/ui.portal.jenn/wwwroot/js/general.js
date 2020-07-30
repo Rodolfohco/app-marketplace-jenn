@@ -59,14 +59,20 @@ function autocompleteConvenio(element) {
         $(divconvenio).find(".convenio").hide();
         $(divconvenio).find(".convenio[data-convenio*='" + valor + "']").show();
     } else {
-        $(divconvenio).find(".convenio").hide();
+        $(divconvenio).find(".convenio").show();
     }
 }
 
 
 function selecionarConvenio(valor, elementos) {
+     
+    var label = $(elementos).parents(".btn-content").find(".h3convenio");
 
-    var divconvenio = $(elementos).parents(".divconvenio");
-    var input = $(divconvenio).find("input");
-    $(input).val(valor);
+    if (label)
+        if (label.length > 0)
+            $(label).html(valor);
+
+
+    $(".box-convenios.box-ativo").removeClass("box-ativo");
+    $(".btn.btn-primary.btn-convenio.btn-ativo").removeClass("btn-ativo");
 }
