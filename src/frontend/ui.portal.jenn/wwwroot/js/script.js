@@ -172,6 +172,24 @@ function onload() {
             }
         }
     }
+    $("#botaofiltrartodos").on('click', function () {
+
+        var elementos = $("#todosfiltros input.form-check-input:checked");
+        var parametros = "";
+        for (var i = 0; i < elementos.length; i++) {
+            var param = $(elementos[i]).attr("data-controller");
+            var valor = $(elementos[i]).attr("data-" + param);
+            if (i > 0)
+                parametros += "&";
+            var array = parametros.split(param + "[");
+            if (parametros.indexOf(param + "[") == -1)
+                array = [];
+            parametros += param + "[" + array.length + "]=" + valor;
+        }
+        window.location.href = "/Produtos/ListarPorFiltros?" + parametros;
+    });
+
+
 
     $("#todosfiltros .botoesfiltro").remove();
 
@@ -199,9 +217,11 @@ function filtrarTodos() {
 
 
 
+    window.location.href = "https://" + window.location.host + "/Produtos/ListarPorFiltros?" + parametros;
 
-    window.open("https://" + window.location.host + "/Produtos/ListarPorFiltros?" + parametros, "","",true);
-    //window.location.replace("https://" + window.location.host + "/Produtos/ListarPorFiltros?" + parametros);
+
+    //window.open("https://" + window.location.host + "/Produtos/ListarPorFiltros?" + parametros, "","",true);
+    ////window.location.replace("https://" + window.location.host + "/Produtos/ListarPorFiltros?" + parametros);
 
 
 }

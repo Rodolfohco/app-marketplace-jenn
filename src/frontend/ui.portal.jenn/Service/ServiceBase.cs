@@ -90,10 +90,8 @@ namespace ui.portal.jenn.Service
         {
             CommandResult retorno;
             try
-            {
-
-               
-                var httpResponse = await this.httpClient.GetAsync($"api/{model.UrlAction}");
+            {               
+                var httpResponse =   this.httpClient.GetAsync($"api/{model.UrlAction}").Result;
                 {
                     if (httpResponse.IsSuccessStatusCode)
                     {

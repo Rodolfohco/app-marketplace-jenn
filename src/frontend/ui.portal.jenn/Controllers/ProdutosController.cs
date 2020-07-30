@@ -37,7 +37,7 @@ namespace ui.portal.jenn.Controllers
                 ViewBag.Produto = model.Produto;
 
             if (model.Localidade == null)
-                ViewBag.Localidade = "Todos as localidades";
+                ViewBag.Localidade = "Todas as localidades";
             else
                 ViewBag.Localidade = model.Localidade;
 
@@ -132,7 +132,8 @@ namespace ui.portal.jenn.Controllers
             return View("Lista", lista);
         }
 
-         public IActionResult ListarPorFiltros(List<string> bairro = null, List<string> procedimento = null, List<string> pagamento = null, List<string> conveniopesquisas = null)
+        [HttpGet]
+        public IActionResult ListarPorFiltros(List<string> bairro = null, List<string> procedimento = null, List<string> pagamento = null, List<string> conveniopesquisas = null)
         {
 
             List<Empresa> lista = new List<Empresa>();
@@ -144,28 +145,28 @@ namespace ui.portal.jenn.Controllers
                 lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas);
                 produtos += " Convenios ";
             }
-                
+
             if (pagamento.Count() > 0)
             {
                 lista = produtoService.BuscarPagamentosPorDetalhes(pagamento, lista);
                 produtos += " Pagamentos ";
             }
-               
+
             if (procedimento.Count() > 0)
             {
                 lista = produtoService.BuscarServicosPorDetalhes(procedimento, lista);
                 produtos += " Serviços ";
             }
-                
+
 
             if (bairro.Count() > 0)
             {
                 lista = produtoService.BuscarBairroPorDetalhes(bairro, lista);
                 localidades = "Bairros";
-            }               
+            }
 
             ViewBag.Produto = produtos == "" ? ViewBag.Produto = "Filtros" : ViewBag.Produto = produtos; ;
-            ViewBag.Localidade = localidades == ""? ViewBag.Localidade = "Todas as Localidades": ViewBag.Localidade = localidades;
+            ViewBag.Localidade = localidades == "" ? ViewBag.Localidade = "Todas as Localidades" : ViewBag.Localidade = localidades;
 
             return View("Lista", lista);
         }
