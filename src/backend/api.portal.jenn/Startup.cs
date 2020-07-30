@@ -25,6 +25,7 @@ using api.portal.jenn.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
+using api.portal.jenn.ViewModel;
 
 namespace api.portal.jenn
 {
@@ -51,7 +52,9 @@ namespace api.portal.jenn
             services.ConfigureBusiness();
             services.ConfigureJWt(this.Configuration);
 
-
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            
+            services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddMemoryCache();
 
 

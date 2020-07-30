@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ui.portal.jenn.Handler;
 using ui.portal.jenn.Models;
 using ui.portal.jenn.Service;
@@ -45,6 +46,8 @@ namespace ui.portal.jenn.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Pesquisa(PesquisaViewModel model)
         {
+ 
+                HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model));
             return RedirectToAction("Lista", "Produtos", model);
         }
 

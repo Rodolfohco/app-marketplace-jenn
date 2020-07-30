@@ -48,6 +48,15 @@ namespace ui.portal.jenn
                   config.AccessDeniedPath = "/Home/AccessDenied";
               });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddSingleton<IEmpresaService, EmpresaService>();
             services.AddSingleton<IProcedimentoEmpresaService, ProcedimentoEmpresaService>();        
             services.AddSingleton<IProdutoService, ProdutoService>();
@@ -77,6 +86,9 @@ namespace ui.portal.jenn
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
@@ -85,7 +97,7 @@ namespace ui.portal.jenn
             app.UseAuthorization();
 
             app.UseCookiePolicy(cookiePolicyOptions);
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
 

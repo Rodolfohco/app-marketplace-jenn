@@ -1,0 +1,30 @@
+﻿@model ui.portal.jenn.ViewModel.PesquisaViewModel
+
+   <div class="brands" style="width:80%; padding-left:2px;"  >
+ 
+        <nav>
+            <ul class="nav">
+                @if (Model.Produto != null && Model.Localidade != null)
+                {
+                    <li>
+                        <a href="" title="@Model.Produto"> @Model.Produto</a>
+                        <a href="" title="@Model.Localidade">em  @Model.Localidade - SP</a>
+                    </li>
+                }
+                else if (Model.Produto != null && Model.Localidade == null)
+                {
+                    <li><a href="" title="@Model.Produto">Por Exame - @Model.Produto</a></li>
+
+                }
+                else if (Model.Produto == null && Model.Localidade != null)
+                {
+                    <li><a href="" title="@Model.Localidade">Procedimentos em  @Model.Localidade - SP</a></li>
+
+                }
+                else
+                {
+
+                }
+            </ul>
+        </nav>
+    </div>
