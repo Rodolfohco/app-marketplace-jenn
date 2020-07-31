@@ -27,6 +27,6 @@
         i++;
     });
 
-    window.location.href = "https://" + window.location.host + "/Produtos/ListarPorServicos?" + param;
+    window.location.href = "/Produtos/ListarPorServicos?" + param;
 
 }

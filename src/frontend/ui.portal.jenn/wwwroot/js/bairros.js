@@ -26,6 +26,6 @@
         i++;
     });
 
-    window.location.href = "https://" + window.location.host + "/Produtos/ListarPorBairros?" + param;
+    window.location.href = "/Produtos/ListarPorBairros?" + param;
 
 }

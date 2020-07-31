@@ -28,7 +28,7 @@
         i++;
     });
 
-    window.location.href = "https://" + window.location.host + "/Produtos/ListarPorPagamentos?" + param;
+    window.location.href = "/Produtos/ListarPorPagamentos?" + param;
 
 
 }

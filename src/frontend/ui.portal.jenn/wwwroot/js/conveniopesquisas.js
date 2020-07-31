@@ -26,5 +26,5 @@
         i++;
     });
 
-    window.location.href = "https://" + window.location.host + "/Produtos/ListarPorConvenio?" + param;
+    window.location.href = "/Produtos/ListarPorConvenio?" + param;
 }
