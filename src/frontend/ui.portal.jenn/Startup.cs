@@ -56,6 +56,7 @@ namespace ui.portal.jenn
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            
 
             services.AddSingleton<IEmpresaService, EmpresaService>();
             services.AddSingleton<IProcedimentoEmpresaService, ProcedimentoEmpresaService>();        
@@ -65,6 +66,7 @@ namespace ui.portal.jenn
             services.AddSingleton<IContatoService, ContatoService>();
             services.AddControllersWithViews();
             services.AddSingleton<ControleCache>();
+            services.AddHttpClient();
             services.AddMvc();
             services.AddMemoryCache();
         }

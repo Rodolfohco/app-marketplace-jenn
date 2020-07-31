@@ -4,9 +4,11 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ui.portal.jenn.Handler;
 using ui.portal.jenn.Service;
 using ui.portal.jenn.ViewModel;
@@ -42,6 +44,16 @@ namespace ui.portal.jenn.Controllers
                 ViewBag.Localidade = model.Localidade;
 
 
+            PesquisaViewModel model2 = new PesquisaViewModel();
+            model2.Produto = ViewBag.Produto;
+            model2.Localidade = ViewBag.Localidade;
+
+
+
+
+            HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model2));
+
+
             List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarProdutosDetalhes(model.Produto, model.Localidade);
 
@@ -52,7 +64,14 @@ namespace ui.portal.jenn.Controllers
         {
            
             ViewBag.Produto = TipoProduto;
-            ViewBag.Localidade = "Todos as localidades";          
+            ViewBag.Localidade = "Todos as localidades";
+
+            PesquisaViewModel model = new PesquisaViewModel();
+            model.Produto = TipoProduto;
+            model.Localidade = "Todos as localidades";
+
+            HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model));
+
 
 
             List<Empresa> lista = new List<Empresa>();
