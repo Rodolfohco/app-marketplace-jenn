@@ -67,8 +67,8 @@
                         </div>
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Endereço de Email*</label>
-                                <input asp-for="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Digite seu endereço email" required>
+                                <label for="InputEmail">Endereço de Email*</label>
+                                <input asp-for="Email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Digite seu endereço email" required>
 
                             </div>
                         </div>
@@ -144,7 +144,7 @@
 
             $("#subButon").attr("disabled", true);
             $("#gridCheck").change(function () {
-                if ($(this).prop("checked") == true) {
+                if ($(this).prop("checked")) {
                     $("#subButon").removeAttr("disabled");
                 }
                 else {

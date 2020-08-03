@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -51,16 +53,13 @@ namespace ui.portal.jenn.Controllers
             return RedirectToAction("Lista", "Produtos", model);
         }
 
-        public IActionResult CentralAjuda()
-        {
-            return View();
-        }
+        public IActionResult CentralAjuda() => View();
+
+
+
 
         [Authorize]
-        public IActionResult MeuPainel()
-        {
-            return View();
-        }
+        public IActionResult MeuPainel() => View();
 
         public IActionResult Index(PesquisaViewModel model)
         {
@@ -71,7 +70,6 @@ namespace ui.portal.jenn.Controllers
         {
             PesquisaViewModel pesquisaViewModel = new PesquisaViewModel();
             pesquisaViewModel.tipoProcedimentoViewModels = produtoService.BuscarTipoProdutos();
-
             return View(pesquisaViewModel);
         }
 
@@ -84,11 +82,8 @@ namespace ui.portal.jenn.Controllers
 
 
         #region Metodos Logon / Central Ajuda
-        public IActionResult Cadastrar()
-        {
-            return View();
-        }
-
+        public IActionResult Cadastrar() => View();
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Cadastrar(NovoLogonViewModel model)
@@ -97,18 +92,15 @@ namespace ui.portal.jenn.Controllers
             {
                 model.Papeis = new List<RolesViewModel>();
                 model.Papeis.Add(new RolesViewModel() { Role = "Cliente" });
+                                var autenticacao = await logonService.Novo(model);
 
-                var autenticacao = await logonService.Novo(model);
+                ViewBag.Mensagem = new ControlePoup() { Titulo = "Sucesso ", Mensagem = "Olá o seu acesso foi criado com sucesso!", Tipo = TipoMensagem.Aviso };
                 return RedirectToAction("Inicio", "Home");
             }
             return View(model);
         }
 
-        public IActionResult Autenticar()
-        {
-            return View();
-        }
- 
+        public IActionResult Autenticar() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -172,52 +164,73 @@ namespace ui.portal.jenn.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Inicio", "Home");
         }
-        public IActionResult AccessDenied()
-        {
-            return View();
-        }
+        public IActionResult AccessDenied() => View();
+        public IActionResult QuemSomos()=> View();
+        public IActionResult TermosCondicoes() => View();
+        public IActionResult SegurancaInformacao() => View();
+        public IActionResult Contato() => View();
 
-
-        public IActionResult QuemSomos()
-        {
-            return View();
-        }
-
-
-        public IActionResult TermosCondicoes()
-        {
-            return View();
-        }
-
-
-        public IActionResult SegurancaInformacao()
-        {
-            return View();
-        }
-
-
-        public IActionResult Contato()
-        {
-            return View();
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contato(ContatoViewModel model)
         {
-            if (ModelState.IsValid)
+            CommandResult contato = new CommandResult(false, "", "", null, System.Net.HttpStatusCode.BadRequest);
+            try
             {
-                var contato = await contatoService.Novo(model);
+                if (ModelState.IsValid)
+                {
+                    contato = await contatoService.Novo(model);
 
-                if (contato != null && contato.Success)
-                    return RedirectToAction("Inicio");
+                    if (contato != null && contato.Success)
+                    {
+                        ViewBag.Mensagem = new ControlePoup() { Titulo = "Sucesso ", Mensagem = "Olá Agradecemos pelo contato, um dos nossos consultores</br> entrara em contato em breve!", Tipo = TipoMensagem.Aviso };
+                        return RedirectToAction("Inicio");
+                    }
+                    else
+                        ViewBag.Mensagem = new ControlePoup() { Titulo = "Ops ocorreu uma ação não esperada, ", Mensagem = $"Por favor tente um pouco mais tarde, Pedimos desculpas pelo ocorrido", Tipo = TipoMensagem.Erro };
+                }
                 else
-                    ModelState.AddModelError("Erro", contato.Message);
+                    return View(model);
             }
-            return View(model);
+            catch (Exception)
+            {
+                this._logger.LogError("Ocorreu o Seguinte Erro", contato.Message);
+            }
+         return View(model);
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CentralAjuda(ContatoViewModel model)
+        {
+            CommandResult contato = new CommandResult(false, "", "", null, System.Net.HttpStatusCode.BadRequest);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    contato = await contatoService.Novo(model);
+
+                    if (contato != null && contato.Success)
+                    {
+                        ViewBag.Mensagem = new ControlePoup() { Titulo = "Sucesso ", Mensagem = "Olá Agradecemos pelo contato, um dos nossos consultores</br> entrara em contato em breve!", Tipo = TipoMensagem.Aviso };
+                        return RedirectToAction("Inicio");
+                    }
+                    else
+                        ViewBag.Mensagem = new ControlePoup() { Titulo = "Ops ocorreu uma ação não esperada, ", Mensagem = $"Por favor tente um pouco mais tarde, Pedimos desculpas pelo ocorrido", Tipo = TipoMensagem.Erro };
+                }
+                else
+                    return View("CentralAjuda", model);
+            }
+            catch (Exception) 
+            {
+                this._logger.LogError("Ocorreu o Seguinte Erro", contato.Message);
+            }
+
+            return View("CentralAjuda");
+        }
+        
         #endregion
     }
 }

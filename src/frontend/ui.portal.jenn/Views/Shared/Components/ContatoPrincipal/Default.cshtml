@@ -1,0 +1,52 @@
+﻿@model ui.portal.jenn.ViewModel.ContatoViewModel
+
+<form asp-action="Contato" asp-controller="Home" method="post" asp-antiforgery="true" class="f-pages">
+    <div class="form-group">
+        <label for="InputNome">Nome</label>
+        <input asp-for="Nome" maxlength="100" type="text" class="form-control" id="InputNome" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
+    </div>
+    <div class="form-group">
+        <label for="InputEmail">Email</label>
+        <input asp-for="Email" maxlength="100" type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Digite seu email" required>
+    </div>
+    <div class="form-group">
+        <label for="InputTelefone">Telefone</label>
+        <input asp-for="Telefone" type="text" class="form-control" id="InputTelefone" aria-describedby="emailHelp" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
+    </div>
+    <div class="form-group">
+        <label for="FormControlTextarea">Mensagem</label>
+        <textarea asp-for="mensagem_cont" class="form-control" id="FormControlTextarea" rows="3" placeholder="Sua mensagem"></textarea>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+<script type="text/javascript" src="/js/script.js"></script>
+
+<script>
+    (function () {
+        $('#InputTelefone').mask("(999) 99999-9999");
+    })();
+</script>
+
+@if (ViewBag.Mensagem != null)
+{
+    @await Component.InvokeAsync("Popup")
+    <script>
+        (function () {
+            $("#ModalCentralizado").modal();
+        })();
+    </script>
+}
+

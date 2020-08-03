@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ui.portal.jenn.ViewComponents
 {
-    public class ContatoViewComponent : ViewComponent
+    public class ContatoPrincipalViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
