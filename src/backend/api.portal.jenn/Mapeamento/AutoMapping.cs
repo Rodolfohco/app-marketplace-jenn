@@ -33,7 +33,13 @@ namespace api.portal.jenn.Mapeamento
                 CreateMap<DTO.Empresa, ConsultaFilialViewModel>();
             CreateMap<ConsultaFilialViewModel, DTO.Empresa>();
 
+            CreateMap<DTO.Agenda, ConsultaAgendaViewModel>();
+            CreateMap<ConsultaAgendaViewModel, DTO.Agenda>();
 
+
+
+            CreateMap<DTO.Agenda, NovoAgendaViewModel>();
+            CreateMap<NovoAgendaViewModel, DTO.Agenda>();
 
 
             CreateMap<DTO.PagamentoProcedimentoEmpresa, NovoPagamentoProcedimentoEmpresaViewModel>();

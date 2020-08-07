@@ -181,6 +181,30 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
+        public IEnumerable<Agenda> GetNovaAgenda(int ProcedimentoEmpresaID, bool lazzLoader = false)
+        {
+            List<Agenda> retorno = new List<Agenda>();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    ctx.Agenda.Include(c=> c.ProcedimentoEmpresa)
+                        .AsParallel().ForAll(
+                        item =>
+                        {
+                            retorno.Add(item);
+                        });
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
         public IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID)
         {
             List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
@@ -363,6 +387,26 @@ namespace api.portal.jenn.Repository
             return model;
         }
 
+        public Agenda InsertNovaAgenda(Agenda model, int ProcedimentoEmpresaID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var procedimento = ctx.ProcedimentoEmpresa.Find(ProcedimentoEmpresaID);
+                    model.ProcedimentoEmpresa = procedimento;
+                    ctx.Agenda.Attach(model);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
         public PlanoProcedimentoEmpresa InsertPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresa model, int ProcedimentoID)
         {
             try
@@ -371,12 +415,8 @@ namespace api.portal.jenn.Repository
                 {
                     var procedimentoEmpresa = ctx.ProcedimentoEmpresa.Include(x=> x.PlanoProcedimentoEmpresas).Where(x => x.ProcedimentoEmpresaID == ProcedimentoID).FirstOrDefault();
                     procedimentoEmpresa.PlanoProcedimentoEmpresas.Add(model);
-
                     ctx.Entry(procedimentoEmpresa).State = EntityState.Modified;
-
                     ctx.ProcedimentoEmpresa.Update(procedimentoEmpresa);
-
-
                     ctx.SaveChanges();
                 }
             }
