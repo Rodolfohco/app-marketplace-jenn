@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.Repository
 {
-    public class EmpresaRepository: IEmpresaRepository
+    public class EmpresaRepository : IEmpresaRepository
     {
         private readonly EmpresaContextFactory contexto;
         private readonly ILogger<EmpresaRepository> logger;
@@ -21,17 +21,16 @@ namespace api.portal.jenn.Repository
 
 
         public EmpresaRepository(
-            IProcedimentoRepository _procedimento,
-        IConfiguration _configuration,
-            ILogger<EmpresaRepository> _logger,
-            EmpresaContextFactory _context)
-        {
+          IProcedimentoRepository _procedimento,
+          IConfiguration _configuration,
+          ILogger<EmpresaRepository> _logger,
+          EmpresaContextFactory _context)
+            {
             this.configuration = _configuration;
             this.logger = _logger;
-
             this.procedimento = _procedimento;
             this.contexto = _context;
-        }
+            }
 
         public void Delete(Expression<Func<Empresa, bool>> where)
         {
@@ -295,7 +294,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public PagamentoProcedimentoEmpresa Insert(PagamentoProcedimentoEmpresa model, int ProcedimentoID)
         {
             try
@@ -320,13 +318,8 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
-
-
-
         public PlanoProcedimentoEmpresa Insert(PlanoProcedimentoEmpresa model)
         {
-
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
@@ -342,7 +335,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public FotoEmpresa Insert(FotoEmpresa model, int EmpresaID)
         {
             try
@@ -364,7 +356,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public Grupo Insert(Grupo model, int EmpresaID)
         {
             try
@@ -386,7 +377,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public Agenda InsertNovaAgenda(Agenda model, int ProcedimentoEmpresaID)
         {
             try
@@ -406,7 +396,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public PlanoProcedimentoEmpresa InsertPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresa model, int ProcedimentoID)
         {
             try
@@ -427,7 +416,6 @@ namespace api.portal.jenn.Repository
             }
             return model;
         }
-
         public void Update(Empresa model, int id)
         {
             try

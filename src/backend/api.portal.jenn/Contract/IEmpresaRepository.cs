@@ -22,9 +22,8 @@ namespace api.portal.jenn.Contract
         DTO.Grupo Insert(DTO.Grupo model, int EmpresaID);
 
 
-
-
-
+        IEnumerable<DTO.Agenda> GetNovaAgenda(int ProcedimentoID, bool lazzLoader = false);
+        DTO.Agenda InsertNovaAgenda(DTO.Agenda model, int ProcedimentoID);
         IEnumerable<DTO.Empresa> GetFiliais(bool lazzLoader = false);
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-    [Table("cat_proced")]
+    [Table("procedcat")]
     public class CategoriaProcedimento
     {
         [Key]

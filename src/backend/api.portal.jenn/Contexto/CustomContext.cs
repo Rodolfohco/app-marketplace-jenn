@@ -28,16 +28,18 @@ namespace api.portal.jenn.Contexto
         public DbSet<Plano> Planos { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
-        public DbSet<DTO.Pais> Pais { get; set; }
+        public DbSet<Pais> Pais { get; set; }
 
-        public DbSet<DTO.CategoriaProcedimento> CategoriaProced { get; set; }
-        public DbSet<DTO.TipoProcedimento> TipoProcedimento { get; set; }
-        public DbSet<DTO.Procedimento> Procedimento { get; set; }
-        public DbSet<DTO.ProcedimentoEmpresa> ProcedimentoEmpresa { get; set; }
-        public DbSet<DTO.FotoEmpresa> FotoEmpresa { get; set; }
-        public DbSet<DTO.Grupo> Grupo { get; set; }
+        public DbSet<CategoriaProcedimento> CategoriaProced { get; set; }
+        public DbSet<TipoProcedimento> TipoProcedimento { get; set; }
+        public DbSet<Procedimento> Procedimento { get; set; }
+        public DbSet<ProcedimentoEmpresa> ProcedimentoEmpresa { get; set; }
+        public DbSet<FotoEmpresa> FotoEmpresa { get; set; }
+        public DbSet<Grupo> Grupo { get; set; }
 
-        public DbSet<DTO.Agenda> Agenda { get; set; }
+        public DbSet<Agenda> Agenda { get; set; }
+
+        public DbSet<ConfirmacaoAgenda> ConfirmacaoAgenda { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
