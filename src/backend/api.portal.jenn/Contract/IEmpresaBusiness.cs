@@ -50,7 +50,8 @@ namespace api.portal.jenn.Contract
 
         ViewModel.PagamentoProcedimentoEmpresaViewModel InserirPagamentoProcedimentoEmpresa(ViewModel.NovoPagamentoProcedimentoEmpresaViewModel model);
 
-
+        IEnumerable<ConsultaAgendaViewModel> SelecionarAgendaProcedimentoEmpresa(int ProcedimentoID);
+        ConsultaAgendaViewModel InserirAgendaProcedimentoEmpresa(NovoAgendaViewModel novaAgenda, int ProcedimentoEmpresaID);
         #endregion
     }
 }

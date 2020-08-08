@@ -69,7 +69,7 @@ namespace api.portal.jenn
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CustomContext customContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DBJennContext customContext)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();

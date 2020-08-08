@@ -24,7 +24,7 @@ namespace api.portal.jenn.Config
 
             if (Configuration.GetValue<string>("BancoPrincipal") == "SQLServer")
             {
-                services.AddDbContext<CustomContext>
+                services.AddDbContext<DBJennContext>
                 (
                      options =>
                      {
@@ -34,7 +34,7 @@ namespace api.portal.jenn.Config
             }
             else if (Configuration.GetValue<string>("BancoPrincipal") == "MySQL")
             {
-                services.AddDbContext<CustomContext>
+                services.AddDbContext<DBJennContext>
                  (
                     options =>
                     {

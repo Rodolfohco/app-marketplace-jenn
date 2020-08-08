@@ -41,6 +41,36 @@ namespace api.portal.jenn.Business
             }
         }
 
+        public IEnumerable<ConsultaAgendaViewModel> SelecionarAgendaProcedimentoEmpresa(int ProcedimentoID)
+        {
+            IEnumerable<Agenda> retorno = Enumerable.Empty<Agenda>();
+            try
+            {
+                retorno = this.repository.GetNovaAgenda(ProcedimentoID, true);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.Agenda>, IEnumerable<ViewModel.ConsultaAgendaViewModel>>(retorno);
+        }
+        public ConsultaAgendaViewModel InserirAgendaProcedimentoEmpresa(NovoAgendaViewModel novaAgenda, int ProcedimentoEmpresaID)
+        {
+            Agenda retorno = null;
+            try
+            {
+                var nova = this.mapper.Map<ViewModel.NovoAgendaViewModel, DTO.Agenda>(novaAgenda);
+                retorno = this.repository.InsertNovaAgenda(nova, ProcedimentoEmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Agenda, ViewModel.ConsultaAgendaViewModel>(retorno);
+        }
+
         public EmpresaViewModel Detalhar(Expression<Func<Empresa, bool>> where)
         {
             Empresa retorno = null;
@@ -351,34 +381,5 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.Grupo, ViewModel.GrupoViewModel>(retorno);
         }
 
-        public IEnumerable<ConsultaAgendaViewModel> SelecionarAgendaProcedimentoEmpresa(int ProcedimentoID)
-        {
-            IEnumerable<Agenda> retorno = Enumerable.Empty<Agenda>();
-            try
-            {
-                retorno = this.repository.GetNovaAgenda(ProcedimentoID, true);
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
-                throw;
-            }
-            return this.mapper.Map<IEnumerable<DTO.Agenda>, IEnumerable<ViewModel.ConsultaAgendaViewModel>>(retorno);
-        }
-        public ConsultaAgendaViewModel InserirAgendaProcedimentoEmpresa(NovoAgendaViewModel novaAgenda, int ProcedimentoEmpresaID)
-        {
-            Agenda retorno = null;
-            try
-            {
-                var nova = this.mapper.Map<ViewModel.NovoAgendaViewModel, DTO.Agenda>(novaAgenda);
-                retorno = this.repository.InsertNovaAgenda(nova, ProcedimentoEmpresaID);
-            }
-            catch (Exception exception)
-            {
-                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
-                throw;
-            }
-            return this.mapper.Map<DTO.Agenda, ViewModel.ConsultaAgendaViewModel>(retorno);
-        }
-    }
+     }
 }

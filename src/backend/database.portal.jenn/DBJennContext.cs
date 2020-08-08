@@ -1,21 +1,22 @@
 ﻿using api.portal.jenn.DTO;
-using AutoMapper.Mappers;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace api.portal.jenn.Contexto
 {
-    public class CustomContext : DbContext
+    public class DBJennContext : DbContext
     {
-        public CustomContext(DbContextOptions<CustomContext> option) : base(option)
+        public DBJennContext(DbContextOptions<DBJennContext> option) : base(option)
         {
-
         }
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        ////    base.OnConfiguring(optionsBuilder);
+        ////    optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=DBJenn;Trusted_Connection=True;");
+
+        //   optionsBuilder.UseMySql("Server=mysql.examesemcasa.com.br;Database=examesemcasa01;Uid=examesemcasa01;Pwd=K3LLaxMmQD9qJd7jYsZutvUbT6DyVw;");
+        //}
 
         public DbSet<FotoEmpresa> FotoEmpresas { get; set; }
         public DbSet<Contato> Contato { get; set; }

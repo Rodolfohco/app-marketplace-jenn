@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api.portal.jenn", "api.portal.jenn.csproj", "{CA6EB922-04E8-46CE-AAD1-F6A2FE58A1AC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "database.portal.jenn", "..\database.portal.jenn\database.portal.jenn.csproj", "{0A742F82-AA9D-4C4F-94CA-9A3998864508}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CA6EB922-04E8-46CE-AAD1-F6A2FE58A1AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA6EB922-04E8-46CE-AAD1-F6A2FE58A1AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA6EB922-04E8-46CE-AAD1-F6A2FE58A1AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A742F82-AA9D-4C4F-94CA-9A3998864508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A742F82-AA9D-4C4F-94CA-9A3998864508}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A742F82-AA9D-4C4F-94CA-9A3998864508}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A742F82-AA9D-4C4F-94CA-9A3998864508}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.factory
 {
-    public class LogonContextFactory : IDesignTimeDbContextFactory<CustomContext>
+    public class LogonContextFactory : IDesignTimeDbContextFactory<DBJennContext>
     {
         private readonly IHostEnvironment environment;
         private readonly IConfiguration config;
@@ -20,9 +20,9 @@ namespace api.portal.jenn.factory
             this.environment = _environment;
             this.config = _config;
         }
-        public CustomContext CreateDbContext(string[] args)
+        public DBJennContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<CustomContext>();
+            var builder = new DbContextOptionsBuilder<DBJennContext>();
             var connectionString = string.Empty;
 
             if (config.GetValue<string>("BancoPrincipal") == "SQLServer")
@@ -35,7 +35,7 @@ namespace api.portal.jenn.factory
                 connectionString = config.GetValue<string>("DataBase:MySqlConnection");
                 builder.UseMySql(connectionString);
             }
-            return new CustomContext(builder.Options);
+            return new DBJennContext(builder.Options);
 
         }
     }

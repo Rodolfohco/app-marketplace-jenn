@@ -36,7 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Contexto\" />
     <Folder Include="Middleware\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\database.portal.jenn\database.portal.jenn.csproj" />
   </ItemGroup>
 
 
