@@ -1,0 +1,47 @@
+﻿@model api.portal.jenn.DTO.CategoriaProcedimento
+
+@{
+    ViewData["Title"] = "Nova Categoria Tipo Procedimento";
+    Layout = "~/Views/Shared/_LayoutProcedimentos.cshtml";
+}
+
+
+<form asp-controller="CategoriaProcedimento" asp-action="Create" method="post" class="form-horizontal">
+    <fieldset>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Cadastro de uma nova Categoria Para o tipo pocedimento</div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-11 control-label">
+                        <p class="help-block"><h11>*</h11> Campo Obrigatório </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Nome"> Tipo <h11>*</h11></label>
+                    <div class="col-md-8">
+                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md" required="" type="text">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Cadastrar"></label>
+                    <div class="col-md-8">
+                        <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit">Cadastrar</button>
+                        <button id="Cancelar" name="Cancelar" class="btn btn-danger" asp-action="Index" type="Reset">Cancelar</button>
+                        <a class="btn btn-info" asp-action="Index">Voltar Para a Lista de Procedimentos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+
+
+ 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

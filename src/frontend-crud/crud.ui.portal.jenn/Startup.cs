@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.portal.jenn.Contexto;
 using crud.ui.portal.jenn.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +27,36 @@ namespace crud.ui.portal.jenn
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            var connectionString = string.Empty;
+
+            if (Configuration.GetValue<string>("BancoPrincipal") == "SQLServer")
+            {
+                services.AddDbContext<DBJennContext>
+                (
+                     options =>
+                     {
+                         options.UseSqlServer(Configuration.GetValue<string>("DataBase:SQLConnection"), options => options.EnableRetryOnFailure());
+                     }
+                );
+            }
+            else if (Configuration.GetValue<string>("BancoPrincipal") == "MySQL")
+            {
+                services.AddDbContext<DBJennContext>
+                 (
+                    options =>
+                    {
+                        options.UseMySql(Configuration.GetValue<string>("DataBase:MySqlConnection"), options => options.EnableRetryOnFailure());
+                        options.EnableDetailedErrors();
+                    }
+                  );
+            }
+            
+
+
+
+
             var urlBase = new Uri(this.Configuration.GetValue<string>("urlBaseApi"));
             services.AddHttpContextAccessor();
             services.AddHttpClient<ServiceBase>(c =>

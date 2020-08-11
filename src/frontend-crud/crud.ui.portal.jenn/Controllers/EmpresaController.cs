@@ -2,70 +2,159 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using crud.ui.portal.jenn.Models;
-using crud.ui.portal.jenn.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using api.portal.jenn.Contexto;
+using api.portal.jenn.DTO;
 
 namespace crud.ui.portal.jenn.Controllers
 {
     public class EmpresaController : Controller
     {
-        private readonly IEmpresaService contexto;
-        private readonly ILogger<EmpresaController> _logger;
+        private readonly DBJennContext _context;
 
-        public EmpresaController(ILogger<EmpresaController> logger, IEmpresaService _contexto)
+        public EmpresaController(DBJennContext context)
         {
-            contexto = _contexto;
-            _logger = logger;
-
-
+            _context = context;
         }
 
-
-        public async Task<IActionResult> Lista()
+        // GET: Empresa
+        public async Task<IActionResult> Index()
         {
-            var empresas = await contexto.Selecionar();
-            var objEmpresa = JsonConvert.DeserializeObject<IEnumerable<EmpresaViewModel>>(empresas.Data.ToString());
-
-            
-            
-            return View(objEmpresa);
+            var dBJennContext = _context.Empresas.Include(e => e.Matriz);
+            return View(await dBJennContext.ToListAsync());
         }
 
-        
-        public async Task<IActionResult> Novo()
+        // GET: Empresa/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            var empresas = await contexto.Selecionar();
-            var objEmpresa = JsonConvert.DeserializeObject<IEnumerable<EmpresaViewModel>>(empresas.Data.ToString());
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-                var select = objEmpresa.ToList().Select(c => new SelectListItem()
-            { Text = c.Nome, Value = c.EmpresaID.ToString() }).ToList();
+            var empresa = await _context.Empresas
+                .Include(e => e.Matriz)
+                .FirstOrDefaultAsync(m => m.EmpresaID == id);
+            if (empresa == null)
+            {
+                return NotFound();
+            }
 
-            select.Insert(0, new SelectListItem("Selecione uma Empresa", ""));
+            return View(empresa);
+        }
 
-         ViewBag.EmpresaObjeto = select;
-
-
-
-
+        // GET: Empresa/Create
+        public IActionResult Create()
+        {
+            ViewData["MatrizID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro");
             return View();
         }
 
+        // POST: Empresa/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Novo(NovaEmpresaViewModel model)
+        public async Task<IActionResult> Create([Bind("CodigoCnes,EmpresaID,MatrizID,cnpj,Nome,Telefone1,Telefone2,ImgemFrontEmpresa,Email,Logradouro,numero,bairro,cep,maps,Responsavel,Id_classe,Cert_Empresa,Ativo")] Empresa empresa)
         {
-            return RedirectToAction("Lista");
+            if (ModelState.IsValid)
+            {
+                _context.Add(empresa);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["MatrizID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro", empresa.MatrizID);
+            return View(empresa);
         }
 
-        public IActionResult Index()
+        // GET: Empresa/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var empresa = await _context.Empresas.FindAsync(id);
+            if (empresa == null)
+            {
+                return NotFound();
+            }
+            ViewData["MatrizID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro", empresa.MatrizID);
+            return View(empresa);
+        }
 
-            return View();
+        // POST: Empresa/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("CodigoCnes,EmpresaID,MatrizID,cnpj,Nome,Telefone1,Telefone2,ImgemFrontEmpresa,Email,Logradouro,numero,bairro,cep,maps,Responsavel,Id_classe,Cert_Empresa,Ativo")] Empresa empresa)
+        {
+            if (id != empresa.EmpresaID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(empresa);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmpresaExists(empresa.EmpresaID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["MatrizID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro", empresa.MatrizID);
+            return View(empresa);
+        }
+
+        // GET: Empresa/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var empresa = await _context.Empresas
+                .Include(e => e.Matriz)
+                .FirstOrDefaultAsync(m => m.EmpresaID == id);
+            if (empresa == null)
+            {
+                return NotFound();
+            }
+
+            return View(empresa);
+        }
+
+        // POST: Empresa/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var empresa = await _context.Empresas.FindAsync(id);
+            _context.Empresas.Remove(empresa);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool EmpresaExists(int id)
+        {
+            return _context.Empresas.Any(e => e.EmpresaID == id);
         }
     }
 }

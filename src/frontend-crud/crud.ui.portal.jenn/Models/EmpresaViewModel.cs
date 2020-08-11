@@ -12,6 +12,13 @@ namespace crud.ui.portal.jenn.Models
 
     public class NovaEmpresaViewModel
     {
+
+        [Required(ErrorMessage = "Informe o CNEs da EmpresaJ")]
+        [Display(Name = "Código CNEs da Empresa :")]
+        public string codCnes { get; set; }
+
+
+
         [Required(ErrorMessage = "Informe o Numero do CNPJ")]
         [Display(Name = "CNPJ Da Empresa :")]
         public string cnpj { get; set; }
@@ -35,8 +42,6 @@ namespace crud.ui.portal.jenn.Models
         [Required(ErrorMessage = "Informe a Logomarca da Empresa")]
         [Display(Name = "Logomarca da Empresa :")]
         public string ImgemFrontEmpresa { get; set; }
-
-
 
 
 
@@ -89,9 +94,10 @@ namespace crud.ui.portal.jenn.Models
 
 
         [Display(Name = "Selecione a Empresa Matriz :")]
-
         [Required(ErrorMessage = "Selecione a ")]
         public int MatrizID { get; set; }
+
+        public CidadeViewModel Cidade { get; set; }
     }
 
     

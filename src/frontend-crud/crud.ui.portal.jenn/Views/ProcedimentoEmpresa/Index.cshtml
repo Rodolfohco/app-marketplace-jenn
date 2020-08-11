@@ -1,0 +1,114 @@
+﻿@model IEnumerable<api.portal.jenn.DTO.ProcedimentoEmpresa>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInclusao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_pers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecoProduto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco_contra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxaParcelamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxaResultado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagemThumb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagemHome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagemMain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Video)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destaque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procedimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Empresa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInclusao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome_pers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecoProduto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco_contra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxaParcelamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxaResultado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagemThumb)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagemHome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagemMain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Video)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destaque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Procedimento.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empresa.Logradouro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProcedimentoEmpresaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProcedimentoEmpresaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProcedimentoEmpresaID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<api.portal.jenn.DTO.TipoProcedimento>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutProcedimentos.cshtml";
+}
+
+<h1>Lista de Tipo de Procedimento</h1>
+
+
+
+<div class="form-group">
+    <a asp-action="Create">Novo Tipo</a>
+    <table class=" table-active col-md-12 ">
+        <thead>
+            <tr>
+                <th>
+                    Nome
+                </th>
+            
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                 
+                    <td>
+                        <div class="col-md-8">
+                            <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.TipoProcedimentoID">Editar</a> |
+                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.TipoProcedimentoID">Detalhar</a> |
+                            <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.TipoProcedimentoID">Deletar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

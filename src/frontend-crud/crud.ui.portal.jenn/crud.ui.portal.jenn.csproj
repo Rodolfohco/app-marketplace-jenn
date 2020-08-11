@@ -2,14 +2,47 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>2d59286d-e279-4908-9ddb-e7b272a4100a</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\Components\NovoPlano\**" />
+    <Content Remove="Views\Shared\Components\NovoPlano\**" />
+    <EmbeddedResource Remove="Views\Shared\Components\NovoPlano\**" />
+    <None Remove="Views\Shared\Components\NovoPlano\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Component\NovoPlanoViewComponent.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Component\" />
     <Folder Include="Service\" />
+    <Folder Include="Views\Shared\Components\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\database.portal.jenn\database.portal.jenn.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Empresa\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

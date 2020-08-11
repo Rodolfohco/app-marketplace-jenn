@@ -13,7 +13,7 @@ namespace crud.ui.portal.jenn.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
 
-        public string ImgProduto_Proc { get; set; }
+        public string ImgProduto { get; set; }
 
         public int Ativo { get; set; }
 
@@ -31,7 +31,7 @@ namespace crud.ui.portal.jenn.Models
         public string Nome { get; set; }
         public string Descricao { get; set; }
 
-        public string ImgProduto_Proc { get; set; }
+        public string ImgProduto { get; set; }
 
         public int Ativo { get; set; }
 
