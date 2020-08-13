@@ -3,7 +3,7 @@
     <form asp-action="Agendamento" asp-controller="Produtos" method="post" asp-antiforgery="true" class="f-pages" style="width: 180%;margin-left: -200px;">
         <div class="row">
             <div class="form-group col-md-6">
-                <label id="nomeexame"></label>
+                <label id="nomeexame">Tipo de Procedimento: @Model.PesquisaViewModel.Produto</label>
             </div>
             <div class="form-group col-md-3" style="text-align: end;">
                 <input checked  class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste">

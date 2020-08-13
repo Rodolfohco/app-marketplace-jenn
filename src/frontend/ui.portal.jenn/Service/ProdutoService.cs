@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ui.portal.jenn.Handler;
+using ui.portal.jenn.Models;
 using ui.portal.jenn.ViewModel;
 
 namespace ui.portal.jenn.Service
@@ -110,9 +111,9 @@ namespace ui.portal.jenn.Service
         }
 
 
-        public List<string> BuscarProdutos(string produtos)
+        public List<DTOAutocomplete> BuscarProdutos(string produtos)
         {
-            List<string> listaFinal = new List<string>();
+            List<DTOAutocomplete> listaFinal = new List<DTOAutocomplete>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
             List<Empresa> listas = new List<Empresa>();
             produtos = produtos.ToLower();
@@ -128,17 +129,24 @@ namespace ui.portal.jenn.Service
 
             foreach (var item in procedimentos)
             {
-                if (listaFinal.Find(n => n == item.nome) == null)
-                    listaFinal.Add(item.nome);
+                if (listaFinal.Find(n => n.label == item.nome) == null)
+                {
+                    DTOAutocomplete dTOAutocomplete = new DTOAutocomplete();
+                    dTOAutocomplete.label = item.nome;
+                    dTOAutocomplete.value = item.nome;
+                    dTOAutocomplete.id = item.procedimentoID;
+                    dTOAutocomplete.tipo = 0;
+                    listaFinal.Add(dTOAutocomplete);
+                }                    
             }
                 
 
             return listaFinal;
         }
 
-        public List<string> BuscarLocalidades(string localidades, string produtos)
+        public List<DTOAutocomplete> BuscarLocalidades(string localidades, string produtos)
         {
-            List<string> listaFinal = new List<string>();
+            List<DTOAutocomplete> listaFinal = new List<DTOAutocomplete>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
             localidades = localidades.ToLower();
@@ -175,16 +183,26 @@ namespace ui.portal.jenn.Service
                 listasCidades = listas.Select(c => c.cidade).Where(p => p != null && p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(localidades))).ToList();
             }
 
+
             foreach (var item in listasCidades)
-                if (listaFinal.IndexOf(item.nome) == -1)
-                    listaFinal.Add(item.nome);
+            {
+                if (listaFinal.Find(n => n.label == item.nome) == null)
+                {
+                    DTOAutocomplete dTOAutocomplete = new DTOAutocomplete();
+                    dTOAutocomplete.label = item.nome;
+                    dTOAutocomplete.value = item.nome;
+                    dTOAutocomplete.id = item.cidadeID;
+                    dTOAutocomplete.tipo = 0;
+                    listaFinal.Add(dTOAutocomplete);
+                }
+            }
 
             return listaFinal;
 
 
         }
 
-        public List<Empresa> BuscarProdutosDetalhes(string produto,  string localidade)
+        public List<Empresa> BuscarProdutosDetalhes(int produto,  string localidade)
         {
             List<Empresa> lista = new List<Empresa>();
             List<Empresa> listasEmpresas = new List<Empresa>();
@@ -197,10 +215,9 @@ namespace ui.portal.jenn.Service
 
             if (produto != null)
             {
-                produto = produto.ToLower();
                 lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
                 {
-                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.ToLower().Contains(produto)).Count() > 0)
+                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.procedimentoID == produto).Count() > 0)
                     { 
                         if (localidade == null || (empresa.cidade != null && empresa.cidade.nome.Contains(localidade)))
                         {
@@ -247,14 +264,17 @@ namespace ui.portal.jenn.Service
         private DTOEmpresa BuscarEmpresas()
         {
             string cacheKey = "DTOEmpresa";
-            DTOEmpresa dTOEmpresa = _cache.Get<DTOEmpresa>(cacheKey);
-
+            
+            DTOEmpresa dTOEmpresa = getProcedimentoEmpresa();
+            /*
+              DTOEmpresa dTOEmpresa = _cache.Get<DTOEmpresa>(cacheKey);
             if (dTOEmpresa == null)
             {
                 dTOEmpresa = getProcedimentoEmpresa();
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromHours(20));
                 _cache.Set<DTOEmpresa>(cacheKey, dTOEmpresa, cacheEntryOptions);
             }
+            */
 
             return dTOEmpresa;
         }
@@ -513,7 +533,7 @@ namespace ui.portal.jenn.Service
             return lista;
         }
 
-        public PesquisaViewModel BuscarEmpresaPorId(int id)
+        public PesquisaViewModel BuscarEmpresaPorId(int id, int idProcedimento)
         {
             PesquisaViewModel pesquisaViewModel = new PesquisaViewModel();
             Empresa empresa = new Empresa();
@@ -568,6 +588,11 @@ namespace ui.portal.jenn.Service
                     pesquisaViewModel.EnderecoLoja = "???";
                     pesquisaViewModel.UrlImagem = empresa.imgemFrontEmpresa;
                     pesquisaViewModel.UrlMaps = empresa.maps;
+
+                    Procedimento procedimento = BuscarProdutosPorId(idProcedimento);
+                    pesquisaViewModel.Produto = procedimento.nome;
+                    pesquisaViewModel.IdProcedimento = procedimento.procedimentoID;
+
                 }
 
             }
@@ -576,5 +601,24 @@ namespace ui.portal.jenn.Service
             return pesquisaViewModel;
         }
 
-    }
+
+        public Procedimento BuscarProdutosPorId(int produto)
+        {
+            List<Empresa> lista = new List<Empresa>();
+            Procedimento procedimento = new Procedimento();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            if (dTOEmpresa.data == null)
+                return procedimento;
+
+            lista = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            ProcedimentoEmpresa procedimentoEmpresas = lista.SelectMany(pe=>pe.procedimentoEmpresas).Where(p=>p.procedimento.procedimentoID == produto).FirstOrDefault();
+
+            if (procedimentoEmpresas != null)
+                procedimento = procedimentoEmpresas.procedimento;
+
+            return procedimento;
+        }
+
+            }
 }

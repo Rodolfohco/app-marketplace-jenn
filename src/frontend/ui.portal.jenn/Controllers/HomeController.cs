@@ -48,8 +48,10 @@ namespace ui.portal.jenn.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Pesquisa(PesquisaViewModel model)
         {
- 
-                HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model));
+            if (model.IdProcedimento == null || model.IdProcedimento == 0)
+                return RedirectToAction("Inicio", "Home");
+
+            HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model));
             return RedirectToAction("Lista", "Produtos", model);
         }
 

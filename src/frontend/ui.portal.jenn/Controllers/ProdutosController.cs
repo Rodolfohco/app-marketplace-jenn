@@ -10,6 +10,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ui.portal.jenn.Handler;
+using ui.portal.jenn.Models;
 using ui.portal.jenn.Service;
 using ui.portal.jenn.ViewModel;
 
@@ -43,7 +44,7 @@ namespace ui.portal.jenn.Controllers
             else
                 ViewBag.Localidade = model.Localidade;
 
-
+            ViewBag.IdProcedimento = model.IdProcedimento;
             PesquisaViewModel model2 = new PesquisaViewModel();
             model2.Produto = ViewBag.Produto;
             model2.Localidade = ViewBag.Localidade;
@@ -51,49 +52,9 @@ namespace ui.portal.jenn.Controllers
             HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model2));
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarProdutosDetalhes(model.Produto, model.Localidade);
+            lista = produtoService.BuscarProdutosDetalhes(model.IdProcedimento, model.Localidade);
 
-            /*
-            lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
-            ConsultaAgendaViewModel consultaAgendaViewModel = new ConsultaAgendaViewModel();
-
-            if (lista.Count >= 1)
-            {
-                lista[0].TipoEmpresa = 2;
-                lista[0].procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
-                for (int i = 7; i <= 17; i++)
-                {
-                    consultaAgendaViewModel = new ConsultaAgendaViewModel();
-                    consultaAgendaViewModel.dia = 12;
-                    consultaAgendaViewModel.mes = 8;
-                    consultaAgendaViewModel.hora = new DateTime(2020, 8, 9, i, 0, 0);
-
-                    lista[0].procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels.Add(consultaAgendaViewModel);
-
-                }
-                for (int i = 11; i <= 15; i++)
-                {
-                    consultaAgendaViewModel = new ConsultaAgendaViewModel();
-                    consultaAgendaViewModel.dia = 11;
-                    consultaAgendaViewModel.mes = 8;
-                    consultaAgendaViewModel.hora = new DateTime(2020, 8, 12, i, 0, 0);
-
-                    lista[0].procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels.Add(consultaAgendaViewModel);
-                }
-            }
-
-
-            if (lista.Count >= 2)
-            {
-                lista[1].TipoEmpresa = 0;
-            }
-
-            if (lista.Count >= 3)
-            {
-                lista[2].TipoEmpresa = 1;
-            }
-            */
-                return View(lista);
+            return View(lista);
         }
 
         public IActionResult ListaTipoProduto(string TipoProduto)
@@ -138,12 +99,12 @@ namespace ui.portal.jenn.Controllers
             return RedirectToAction("Lista", lista);
         }
 
-        public List<string> BuscarProdutos(string produtos)
+        public List<DTOAutocomplete> BuscarProdutos(string produtos)
         {
             return produtoService.BuscarProdutos(produtos);
         }
 
-        public List<string> BuscarLocalidades(string localidades, string produtos)
+        public List<DTOAutocomplete> BuscarLocalidades(string localidades, string produtos)
         {
             return produtoService.BuscarLocalidades(localidades, produtos);
         }
@@ -228,12 +189,13 @@ namespace ui.portal.jenn.Controllers
 
          
 
-        public IActionResult Agendamento(int id)
+        public IActionResult Agendamento(int id, int idProcedimento)
         {
             AgendamentoViewModel agendamentoViewModel = new AgendamentoViewModel();
 
-            agendamentoViewModel.PesquisaViewModel = produtoService.BuscarEmpresaPorId(id);
+            agendamentoViewModel.PesquisaViewModel = produtoService.BuscarEmpresaPorId(id, idProcedimento);
             agendamentoViewModel.Convenios = produtoService.BuscarConvenios();
+            ViewBag.idProcedimento = idProcedimento;
 
             return View("Agendamento", agendamentoViewModel);
         }

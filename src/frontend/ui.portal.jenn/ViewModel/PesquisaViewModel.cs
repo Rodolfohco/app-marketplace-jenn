@@ -29,5 +29,7 @@ namespace ui.portal.jenn.ViewModel
         public List<ConsultaAgendaViewModel> consultaAgendaViewModels { get; set; }
         public int EmpresaID { get; set; }
 
+        public int IdProcedimento { get; set; }
+
     }
 }

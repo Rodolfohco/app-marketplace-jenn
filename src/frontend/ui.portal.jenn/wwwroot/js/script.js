@@ -14,11 +14,17 @@
                         url: "Produtos/BuscarProdutos",
                         success: function (data) {
                             response(data);
+                            $("#txtIdProcedimento").val("");
                         },
                         error: function (data) {
                             console.log(data);
                         }
                     });
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $("#txtIdProcedimento").val(ui.item.id);
                 }
             });
         });

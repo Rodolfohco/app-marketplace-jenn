@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ui.portal.jenn.Handler;
+using ui.portal.jenn.Models;
 using ui.portal.jenn.ViewModel;
 
 namespace ui.portal.jenn.Service
@@ -18,9 +19,9 @@ namespace ui.portal.jenn.Service
 
         Task Atualizar(ProdutoViewModel model, Guid EmpresaID);
         Task<CommandResult> Detalhar(Guid EmpresaID);
-        List<string> BuscarProdutos(string produtos);
-        List<string> BuscarLocalidades(string localidades, string produtos);
-        List<Empresa> BuscarProdutosDetalhes(string produto, string localidade);
+        List<DTOAutocomplete> BuscarProdutos(string produtos);
+        List<DTOAutocomplete> BuscarLocalidades(string localidades, string produtos);
+        List<Empresa> BuscarProdutosDetalhes(int produto, string localidade);
         List<Empresa> BuscarTipoProdutosDetalhes(string tipoproduto);
         List<TipoProcedimentoViewModel> BuscarTipoProdutos();
         List<string> BuscarBairros();
@@ -31,7 +32,8 @@ namespace ui.portal.jenn.Service
         List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null);
         List<string> BuscarConvenios();
         List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null);
-        PesquisaViewModel BuscarEmpresaPorId(int id);
+        PesquisaViewModel BuscarEmpresaPorId(int id, int idProcedimento);
+        Procedimento BuscarProdutosPorId(int produto);
     }
    
 }
