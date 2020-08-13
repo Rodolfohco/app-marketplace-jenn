@@ -1,0 +1,65 @@
+﻿
+@model IEnumerable<api.portal.jenn.DTO.Convenio>
+
+@{
+    ViewData["Title"] = "Convenio-Planos";
+    Layout = "~/Views/Shared/_LayoutConvenio.cshtml";
+}
+
+<h1>Lista de Convenios</h1>
+
+<div class="form-group">
+    <a asp-action="Create">Novo Convenio</a>
+    <table class=" table-active col-md-12 ">
+        <thead>
+            <tr>
+                <th>
+                  Convenio
+                </th>
+                <th>
+                  Data da Inclusão
+                </th>
+                <th>
+                   Status
+                </th>
+                <th></th>   
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => item.DataInclusao)
+                </td>
+                <td>
+
+                    @if (item.Ativo > 0)
+                        {
+                    <label class="bg-success">Ativo</label>
+                        }
+                        else
+                        {
+                    <label class="bg-danger">Desativado</label>
+                        }
+                </td>
+                <td>
+                    <div class="col-md-8">
+                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.ConvenioId">Editar</a> |
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ConvenioId">Detalhar</a> |
+                        <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.ConvenioId">Deletar</a>
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+  
