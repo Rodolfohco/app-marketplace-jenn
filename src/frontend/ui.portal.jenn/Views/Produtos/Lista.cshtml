@@ -13,6 +13,9 @@
 
     pesquisaViewModel.DescricaoProcedimento = "";
     IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = item.procedimentoEmpresas.ToList();
+    List<ConsultaAgendaViewModel> consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
+
+    string tipoprocedimento = "";
     int i = 0;
     foreach (var itemEmp in procedimentoEmpresas)
     {
@@ -25,21 +28,34 @@
                 operador = ", ";
         }
 
-        pesquisaViewModel.DescricaoProcedimento += operador + itemEmp.procedimento.tipoProcedimento.nome;
+
+        if (tipoprocedimento.IndexOf(itemEmp.procedimento.tipoProcedimento.nome + ";") == -1)
+        {
+            pesquisaViewModel.DescricaoProcedimento += operador + itemEmp.procedimento.tipoProcedimento.nome;
+            tipoprocedimento += itemEmp.procedimento.tipoProcedimento.nome + ";";
+        }
+
+
+
+        if(itemEmp.agendas != null &&itemEmp.agendas.Count() > 0)
+            consultaAgendaViewModels.AddRange(itemEmp.agendas);
 
         i++;
     }
 
-
+    pesquisaViewModel.EmpresaID = item.empresaID;
 
     pesquisaViewModel.Opiniao = item.avaliacoes.Count();
     pesquisaViewModel.NomeUnidade =  item.nome;
     pesquisaViewModel.EnderecoCompleto =  item.logradouro + ", " + item.numero + " - " + item.bairro;
-    pesquisaViewModel.EnderecoLoja = "???";
+    pesquisaViewModel.EnderecoLoja = item.url_loja;
     pesquisaViewModel.UrlImagem =  item.imgemFrontEmpresa;
     pesquisaViewModel.UrlMaps = item.maps;
+    pesquisaViewModel.TipoEmpresa = item.TipoEmpresa;
 
     pesquisaViewModel.Convenios = item.procedimentoEmpresas.SelectMany(p => p.planoProcedimentoEmpresas).Select(c => c.plano.convenio).ToList();
+
+    pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels;
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

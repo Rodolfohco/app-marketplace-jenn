@@ -38,6 +38,10 @@ public class Empresa
     public object[] avaliacoes { get; set; }
     public Matriz matriz { get; set; }
     public ProcedimentoEmpresa[] procedimentoEmpresas { get; set; }
+
+    public int TipoEmpresa { get; set; }
+
+    public string url_loja { get; set; }
 }
 
 public class Cidade
@@ -106,6 +110,7 @@ public class ProcedimentoEmpresa
     public PlanoProcedimentoEmpresa[] planoProcedimentoEmpresas { get; set; }
     public object[] procedimentoPerguntas { get; set; }
     public PagamentoProcedimentoEmpresa[] pagamentoProcedimentoEmpresas { get; set; }
+    public List<ConsultaAgendaViewModel> agendas { get; set; }
 }
 
 public class Procedimento
@@ -163,4 +168,14 @@ public class Convenio
     public string nome { get; set; }
     public DateTime dataInclusao { get; set; }
     public int ativo { get; set; }
+}
+
+public class ConsultaAgendaViewModel
+{
+    public int agendaID { get; set; }
+    public int mes { get; set; }
+    public int dia { get; set; }
+    public DateTime hora { get; set; }
+    public DateTime dataVigencia { get; set; }
+
 }

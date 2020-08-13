@@ -137,21 +137,22 @@
                         @RenderBody()
                     </div>
                 </div>
-            </main>
+            </main> 
+            <footer class="footer">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-md-12">
+                        @await Component.InvokeAsync("FooterParte1")
+
+                    </div>
+                    <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
+                        @await Component.InvokeAsync("FooterParte2")
+                    </div>
+                </div>
+            </footer>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="row">
-            <div class="col-xl-6 col-lg-12 col-md-12">
-                @await Component.InvokeAsync("FooterParte1")
-
-            </div>
-            <div class="col-xl-5 offset-xl-1  right-side col-lg-12 col-md-12">
-                @await Component.InvokeAsync("FooterParte2")
-            </div>
-        </div>
-    </footer>
+   
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 

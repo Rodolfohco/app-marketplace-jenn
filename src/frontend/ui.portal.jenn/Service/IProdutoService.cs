@@ -31,6 +31,7 @@ namespace ui.portal.jenn.Service
         List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null);
         List<string> BuscarConvenios();
         List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null);
+        PesquisaViewModel BuscarEmpresaPorId(int id);
     }
    
 }

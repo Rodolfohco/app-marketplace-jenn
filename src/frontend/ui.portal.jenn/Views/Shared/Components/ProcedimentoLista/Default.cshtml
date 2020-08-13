@@ -46,101 +46,21 @@
                                     <input onkeyup="autocompleteConvenio(this)" type="text" class="form-control" placeholder="Pesquisar..." />
                                     @foreach (var item in Model.Convenios)
                                     {
-                                        <a onclick="selecionarConvenio('@item.nome', this)" href="#" class="convenio"  padding: 3%;" data-convenio="@item.nome.ToLower()">@item.nome</a>
+                                        <a onclick="selecionarConvenio('@item.nome', this)" href="#" class="convenio" padding: 3%;" data-convenio="@item.nome.ToLower()">@item.nome</a>
                                         <br>
                                     }
                                 </div>
                             </div>
                         </div>
-                        
+
 
                     </form>
                 </div>
             </div>
 
         </div>
-        <div class="col-xl-3 col-md-12  col-12">
-            <div class="calendar">
-                <h4>Horário Desejado</h4>
-                <p>Entenda como a sugestão de agenda funciona.</p>
-                <div class="slider-time">
-
-                    <div>
-                        <div class="box-time">
-                            <h5>Hoje</h5>
-                            <p>13/JAN</p>
-                            <div class="content-time">
-                                <span class="active">12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="box-time">
-                            <h5>Amanhã</h5>
-                            <p>13/JAN</p>
-                            <div class="content-time">
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="box-time">
-                            <h5>SEG</h5>
-                            <p>13/JAN</p>
-                            <div class="content-time">
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="box-time">
-                            <h5>ter</h5>
-                            <p>13/JAN</p>
-                            <div class="content-time">
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="box-time">
-                            <h5>qua</h5>
-                            <p>13/JAN</p>
-                            <div class="content-time">
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="box-time">
-                            <h5>qui</h5>
-                            <p>13/JAN</p>
-                            <div class="content-time">
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                                <span>12:00 </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <!--Agenda-->
+        @await Component.InvokeAsync("Agendamento", Model)
     </div>
 </div>
 

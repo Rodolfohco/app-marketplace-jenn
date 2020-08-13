@@ -1,0 +1,104 @@
+﻿@model ui.portal.jenn.ViewModel.PesquisaViewModel
+    <div class="col-xl-3 col-md-12  col-12">
+
+
+        @switch (Model.TipoEmpresa)
+        {
+            case 0:
+                //Plano gratuito
+                <div class="calendar">
+                    <br>
+                    <h4>Preço do exame particular</h4>
+                    <br>
+                    <p>Esta instituição ainda não tem loja virtual.</p>
+                    <div class="">
+                        <a style="background-color:#4472c4; " href="" class="btn btn-primary" title="">Solicite contato</a>
+                    </div>
+                </div>
+                break;
+            case 1:
+                //Plano básico
+                <div class="calendar">
+                    <br>
+                    <h4>Preço do exame particular</h4>
+                    <br>
+                    @*<h4>R$ 100,00</h4>*@
+                    <p>Compre online em até 12X</p>
+                    <div class="">
+                        <a style="background-color:#4472c4; " href="@Model.EnderecoLoja" class="btn btn-primary" title="">Ir para a loja virtual</a>
+                    </div>
+                </div>
+                break;
+            case 2:
+                //Plano VIP
+                <div class="calendar">
+                    <h4>Horário Desejado</h4>
+                    <p>Entenda como a sugestão de agenda funciona.</p>
+                    <div class="slider-time">
+                        @{
+                            DateTime diaAtual = DateTime.Now;
+                            string[] mesArray = new string[12] { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
+                            string[] semanaArray = new string[7] { "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
+                            bool botaoHorario = false;
+
+                            for (int i = 0; i < 6; i++)
+                            {
+
+                                <div>
+                                    <div class="box-time">
+                                        <h5>@semanaArray[Convert.ToInt32(diaAtual.DayOfWeek)]</h5>
+                                        <p>@diaAtual.Day/@mesArray[diaAtual.Month - 1]</p>
+                                        <div class="content-time">
+                                            @{
+
+                                                List<ConsultaAgendaViewModel> consultaAgendaViewModels = Model.consultaAgendaViewModels.Where(c => c.mes == diaAtual.Month && c.dia == diaAtual.Day).ToList();
+                                                for (int j = 0; j < consultaAgendaViewModels.Count; j++)
+                                                {
+                                                    string visivel = "";
+                                                    string classvisivel = "";
+
+                                                    if (j >= 4)
+                                                    {
+                                                        visivel = "display:none";
+                                                        classvisivel = "invisivel";
+                                                        botaoHorario = true;
+                                                    }
+
+                                                    <a href="/Produtos/Agendamento?id=@Model.EmpresaID"><span style="@visivel" class="active @classvisivel empresa_@Model.EmpresaID">@consultaAgendaViewModels[j].hora.Hour :00 </span></a>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                diaAtual = diaAtual.AddDays(1);
+                            }
+                        }
+
+                    </div>
+                </div>
+                if (botaoHorario == true)
+                {
+                    <a href="javascript:void(0)" class="botao_@Model.EmpresaID" onclick="abrirHorario('@Model.EmpresaID');">Mostrar mais horários</a>
+                }
+
+
+                break;
+
+            default:
+                break;
+        }
+
+
+
+    </div>
+<script>
+    function abrirHorario(id) {
+        if ($(".empresa_" + id + ".invisivel").css('display') == "none") {
+            $(".botao_" + id).html("Menos");
+            $(".empresa_" + id + ".invisivel").show();
+        } else {
+            $(".empresa_" + id + ".invisivel").hide();
+            $(".botao_" + id).html("Mostrar mais horários");
+        }           
+    }
+</script>

@@ -48,16 +48,52 @@ namespace ui.portal.jenn.Controllers
             model2.Produto = ViewBag.Produto;
             model2.Localidade = ViewBag.Localidade;
 
-
-
-
             HttpContext.Session.SetString("filtroPesquisa", JsonConvert.SerializeObject(model2));
-
 
             List<Empresa> lista = new List<Empresa>();
             lista = produtoService.BuscarProdutosDetalhes(model.Produto, model.Localidade);
 
-            return View(lista);
+            /*
+            lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
+            ConsultaAgendaViewModel consultaAgendaViewModel = new ConsultaAgendaViewModel();
+
+            if (lista.Count >= 1)
+            {
+                lista[0].TipoEmpresa = 2;
+                lista[0].procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
+                for (int i = 7; i <= 17; i++)
+                {
+                    consultaAgendaViewModel = new ConsultaAgendaViewModel();
+                    consultaAgendaViewModel.dia = 12;
+                    consultaAgendaViewModel.mes = 8;
+                    consultaAgendaViewModel.hora = new DateTime(2020, 8, 9, i, 0, 0);
+
+                    lista[0].procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels.Add(consultaAgendaViewModel);
+
+                }
+                for (int i = 11; i <= 15; i++)
+                {
+                    consultaAgendaViewModel = new ConsultaAgendaViewModel();
+                    consultaAgendaViewModel.dia = 11;
+                    consultaAgendaViewModel.mes = 8;
+                    consultaAgendaViewModel.hora = new DateTime(2020, 8, 12, i, 0, 0);
+
+                    lista[0].procedimentoEmpresas.FirstOrDefault().consultaAgendaViewModels.Add(consultaAgendaViewModel);
+                }
+            }
+
+
+            if (lista.Count >= 2)
+            {
+                lista[1].TipoEmpresa = 0;
+            }
+
+            if (lista.Count >= 3)
+            {
+                lista[2].TipoEmpresa = 1;
+            }
+            */
+                return View(lista);
         }
 
         public IActionResult ListaTipoProduto(string TipoProduto)
@@ -189,6 +225,19 @@ namespace ui.portal.jenn.Controllers
 
             return View("Lista", lista);
         }
+
+         
+
+        public IActionResult Agendamento(int id)
+        {
+            AgendamentoViewModel agendamentoViewModel = new AgendamentoViewModel();
+
+            agendamentoViewModel.PesquisaViewModel = produtoService.BuscarEmpresaPorId(id);
+            agendamentoViewModel.Convenios = produtoService.BuscarConvenios();
+
+            return View("Agendamento", agendamentoViewModel);
+        }
+
 
     }
 }

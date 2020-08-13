@@ -114,10 +114,15 @@ namespace ui.portal.jenn.Service
         {
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
-
+            List<Empresa> listas = new List<Empresa>();
             produtos = produtos.ToLower();
 
-            List<Empresa> listas = dTOEmpresa.data.ToList();
+
+            if (dTOEmpresa.data == null)
+                return listaFinal;
+
+            listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
 
@@ -138,8 +143,13 @@ namespace ui.portal.jenn.Service
 
             localidades = localidades.ToLower();
             List<Cidade> listasCidades = new List<Cidade>();
-            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<Empresa> listas = new List<Empresa>();
 
+            if (dTOEmpresa.data == null)
+                return listaFinal;
+
+            listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+             
             if(produtos != null)
             {
                 produtos = produtos.ToLower();
@@ -180,23 +190,23 @@ namespace ui.portal.jenn.Service
             List<Empresa> listasEmpresas = new List<Empresa>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
-            lista = dTOEmpresa.data.ToList();
+            if(dTOEmpresa.data == null)
+                return listasEmpresas;
+
+            lista = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
 
             if (produto != null)
             {
                 produto = produto.ToLower();
                 lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
                 {
-                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produto))) != null)
-                    {
-                        if (empresa.cidade != null)
+                    if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.nome.ToLower().Contains(produto)).Count() > 0)
+                    { 
+                        if (localidade == null || (empresa.cidade != null && empresa.cidade.nome.Contains(localidade)))
                         {
-                            if (localidade == null || empresa.cidade.nome.Contains(localidade))
-                            {
-                                if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
-                                    listasEmpresas.Add(empresa);
-                            }
-                        }
+                            if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
+                                listasEmpresas.Add(empresa);
+                        }                         
                     }
                 }));
             }
@@ -281,9 +291,12 @@ namespace ui.portal.jenn.Service
         {
             List<TipoProcedimentoViewModel> listaFinal = new List<TipoProcedimentoViewModel>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
+             
+            if (dTOEmpresa.data == null)
+                return listaFinal;
 
-            //List<Tipoprocedimento> listas = dTOEmpresa.data.Select(p => p.procedimento).Select(a=>a.tipoProcedimento).Take(10).ToList();
-            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<Empresa> listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
 
@@ -341,7 +354,11 @@ namespace ui.portal.jenn.Service
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
-            List<Empresa> listas = dTOEmpresa.data.ToList();
+            if (dTOEmpresa.data == null)
+                return listaFinal;
+
+            List<Empresa> listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
 
@@ -360,7 +377,12 @@ namespace ui.portal.jenn.Service
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
 
-            List<Empresa> listas = dTOEmpresa.data.ToList();
+
+            if (dTOEmpresa.data == null)
+                return listaFinal;
+
+            List<Empresa> listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<PagamentoProcedimentoEmpresa> pagamentoProcedimentoEmpresas = procedimentoEmpresas.SelectMany(p => p.pagamentoProcedimentoEmpresas).ToList();
 
@@ -490,5 +512,69 @@ namespace ui.portal.jenn.Service
             lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             return lista;
         }
+
+        public PesquisaViewModel BuscarEmpresaPorId(int id)
+        {
+            PesquisaViewModel pesquisaViewModel = new PesquisaViewModel();
+            Empresa empresa = new Empresa();
+            DTOEmpresa dTOEmpresa = new DTOEmpresa();
+
+            dTOEmpresa = BuscarEmpresas();
+
+            if (dTOEmpresa != null && dTOEmpresa.data != null)
+            {
+                empresa = dTOEmpresa.data.Where(e => e.empresaID == id).ToList().FirstOrDefault();
+
+                if(empresa != null)
+                {
+                    pesquisaViewModel.NomeEmpresa = empresa.matriz != null ? empresa.matriz.nome : "";
+                    pesquisaViewModel.Localidade = empresa.logradouro;
+
+                    pesquisaViewModel.DescricaoProcedimento = "";
+                    IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = empresa.procedimentoEmpresas.ToList();
+                    List<ConsultaAgendaViewModel> consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
+
+                    string tipoprocedimento = "";
+                    int i = 0;
+                    foreach (var itemEmp in procedimentoEmpresas)
+                    {
+                        string operador = "";
+                        if (i > 0)
+                        {
+                            if (i + 1 == procedimentoEmpresas.Count())
+                                operador = " e ";
+                            else
+                                operador = ", ";
+                        }
+
+                        if(tipoprocedimento.IndexOf(itemEmp.procedimento.tipoProcedimento.nome + ";") == -1)
+                        {
+                            pesquisaViewModel.DescricaoProcedimento += operador + itemEmp.procedimento.tipoProcedimento.nome;
+                            tipoprocedimento += itemEmp.procedimento.tipoProcedimento.nome + ";";
+                        }
+                            
+
+                        if (itemEmp.agendas != null && itemEmp.agendas.Count() > 0)
+                            consultaAgendaViewModels.AddRange(itemEmp.agendas);
+
+                        i++;
+                    }
+
+                    pesquisaViewModel.EmpresaID = empresa.empresaID;
+
+                    pesquisaViewModel.Opiniao = empresa.avaliacoes.Count();
+                    pesquisaViewModel.NomeUnidade = empresa.nome;
+                    pesquisaViewModel.EnderecoCompleto = empresa.logradouro + ", " + empresa.numero + " - " + empresa.bairro;
+                    pesquisaViewModel.EnderecoLoja = "???";
+                    pesquisaViewModel.UrlImagem = empresa.imgemFrontEmpresa;
+                    pesquisaViewModel.UrlMaps = empresa.maps;
+                }
+
+            }
+           
+
+            return pesquisaViewModel;
+        }
+
     }
 }
