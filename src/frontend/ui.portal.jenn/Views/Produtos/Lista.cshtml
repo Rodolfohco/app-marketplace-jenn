@@ -57,7 +57,9 @@
     pesquisaViewModel.Convenios = item.procedimentoEmpresas.SelectMany(p => p.planoProcedimentoEmpresas).Select(c => c.plano.convenio).ToList();
 
     pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels;
-    pesquisaViewModel.IdProcedimento = ViewBag.idProcedimento;
+
+    if(ViewBag.idProcedimento != null)
+        pesquisaViewModel.IdProcedimento = ViewBag.idProcedimento;
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }
