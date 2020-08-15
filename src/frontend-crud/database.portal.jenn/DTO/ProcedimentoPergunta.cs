@@ -28,9 +28,7 @@ namespace api.portal.jenn.DTO
         [StringLength(300)]
         public string descricao { get; set; }
 
-        [Required]
         [Column("atv_proced", Order = 3)]
-        [StringLength(1)]
         public int Ativo { get; set; }
 
 

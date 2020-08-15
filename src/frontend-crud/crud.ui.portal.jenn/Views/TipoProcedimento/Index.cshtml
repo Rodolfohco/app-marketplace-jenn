@@ -17,26 +17,31 @@
                 <th>
                     Nome
                 </th>
-            
+                <th>
+                    Categoria
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                 
-                    <td>
-                        <div class="col-md-8">
-                            <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.TipoProcedimentoID">Editar</a> |
-                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.TipoProcedimentoID">Detalhar</a> |
-                            <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.TipoProcedimentoID">Deletar</a>
-                        </div>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                </td>
+
+                <td>
+                    <div class="col-md-8">
+                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.TipoProcedimentoID">Editar</a> |
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.TipoProcedimentoID">Detalhar</a> |
+                        <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.TipoProcedimentoID">Deletar</a>
+                    </div>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

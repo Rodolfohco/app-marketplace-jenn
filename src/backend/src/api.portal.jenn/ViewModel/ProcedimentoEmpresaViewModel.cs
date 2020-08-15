@@ -97,7 +97,7 @@ namespace api.portal.jenn.ViewModel
         public int? Destaque { get; set; }
         public virtual ProcedimentoViewModel Procedimento { get; set; }
 
-        public virtual ICollection<ConsultaAgendaViewModel> Agenda { get; set; }
+        public virtual ICollection<ConsultaAgendaViewModel> Agendas { get; set; }
         
         public virtual ICollection<PlanoProcedimentoEmpresaViewModel> PlanoProcedimentoEmpresas { get; set; }
         public virtual ICollection<ProcedimentoPerguntaViewModel> ProcedimentoPerguntas { get; set; }

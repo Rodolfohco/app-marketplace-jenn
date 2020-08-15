@@ -21,14 +21,13 @@ namespace api.portal.jenn.DTO
         [StringLength(200)]
         public string Nome { get; set; }
 
-       
+        [Required]
         [Column("data_inc", Order = 2)]
         public DateTime DataInclusao { get; set; }
 
         
-         [Column("atv_proced", Order =3)]
-         public int Ativo { get; set; }
-     
+        [Column("atv_proced", Order =3)]
+        public int Ativo { get; set; }
         public virtual ICollection<Plano> Planos { get; set; }
     }
 }

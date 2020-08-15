@@ -20,6 +20,12 @@ namespace api.portal.jenn.DTO
         public int? MatrizID { get; set; }
 
         [Required]
+        [Column("cnes_emp", Order = 1)]
+        [StringLength(20)]
+        public string CodigoCnes { get; set; }
+
+
+        [Required]
         [Column("cnpj_emp", Order = 1)]
         [StringLength(14)]
         public string cnpj { get; set; }

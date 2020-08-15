@@ -9,5 +9,7 @@ namespace api.portal.jenn.ViewModel
     {
         public int UfID { get; set; }
         public string Nome { get; set; }
+
+        public string num_uf { get; set; }
     }
 }

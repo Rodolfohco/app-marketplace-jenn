@@ -17,6 +17,10 @@ namespace api.portal.jenn.DTO
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaisID { get; set; }
 
+        [Column("num_pais", Order = 3)]
+        [StringLength(5)]
+        public string  num_pais { get; set; }
+
         [Required]
         [Column("nom_pais", Order = 3)]
         [StringLength(200)]

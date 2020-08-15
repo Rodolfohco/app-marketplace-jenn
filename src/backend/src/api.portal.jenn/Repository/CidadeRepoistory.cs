@@ -40,7 +40,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Delete] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Delete] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }
@@ -53,14 +53,14 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        retorno = ctx.Cidades.Include(c => c.Regiao).Include(c=> c.Ufs).Where(c=> c.CidadeID == CidadeID).SingleOrDefault();
+                        retorno = ctx.Cidades.Include(c => c.Regiao).Include(c=> c.Uf).Where(c=> c.CidadeID == CidadeID).SingleOrDefault();
                     else
                         retorno = ctx.Cidades.Where(c => c.CidadeID == CidadeID).SingleOrDefault();
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -74,14 +74,14 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Cidades.Include(c => c.Ufs).ThenInclude(c=> c.Pais).Include(c=> c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
+                        ctx.Cidades.Include(c => c.Uf).ThenInclude(c=> c.Pais).Include(c=> c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
                     else
                         ctx.Cidades.AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -95,14 +95,14 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Cidades.Include(c => c.Ufs).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
+                        ctx.Cidades.Include(c => c.Uf).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
                     else
                         ctx.Cidades.AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -117,14 +117,14 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Empresas.Where(c=> c.EmpresaID==EmpresaID).Select(c=> c.Cidade).Include(c => c.Ufs).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
+                        ctx.Empresas.Where(c=> c.EmpresaID==EmpresaID).Select(c=> c.Cidade).Include(c => c.Uf).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
                     else
                         ctx.Empresas.Where(c => c.EmpresaID == EmpresaID).Select(c => c.Cidade).AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -139,14 +139,23 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     if (lazzLoader)
-                        ctx.Cidades.Include(c => c.Ufs).ThenInclude(c => c.Pais).Include(c => c.Regiao).AsParallel().ForAll(item => { retorno.Add(item); });
+                    {
+                        ctx.Cidades
+                            .Include(c => c.Uf)
+                            .Include(c => c.Regiao)
+                            .AsParallel().ForAll(
+                            item =>
+                            {
+                                retorno.Add(item);
+                            });
+                    }
                     else
                         ctx.Cidades.AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -164,7 +173,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return model;
@@ -186,7 +195,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return model;
@@ -208,7 +217,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return model;
@@ -238,7 +247,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }
@@ -260,7 +269,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }
@@ -288,7 +297,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -316,7 +325,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;

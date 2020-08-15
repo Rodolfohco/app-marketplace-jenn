@@ -19,5 +19,7 @@ namespace api.portal.jenn.DTO
         [Column("nom_categoria", Order = 1)]
         [StringLength(200)]
         public string Nome { get; set; }
+
+        public virtual ICollection<TipoProcedimento> TiposProcedimentos { get; set; }
     }
 }

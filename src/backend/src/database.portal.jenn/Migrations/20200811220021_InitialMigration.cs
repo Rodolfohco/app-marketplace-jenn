@@ -14,11 +14,27 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_cidade = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_cid = table.Column<string>(maxLength: 5, nullable: false),
                     nom_cid = table.Column<string>(maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_cidade", x => x.cod_cidade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CidadeMunicipios",
+                columns: table => new
+                {
+                    CidadeID = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CodIbge = table.Column<string>(nullable: true),
+                    Cidade = table.Column<string>(nullable: true),
+                    Uf = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CidadeMunicipios", x => x.CidadeID);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,11 +61,76 @@ namespace database.portal.jenn.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     nom_conv = table.Column<string>(maxLength: 200, nullable: false),
                     data_inc = table.Column<DateTime>(nullable: false),
-                    atv_proced = table.Column<int>(maxLength: 1, nullable: false)
+                    atv_proced = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_conv", x => x.cod_conv);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Estabelicimentos",
+                columns: table => new
+                {
+                    EstabelicimentoID = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CO_CNES = table.Column<string>(nullable: true),
+                    NU_CNPJ_MANTENEDORA = table.Column<string>(nullable: true),
+                    TP_PFPJ = table.Column<string>(nullable: true),
+                    NIVEL_DEP = table.Column<string>(nullable: true),
+                    NO_RAZAO_SOCIAL = table.Column<string>(nullable: true),
+                    NO_FANTASIA = table.Column<string>(nullable: true),
+                    NO_LOGRADOURO = table.Column<string>(nullable: true),
+                    NU_ENDERECO = table.Column<string>(nullable: true),
+                    NO_COMPLEMENTO = table.Column<string>(nullable: true),
+                    NO_BAIRRO = table.Column<string>(nullable: true),
+                    CO_CEP = table.Column<string>(nullable: true),
+                    CO_REGIAO_SAUDE = table.Column<string>(nullable: true),
+                    CO_MICRO_REGIAO = table.Column<string>(nullable: true),
+                    CO_DISTRITO_SANITARIO = table.Column<string>(nullable: true),
+                    CO_DISTRITO_ADMINISTRATIVO = table.Column<string>(nullable: true),
+                    NU_TELEFONE = table.Column<string>(nullable: true),
+                    NU_FAX = table.Column<string>(nullable: true),
+                    NO_EMAIL = table.Column<string>(nullable: true),
+                    NU_CPF = table.Column<string>(nullable: true),
+                    NU_CNPJ = table.Column<string>(nullable: true),
+                    CO_ATIVIDADE = table.Column<string>(nullable: true),
+                    CO_CLIENTELA = table.Column<string>(nullable: true),
+                    NU_ALVARA = table.Column<string>(nullable: true),
+                    DT_EXPEDICAO = table.Column<string>(nullable: true),
+                    TP_ORGAO_EXPEDIDOR = table.Column<string>(nullable: true),
+                    DT_VAL_LIC_SANI = table.Column<string>(nullable: true),
+                    TP_LIC_SANI = table.Column<string>(nullable: true),
+                    TP_UNIDADE = table.Column<string>(nullable: true),
+                    CO_TURNO_ATENDIMENTO = table.Column<string>(nullable: true),
+                    CO_ESTADO_GESTOR = table.Column<string>(nullable: true),
+                    CO_MUNICIPIO_GESTOR = table.Column<string>(nullable: true),
+                    DT_ATUALIZACAO = table.Column<string>(nullable: true),
+                    CO_USUARIO = table.Column<string>(nullable: true),
+                    CO_CPFDIRETORCLN = table.Column<string>(nullable: true),
+                    REG_DIRETORCLN = table.Column<string>(nullable: true),
+                    ST_ADESAO_FILANTROP = table.Column<string>(nullable: true),
+                    CO_MOTIVO_DESAB = table.Column<string>(nullable: true),
+                    NO_URL = table.Column<string>(nullable: true),
+                    NU_LATITUDE = table.Column<string>(nullable: true),
+                    NU_LONGITUDE = table.Column<string>(nullable: true),
+                    DT_ATU_GEO = table.Column<string>(nullable: true),
+                    NO_USUARIO_GEO = table.Column<string>(nullable: true),
+                    CO_NATUREZA_JUR = table.Column<string>(nullable: true),
+                    TP_ESTAB_SEMPRE_ABERTO = table.Column<string>(nullable: true),
+                    ST_GERACREDITO_GERENTE_SGIF = table.Column<string>(nullable: true),
+                    ST_CONEXAO_INTERNET = table.Column<string>(nullable: true),
+                    CO_TIPO_UNIDADE = table.Column<string>(nullable: true),
+                    NO_FANTASIA_ABREV = table.Column<string>(nullable: true),
+                    TP_GESTAO = table.Column<string>(nullable: true),
+                    DT_ATUALIZACAO_ORIGEM = table.Column<string>(nullable: true),
+                    CO_TIPO_ESTABELECIMENTO = table.Column<string>(nullable: true),
+                    CO_ATIVIDADE_PRINCIPAL = table.Column<string>(nullable: true),
+                    ST_CONTRATO_FORMALIZADO = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estabelicimentos", x => x.EstabelicimentoID);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,11 +156,35 @@ namespace database.portal.jenn.Migrations
                     usua_email = table.Column<string>(maxLength: 150, nullable: false),
                     password = table.Column<string>(maxLength: 100, nullable: false),
                     dt_inclusao = table.Column<DateTime>(nullable: false),
-                    atv_logon = table.Column<int>(maxLength: 1, nullable: false)
+                    atv_logon = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Logon", x => x.LogonID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "paciente",
+                columns: table => new
+                {
+                    cod_paciente = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nom_paciente = table.Column<string>(maxLength: 100, nullable: false),
+                    sobnom_paciente = table.Column<string>(maxLength: 100, nullable: false),
+                    nasc_paciente = table.Column<DateTime>(nullable: false),
+                    cpf_paciente = table.Column<string>(maxLength: 11, nullable: false),
+                    sex_paciente = table.Column<string>(maxLength: 1, nullable: false),
+                    tel_paciente = table.Column<string>(maxLength: 20, nullable: false),
+                    cel_paciente = table.Column<string>(maxLength: 21, nullable: true),
+                    logr_paciente = table.Column<string>(maxLength: 150, nullable: true),
+                    num_paciente = table.Column<string>(maxLength: 12, nullable: true),
+                    bai_paciente = table.Column<string>(maxLength: 100, nullable: true),
+                    cep_paciente = table.Column<string>(maxLength: 20, nullable: true),
+                    refer_paciente = table.Column<string>(maxLength: 200, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_paciente", x => x.cod_paciente);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,6 +193,7 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_pais = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_pais = table.Column<string>(maxLength: 5, nullable: true),
                     nom_pais = table.Column<string>(maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -198,7 +304,6 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_emp = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    cod_cnes = table.Column<int>(nullable: false),
                     cod_matriz_emp = table.Column<int>(nullable: true),
                     cnpj_emp = table.Column<string>(maxLength: 14, nullable: false),
                     nome_emp = table.Column<string>(maxLength: 200, nullable: false),
@@ -213,8 +318,10 @@ namespace database.portal.jenn.Migrations
                     maps_emp = table.Column<string>(maxLength: 200, nullable: true),
                     reps_emp = table.Column<string>(maxLength: 200, nullable: false),
                     id_classe = table.Column<string>(maxLength: 10, nullable: true),
-                    cert_emp = table.Column<string>(maxLength: 2, nullable: true),
-                    atv_proced = table.Column<int>(maxLength: 1, nullable: false),
+                    cert_emp = table.Column<string>(nullable: true),
+                    atv_proced = table.Column<int>(nullable: false),
+                    tipo_emp = table.Column<int>(nullable: false),
+                    url_loja = table.Column<string>(maxLength: 300, nullable: true),
                     GrupoID = table.Column<int>(nullable: true),
                     CidadeID = table.Column<int>(nullable: true)
                 },
@@ -267,6 +374,7 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_uf = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_uf = table.Column<string>(maxLength: 3, nullable: false),
                     nom_uf = table.Column<string>(maxLength: 200, nullable: false),
                     PaisID = table.Column<int>(nullable: true),
                     CidadeID = table.Column<int>(nullable: true)
@@ -395,7 +503,7 @@ namespace database.portal.jenn.Migrations
                     nom_proced = table.Column<string>(maxLength: 200, nullable: false),
                     desc_proced = table.Column<string>(maxLength: 400, nullable: false),
                     imgprod_proced = table.Column<string>(maxLength: 200, nullable: false),
-                    atv_proced = table.Column<int>(maxLength: 1, nullable: false),
+                    atv_proced = table.Column<int>(nullable: false),
                     TipoProcedimentoID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -558,7 +666,7 @@ namespace database.portal.jenn.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     titulo_procperg = table.Column<string>(maxLength: 150, nullable: false),
                     desc_procperg = table.Column<string>(maxLength: 300, nullable: false),
-                    atv_proced = table.Column<int>(maxLength: 1, nullable: false),
+                    atv_proced = table.Column<int>(nullable: false),
                     ProcedimentoEmpresaID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -586,7 +694,9 @@ namespace database.portal.jenn.Migrations
                     alergia_reacoes = table.Column<string>(nullable: false),
                     PlanoID = table.Column<int>(nullable: true),
                     AgendaID = table.Column<int>(nullable: true),
-                    ClienteID = table.Column<int>(nullable: true)
+                    ClienteID = table.Column<int>(nullable: true),
+                    PacienteID = table.Column<int>(nullable: true),
+                    ProcedimentoEmpresaID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -604,10 +714,22 @@ namespace database.portal.jenn.Migrations
                         principalColumn: "cod_cliente",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_proceagendaconfirma_paciente_PacienteID",
+                        column: x => x.PacienteID,
+                        principalTable: "paciente",
+                        principalColumn: "cod_paciente",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_proceagendaconfirma_plano_conv_PlanoID",
                         column: x => x.PlanoID,
                         principalTable: "plano_conv",
                         principalColumn: "cod_plano",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_proceagendaconfirma_procemp_ProcedimentoEmpresaID",
+                        column: x => x.ProcedimentoEmpresaID,
+                        principalTable: "procemp",
+                        principalColumn: "cod_procemp",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -702,9 +824,19 @@ namespace database.portal.jenn.Migrations
                 column: "ClienteID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_proceagendaconfirma_PacienteID",
+                table: "proceagendaconfirma",
+                column: "PacienteID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_proceagendaconfirma_PlanoID",
                 table: "proceagendaconfirma",
                 column: "PlanoID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_proceagendaconfirma_ProcedimentoEmpresaID",
+                table: "proceagendaconfirma",
+                column: "ProcedimentoEmpresaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_proced_TipoProcedimentoID",
@@ -765,10 +897,16 @@ namespace database.portal.jenn.Migrations
                 name: "avalia");
 
             migrationBuilder.DropTable(
+                name: "CidadeMunicipios");
+
+            migrationBuilder.DropTable(
                 name: "contato");
 
             migrationBuilder.DropTable(
                 name: "domic");
+
+            migrationBuilder.DropTable(
+                name: "Estabelicimentos");
 
             migrationBuilder.DropTable(
                 name: "fotoemp");
@@ -802,6 +940,9 @@ namespace database.portal.jenn.Migrations
 
             migrationBuilder.DropTable(
                 name: "proceagenda");
+
+            migrationBuilder.DropTable(
+                name: "paciente");
 
             migrationBuilder.DropTable(
                 name: "plano_conv");

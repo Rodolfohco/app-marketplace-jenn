@@ -1,4 +1,5 @@
 ﻿using api.portal.jenn.DTO;
+using api.portal.jenn.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace api.portal.jenn.Contract
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID);
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa();
         DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model);
+
+        DTO.ConfirmacaoAgenda InsertConfirmacaoAgenda(ConfirmacaoAgendaViewModel model);
+
+
 
         DTO.PagamentoProcedimentoEmpresa Insert(DTO.PagamentoProcedimentoEmpresa model, int ProcedimentoID);
 

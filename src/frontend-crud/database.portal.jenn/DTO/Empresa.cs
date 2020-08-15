@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 namespace api.portal.jenn.DTO
 {
 
-
    [Table("emp")]
     public class Empresa
     {
-        [Column("cod_cnes", Order = 0)]
-        public int CodigoCnes { get; set; }
-
-
         [Key]
         [Column("cod_emp", Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,18 +20,28 @@ namespace api.portal.jenn.DTO
         public int? MatrizID { get; set; }
 
         [Required]
+        [Column("cnes_emp", Order = 1)]
+        [StringLength(20)]
+        [Display(Name ="Cnes")]
+        public string CodigoCnes { get; set; }
+
+
+        [Required]
         [Column("cnpj_emp", Order = 1)]
         [StringLength(14)]
+        [Display(Name = "CNPJ")]
         public string cnpj { get; set; }
 
         [Required]
         [Column("nome_emp", Order = 2)]
+        [Display(Name = "Nome")]
         [StringLength(200)]
         public string Nome { get; set; }        
       
         [Required]
         [Column("tel_emp1", Order = 4)]
         [StringLength(20)]
+        [Display(Name = "Telefone")]
         public string Telefone1 { get; set; }
 
         [Column("tel_emp2", Order = 5)]
@@ -49,6 +54,7 @@ namespace api.portal.jenn.DTO
 
         [Column("mail_emp", Order = 7)]
         [StringLength(100)]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         [Column("logr_emp", Order = 8)]
@@ -83,18 +89,23 @@ namespace api.portal.jenn.DTO
 
 
         [Column("cert_emp", Order = 15)]
-        [StringLength(2)]
         public string Cert_Empresa { get; set; }
 
         [Column("atv_proced", Order = 16)]
-        [StringLength(1)]
         public int Ativo { get; set; }
 
- 
-        public virtual Grupo Grupo { get; set; }
-       
-        public virtual Cidade Cidade{get;set;}
+        [Column("tipo_emp", Order = 16)]
+        public int TipoEmpresa { get; set; }
 
+        [Column("url_loja", Order = 14)]
+        [StringLength(300)]
+        public string url_loja { get; set; }
+        
+        [NotMapped]
+        public string num_cidade { get; set; }
+
+        public virtual Grupo Grupo { get; set; }
+        public virtual Cidade Cidade{get;set;}
         public virtual ICollection<FotoEmpresa> Fotos { get; set; }
         public virtual ICollection<Avalia> Avaliacoes { get; set; }
         public virtual Empresa Matriz { get; set; }

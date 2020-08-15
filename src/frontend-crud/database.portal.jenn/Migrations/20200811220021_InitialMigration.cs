@@ -14,6 +14,7 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_cidade = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_cid = table.Column<string>(maxLength: 5, nullable: false),
                     nom_cid = table.Column<string>(maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -192,6 +193,7 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_pais = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_pais = table.Column<string>(maxLength: 5, nullable: true),
                     nom_pais = table.Column<string>(maxLength: 200, nullable: false)
                 },
                 constraints: table =>
@@ -372,6 +374,7 @@ namespace database.portal.jenn.Migrations
                 {
                     cod_uf = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_uf = table.Column<string>(maxLength: 3, nullable: false),
                     nom_uf = table.Column<string>(maxLength: 200, nullable: false),
                     PaisID = table.Column<int>(nullable: true),
                     CidadeID = table.Column<int>(nullable: true)

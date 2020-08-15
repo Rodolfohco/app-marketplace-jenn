@@ -40,7 +40,6 @@ namespace api.portal.jenn.DTO
         public DateTime DataInclusao { get; set; }
         
         [Column("atv_logon", Order = 16)]
-        [StringLength(1)]
         public int Ativo { get; set; }
 
         public virtual ICollection<Roles> Papeis { get; set; }

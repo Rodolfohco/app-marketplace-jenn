@@ -1,6 +1,7 @@
 ﻿using api.portal.jenn.DTO;
 using api.portal.jenn.ViewModel;
 using AutoMapper;
+using database.portal.jenn.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,11 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Grupo, GrupoViewModel>();
             CreateMap<GrupoViewModel, DTO.Grupo>();
 
+            CreateMap<DTO.ConfirmacaoAgenda, ConfirmacaoAgendaViewModel>();
+            CreateMap<ConfirmacaoAgendaViewModel, DTO.ConfirmacaoAgenda>();
+
+            CreateMap<Paciente, PacienteViewModel>();
+            CreateMap<PacienteViewModel, Paciente>();
 
 
             CreateMap<DTO.Empresa, NovaEmpresaViewModel>();
@@ -59,6 +65,9 @@ namespace api.portal.jenn.Mapeamento
 
             CreateMap<DTO.Empresa, ConsultaEmpresaViewModel>();
             CreateMap<ConsultaEmpresaViewModel, DTO.Empresa>();
+
+            CreateMap<DTO.Empresa, EmpresaMatrizViewModel>();
+
 
             
 

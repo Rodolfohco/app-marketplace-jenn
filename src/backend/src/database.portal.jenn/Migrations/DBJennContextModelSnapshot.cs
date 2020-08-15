@@ -125,6 +125,12 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<string>("num_cidade")
+                        .IsRequired()
+                        .HasColumnName("num_cid")
+                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasMaxLength(5);
+
                     b.HasKey("CidadeID");
 
                     b.ToTable("cidade");
@@ -618,6 +624,11 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<string>("num_pais")
+                        .HasColumnName("num_pais")
+                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasMaxLength(5);
+
                     b.HasKey("PaisID");
 
                     b.ToTable("pais");
@@ -913,6 +924,12 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int?>("PaisID")
                         .HasColumnType("int");
+
+                    b.Property<string>("num_uf")
+                        .IsRequired()
+                        .HasColumnName("num_uf")
+                        .HasColumnType("varchar(3) CHARACTER SET utf8mb4")
+                        .HasMaxLength(3);
 
                     b.HasKey("UfID");
 

@@ -43,7 +43,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.InnerException}] ;", exception);
             }
         }
  
@@ -58,7 +58,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
             }
             return this.mapper.Map<DTO.Logon, ViewModel.ConsultaLogonViewModel>(retorno);
         }
@@ -80,7 +80,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return this.mapper.Map<DTO.Logon, ViewModel.ConsultaLogonViewModel>(retorno);

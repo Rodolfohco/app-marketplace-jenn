@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.portal.jenn.Contract;
+using api.portal.jenn.DTO;
 using api.portal.jenn.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +24,36 @@ namespace api.portal.jenn.Controllers
         }
 
 
- 
-     
 
+        [HttpPost("ConfirmarAgenda")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult ConfirmarAgenda([FromBody] ConfirmacaoAgendaViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.InserirConfirmacaoAgenda(model);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
  
+
+
 
         [HttpPost]
         [ProducesResponseType(200)]
@@ -49,7 +76,7 @@ namespace api.portal.jenn.Controllers
             }
             catch (Exception e)
             {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
             }
 
             return resultado;
@@ -72,7 +99,7 @@ namespace api.portal.jenn.Controllers
             }
             catch (Exception e)
             {
-                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.Message}]", System.Net.HttpStatusCode.BadRequest);
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
             }
 
             return resultado;
