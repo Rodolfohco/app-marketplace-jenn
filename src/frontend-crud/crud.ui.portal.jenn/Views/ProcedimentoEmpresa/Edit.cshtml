@@ -1,100 +1,143 @@
 ﻿@model api.portal.jenn.DTO.ProcedimentoEmpresa
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
-@{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<h1>Edit</h1>
 
-<h4>ProcedimentoEmpresa</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProcedimentoEmpresaID" />
-            <div class="form-group">
-                <label asp-for="DataInclusao" class="control-label"></label>
-                <input asp-for="DataInclusao" class="form-control" />
-                <span asp-validation-for="DataInclusao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nome_pers" class="control-label"></label>
-                <input asp-for="Nome_pers" class="form-control" />
-                <span asp-validation-for="Nome_pers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecoProduto" class="control-label"></label>
-                <input asp-for="PrecoProduto" class="form-control" />
-                <span asp-validation-for="PrecoProduto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Preco_contra" class="control-label"></label>
-                <input asp-for="Preco_contra" class="form-control" />
-                <span asp-validation-for="Preco_contra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TaxaParcelamento" class="control-label"></label>
-                <input asp-for="TaxaParcelamento" class="form-control" />
-                <span asp-validation-for="TaxaParcelamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TaxaResultado" class="control-label"></label>
-                <input asp-for="TaxaResultado" class="form-control" />
-                <span asp-validation-for="TaxaResultado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemThumb" class="control-label"></label>
-                <input asp-for="ImagemThumb" class="form-control" />
-                <span asp-validation-for="ImagemThumb" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemHome" class="control-label"></label>
-                <input asp-for="ImagemHome" class="form-control" />
-                <span asp-validation-for="ImagemHome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemMain" class="control-label"></label>
-                <input asp-for="ImagemMain" class="form-control" />
-                <span asp-validation-for="ImagemMain" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Video" class="control-label"></label>
-                <input asp-for="Video" class="form-control" />
-                <span asp-validation-for="Video" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Ativo" class="control-label"></label>
-                <input asp-for="Ativo" class="form-control" />
-                <span asp-validation-for="Ativo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Destaque" class="control-label"></label>
-                <input asp-for="Destaque" class="form-control" />
-                <span asp-validation-for="Destaque" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProcedimentoID" class="control-label"></label>
-                <select asp-for="ProcedimentoID" class="form-control" asp-items="ViewBag.ProcedimentoID"></select>
-                <span asp-validation-for="ProcedimentoID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmpresaID" class="control-label"></label>
-                <select asp-for="EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
-                <span asp-validation-for="EmpresaID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<form asp-controller="ProcedimentoEmpresa" asp-action="Edit" asp-antiforgery="true" method="post" class="form-horizontal">
+   
+    <input type="hidden" asp-for="Ativo" />
+    <input type="hidden" asp-for="ProcedimentoEmpresaID" />
+    <fieldset>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Editar Procedimento Empresa </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-11 control-label">
+                        <p class="help-block"><h11>*</h11> Campo Obrigatório </p>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="ProcedimentoID">Procedimento<h11>*</h11></label>
+                    <div class="col-md-8">
+
+                        <select id="ProcedimentoID" asp-for="ProcedimentoID" class="form-control" asp-items="ViewBag.ProcedimentoID"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="EmpresaID">Empresa <h11> * </h11></label>
+                    <div class="col-md-8">
+
+                        <select id="EmpresaID" asp-for="EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Nome">Nome Procedimento <h11>*</h11></label>
+                    <div class="col-md-8">
+                        <input id="Nome" asp-for="Nome_pers" name="Nome_pers" placeholder="" class="form-control input-md" required="" type="text">
+                        <span asp-validation-for="Nome_pers" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Nome">Preço Procedimento <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="PrecoProduto" id="cnpj" name="PrecoProduto" placeholder="Apenas números" class="form-control input-md" required="" type="text" pattern="[0-9]+$">
+                        <span asp-validation-for="PrecoProduto" class="text-danger"></span>
+                    </div>
+
+                    <label class="col-md-2 control-label" for="Nome">Preço Contra Oferta <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="Preco_contra" id="CodigoCnes" name="Preco_contra" placeholder="Apenas números" class="form-control input-md" required="" type="text" pattern="[0-9]+$">
+                        <span asp-validation-for="Preco_contra" class="text-danger"></span>
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group">
+
+                    <label class="col-md-2 control-label" for="TaxaParcelamento">Taxa Parcelamento <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="TaxaParcelamento" id="TaxaParcelamento" name="TaxaParcelamento" placeholder="Apenas números" class="form-control input-md" required="" type="number" min="0" max="100" pattern="[0-9]+$">
+                        <span asp-validation-for="TaxaParcelamento" class="text-danger"></span>
+                    </div>
+
+
+                    <label class="col-md-2 control-label" for="TaxaResultado">Taxa Resultado <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="TaxaResultado" id="TaxaResultado" name="TaxaResultado" placeholder="Apenas números" class="form-control input-md" required="" type="number" min="0" max="100" pattern="[0-9]+$">
+                        <span asp-validation-for="TaxaResultado" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label class="col-md-2 control-label" for="ImagemHome">Imagem Home <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="ImagemHome" id="TaxaParcelamento" name="ImagemHome" class="form-control input-md" required="" type="url">
+                        <span asp-validation-for="ImagemHome" class="text-danger"></span>
+                    </div>
+
+                    <label class="col-md-2 control-label" for="ImagemMain">Imagem Main</label>
+                    <div class="col-md-3">
+                        <input asp-for="ImagemMain" id="TaxaParcelamento" name="ImagemMain" class="form-control input-md" required="" type="url">
+                        <span asp-validation-for="ImagemMain" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="ImagemHome">Imagem Thunb <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="ImagemThumb" id="TaxaParcelamento" name="ImagemThumb" class="form-control input-md" required="" type="url">
+                        <span asp-validation-for="ImagemThumb" class="text-danger"></span>
+                    </div>
+
+                    <label class="col-md-2 control-label" for="Video">Video <h11>*</h11></label>
+                    <div class="col-md-3">
+                        <input asp-for="Video" id="Video" name="Video" class="form-control input-md" required="" type="url">
+                        <span asp-validation-for="Video" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Destaque">Nivel Destaque<h11>*</h11></label>
+                    <div class="col-md-2">
+                        <select asp-for="Destaque" required id="Destaque" name="Destaque" class="form-control">
+                            <option value="">Selecione</option>
+                            <option value="1">Pagina Pesquisa</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="Cadastrar"></label>
+            <div class="col-md-8">
+                <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit">Cadastrar</button>
+                <button id="Cancelar" name="Cancelar" class="btn btn-danger" type="Reset">Cancelar</button>
+                <a class="btn btn-info" asp-action="Index">Voltar Para a Lista</a>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+ 
