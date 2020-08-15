@@ -200,6 +200,11 @@ namespace ui.portal.jenn.Controllers
             return View("Agendamento", agendamentoViewModel);
         }
 
+        public IActionResult FinalizarAgendamento(AgendamentoViewModel model)
+        {
+            string mensagem = "Agendamento enviado com sucesso, em breve entraremos em contato.";
+            return View("FinalizarAgendamento", mensagem);
+        }
 
     }
 }

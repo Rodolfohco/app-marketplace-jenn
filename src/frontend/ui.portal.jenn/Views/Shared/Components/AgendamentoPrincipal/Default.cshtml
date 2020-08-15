@@ -1,190 +1,364 @@
 ﻿@model ui.portal.jenn.ViewModel.AgendamentoViewModel
 
-    <form asp-action="Agendamento" asp-controller="Produtos" method="post" asp-antiforgery="true" class="f-pages" style="width: 180%;margin-left: -200px;">
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label id="nomeexame">Tipo de Procedimento: @Model.PesquisaViewModel.Produto</label>
-            </div>
-            <div class="form-group col-md-3" style="text-align: end;">
-                <input checked  class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste">
-                <label style="display: inline-flex;" for="InputComContraste">Com contraste</label>
-            </div>
-            <div class="form-group col-md-3" style="text-align: end;">
-                <input class="form-control col-md-2" type="radio" id="InputSemContraste" style="height: 30px;display: inline-flex;" name="contraste">
-                <<label style="display: inline-flex;" for="InputSemContraste">Sem contraste</label>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
+    body {
+        background-color: #f1f1f1;
+    }
 
-        <div class="card card-exame" style="background: #c7d5ed;width: 100%;">
+    #regForm {
+        background-color: #ffffff45;
+        margin: 100px auto;
+        font-family: Raleway;
+        padding: 40px;
+        width: 70%;
+        min-width: 300px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    input {
+        padding: 10px;
+        width: 100%;
+        font-size: 17px;
+        font-family: Raleway;
+        border: 1px solid #aaaaaa;
+    }
+
+        /* Mark input boxes that gets an error on validation: */
+        input.invalid {
+            background-color: #ffdddd;
+        }
+
+    /* Hide all steps by default: */
+    .tab {
+        display: none;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 17px;
+        font-family: Raleway;
+        cursor: pointer;
+    }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+    #prevBtn {
+        background-color: #bbbbbb;
+    }
+
+    /* Make circles that indicate the steps of the form: */
+    .step {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbbbbb;
+        border: none;
+        border-radius: 50%;
+        display: inline-block;
+        opacity: 0.5;
+    }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #4CAF50;
+        }
+</style>
+<body>
+    <form asp-action="FinalizarAgendamento" asp-controller="Produtos" method="post" asp-antiforgery="true" class="f-pages" style="width: 180%;margin-left: -200px;" id="regForm">
+        <div class="tab">
             <div class="row">
-                <div class="col-xl-3 col-md-6 col-12" style="align-self: center;">
-                    <img src="@Model.PesquisaViewModel.UrlImagem" alt="" width="400" height="232" style="height: 80%;width: 80%;">
+                <div class="form-group col-md-6">
+                    <label id="nomeexame">Tipo de Procedimento: @Model.PesquisaViewModel.Produto</label>
                 </div>
-                <div class="col-xl-6 col-md-6 col-12">
-                    <h3>@Model.PesquisaViewModel.NomeEmpresa<img src="/img/icon-check.png"> </h3>
-                    <p>@Model.PesquisaViewModel.DescricaoProcedimento</p>
-                    
-                    <div class="info">
-                        <div class="content-info">
-                            <h4>@Model.PesquisaViewModel.NomeUnidade</h4>
-                            <p>@Model.PesquisaViewModel.EnderecoCompleto</p>
+                <div class="form-group col-md-3" style="text-align: end;">
+                    <input checked class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste">
+                    <label style="display: inline-flex;" for="InputComContraste">Com contraste</label>
+                </div>
+                <div class="form-group col-md-3" style="text-align: end;">
+                    <input class="form-control col-md-2" type="radio" id="InputSemContraste" style="height: 30px;display: inline-flex;" name="contraste">
+                    <label style="display: inline-flex;" for="InputSemContraste">Sem contraste</label>
+                </div>
+            </div>
+            <div class="card card-exame" style="background: #c7d5ed;width: 100%;">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 col-12" style="align-self: center;">
+                        <img src="@Model.PesquisaViewModel.UrlImagem" alt="" width="400" height="232" style="height: 80%">
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-12">
+                        <h3>@Model.PesquisaViewModel.NomeEmpresa<img src="/img/icon-check.png"> </h3>
+                        <p>@Model.PesquisaViewModel.DescricaoProcedimento</p>
+
+                        <div class="info">
+                            <div class="content-info">
+                                <h4>@Model.PesquisaViewModel.NomeUnidade</h4>
+                                <p>@Model.PesquisaViewModel.EnderecoCompleto</p>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
-               
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group col-md-6">
-                <input onclick="camposTipoAgendamento()" checked  class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparamim">
-                <label style="display: inline-flex;margin: -20px;" for="Proprio">O exame é para mim</label>
+        <div class="tab">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <input onclick="camposTipoAgendamento()" checked class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparamim">
+                    <label style="display: inline-flex;margin: -20px;" for="Proprio">O exame é para mim</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <input onclick="camposTipoAgendamento()" class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparaoutro">
+                    <label style="display: inline-flex;margin: -20px;" for="Outro">O exame é para outra pessoa</label>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <input  onclick="camposTipoAgendamento()"  class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparaoutro">
-                <<label style="display: inline-flex;margin: -20px;" for="Outro">O exame é para outra pessoa</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="InputPlanos">Plano de saúde</label>
-                <select class="form-control" style="height: 60%;" id="Planos">
-                    <option value="">Selecione</option>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="InputPlanos">Plano de saúde</label>
+                    <select class="form-control" style="height: 60%;" id="Planos">
+                        <option value="">Selecione</option>
 
-                    @for (int i = 0; i < Model.Convenios.Count; i++)
-                    {
-                        <option value="@Model.Convenios[i]">@Model.Convenios[i]</option>
-                    }
-                     
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputCarteirinha">Carteirinha do convênio*</label>
-                <input asp-for="Carteirinha" maxlength="100" type="text" class="form-control" id="InputCarteirinha" aria-describedby="" placeholder="Digite o número da carteirinha" required>
-            </div>
-        </div>
+                        @for (int i = 0; i < Model.Convenios.Count; i++)
+                        {
+                            <option value="@Model.Convenios[i]">@Model.Convenios[i]</option>
+                        }
 
-        <div style="display:none" class="row exameoutrapessoa">
-            <div class="form-group col-md-6">
-                <label for="InputCPFSolicitante">CPF do Solicitante*</label>
-                <input asp-for="CPFSolicitante" maxlength="100" type="text" class="form-control" id="InputCPFSolicitante" placeholder="Digite cpf do solicitante" required>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="InputNome">Nome*</label>
-                <input asp-for="Nome" maxlength="100" type="text" class="form-control" id="InputNome" placeholder="Digite seu nome" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputSobrenome">Sobrenome*</label>
-                <input asp-for="Sobrenome" maxlength="100" type="text" class="form-control" id="InputSobrenome" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="InputCelular">Celular</label>
-                <input asp-for="Celular" type="text" class="form-control" id="InputCelular" aria-describedby="" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputEmail">Email</label>
-                <input asp-for="Email" maxlength="100" type="email" class="form-control" id="InputEmail" aria-describedby="" placeholder="Digite seu email" required>
-            </div>
-        </div>
-
-        <div  class="row">
-            <div class="form-group col-md-6">
-                <label for="InputCpf">CPF do paciente*</label>
-                <input asp-for="CPF" type="text" class="form-control" id="InputCpf" aria-describedby="" placeholder="CPF do paciente*" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputDataNascimento">Data de Nascimento*</label>
-                <input asp-for="DataNascimento" type="text" class="form-control" id="InputDataNascimento" aria-describedby="" placeholder="Data de Nascimento*" required>
-            </div>
-        </div>
-
-        <div  style="display:none" class="row exameoutrapessoa">
-            <div class="form-group col-md-6">
-                <label for="InputNome">Nome*</label>
-                <input asp-for="NomePaciente" maxlength="100" type="text" class="form-control" id="InputNomePaciente" placeholder="Digite seu nome" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputSobrenome">Sobrenome*</label>
-                <input asp-for="SobrenomePaciente" maxlength="100" type="text" class="form-control" id="InputSobrenomePaciente" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
-            </div>
-
-        </div>
-        <div  style="display:none" class="row exameoutrapessoa">
-            <div class="form-group col-md-6">
-                <label for="InputCelularPaciente">Celular</label>
-                <input asp-for="CelularPaciente" type="text" class="form-control" id="InputCelularPaciente" aria-describedby="" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputEmailPaciente">Email</label>
-                <input asp-for="EmailPaciente" maxlength="100" type="email" class="form-control" id="InputEmailPaciente" aria-describedby="" placeholder="Digite seu email" required>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="InputNome">Peso*</label>
-                <input asp-for="Peso" maxlength="100" type="text" class="form-control" id="InputNome" aria-describedby="" placeholder="Digite seu peso" required>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="InputNome">Altura*</label>
-                <input asp-for="Altura" maxlength="100" type="text" class="form-control" id="InputNome" aria-describedby="" placeholder="Digite sua altura" required>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputCarteirinha">Carteirinha do convênio*</label>
+                    <input asp-for="Carteirinha" maxlength="100" type="text" class="form-control" id="InputCarteirinha" aria-describedby="" placeholder="Digite o número da carteirinha" required>
+                </div>
             </div>
         </div>
 
 
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label for="AlgumaAlergia">Alguma alergia?</label>
-                <textarea asp-for="AlgumaAlergia" class="form-control" id="AlgumaAlergia" rows="3" placeholder="Alguma alergia?"></textarea>
+        <div class="tab">
+            <div style="display:none" class="row exameoutrapessoa">
+                <div class="form-group col-md-6">
+                    <label for="InputCPFSolicitante">CPF do Solicitante*</label>
+                    <input asp-for="CPFSolicitante" maxlength="100" type="text" class="form-control" id="InputCPFSolicitante" placeholder="Digite cpf do solicitante" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="InputNome">Nome*</label>
+                    <input asp-for="Nome" maxlength="100" type="text" class="form-control" id="InputNome" placeholder="Digite seu nome" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputSobrenome">Sobrenome*</label>
+                    <input asp-for="Sobrenome" maxlength="100" type="text" class="form-control" id="InputSobrenome" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="InputCelular">Celular</label>
+                    <input asp-for="Celular" type="text" class="form-control" id="InputCelular" aria-describedby="" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputEmail">Email</label>
+                    <input asp-for="Email" maxlength="100" type="email" class="form-control" id="InputEmail" aria-describedby="" placeholder="Digite seu email" required>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="tab">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="InputCpf">CPF do paciente*</label>
+                    <input asp-for="CPF" type="text" class="form-control" id="InputCpf" aria-describedby="" placeholder="CPF do paciente*" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputDataNascimento">Data de Nascimento*</label>
+                    <input asp-for="DataNascimento" type="text" class="form-control" id="InputDataNascimento" aria-describedby="" placeholder="Data de Nascimento*" required>
+                </div>
+            </div>
+
+            <div style="display:none" class="row exameoutrapessoa">
+                <div class="form-group col-md-6">
+                    <label for="InputNome">Nome*</label>
+                    <input asp-for="NomePaciente" maxlength="100" type="text" class="form-control" id="InputNomePaciente" placeholder="Digite seu nome" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputSobrenome">Sobrenome*</label>
+                    <input asp-for="SobrenomePaciente" maxlength="100" type="text" class="form-control" id="InputSobrenomePaciente" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
+                </div>
+
+            </div>
+            <div style="display:none" class="row exameoutrapessoa">
+                <div class="form-group col-md-6">
+                    <label for="InputCelularPaciente">Celular</label>
+                    <input asp-for="CelularPaciente" type="text" class="form-control" id="InputCelularPaciente" aria-describedby="" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputEmailPaciente">Email</label>
+                    <input asp-for="EmailPaciente" maxlength="100" type="email" class="form-control" id="InputEmailPaciente" aria-describedby="" placeholder="Digite seu email" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="InputNome">Peso*</label>
+                    <input asp-for="Peso" maxlength="100" type="text" class="form-control" id="InputNome" aria-describedby="" placeholder="Digite seu peso" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="InputNome">Altura*</label>
+                    <input asp-for="Altura" maxlength="100" type="text" class="form-control" id="InputNome" aria-describedby="" placeholder="Digite sua altura" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab">
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="AlgumaAlergia">Alguma alergia?</label>
+                    <textarea asp-for="AlgumaAlergia" class="form-control" id="AlgumaAlergia" rows="3" placeholder="Alguma alergia?"></textarea>
+                </div>
             </div>
         </div>
 
         @*<button type="submit" class="btn btn-primary">Enviar</button>*@
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Próximo</button>
+            </div>
+        </div>
+        <!-- Circles which indicates the steps of the form: -->
+        <div style="text-align:center;margin-top:40px;">
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+            <span class="step"></span>
+        </div>
     </form>
 
-<script src="https://code.jquery.com/jquery-3.2.1.js"
-        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-        crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script>
+        var currentTab = 0;
+        showTab(currentTab);
 
-<script type="text/javascript" src="/js/script.js"></script>
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Enviar";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Próximo";
+            }
+            fixStepIndicator(n)
+        }
 
-<script>
-    (function () {
-        $('#InputTelefone').mask("(999) 99999-9999");
-    })();
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            // if (n == 1 && !validateForm()) return false;
+            x[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+            
+            if (currentTab >= x.length) {
+                document.getElementById("regForm").submit();
+                return false;
+            }
+            
+            showTab(currentTab);
+        }
 
-    function camposTipoAgendamento() {
-        var tipoagendamento = $("[name='tipoagendamento']:checked").val();
-        if (tipoagendamento == "exameparamim")
-            $(".exameoutrapessoa").hide();
-        else
-            $(".exameoutrapessoa").show();
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            for (i = 0; i < y.length; i++) {
+                if (y[i].value == "") {
+                    y[i].className += " invalid";
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid;
+        }
 
-    }
+        function fixStepIndicator(n) {
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+    </script>
 
-    $(".page-contato .footer").attr("style", "margin-top:30%")
-</script>
 
-@if (ViewBag.Mensagem != null)
-{
-    @await Component.InvokeAsync("Popup")
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+    <script type="text/javascript" src="/js/script.js"></script>
+
     <script>
         (function () {
-            $("#ModalCentralizado").modal();
-        })();   
+            $('#InputTelefone').mask("(999) 99999-9999");
+        })();
+
+        function camposTipoAgendamento() {
+            var tipoagendamento = $("[name='tipoagendamento']:checked").val();
+            if (tipoagendamento == "exameparamim")
+                $(".exameoutrapessoa").hide();
+            else
+                $(".exameoutrapessoa").show();
+
+        }
+
+        $(".page-contato .footer").attr("style", "margin-top:30%")
     </script>
-}
+
+    @if (ViewBag.Mensagem != null)
+    {
+        @await Component.InvokeAsync("Popup")
+        <script>
+            (function () {
+                $("#ModalCentralizado").modal();
+            })();
+        </script>
+    }
+
+
+
+
+</body>
+</html>
 
