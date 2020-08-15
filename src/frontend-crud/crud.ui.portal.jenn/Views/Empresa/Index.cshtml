@@ -5,34 +5,36 @@
     Layout = "~/Views/Shared/_LayoutEmpresa.cshtml";
 }
 
+
 <h1>Todas as Empresas</h1>
 
 <p>
     <a asp-action="Create">Nova Empresa</a>
 </p>
-<table class=" table-active col-md-12  ">
-    <thead>
+<table class=" table table-striped">
+    <thead class="thead-dark">
         <tr>
-            <th>
+            <th scope="col">#</th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.CodigoCnes)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Telefone1)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Responsavel)
             </th>
-            <th>
+            <th scope="col">
             </th>
             <th>
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Ativo)
             </th>
             <th>
@@ -44,6 +46,7 @@
         @foreach (var item in Model)
         {
         <tr>
+            <th scope="row">  @Html.DisplayFor(modelItem => item.EmpresaID)</th>
             <td>
                 @Html.DisplayFor(modelItem => item.CodigoCnes)
             </td>
@@ -73,7 +76,7 @@
                 }
                 else
                 {
-                    <a asp-action="Desativar" asp-route-id="@item.EmpresaID">Lig</a> 
+                    <a asp-action="Desativar" asp-route-id="@item.EmpresaID">Lig</a>
 
                 }|
                 <a asp-action="Edit" asp-route-id="@item.EmpresaID">Edição</a> |
@@ -84,3 +87,4 @@
         }
     </tbody>
 </table>
+

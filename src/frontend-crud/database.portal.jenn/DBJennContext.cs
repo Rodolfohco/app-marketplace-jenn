@@ -45,10 +45,6 @@ namespace api.portal.jenn.Contexto
 
         public DbSet<Agenda> Agenda { get; set; }
 
-        public DbSet<CidadeMunicipio> CidadeMunicipios { get; set; }
-
-
-        public DbSet<Estabelicimento> Estabelicimentos { get; set; }
         public DbSet<ConfirmacaoAgenda> ConfirmacaoAgenda { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -49,9 +49,42 @@ namespace crud.ui.portal.jenn.Controllers
         // GET: ProcedimentoEmpresa/Create
         public IActionResult Create()
         {
-            ViewData["EmpresaID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro");
-            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento, "ProcedimentoID", "Descricao");
+            GetCombo();
             return View();
+        }
+
+        public async Task<IActionResult> Desativar(int id)
+        {
+            var procedimento = _context.ProcedimentoEmpresa.Find(id);
+
+
+            if (procedimento.Ativo == 1)
+            {
+                procedimento.Ativo = 0;
+            }
+            else
+            {
+                procedimento.Ativo = 1;
+            }
+
+
+
+            _context.Update(procedimento);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+      public  void GetCombo()
+        {
+
+           
+      
+
+
+            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome");
+
+            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome");
+
         }
 
         // POST: ProcedimentoEmpresa/Create
@@ -67,8 +100,7 @@ namespace crud.ui.portal.jenn.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresaID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro", procedimentoEmpresa.EmpresaID);
-            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento, "ProcedimentoID", "Descricao", procedimentoEmpresa.ProcedimentoID);
+            GetCombo();
             return View(procedimentoEmpresa);
         }
 
@@ -85,9 +117,13 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmpresaID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro", procedimentoEmpresa.EmpresaID);
-            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento, "ProcedimentoID", "Descricao", procedimentoEmpresa.ProcedimentoID);
-            return View(procedimentoEmpresa);
+
+            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome", procedimentoEmpresa.EmpresaID);
+
+            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome", procedimentoEmpresa.ProcedimentoID);
+
+
+                  return View(procedimentoEmpresa);
         }
 
         // POST: ProcedimentoEmpresa/Edit/5
@@ -106,6 +142,8 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 try
                 {
+                    _context.Entry(procedimentoEmpresa).State = EntityState.Modified;
+
                     _context.Update(procedimentoEmpresa);
                     await _context.SaveChangesAsync();
                 }
@@ -122,8 +160,9 @@ namespace crud.ui.portal.jenn.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmpresaID"] = new SelectList(_context.Empresas, "EmpresaID", "Logradouro", procedimentoEmpresa.EmpresaID);
-            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento, "ProcedimentoID", "Descricao", procedimentoEmpresa.ProcedimentoID);
+            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome", procedimentoEmpresa.EmpresaID);
+
+            ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome", procedimentoEmpresa.ProcedimentoID);
             return View(procedimentoEmpresa);
         }
 
