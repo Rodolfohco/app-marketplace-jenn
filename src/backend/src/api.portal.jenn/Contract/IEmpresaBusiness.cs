@@ -52,6 +52,8 @@ namespace api.portal.jenn.Contract
 
         IEnumerable<ConsultaAgendaViewModel> SelecionarAgendaProcedimentoEmpresa(int ProcedimentoID);
         ConsultaAgendaViewModel InserirAgendaProcedimentoEmpresa(NovoAgendaViewModel novaAgenda, int ProcedimentoEmpresaID);
+
+        ConsultaConfirmacaoAgendaViewModel InserirConfirmacaoAgenda(ConfirmacaoAgendaViewModel novaAgenda );
         #endregion
     }
 }

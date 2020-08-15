@@ -43,7 +43,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Delete] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Delete] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }
@@ -59,7 +59,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -101,7 +101,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -117,7 +117,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -152,7 +152,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return model;
@@ -175,7 +175,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.Message}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }

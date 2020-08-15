@@ -38,7 +38,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.InnerException}] ;", exception);
             }
         }
 
@@ -51,7 +51,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
             }
             return this.mapper.Map<DTO.Convenio, ViewModel.ConvenioViewModel>(retorno);
         }
@@ -64,7 +64,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Excluir] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Excluir] [{exception.InnerException}] ;", exception);
             }
 
         }
@@ -85,7 +85,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return this.mapper.Map<DTO.Convenio, ViewModel.ConvenioViewModel>(retorno);
@@ -100,7 +100,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return this.mapper.Map<IEnumerable<DTO.Convenio>, IEnumerable<ViewModel.ConvenioViewModel>>(retorno);
@@ -115,7 +115,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Selecionar] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return this.mapper.Map<IEnumerable<DTO.Convenio>, IEnumerable<ViewModel.ConvenioViewModel>>(retorno);

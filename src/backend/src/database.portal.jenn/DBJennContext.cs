@@ -17,7 +17,7 @@ namespace api.portal.jenn.Contexto
         //    //optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=DBJenn;Trusted_Connection=True;");
 
         //    //Producao
-        //       optionsBuilder.UseMySql("Server=mysql.examesemcasa.com.br;Database=examesemcasa;Uid=examesemcasa;Pwd=K3LLaxMmQD9qJd7jYsZutvUbT6DyVw;");
+        //    optionsBuilder.UseMySql("Server=mysql.examesemcasa.com.br;Database=examesemcasa;Uid=examesemcasa;Pwd=K3LLaxMmQD9qJd7jYsZutvUbT6DyVw;");
         //}
 
         public DbSet<FotoEmpresa> FotoEmpresas { get; set; }
@@ -32,9 +32,9 @@ namespace api.portal.jenn.Contexto
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<Pais> Pais { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
 
 
-       
 
         public DbSet<CategoriaProcedimento> CategoriaProced { get; set; }
         public DbSet<TipoProcedimento> TipoProcedimento { get; set; }
@@ -59,13 +59,20 @@ namespace api.portal.jenn.Contexto
                 entity.Property(e => e.Nome).IsRequired();
                 entity.HasMany(a => a.Ufs);
             });
-
             modelBuilder.Entity<Cidade>(entity =>
             {
                 entity.HasKey(e => e.CidadeID);
                 entity.Property(e => e.Nome).IsRequired();
                 entity.HasMany(a => a.Regiao);
-                entity.HasMany(a => a.Ufs);
+
+
+            });
+
+            modelBuilder.Entity<UF>(entity =>
+            {
+                entity.HasKey(e => e.UfID);
+                entity.Property(e => e.Nome).IsRequired();
+                entity.HasMany(a => a.Cidades).WithOne(c => c.Uf);
             });
 
 

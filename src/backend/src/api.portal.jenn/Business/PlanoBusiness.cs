@@ -49,7 +49,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }
@@ -74,7 +74,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -97,7 +97,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Excluir] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Excluir] [{exception.InnerException}] ;", exception);
                 throw;
             }
         }
@@ -123,7 +123,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Atualizar] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return model;
@@ -144,7 +144,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
@@ -165,7 +165,7 @@ namespace api.portal.jenn.Business
             }
             catch (Exception exception)
             {
-                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.Message}] ;", exception);
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;
