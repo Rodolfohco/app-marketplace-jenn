@@ -15,7 +15,7 @@ namespace api.portal.jenn.DTO
         [Column("cod_procemp", Order = 16)]
         public int ProcedimentoEmpresaID { get; set; }
 
-       
+
         [Column("dataincl_procemp", Order = 1)]
         public DateTime DataInclusao { get; set; }
 
@@ -63,7 +63,7 @@ namespace api.portal.jenn.DTO
         [StringLength(100)]
         public string Video { get; set; }
 
-        [Column("atv_proced", Order = 14)]        
+        [Column("atv_proced", Order = 14)]
         public int Ativo { get; set; }
 
         [Column("dest_proced")]
@@ -79,8 +79,11 @@ namespace api.portal.jenn.DTO
         [ForeignKey("cod_emp")]
         [Column("cod_emp", Order = 16)]
         public int EmpresaID { get; set; }
+
         public virtual Empresa Empresa { get; set; }
-          public virtual ICollection<PlanoProcedimentoEmpresa> PlanoProcedimentoEmpresas { get; set; }
+        public virtual ICollection<PlanoProcedimentoEmpresa> PlanoProcedimentoEmpresas { get; set; }
+        public virtual ICollection<Agenda> Agendas { get; set; }
+
         public virtual ICollection<ProcedimentoPergunta> ProcedimentoPerguntas { get; set; }
         public virtual ICollection<PagamentoProcedimentoEmpresa> PagamentoProcedimentoEmpresas { get; set; }
 

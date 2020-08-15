@@ -23,7 +23,7 @@ namespace crud.ui.portal.jenn.Controllers
         // GET: Procedimento
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Procedimento.ToListAsync());
+            return View(await _context.Procedimento.Include(x=> x.TipoProcedimento).ToListAsync());
         }
 
         // GET: Procedimento/Details/5
@@ -43,10 +43,26 @@ namespace crud.ui.portal.jenn.Controllers
 
             return View(procedimento);
         }
+        private void GetTipo(bool Selecionar = true)
+        {
+            List<SelectListItem> item = _context.TipoProcedimento
+                .Select(c => new SelectListItem() { Text = c.Nome, Value = c.TipoProcedimentoID.ToString() }).ToList();
 
+
+            if (Selecionar)
+            {
+                if (item.Count > 0)
+                    item.Insert(0, new SelectListItem() { Text = "Selecione Uma Opção", Value = "", Selected = true });
+                else
+                    item.Insert(0, new SelectListItem() { Text = "Não Existem  Cadastradas", Value = "", Selected = true });
+            }
+
+            ViewBag.TipoProcedimento = item;
+        }
         // GET: Procedimento/Create
         public IActionResult Create()
         {
+            GetTipo();
             return View();
         }
 
@@ -55,12 +71,12 @@ namespace crud.ui.portal.jenn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProcedimentoID,Nome,Descricao,ImgProduto,Ativo")] Procedimento procedimento)
+        public async Task<IActionResult> Create([Bind("ProcedimentoID,Nome,Descricao,ImgProduto_Proc,Ativo")] Procedimento procedimento, int TipoProcedimento)
         {
             if (ModelState.IsValid)
             {
                 procedimento.Ativo =(int)Status.Ativo;
-                
+                procedimento.TipoProcedimento = _context.TipoProcedimento.Find(TipoProcedimento);
 
 
                 _context.Add(procedimento);
@@ -78,11 +94,17 @@ namespace crud.ui.portal.jenn.Controllers
                 return NotFound();
             }
 
-            var procedimento = await _context.Procedimento.FindAsync(id);
+            //      var procedimento = await _context.Procedimento.FindAsync(id);
+            var procedimento = await (from item in _context.Procedimento.Include(c => c.TipoProcedimento)
+                                where item.ProcedimentoID == id
+                                select item).FirstOrDefaultAsync();
+
+
             if (procedimento == null)
             {
                 return NotFound();
             }
+            GetTipo(false);
             return View(procedimento);
         }
 
@@ -91,7 +113,7 @@ namespace crud.ui.portal.jenn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProcedimentoID,Nome,Descricao,ImgProduto,Ativo")] Procedimento procedimento)
+        public async Task<IActionResult> Edit(int id, [Bind("ProcedimentoID,Nome,Descricao,ImgProduto_Proc,Ativo")] Procedimento procedimento)
         {
             if (id != procedimento.ProcedimentoID)
             {

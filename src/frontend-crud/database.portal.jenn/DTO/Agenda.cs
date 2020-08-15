@@ -26,11 +26,8 @@ namespace api.portal.jenn.DTO
         [Column("agen_hora", Order = 1)]
         public DateTime Hora { get; set; }
 
-
         [Column("agen_datvige", Order = 1)]
         public DateTime DataVigencia { get; set; }
-
-
 
         [Column("agen_atv", Order = 1)]
         public bool Ativo { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.DTO
 {
-   [Table("uf")]
+    [Table("uf")]
     public class UF
     {
         [Key]
@@ -16,10 +16,16 @@ namespace api.portal.jenn.DTO
         public int UfID { get; set; }
 
         [Required]
-        [Column("nom_uf", Order = 1)]
+        [Column("num_uf", Order = 1)]
+        [StringLength(3)]
+        public string num_uf { get; set; }
+
+        [Required]
+        [Column("nom_uf", Order = 2)]
         [StringLength(200)]
         public string Nome { get; set; }
- 
+
+        public virtual ICollection<Cidade> Cidades { get; set; }
         public virtual Pais Pais { get; set; }
     }
 }

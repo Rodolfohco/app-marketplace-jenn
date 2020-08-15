@@ -1,23 +1,20 @@
 ﻿@model IEnumerable<api.portal.jenn.DTO.Empresa>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Lista de Empresas";
+    Layout = "~/Views/Shared/_LayoutEmpresa.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Todas as Empresas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Nova Empresa</a>
 </p>
-<table class="table">
+<table class=" table-active col-md-12  ">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.CodigoCnes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cnpj)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
@@ -26,55 +23,29 @@
                 @Html.DisplayNameFor(model => model.Telefone1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefone2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImgemFrontEmpresa)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Logradouro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.numero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.bairro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cep)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.maps)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Responsavel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Id_classe)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cert_Empresa)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ativo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Matriz)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CodigoCnes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cnpj)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
@@ -83,50 +54,33 @@
                 @Html.DisplayFor(modelItem => item.Telefone1)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Telefone2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImgemFrontEmpresa)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Logradouro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.bairro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cep)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.maps)
-            </td>
-            <td>
+            <td width="100">
                 @Html.DisplayFor(modelItem => item.Responsavel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id_classe)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cert_Empresa)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ativo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Matriz.Logradouro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EmpresaID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmpresaID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmpresaID">Delete</a>
+                @if (item.Ativo == 1)
+                {
+                    <a asp-action="Desativar" asp-route-id="@item.EmpresaID">Des</a>
+                }
+                else
+                {
+                    <a asp-action="Desativar" asp-route-id="@item.EmpresaID">Lig</a> 
+
+                }|
+                <a asp-action="Edit" asp-route-id="@item.EmpresaID">Edição</a> |
+                <a asp-action="Details" asp-route-id="@item.EmpresaID">Detalhe</a> |
+                <a asp-action="Delete" asp-route-id="@item.EmpresaID">Excluir</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

@@ -125,6 +125,12 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<string>("num_cidade")
+                        .IsRequired()
+                        .HasColumnName("num_cid")
+                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasMaxLength(5);
+
                     b.HasKey("CidadeID");
 
                     b.ToTable("cidade");
@@ -239,6 +245,9 @@ namespace database.portal.jenn.Migrations
                     b.Property<int?>("ClienteID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PacienteID")
+                        .HasColumnType("int");
+
                     b.Property<ulong>("PacienteTitular")
                         .HasColumnName("bln_paciente_tiular")
                         .HasColumnType("bit");
@@ -248,6 +257,9 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("float");
 
                     b.Property<int?>("PlanoID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProcedimentoEmpresaID")
                         .HasColumnType("int");
 
                     b.Property<ulong>("contraste")
@@ -260,7 +272,11 @@ namespace database.portal.jenn.Migrations
 
                     b.HasIndex("ClienteID");
 
+                    b.HasIndex("PacienteID");
+
                     b.HasIndex("PlanoID");
+
+                    b.HasIndex("ProcedimentoEmpresaID");
 
                     b.ToTable("proceagendaconfirma");
                 });
@@ -309,8 +325,7 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int>("Ativo")
                         .HasColumnName("atv_proced")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataInclusao")
                         .HasColumnName("data_inc")
@@ -363,19 +378,13 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int>("Ativo")
                         .HasColumnName("atv_proced")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<string>("Cert_Empresa")
                         .HasColumnName("cert_emp")
-                        .HasColumnType("varchar(2) CHARACTER SET utf8mb4")
-                        .HasMaxLength(2);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int?>("CidadeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CodigoCnes")
-                        .HasColumnName("cod_cnes")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -429,6 +438,10 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
                         .HasMaxLength(20);
 
+                    b.Property<int>("TipoEmpresa")
+                        .HasColumnName("tipo_emp")
+                        .HasColumnType("int");
+
                     b.Property<string>("bairro")
                         .IsRequired()
                         .HasColumnName("bai_emp")
@@ -457,6 +470,11 @@ namespace database.portal.jenn.Migrations
                         .HasColumnName("num_emp")
                         .HasColumnType("varchar(12) CHARACTER SET utf8mb4")
                         .HasMaxLength(12);
+
+                    b.Property<string>("url_loja")
+                        .HasColumnName("url_loja")
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
 
                     b.HasKey("EmpresaID");
 
@@ -524,8 +542,7 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int>("Ativo")
                         .HasColumnName("atv_logon")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataInclusao")
                         .HasColumnName("dt_inclusao")
@@ -607,6 +624,11 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<string>("num_pais")
+                        .HasColumnName("num_pais")
+                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasMaxLength(5);
+
                     b.HasKey("PaisID");
 
                     b.ToTable("pais");
@@ -666,8 +688,7 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int>("Ativo")
                         .HasColumnName("atv_proced")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -793,8 +814,7 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int>("Ativo")
                         .HasColumnName("atv_proced")
-                        .HasColumnType("int")
-                        .HasMaxLength(1);
+                        .HasColumnType("int");
 
                     b.Property<int?>("ProcedimentoEmpresaID")
                         .HasColumnType("int");
@@ -905,6 +925,12 @@ namespace database.portal.jenn.Migrations
                     b.Property<int?>("PaisID")
                         .HasColumnType("int");
 
+                    b.Property<string>("num_uf")
+                        .IsRequired()
+                        .HasColumnName("num_uf")
+                        .HasColumnType("varchar(3) CHARACTER SET utf8mb4")
+                        .HasMaxLength(3);
+
                     b.HasKey("UfID");
 
                     b.HasIndex("CidadeID");
@@ -948,10 +974,276 @@ namespace database.portal.jenn.Migrations
                     b.ToTable("usuario");
                 });
 
+            modelBuilder.Entity("database.portal.jenn.DTO.CidadeMunicipio", b =>
+                {
+                    b.Property<int>("CidadeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Cidade")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CodIbge")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Uf")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("CidadeID");
+
+                    b.ToTable("CidadeMunicipios");
+                });
+
+            modelBuilder.Entity("database.portal.jenn.DTO.Estabelicimento", b =>
+                {
+                    b.Property<int>("EstabelicimentoID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CO_ATIVIDADE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_ATIVIDADE_PRINCIPAL")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_CEP")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_CLIENTELA")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_CNES")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_CPFDIRETORCLN")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_DISTRITO_ADMINISTRATIVO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_DISTRITO_SANITARIO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_ESTADO_GESTOR")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_MICRO_REGIAO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_MOTIVO_DESAB")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_MUNICIPIO_GESTOR")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_NATUREZA_JUR")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_REGIAO_SAUDE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_TIPO_ESTABELECIMENTO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_TIPO_UNIDADE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_TURNO_ATENDIMENTO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("CO_USUARIO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("DT_ATUALIZACAO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("DT_ATUALIZACAO_ORIGEM")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("DT_ATU_GEO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("DT_EXPEDICAO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("DT_VAL_LIC_SANI")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NIVEL_DEP")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_BAIRRO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_COMPLEMENTO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_EMAIL")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_FANTASIA")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_FANTASIA_ABREV")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_LOGRADOURO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_RAZAO_SOCIAL")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_URL")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NO_USUARIO_GEO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_ALVARA")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_CNPJ")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_CNPJ_MANTENEDORA")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_CPF")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_ENDERECO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_FAX")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_LATITUDE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_LONGITUDE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NU_TELEFONE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("REG_DIRETORCLN")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ST_ADESAO_FILANTROP")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ST_CONEXAO_INTERNET")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ST_CONTRATO_FORMALIZADO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ST_GERACREDITO_GERENTE_SGIF")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("TP_ESTAB_SEMPRE_ABERTO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("TP_GESTAO")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("TP_LIC_SANI")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("TP_ORGAO_EXPEDIDOR")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("TP_PFPJ")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("TP_UNIDADE")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("EstabelicimentoID");
+
+                    b.ToTable("Estabelicimentos");
+                });
+
+            modelBuilder.Entity("database.portal.jenn.DTO.Paciente", b =>
+                {
+                    b.Property<int>("PacienteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("cod_paciente")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Celular")
+                        .HasColumnName("cel_paciente")
+                        .HasColumnType("varchar(21) CHARACTER SET utf8mb4")
+                        .HasMaxLength(21);
+
+                    b.Property<string>("Cep")
+                        .HasColumnName("cep_paciente")
+                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("DtaNascimento")
+                        .HasColumnName("nasc_paciente")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Logradouro")
+                        .HasColumnName("logr_paciente")
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnName("nom_paciente")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Referencia")
+                        .HasColumnName("refer_paciente")
+                        .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Sexo")
+                        .IsRequired()
+                        .HasColumnName("sex_paciente")
+                        .HasColumnType("varchar(1) CHARACTER SET utf8mb4")
+                        .HasMaxLength(1);
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnName("tel_paciente")
+                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("bairro")
+                        .HasColumnName("bai_paciente")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("cpf_paciente")
+                        .IsRequired()
+                        .HasColumnName("cpf_paciente")
+                        .HasColumnType("varchar(11) CHARACTER SET utf8mb4")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("numero")
+                        .HasColumnName("num_paciente")
+                        .HasColumnType("varchar(12) CHARACTER SET utf8mb4")
+                        .HasMaxLength(12);
+
+                    b.Property<string>("sobrenome")
+                        .IsRequired()
+                        .HasColumnName("sobnom_paciente")
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
+
+                    b.HasKey("PacienteID");
+
+                    b.ToTable("paciente");
+                });
+
             modelBuilder.Entity("api.portal.jenn.DTO.Agenda", b =>
                 {
                     b.HasOne("api.portal.jenn.DTO.ProcedimentoEmpresa", "ProcedimentoEmpresa")
-                        .WithMany()
+                        .WithMany("Agendas")
                         .HasForeignKey("ProcedimentoEmpresaID");
                 });
 
@@ -983,9 +1275,17 @@ namespace database.portal.jenn.Migrations
                         .WithMany()
                         .HasForeignKey("ClienteID");
 
+                    b.HasOne("database.portal.jenn.DTO.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteID");
+
                     b.HasOne("api.portal.jenn.DTO.Plano", "Plano")
                         .WithMany()
                         .HasForeignKey("PlanoID");
+
+                    b.HasOne("api.portal.jenn.DTO.ProcedimentoEmpresa", "ProcedimentoEmpresa")
+                        .WithMany()
+                        .HasForeignKey("ProcedimentoEmpresaID");
                 });
 
             modelBuilder.Entity("api.portal.jenn.DTO.Domicilio", b =>

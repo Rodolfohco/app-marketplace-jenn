@@ -1,4 +1,5 @@
-﻿using System;
+﻿using database.portal.jenn.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -43,5 +44,7 @@ namespace api.portal.jenn.DTO
         public virtual Plano Plano { get; set; }
         public virtual Agenda Agenda { get; set; }
         public virtual Cliente Cliente { get; set; }
+        public virtual Paciente Paciente { get; set; }    
+        public virtual ProcedimentoEmpresa ProcedimentoEmpresa { get; set; }
     }
 }

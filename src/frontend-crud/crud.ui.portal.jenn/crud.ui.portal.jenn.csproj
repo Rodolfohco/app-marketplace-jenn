@@ -8,9 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Empresanovo\**" />
     <Compile Remove="Views\Shared\Components\NovoPlano\**" />
+    <Content Remove="Views\Empresanovo\**" />
     <Content Remove="Views\Shared\Components\NovoPlano\**" />
+    <EmbeddedResource Remove="Views\Empresanovo\**" />
     <EmbeddedResource Remove="Views\Shared\Components\NovoPlano\**" />
+    <None Remove="Views\Empresanovo\**" />
     <None Remove="Views\Shared\Components\NovoPlano\**" />
   </ItemGroup>
 
@@ -36,13 +40,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\database.portal.jenn\database.portal.jenn.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Empresa\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

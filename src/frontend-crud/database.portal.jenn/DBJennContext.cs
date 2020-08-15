@@ -1,4 +1,5 @@
 ﻿using api.portal.jenn.DTO;
+using database.portal.jenn.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 
@@ -10,13 +11,14 @@ namespace api.portal.jenn.Contexto
         {
         }
 
-        ////protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        ////{
-        ////    base.OnConfiguring(optionsBuilder);
-        ////    optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=DBJenn;Trusted_Connection=True;");
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //    base.OnConfiguring(optionsBuilder);
+        //    //optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=DBJenn;Trusted_Connection=True;");
 
-        ////    optionsBuilder.UseMySql("Server=mysql.examesemcasa.com.br;Database=examesemcasa01;Uid=examesemcasa01;Pwd=K3LLaxMmQD9qJd7jYsZutvUbT6DyVw;");
-        ////}
+        //    //Producao
+        //    optionsBuilder.UseMySql("Server=mysql.examesemcasa.com.br;Database=examesemcasa;Uid=examesemcasa;Pwd=K3LLaxMmQD9qJd7jYsZutvUbT6DyVw;");
+        //}
 
         public DbSet<FotoEmpresa> FotoEmpresas { get; set; }
         public DbSet<Contato> Contato { get; set; }
@@ -30,6 +32,9 @@ namespace api.portal.jenn.Contexto
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
         public DbSet<Pais> Pais { get; set; }
+        public DbSet<UF> Ufs { get; set; }
+        
+
 
         public DbSet<CategoriaProcedimento> CategoriaProced { get; set; }
         public DbSet<TipoProcedimento> TipoProcedimento { get; set; }
@@ -40,6 +45,10 @@ namespace api.portal.jenn.Contexto
 
         public DbSet<Agenda> Agenda { get; set; }
 
+        public DbSet<CidadeMunicipio> CidadeMunicipios { get; set; }
+
+
+        public DbSet<Estabelicimento> Estabelicimentos { get; set; }
         public DbSet<ConfirmacaoAgenda> ConfirmacaoAgenda { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -50,13 +59,20 @@ namespace api.portal.jenn.Contexto
                 entity.Property(e => e.Nome).IsRequired();
                 entity.HasMany(a => a.Ufs);
             });
-
             modelBuilder.Entity<Cidade>(entity =>
             {
                 entity.HasKey(e => e.CidadeID);
                 entity.Property(e => e.Nome).IsRequired();
                 entity.HasMany(a => a.Regiao);
-                entity.HasMany(a => a.Ufs);
+
+
+            });
+
+            modelBuilder.Entity<UF>(entity =>
+            {
+                entity.HasKey(e => e.UfID);
+                entity.Property(e => e.Nome).IsRequired();
+                entity.HasMany(a => a.Cidades).WithOne(c => c.Uf);
             });
 
 
@@ -72,7 +88,7 @@ namespace api.portal.jenn.Contexto
                 entity.Property(e => e.Nome).IsRequired();
                 entity.Property(e => e.Descricao).IsRequired();
                 entity.Property(e => e.Ativo).IsRequired();
-                entity.Property(e => e.ImgProduto).IsRequired();
+                entity.Property(e => e.ImgProduto_Proc).IsRequired();
             });
 
 
@@ -119,6 +135,7 @@ namespace api.portal.jenn.Contexto
                 entity.HasOne<Empresa>(sc => sc.Empresa).WithMany(s => s.ProcedimentoEmpresas).HasForeignKey(sc => sc.EmpresaID);
                 entity.HasMany(a => a.ProcedimentoPerguntas).WithOne(b => b.ProcedimentoEmpresa);
                 entity.HasMany(a => a.PagamentoProcedimentoEmpresas).WithOne(b => b.ProcedimentoEmpresa);
+
             });
 
             modelBuilder.Entity<Convenio>(entity =>

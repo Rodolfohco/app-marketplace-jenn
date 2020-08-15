@@ -20,5 +20,6 @@ namespace api.portal.jenn.DTO
         [StringLength(200)]
         public string Nome { get; set; }
 
+
     }
 }
