@@ -56,7 +56,7 @@
 
     pesquisaViewModel.Convenios = item.procedimentoEmpresas.SelectMany(p => p.planoProcedimentoEmpresas).Select(c => c.plano.convenio).ToList();
 
-    pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels;
+    pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels.OrderBy(a=>a.hora).ToList();
 
     if(ViewBag.idProcedimento != null)
         pesquisaViewModel.IdProcedimento = ViewBag.idProcedimento;

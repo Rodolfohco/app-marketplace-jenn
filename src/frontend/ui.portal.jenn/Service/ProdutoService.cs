@@ -585,7 +585,7 @@ namespace ui.portal.jenn.Service
                     pesquisaViewModel.Opiniao = empresa.avaliacoes.Count();
                     pesquisaViewModel.NomeUnidade = empresa.nome;
                     pesquisaViewModel.EnderecoCompleto = empresa.logradouro + ", " + empresa.numero + " - " + empresa.bairro;
-                    pesquisaViewModel.EnderecoLoja = "???";
+                    pesquisaViewModel.EnderecoLoja = empresa.url_loja;
                     pesquisaViewModel.UrlImagem = empresa.imgemFrontEmpresa;
                     pesquisaViewModel.UrlMaps = empresa.maps;
 
