@@ -53,11 +53,19 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Grupo, GrupoViewModel>();
             CreateMap<GrupoViewModel, DTO.Grupo>();
 
-            CreateMap<DTO.ConfirmacaoAgenda, ConfirmacaoAgendaViewModel>();
-            CreateMap<ConfirmacaoAgendaViewModel, DTO.ConfirmacaoAgenda>();
+            CreateMap<DTO.ConfirmacaoAgenda, NovaConfirmacaoAgendaViewModel>();
+            CreateMap<NovaConfirmacaoAgendaViewModel, DTO.ConfirmacaoAgenda>();
+
+           
+
+                CreateMap<ConsultaNovaConfirmacaoAgendaViewModel, DTO.ConfirmacaoAgenda>();
+            CreateMap<DTO.ConfirmacaoAgenda, ConsultaNovaConfirmacaoAgendaViewModel>();
 
             CreateMap<Paciente, PacienteViewModel>();
             CreateMap<PacienteViewModel, Paciente>();
+
+
+
 
 
             CreateMap<DTO.Empresa, NovaEmpresaViewModel>();
@@ -80,10 +88,10 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.Roles, RolesViewModel>();
             CreateMap<RolesViewModel, DTO.Roles>();
 
+ 
 
-            
 
-                            CreateMap<DTO.Cidade, NovaCidadeViewModel>();
+            CreateMap<DTO.Cidade, NovaCidadeViewModel>();
             CreateMap<NovaCidadeViewModel, DTO.Cidade>();
 
 
@@ -95,6 +103,9 @@ namespace api.portal.jenn.Mapeamento
 
             CreateMap<DTO.Plano, PlanoViewModel>();
             CreateMap<PlanoViewModel, DTO.Plano>();
+
+            CreateMap<DTO.Plano, ConsultaPlanoViewModel>();
+            CreateMap<ConsultaPlanoViewModel, DTO.Plano>();
 
             CreateMap<DTO.Empresa, EmpresaViewModel>();
             CreateMap<EmpresaViewModel, DTO.Empresa>();
@@ -141,8 +152,15 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<DTO.TipoProcedimento, TipoProcedimentoViewModel>();
             CreateMap<TipoProcedimentoViewModel, DTO.TipoProcedimento>();
 
+            CreateMap<ConsultaTipoProcedimentoViewModel, DTO.TipoProcedimento>();
+
+            
+
             CreateMap<DTO.CategoriaProcedimento, CategoriaProcedimentoViewModel>();
             CreateMap<CategoriaProcedimentoViewModel, DTO.CategoriaProcedimento>();
+
+            CreateMap<ConsultaCategoriaProcedimentoViewModel, DTO.CategoriaProcedimento>();
+
 
             CreateMap<DTO.UF, UFViewModel>();
             CreateMap<UFViewModel, DTO.UF>();

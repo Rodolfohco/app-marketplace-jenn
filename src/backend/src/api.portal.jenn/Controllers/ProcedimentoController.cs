@@ -60,6 +60,36 @@ namespace api.portal.jenn.Controllers
             return resultado;
         }
 
+
+        [HttpPost("NovoProcedimento")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovoProcedimento(ProcedimentoViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.Inserir(model);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

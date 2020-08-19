@@ -4,6 +4,7 @@ using api.portal.jenn.factory;
 using api.portal.jenn.ViewModel;
 using database.portal.jenn.DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -56,6 +57,46 @@ namespace api.portal.jenn.Repository
                 throw;
             }
         }
+
+        public Empresa Detail( string nome, bool lazzLoader = false)
+        {
+            Empresa retorno = null;
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    if (lazzLoader)
+                    {
+                        retorno = ctx.Empresas.Where(c => c.Nome == nome)
+                            .Include(c => c.ProcedimentoEmpresas)
+                           .ThenInclude(c => c.Procedimento)
+                           .ThenInclude(c => c.TipoProcedimento)
+                           .ThenInclude(c => c.Categoria)
+                           .Include(c => c.Cidade)
+                           .ThenInclude(c => c.Regiao)
+                           .Include(c => c.Cidade)
+                           .ThenInclude(c => c.Uf).FirstOrDefault();
+                    }
+                    else
+                    {
+                        retorno = (from item in ctx.Empresas.ToList()
+                                   where item.Nome.Trim().ToUpper() == nome.Trim().ToUpper()
+                                   select item).FirstOrDefault();
+                    }
+
+                }
+            }      
+                
+            
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+
 
         public Empresa Detail(Expression<Func<Empresa, bool>> where, bool lazzLoader = false)
         {
@@ -265,7 +306,50 @@ namespace api.portal.jenn.Repository
             }
             return retorno;
         }
+        public Empresa InsertFilial(Empresa model)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    var matriz = ctx.Empresas.Include(x => x.Matriz).Select(x => x.Matriz).Where(x => x.Nome.Trim().ToUpper() == model.Matriz.Nome).FirstOrDefault();
+                    model.Matriz = matriz;
+                    ctx.Empresas.Add(model);
 
+
+                  
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return model;
+        }
+
+        public Empresa InsertMatriz(Empresa model, string NomeMatriz)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                  
+                        var Matriz = ctx.Empresas.Where(x => x.Nome == NomeMatriz).FirstOrDefault();
+                        model.Matriz = Matriz;
+                  
+                    ctx.Empresas.Add(model);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
+                throw;
+            }
+            return model;
+        }
 
         public Empresa Insert(Empresa model)
         {
@@ -273,13 +357,41 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                   ctx.Add(model);
-                    ctx.SaveChanges();
+
+
+
+
+                    if (model.MatrizID.HasValue)
+                    {
+                        var Matriz = ctx.Empresas.Include(X => X.Matriz).Select(x => x.Matriz).Where(c => c.MatrizID == model.MatrizID).FirstOrDefault();
+                        model.Matriz = Matriz;
+                    }
+
+                    if (model.Grupo!= null && model.Grupo.GrupoID > 0)
+                    {
+                        var grupo = ctx.Grupo.Find(model.Grupo.GrupoID);
+                        model.Grupo = grupo;
+                    }
+
+                    if (model.Cidade != null && !string.IsNullOrEmpty(model.Cidade.num_cidade))
+                    {
+                        var Cidade = ctx.Cidades.Where(x => x.num_cidade == model.Cidade.num_cidade.Substring(2)).FirstOrDefault();
+                     
+                        if (Cidade != null)
+                            model.Cidade = Cidade;
+                    }
+
+                    var empresaPesquisa = ctx.Empresas.Where(x => x.Nome == model.Nome && x.cnpj == model.cnpj).FirstOrDefault();
+                    if (empresaPesquisa == null)
+                    {
+                        ctx.Empresas.Add(model);
+                        ctx.SaveChanges();
+                    }
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
             return model;
@@ -297,7 +409,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
             return model;
@@ -319,7 +431,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
             return model;
@@ -336,7 +448,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
             return model;
@@ -357,7 +469,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
             return model;
@@ -378,54 +490,107 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
             return model;
         }
 
-        public ConfirmacaoAgenda InsertConfirmacaoAgenda(ConfirmacaoAgendaViewModel model)
+        public ConfirmacaoAgenda InsertConfirmacaoAgenda(NovaConfirmacaoAgendaViewModel model)
         {
             ConfirmacaoAgenda confirmacaoAgenda = new ConfirmacaoAgenda();
             try
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    //Paciente paciente = model.Paciente;
-                    //Cliente cliente = ctx.Clientes.Find(model.ClienteID);
-
-
-
-                   
                     
                 
                     ProcedimentoEmpresa procedimento = ctx.ProcedimentoEmpresa.Find(model.ProcedimentoEmpresaID);
                     Agenda agenda = ctx.Agenda.Find(model.PlanoID);
-                    Cliente cliente = ctx.Clientes.Find(model.ClienteID);
+                    
                     Plano plano = ctx.Planos.Find(model.PlanoID);
 
-                    Paciente paciente = new Paciente()
+                    Cliente cliente = ctx.Clientes.Where(x=> x.cpf_cliente == model.Cliente.cpf_cliente).FirstOrDefault();
+                    Paciente paciente = ctx.Pacientes.Where(x => x.cpf_paciente == model.Paciente.cpf_paciente).FirstOrDefault();
+
+
+
+                    if (cliente == null)
                     {
-                        bairro = model.Paciente.bairro,
-                        Celular = model.Paciente.Celular,
-                        Nome = model.Paciente.Nome,
-                        Telefone = model.Paciente.Telefone,
-                        Cep = model.Paciente.Cep,
-                        cpf_paciente = model.Paciente.cpf_paciente,
-                        DtaNascimento = model.Paciente.DtaNascimento,
-                        Logradouro = model.Paciente.Logradouro,
-                        numero = model.Paciente.numero,
-                        Referencia = model.Paciente.Referencia,
-                        Sexo = model.Paciente.Sexo,
-                        sobrenome = model.Paciente.sobrenome
+                        cliente = new Cliente()
+                        {
+                            bairro = model.Cliente.bairro,
+                            Celular = model.Cliente.Celular,
+                            Nome = model.Cliente.Nome,
+                            Telefone = model.Cliente.Telefone,
+                            Cep = model.Cliente.Cep,
+                            cpf_cliente = model.Cliente.cpf_cliente,
+                            DtaNascimento = model.Cliente.DtaNascimento,
+                            Logradouro = model.Cliente.Logradouro,
+                            numero = model.Cliente.numero,
+                            Referencia = model.Cliente.Referencia,
+                            Sexo = model.Cliente.Sexo,
+                            sobrenome = model.Cliente.sobrenome
+                        };
+                        ctx.Entry(cliente).State = EntityState.Added;
+                        ctx.Clientes.Add(cliente);
+                        ctx.SaveChanges();
+                    }
 
-                    };
-                    ctx.Entry(paciente).State = EntityState.Added;
+                    if (!model.PacienteTitular)
+                    {
+                        if (paciente == null)
+                        {
+                            paciente = new Paciente()
+                            {
+                                bairro = model.Paciente.bairro,
+                                Celular = model.Paciente.Celular,
+                                Nome = model.Paciente.Nome,
+                                Telefone = model.Paciente.Telefone,
+                                Cep = model.Paciente.Cep,
+                                cpf_paciente = model.Paciente.cpf_paciente,
+                                DtaNascimento = model.Paciente.DtaNascimento,
+                                Logradouro = model.Paciente.Logradouro,
+                                numero = model.Paciente.numero,
+                                Referencia = model.Paciente.Referencia,
+                                Sexo = model.Paciente.Sexo,
+                                sobrenome = model.Paciente.sobrenome
 
+                            };
+                            ctx.Entry(paciente).State = EntityState.Added;
+                            ctx.Pacientes.Add(paciente);
+                            ctx.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        paciente = ctx.Pacientes.Where(x => x.cpf_paciente == model.Cliente.cpf_cliente).FirstOrDefault();
 
-                    ctx.Pacientes.Add(paciente);
-                    ctx.SaveChanges();
+                        if (paciente == null)
+                        {
+                            paciente = new Paciente()
+                            {
+                                bairro = model.Cliente.bairro,
+                                Celular = model.Cliente.Celular,
+                                Nome = model.Cliente.Nome,
+                                Telefone = model.Cliente.Telefone,
+                                Cep = model.Cliente.Cep,
+                                cpf_paciente = model.Cliente.cpf_cliente,
+                                DtaNascimento = model.Cliente.DtaNascimento,
+                                Logradouro = model.Cliente.Logradouro,
+                                numero = model.Cliente.numero,
+                                Referencia = model.Cliente.Referencia,
+                                Sexo = model.Cliente.Sexo,
+                                sobrenome = model.Cliente.sobrenome
 
+                            };
+                            ctx.Entry(paciente).State = EntityState.Added;
+                            ctx.Pacientes.Add(paciente);
+                            ctx.SaveChanges();
+                        }
+                
+
+                    }
 
 
 
@@ -447,7 +612,7 @@ namespace api.portal.jenn.Repository
                     ctx.Entry(confirmacaoAgenda).State = EntityState.Added;
 
 
-                    ctx.ConfirmacaoAgenda.Attach(confirmacaoAgenda);
+                    ctx.ConfirmacaoAgenda.Add(confirmacaoAgenda);
                     ctx.SaveChanges();
                 }
             }
@@ -517,7 +682,7 @@ namespace api.portal.jenn.Repository
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Update] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
         }

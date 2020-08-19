@@ -29,16 +29,21 @@ namespace api.portal.jenn.ViewModel
         public string mensagem_cont { get; set; }
     }
 
-        public class NovoContatoViewModel
+    public class NovoContatoProcedimentoViewModel : NovoContatoViewModel
+    {
+        public int ProcedimentoID { get; set; }
+    }
+
+    public class NovoContatoViewModel
     {
 
-     
+
         [Required]
         [StringLength(200)]
         [Display(Name = "Nome")]
         public string Nome { get; set; }
 
-      
+
         [StringLength(20)]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Telefone")]
@@ -53,7 +58,7 @@ namespace api.portal.jenn.ViewModel
 
         [Required]
         [StringLength(800)]
-        [Display(Name ="Mensagem")]
+        [Display(Name = "Mensagem")]
         [DataType(DataType.MultilineText)]
         public string mensagem_cont { get; set; }
     }

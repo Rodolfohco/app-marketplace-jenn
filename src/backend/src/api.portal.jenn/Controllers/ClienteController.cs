@@ -87,6 +87,34 @@ namespace api.portal.jenn.Controllers
         }
 
 
+        [HttpPost("InserirContatoProcedimento")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult InserirContatoProcedimento([FromBody] NovoContatoProcedimentoViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var corpo = JsonConvert.SerializeObject(model);
+
+                    _emailSender.SendEmailAsync(model.Email, "Socilitação de Contato", corpo, "Jenn Solicitação de Contato", "Jenn").Wait();
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+
+            return resultado;
+        }
+
+
+
+
+
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

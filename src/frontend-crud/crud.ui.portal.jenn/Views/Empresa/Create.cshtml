@@ -1,11 +1,5 @@
 ﻿@model api.portal.jenn.DTO.Empresa
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-
-
 
 <form asp-controller="Empresa" asp-action="Create" asp-antiforgery="true" method="post" class="form-horizontal">
     <fieldset>
@@ -46,7 +40,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
                     <div class="col-md-8">
-                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md" required="" type="text">
+                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md"  type="text">
                         <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
                 </div>
@@ -55,13 +49,13 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Nome">CNPJ <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="cnpj" id="cnpj" name="cnpj" placeholder="Apenas números" class="form-control input-md" required="" type="text" maxlength="20" pattern="[0-9]+$">
+                        <input asp-for="cnpj" id="cnpj" name="cnpj" placeholder="Apenas números" class="form-control input-md"  type="text" maxlength="20" pattern="[0-9]+$">
                         <span asp-validation-for="cnpj" class="text-danger"></span>
                     </div>
 
                     <label class="col-md-2 control-label" for="Nome">Código Cnes <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="CodigoCnes" id="CodigoCnes" name="CodigoCnes" placeholder="Apenas números" class="form-control input-md" required="" type="text" maxlength="20" pattern="[0-9]+$">
+                        <input asp-for="CodigoCnes" id="CodigoCnes" name="CodigoCnes" placeholder="Apenas números" class="form-control input-md"  type="text" maxlength="20" pattern="[0-9]+$">
                         <span asp-validation-for="CodigoCnes" class="text-danger"></span>
                     </div>
                 </div>
@@ -88,7 +82,7 @@
                     <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                            <input id="prependedtext"  asp-for="Telefone1" name="Telefone1" class="form-control" placeholder="XX XXXXX-XXXX" required="" type="text" maxlength="13" pattern="\[0-9]{2}\ [0-9]{4,6}-[0-9]{3,4}$"
+                            <input id="prependedtext"  asp-for="Telefone1" name="Telefone1" class="form-control" placeholder="XX XXXXX-XXXX"  type="text" maxlength="13" pattern="\[0-9]{2}\ [0-9]{4,6}-[0-9]{3,4}$"
                                    OnKeyPress="formatar('## #####-####', this)">
                         </div>
                     </div>
@@ -108,7 +102,7 @@
                     <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input id="email" asp-for="Email" name="Email" class="form-control" placeholder="email@email.com" required="" type="email" />
+                            <input id="email" asp-for="Email" name="Email" class="form-control" placeholder="email@email.com"  type="email" />
                         </div>
                     </div>
 
@@ -146,7 +140,7 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input id="prependedtext" asp-for="Responsavel" name="Responsavel" class="form-control" placeholder="Responsavel pela empresa" required="" type="text" />
+                            <input id="prependedtext" asp-for="Responsavel" name="Responsavel" class="form-control" placeholder="Responsavel pela empresa"  type="text" />
                         </div>
                     </div>
                 </div>
@@ -174,14 +168,14 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon">Rua</span>
-                            <input id="rua" name="Logradouro" asp-for="Logradouro" class="form-control" placeholder="" required="" type="text">
+                            <input id="rua" name="Logradouro" asp-for="Logradouro" class="form-control" placeholder=""  type="text">
                         </div>
 
                     </div>
                     <div class="col-md-2">
                         <div class="input-group">
                             <span class="input-group-addon">Nº <h11>*</h11></span>
-                            <input id="numero" name="numero" asp-for="numero" class="form-control" placeholder="" required="" type="text">
+                            <input id="numero" name="numero" asp-for="numero" class="form-control" placeholder=""  type="text">
                         </div>
 
                     </div>
@@ -189,7 +183,7 @@
                     <div class="col-md-3">
                         <div class="input-group">
                             <span class="input-group-addon">Bairro</span>
-                            <input id="bairro" asp-for="bairro" name="bairro" class="form-control" placeholder="" required="" type="text">
+                            <input id="bairro" asp-for="bairro" name="bairro" class="form-control" placeholder=""  type="text">
                         </div>
 
                     </div>

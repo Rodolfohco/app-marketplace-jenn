@@ -92,7 +92,28 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.Procedimento, ViewModel.ProcedimentoViewModel>(retorno);
         }
 
-       
+
+        public ProcedimentoViewModel Inserir(ProcedimentoViewModel model)
+        {
+            Procedimento retorno = null;
+            try
+            {
+                var EmpresaNova = this.mapper.Map<ViewModel.ProcedimentoViewModel, DTO.Procedimento>(model);
+
+                EmpresaNova.TipoProcedimento = this.tipoProcedimentoRepository.Detail(c => c.Nome == model.TipoProcedimento.Nome);
+
+                retorno = this.repository.Insert(EmpresaNova);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.Procedimento, ViewModel.ProcedimentoViewModel>(retorno);
+        }
+
+
+
 
         public IEnumerable<ProcedimentoViewModel> Selecionar()
         {

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.ViewModel
 {
+  
+
 
     public class NovaEmpresaViewModel
     {
@@ -29,8 +31,14 @@ namespace api.portal.jenn.ViewModel
         public int Ativo { get; set; }
         public int TipoEmpresa { get; set; }
 
-        public string url_loja { get; set; }
+        [AutoMapper.IgnoreMap]
+        public int GrupoId { get; set; }
+      
+        [AutoMapper.IgnoreMap]
+        public string NumeroCidade { get; set; }
 
+        public string url_loja { get; set; }
+        
     }
 
 
@@ -138,13 +146,13 @@ namespace api.portal.jenn.ViewModel
     }
 
 
-
     public class NovaFilialViewModel
     {
+        [AutoMapper.IgnoreMap]
+        public string Matriz { get; set; }
         public int? MatrizID { get; set; }
         public string cnpj { get; set; }
         public string Nome { get; set; }
-
         public string Telefone1 { get; set; }
         public string Telefone2 { get; set; }
         public string ImgemFrontEmpresa { get; set; }
@@ -161,6 +169,12 @@ namespace api.portal.jenn.ViewModel
         public int TipoEmpresa { get; set; }
         public string CodigoCnes { get; set; }
         public string url_loja { get; set; }
+        
+        [AutoMapper.IgnoreMap]
+        public string NumeroCidade { get; set; }
+       
+        [AutoMapper.IgnoreMap]
+        public int GrupoId { get; set; }
     }
 
     public class FilialViewModel

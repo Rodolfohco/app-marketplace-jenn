@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using api.portal.jenn.Contexto;
 using api.portal.jenn.DTO;
+using crud.ui.portal.jenn.Enumeradores;
+using System.Data;
 
 namespace crud.ui.portal.jenn.Controllers
 {
@@ -74,7 +76,7 @@ namespace crud.ui.portal.jenn.Controllers
 
             return RedirectToAction("Index");
         }
-      public  void GetCombo()
+        public  void GetCombo()
         {
 
            
@@ -92,10 +94,28 @@ namespace crud.ui.portal.jenn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProcedimentoEmpresaID,DataInclusao,Nome_pers,PrecoProduto,Preco_contra,TaxaParcelamento,TaxaResultado,ImagemThumb,ImagemHome,ImagemMain,Video,Ativo,Destaque,ProcedimentoID,EmpresaID")] ProcedimentoEmpresa procedimentoEmpresa)
+        public async Task<IActionResult> Create( ProcedimentoEmpresa procedimentoEmpresa)
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemHome))
+                    procedimentoEmpresa.ImagemHome = string.Empty;
+
+
+                if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemMain))
+                    procedimentoEmpresa.ImagemMain = string.Empty;
+
+
+                if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemThumb))
+                    procedimentoEmpresa.ImagemThumb = string.Empty;
+
+                if (string.IsNullOrEmpty(procedimentoEmpresa.Video))
+                    procedimentoEmpresa.Video = string.Empty;
+
+                procedimentoEmpresa.Ativo = (int)Status.Ativo;
+
+                procedimentoEmpresa.DataInclusao = DateTime.Now;
+
                 _context.Add(procedimentoEmpresa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -131,7 +151,7 @@ namespace crud.ui.portal.jenn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProcedimentoEmpresaID,DataInclusao,Nome_pers,PrecoProduto,Preco_contra,TaxaParcelamento,TaxaResultado,ImagemThumb,ImagemHome,ImagemMain,Video,Ativo,Destaque,ProcedimentoID,EmpresaID")] ProcedimentoEmpresa procedimentoEmpresa)
+        public async Task<IActionResult> Edit(int id,  ProcedimentoEmpresa procedimentoEmpresa)
         {
             if (id != procedimentoEmpresa.ProcedimentoEmpresaID)
             {
@@ -142,6 +162,22 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemHome))
+                        procedimentoEmpresa.ImagemHome = string.Empty;
+
+
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemMain))
+                        procedimentoEmpresa.ImagemMain = string.Empty;
+
+
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemThumb))
+                        procedimentoEmpresa.ImagemThumb = string.Empty;
+
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.Video))
+                        procedimentoEmpresa.Video = string.Empty;
+
+
+
                     _context.Entry(procedimentoEmpresa).State = EntityState.Modified;
 
                     _context.Update(procedimentoEmpresa);

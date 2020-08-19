@@ -10,4 +10,9 @@ namespace api.portal.jenn.ViewModel
         public int CategoriaID { get; set; }
         public string Nome { get; set; }
     }
+
+    public class ConsultaCategoriaProcedimentoViewModel
+    {
+        public string Nome { get; set; }
+    }
 }
