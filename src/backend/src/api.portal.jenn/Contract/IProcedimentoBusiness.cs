@@ -10,6 +10,7 @@ namespace api.portal.jenn.Contract
     {
         #region Metodos
         ViewModel.ProcedimentoViewModel Inserir(ViewModel.NovoProcedimentoViewModel model);
+        ViewModel.ProcedimentoViewModel Inserir(ViewModel.ProcedimentoViewModel model);
         IEnumerable<ViewModel.ProcedimentoViewModel> Selecionar();
 
 

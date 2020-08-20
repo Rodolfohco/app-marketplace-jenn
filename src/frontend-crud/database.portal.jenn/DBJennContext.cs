@@ -9,6 +9,7 @@ namespace api.portal.jenn.Contexto
     {
         public DBJennContext(DbContextOptions<DBJennContext> option) : base(option)
         {
+
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

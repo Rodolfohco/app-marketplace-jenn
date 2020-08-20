@@ -118,13 +118,36 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    ctx.Add(model);
+                    var categoria = ctx.CategoriaProced.Where(x => x.Nome == model.Categoria.Nome).FirstOrDefault();
+
+
+                    if (categoria != null)
+                        model.Categoria = categoria;
+                    else
+                        ctx.CategoriaProced.Add(model.Categoria);
+
+
+
+                    var TipoProced = ctx.TipoProcedimento.Where(x => x.Nome.ToLower().Trim() == model.Nome.ToLower().Trim()).FirstOrDefault();
+
+                    if (TipoProced == null)
+                    {
+                        ctx.Entry(model).State = EntityState.Added;                        
+                        ctx.TipoProcedimento.Add(model);
+
+                    }
+                    else {
+                  
+                        ctx.Entry(TipoProced).State = EntityState.Modified;
+                        TipoProced.Categoria = ctx.CategoriaProced.Where(x => x.Nome == model.Categoria.Nome).FirstOrDefault();
+                        ctx.TipoProcedimento.Update(TipoProced);
+                    }
                     ctx.SaveChanges();
                 }
             }
             catch (Exception exception)
             {
-                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.Message}] ;", exception);
                 throw;
             }
             return model;

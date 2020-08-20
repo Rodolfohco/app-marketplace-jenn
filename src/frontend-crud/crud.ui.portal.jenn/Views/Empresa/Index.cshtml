@@ -4,87 +4,70 @@
     ViewData["Title"] = "Lista de Empresas";
     Layout = "~/Views/Shared/_LayoutEmpresa.cshtml";
 }
-
-
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <h1>Todas as Empresas</h1>
 
 <p>
     <a asp-action="Create">Nova Empresa</a>
 </p>
-<table class=" table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.CodigoCnes)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Telefone1)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Responsavel)
-            </th>
-            <th scope="col">
-            </th>
-            <th>
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.Ativo)
-            </th>
-            <th>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <th scope="row">  @Html.DisplayFor(modelItem => item.EmpresaID)</th>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoCnes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefone1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td width="100">
-                @Html.DisplayFor(modelItem => item.Responsavel)
-            </td>
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ativo)
-            </td>
-            <td>
-                @if (item.Ativo == 1)
-                {
-                    <a asp-action="Desativar" asp-route-id="@item.EmpresaID">Des</a>
-                }
-                else
-                {
-                    <a asp-action="Desativar" asp-route-id="@item.EmpresaID">Lig</a>
+<!-- Prepended text-->
+<div class="form-group">
 
-                }|
-                <a asp-action="Edit" asp-route-id="@item.EmpresaID">Edição</a> |
-                <a asp-action="Details" asp-route-id="@item.EmpresaID">Detalhe</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmpresaID">Excluir</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+    <div class="col-md-3">
+    </div>
+    <table id="grid" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Cnes</th>
+                <th><div style="width:450px; Word-wrap: break-Word">Nome </div></th>
+                <th>E-mail</th>
+                <th>Status</th>
+                <th>Controle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(modelItem => item.EmpresaID)</td>
+                    <td> @Html.DisplayFor(modelItem => item.CodigoCnes)</td>
+                    <td><div style="width:450px; Word-wrap: break-Word"> @Html.DisplayFor(modelItem => item.Nome)</div></td>
+                    <td> @Html.DisplayFor(modelItem => item.Email)</td>
 
+                    <td>
+                        @if (item.Ativo == 1)
+                        {
+                            <i class="	fas fa-handshake"></i>
+                        }
+                        else
+                        {
+                            <i class="	fas fa-handshake-alt-slash"></i>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Ativo == 1)
+                        {
+                            <a asp-action="Desativar" class="fas fa-window-close" title="Desativar Empresa" asp-route-id="@item.EmpresaID"></a>
+                        }
+                        else
+                        {
+                            <a asp-action="Desativar" class="far fa-window-close" title="Ligar Empresa" asp-route-id="@item.EmpresaID"></a>
+
+                        }|
+                        <a asp-action="Edit" asp-route-id="@item.EmpresaID" class='far fa-edit'></a>|
+
+                        <a asp-action="Details" asp-route-id="@item.EmpresaID" title="Detalhar este Registro" class='fas fa-glasses'></a> |
+                        <a asp-action="Delete" asp-route-id="@item.EmpresaID" title="Excluir este Registro" class='fas fa-eraser'></a>
+                    </td>
+                </tr>
+
+            }
+
+
+        </tbody>
+          </table>
+
+</div>
+<br />
+<br />

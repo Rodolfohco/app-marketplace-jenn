@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Nome">Nome do Convenio <h11>*</h11></label>
                     <div class="col-md-8">
-                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md" required="" type="text">
+                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md"  type="text">
                         <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
                 </div>
@@ -29,16 +29,16 @@
                     <label class="col-md-2 control-label" for="Cadastrar Novos Planos"></label>
 
                     <div class="col-sm-3 my-1">
-                        <label class="sr-only" for="inlineFormInputGroupUsername">Usuário</label>
+                        <label class="sr-only" for="inlineFormInputGroupPlano">Plano</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"> </div>
                             </div>
-                            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Usuário">
+                            <input type="text" class="form-control" id="inlineFormInputGroupPlano" placeholder="Plano">
                         </div>
                     </div>
                     <div class="col-auto my-1">
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
                     </div>
                 </div>
                     <div class="col-md-8">
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+             
     </fieldset>
 </form>
 

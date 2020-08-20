@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
-   
+    $("#grid").DataTable({
+        "pageLength": 50
+    });
+    
+
+
  
     $("#pesquisa").bind("click", function () {
 

@@ -9,7 +9,7 @@ using api.portal.jenn.Contexto;
 namespace database.portal.jenn.Migrations
 {
     [DbContext(typeof(DBJennContext))]
-    [Migration("20200811220021_InitialMigration")]
+    [Migration("20200817182423_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,6 +127,9 @@ namespace database.portal.jenn.Migrations
                         .HasColumnType("varchar(200) CHARACTER SET utf8mb4")
                         .HasMaxLength(200);
 
+                    b.Property<int?>("UfID")
+                        .HasColumnType("int");
+
                     b.Property<string>("num_cidade")
                         .IsRequired()
                         .HasColumnName("num_cid")
@@ -134,6 +137,8 @@ namespace database.portal.jenn.Migrations
                         .HasMaxLength(5);
 
                     b.HasKey("CidadeID");
+
+                    b.HasIndex("UfID");
 
                     b.ToTable("cidade");
                 });
@@ -388,6 +393,12 @@ namespace database.portal.jenn.Migrations
 
                     b.Property<int?>("CidadeID")
                         .HasColumnType("int");
+
+                    b.Property<string>("CodigoCnes")
+                        .IsRequired()
+                        .HasColumnName("cnes_emp")
+                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
+                        .HasMaxLength(20);
 
                     b.Property<string>("Email")
                         .HasColumnName("mail_emp")
@@ -915,9 +926,6 @@ namespace database.portal.jenn.Migrations
                         .HasColumnName("cod_uf")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CidadeID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnName("nom_uf")
@@ -934,8 +942,6 @@ namespace database.portal.jenn.Migrations
                         .HasMaxLength(3);
 
                     b.HasKey("UfID");
-
-                    b.HasIndex("CidadeID");
 
                     b.HasIndex("PaisID");
 
@@ -1260,6 +1266,13 @@ namespace database.portal.jenn.Migrations
                         .HasForeignKey("EmpresaID");
                 });
 
+            modelBuilder.Entity("api.portal.jenn.DTO.Cidade", b =>
+                {
+                    b.HasOne("api.portal.jenn.DTO.UF", "Uf")
+                        .WithMany("Cidades")
+                        .HasForeignKey("UfID");
+                });
+
             modelBuilder.Entity("api.portal.jenn.DTO.Cliente", b =>
                 {
                     b.HasOne("api.portal.jenn.DTO.Cidade", "Cidade")
@@ -1405,10 +1418,6 @@ namespace database.portal.jenn.Migrations
 
             modelBuilder.Entity("api.portal.jenn.DTO.UF", b =>
                 {
-                    b.HasOne("api.portal.jenn.DTO.Cidade", null)
-                        .WithMany("Ufs")
-                        .HasForeignKey("CidadeID");
-
                     b.HasOne("api.portal.jenn.DTO.Pais", "Pais")
                         .WithMany("Ufs")
                         .HasForeignKey("PaisID");

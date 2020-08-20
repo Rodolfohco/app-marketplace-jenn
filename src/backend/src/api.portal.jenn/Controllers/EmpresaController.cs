@@ -63,6 +63,9 @@ namespace api.portal.jenn.Controllers
             return resultado;
         }
 
+
+        
+
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

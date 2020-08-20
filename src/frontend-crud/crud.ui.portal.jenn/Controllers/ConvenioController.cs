@@ -51,6 +51,30 @@ namespace crud.ui.portal.jenn.Controllers
             return View();
         }
 
+        
+
+        
+        public async Task<JsonResult> NovoPlano(int ConvenioID, Plano plano)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    convenio.Ativo = (int)Status.Ativo;
+            //    convenio.DataInclusao = DateTime.Now;
+
+
+            //    _context.Add(convenio);
+            //    await _context.SaveChangesAsync();
+            //   // return RedirectToAction(nameof(Index));
+            //}
+            return new JsonResult(ConvenioID);
+        }
+
+        
+
+
+
+
+
         // POST: Convenio/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -84,6 +108,9 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Convenio = convenio.Nome;
+            ViewBag.ConvenioID = convenio.ConvenioId;
+
             return View(convenio);
         }
 

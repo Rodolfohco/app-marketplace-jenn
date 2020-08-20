@@ -20,10 +20,8 @@ namespace api.portal.jenn.Contract
         void Excluir(Expression<Func<DTO.Empresa, bool>> where);
         void Atualizar(ViewModel.EmpresaViewModel model, int id);
         ViewModel.EmpresaViewModel Detalhar(Expression<Func<DTO.Empresa, bool>> where);
-
-
-
-
+        EmpresaViewModel DetalharMatriz(string nome);
+        EmpresaViewModel Detalhar(string nome);
 
         ViewModel.FilialViewModel InserirFilial(ViewModel.NovaFilialViewModel model);
         IEnumerable<ViewModel.ConsultaFilialViewModel> SelecionarFilial();
@@ -53,7 +51,7 @@ namespace api.portal.jenn.Contract
         IEnumerable<ConsultaAgendaViewModel> SelecionarAgendaProcedimentoEmpresa(int ProcedimentoID);
         ConsultaAgendaViewModel InserirAgendaProcedimentoEmpresa(NovoAgendaViewModel novaAgenda, int ProcedimentoEmpresaID);
 
-        ConsultaConfirmacaoAgendaViewModel InserirConfirmacaoAgenda(ConfirmacaoAgendaViewModel novaAgenda );
+        ConsultaNovaConfirmacaoAgendaViewModel InserirConfirmacaoAgenda(NovaConfirmacaoAgendaViewModel novaAgenda );
         #endregion
     }
 }

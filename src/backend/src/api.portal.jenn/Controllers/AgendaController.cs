@@ -29,7 +29,7 @@ namespace api.portal.jenn.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public ICommandResult ConfirmarAgenda([FromBody] ConfirmacaoAgendaViewModel model)
+        public ICommandResult ConfirmarAgenda([FromBody] NovaConfirmacaoAgendaViewModel model)
         {
             CommandResult resultado = null;
             try

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using api.portal.jenn.Contexto;
 using api.portal.jenn.DTO;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.InteropServices.ComTypes;
+using crud.ui.portal.jenn.Enumeradores;
 
 namespace crud.ui.portal.jenn.Controllers
 {
@@ -63,7 +65,34 @@ namespace crud.ui.portal.jenn.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
+        private void GetMatriz( int MatrizID, bool Selecionar = true)
+        {
+            //if(MatrizID >0)
+            //    ViewBag.MatrizID = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "MatrizID", "Nome", MatrizID);
+            //else
+            //    ViewBag.MatrizID = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "MatrizID", "Nome");
+
+            var DBMatriz = _context.Empresas.Include(e => e.Matriz);
+         
+            List<SelectListItem> itemMatriz = new List<SelectListItem>();
+            (
+                from emp in DBMatriz.Select(c => c.Matriz)
+             where !emp.MatrizID.HasValue
+             select emp).Distinct().ToList().ForEach(empresa =>
+             {
+                 if (empresa != null)
+                 {
+                     itemMatriz.Insert(0, new SelectListItem() { Text = empresa.Nome, Value = empresa.EmpresaID.ToString() });
+                 }
+             });
+
+            itemMatriz.Insert(0, new SelectListItem() { Text = "Empresa Matriz", Value = "" });
+
+            ViewBag.MatrizID = itemMatriz;
+
+        }
+
 
         private void GetCombo(bool Selecionar = true)
         {
@@ -109,7 +138,7 @@ namespace crud.ui.portal.jenn.Controllers
                     {
                         Group = itemUf,
                         Text = cidade.Nome,
-                        Value = $"{uf.num_uf}{cidade.num_cidade}"
+                        Value = $"{cidade.num_cidade}"
                     });
                 });
             });
@@ -155,6 +184,25 @@ namespace crud.ui.portal.jenn.Controllers
                 empresa.Cidade = SelecionadaCidade;
 
 
+                if (string.IsNullOrEmpty(empresa.ImgemFrontEmpresa))
+                    empresa.ImgemFrontEmpresa = string.Empty;
+
+
+                if (string.IsNullOrEmpty(empresa.maps))
+                    empresa.maps = string.Empty;
+
+
+                if (string.IsNullOrEmpty(empresa.url_loja))
+                    empresa.url_loja = string.Empty;
+
+                if (string.IsNullOrEmpty(empresa.Email))
+                    empresa.Email = string.Empty;
+
+
+                empresa.Ativo = (int)Status.Ativo;
+
+               
+
                 _context.Add(empresa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -179,13 +227,19 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 return NotFound();
             }
-         
-            
-            if (empresa.Cidade != null && empresa.Cidade.Uf != null)
-                empresa.num_cidade = $"{empresa.Cidade.Uf.num_uf}{empresa.Cidade.num_cidade}";
 
             ViewBag.Tipo = (empresa.MatrizID.HasValue);
             GetCombo(false);
+
+            if(empresa.Cidade!=null)
+            empresa.num_cidade = empresa.Cidade.num_cidade;
+
+
+            if (empresa.MatrizID.HasValue)
+                GetMatriz(empresa.MatrizID.Value);
+            else
+                GetMatriz(0);
+
             return View(empresa);
         }
 
@@ -216,6 +270,24 @@ namespace crud.ui.portal.jenn.Controllers
 
              
                     empresa.Cidade = SelecionadaCidade;
+
+
+                    if (string.IsNullOrEmpty(empresa.ImgemFrontEmpresa))
+                        empresa.ImgemFrontEmpresa = string.Empty;
+
+
+                    if (string.IsNullOrEmpty(empresa.maps))
+                        empresa.maps = string.Empty;
+
+
+                    if (string.IsNullOrEmpty(empresa.url_loja))
+                        empresa.url_loja = string.Empty;
+
+                    if (string.IsNullOrEmpty(empresa.Email))
+                        empresa.Email = string.Empty;
+
+
+
 
                     _context.Update(empresa);
                     await _context.SaveChangesAsync();

@@ -9,20 +9,6 @@ namespace database.portal.jenn.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "cidade",
-                columns: table => new
-                {
-                    cod_cidade = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    num_cid = table.Column<string>(maxLength: 5, nullable: false),
-                    nom_cid = table.Column<string>(maxLength: 200, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_cidade", x => x.cod_cidade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CidadeMunicipios",
                 columns: table => new
                 {
@@ -228,6 +214,131 @@ namespace database.portal.jenn.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "plano_conv",
+                columns: table => new
+                {
+                    cod_plano = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nom_plano = table.Column<string>(maxLength: 200, nullable: false),
+                    ConvenioId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_plano_conv", x => x.cod_plano);
+                    table.ForeignKey(
+                        name: "FK_plano_conv_conv_ConvenioId",
+                        column: x => x.ConvenioId,
+                        principalTable: "conv",
+                        principalColumn: "cod_conv",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "papeis",
+                columns: table => new
+                {
+                    RoleID = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    papel = table.Column<string>(maxLength: 100, nullable: false),
+                    LogonID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_papeis", x => x.RoleID);
+                    table.ForeignKey(
+                        name: "FK_papeis_Logon_LogonID",
+                        column: x => x.LogonID,
+                        principalTable: "Logon",
+                        principalColumn: "LogonID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "uf",
+                columns: table => new
+                {
+                    cod_uf = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_uf = table.Column<string>(maxLength: 3, nullable: false),
+                    nom_uf = table.Column<string>(maxLength: 200, nullable: false),
+                    PaisID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_uf", x => x.cod_uf);
+                    table.ForeignKey(
+                        name: "FK_uf_pais_PaisID",
+                        column: x => x.PaisID,
+                        principalTable: "pais",
+                        principalColumn: "cod_pais",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tipo_proced",
+                columns: table => new
+                {
+                    cod_tipproced = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nom_tipproced = table.Column<string>(maxLength: 200, nullable: false),
+                    CategoriaID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tipo_proced", x => x.cod_tipproced);
+                    table.ForeignKey(
+                        name: "FK_tipo_proced_procedcat_CategoriaID",
+                        column: x => x.CategoriaID,
+                        principalTable: "procedcat",
+                        principalColumn: "cod_categoria",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "cidade",
+                columns: table => new
+                {
+                    cod_cidade = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    num_cid = table.Column<string>(maxLength: 5, nullable: false),
+                    nom_cid = table.Column<string>(maxLength: 200, nullable: false),
+                    UfID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cidade", x => x.cod_cidade);
+                    table.ForeignKey(
+                        name: "FK_cidade_uf_UfID",
+                        column: x => x.UfID,
+                        principalTable: "uf",
+                        principalColumn: "cod_uf",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "proced",
+                columns: table => new
+                {
+                    cod_proced = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nom_proced = table.Column<string>(maxLength: 200, nullable: false),
+                    desc_proced = table.Column<string>(maxLength: 400, nullable: false),
+                    imgprod_proced = table.Column<string>(maxLength: 200, nullable: false),
+                    atv_proced = table.Column<int>(nullable: false),
+                    TipoProcedimentoID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_proced", x => x.cod_proced);
+                    table.ForeignKey(
+                        name: "FK_proced_tipo_proced_TipoProcedimentoID",
+                        column: x => x.TipoProcedimentoID,
+                        principalTable: "tipo_proced",
+                        principalColumn: "cod_tipproced",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "cliente",
                 columns: table => new
                 {
@@ -259,52 +370,13 @@ namespace database.portal.jenn.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "regiao",
-                columns: table => new
-                {
-                    cod_regiao = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nom_reg = table.Column<string>(maxLength: 200, nullable: false),
-                    CidadeID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_regiao", x => x.cod_regiao);
-                    table.ForeignKey(
-                        name: "FK_regiao_cidade_CidadeID",
-                        column: x => x.CidadeID,
-                        principalTable: "cidade",
-                        principalColumn: "cod_cidade",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "plano_conv",
-                columns: table => new
-                {
-                    cod_plano = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nom_plano = table.Column<string>(maxLength: 200, nullable: false),
-                    ConvenioId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_plano_conv", x => x.cod_plano);
-                    table.ForeignKey(
-                        name: "FK_plano_conv_conv_ConvenioId",
-                        column: x => x.ConvenioId,
-                        principalTable: "conv",
-                        principalColumn: "cod_conv",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "emp",
                 columns: table => new
                 {
                     cod_emp = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     cod_matriz_emp = table.Column<int>(nullable: true),
+                    cnes_emp = table.Column<string>(maxLength: 20, nullable: false),
                     cnpj_emp = table.Column<string>(maxLength: 14, nullable: false),
                     nome_emp = table.Column<string>(maxLength: 200, nullable: false),
                     tel_emp1 = table.Column<string>(maxLength: 20, nullable: false),
@@ -349,70 +421,22 @@ namespace database.portal.jenn.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "papeis",
+                name: "regiao",
                 columns: table => new
                 {
-                    RoleID = table.Column<int>(nullable: false)
+                    cod_regiao = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    papel = table.Column<string>(maxLength: 100, nullable: false),
-                    LogonID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_papeis", x => x.RoleID);
-                    table.ForeignKey(
-                        name: "FK_papeis_Logon_LogonID",
-                        column: x => x.LogonID,
-                        principalTable: "Logon",
-                        principalColumn: "LogonID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "uf",
-                columns: table => new
-                {
-                    cod_uf = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    num_uf = table.Column<string>(maxLength: 3, nullable: false),
-                    nom_uf = table.Column<string>(maxLength: 200, nullable: false),
-                    PaisID = table.Column<int>(nullable: true),
+                    nom_reg = table.Column<string>(maxLength: 200, nullable: false),
                     CidadeID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_uf", x => x.cod_uf);
+                    table.PrimaryKey("PK_regiao", x => x.cod_regiao);
                     table.ForeignKey(
-                        name: "FK_uf_cidade_CidadeID",
+                        name: "FK_regiao_cidade_CidadeID",
                         column: x => x.CidadeID,
                         principalTable: "cidade",
                         principalColumn: "cod_cidade",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_uf_pais_PaisID",
-                        column: x => x.PaisID,
-                        principalTable: "pais",
-                        principalColumn: "cod_pais",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tipo_proced",
-                columns: table => new
-                {
-                    cod_tipproced = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nom_tipproced = table.Column<string>(maxLength: 200, nullable: false),
-                    CategoriaID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tipo_proced", x => x.cod_tipproced);
-                    table.ForeignKey(
-                        name: "FK_tipo_proced_procedcat_CategoriaID",
-                        column: x => x.CategoriaID,
-                        principalTable: "procedcat",
-                        principalColumn: "cod_categoria",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -491,29 +515,6 @@ namespace database.portal.jenn.Migrations
                         column: x => x.EmpresaID,
                         principalTable: "emp",
                         principalColumn: "cod_emp",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "proced",
-                columns: table => new
-                {
-                    cod_proced = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nom_proced = table.Column<string>(maxLength: 200, nullable: false),
-                    desc_proced = table.Column<string>(maxLength: 400, nullable: false),
-                    imgprod_proced = table.Column<string>(maxLength: 200, nullable: false),
-                    atv_proced = table.Column<int>(nullable: false),
-                    TipoProcedimentoID = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_proced", x => x.cod_proced);
-                    table.ForeignKey(
-                        name: "FK_proced_tipo_proced_TipoProcedimentoID",
-                        column: x => x.TipoProcedimentoID,
-                        principalTable: "tipo_proced",
-                        principalColumn: "cod_tipproced",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -744,6 +745,11 @@ namespace database.portal.jenn.Migrations
                 column: "EmpresaID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_cidade_UfID",
+                table: "cidade",
+                column: "UfID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_cliente_CidadeID",
                 table: "cliente",
                 column: "CidadeID");
@@ -870,11 +876,6 @@ namespace database.portal.jenn.Migrations
                 column: "CategoriaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_uf_CidadeID",
-                table: "uf",
-                column: "CidadeID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_uf_PaisID",
                 table: "uf",
                 column: "PaisID");
@@ -930,9 +931,6 @@ namespace database.portal.jenn.Migrations
                 name: "regiao");
 
             migrationBuilder.DropTable(
-                name: "uf");
-
-            migrationBuilder.DropTable(
                 name: "usuario");
 
             migrationBuilder.DropTable(
@@ -946,9 +944,6 @@ namespace database.portal.jenn.Migrations
 
             migrationBuilder.DropTable(
                 name: "plano_conv");
-
-            migrationBuilder.DropTable(
-                name: "pais");
 
             migrationBuilder.DropTable(
                 name: "cliente");
@@ -978,7 +973,13 @@ namespace database.portal.jenn.Migrations
                 name: "tipo_proced");
 
             migrationBuilder.DropTable(
+                name: "uf");
+
+            migrationBuilder.DropTable(
                 name: "procedcat");
+
+            migrationBuilder.DropTable(
+                name: "pais");
         }
     }
 }

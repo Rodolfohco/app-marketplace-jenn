@@ -85,6 +85,38 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.Empresa, ViewModel.EmpresaViewModel>(retorno);
         }
 
+        public EmpresaViewModel Detalhar(string nome)
+        {
+            Empresa retorno = null;
+            try
+            {
+                retorno = this.repository.Detail(nome);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
+            }
+            return this.mapper.Map<DTO.Empresa, ViewModel.EmpresaViewModel>(retorno);
+        }
+
+
+
+
+        public EmpresaViewModel DetalharMatriz( string nome)
+        {
+            Empresa retorno = null;
+            try
+            {
+                retorno = this.repository.Detail(empresa => empresa.Nome.Trim().ToLower().Equals(nome.Trim().ToLower()));
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detalhar] [{exception.InnerException}] ;", exception);
+            }
+            return this.mapper.Map<DTO.Empresa, ViewModel.EmpresaViewModel>(retorno);
+        }
+
+
         public void Excluir(Expression<Func<Empresa, bool>> where)
         {
             try
@@ -228,12 +260,21 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.ProcedimentoEmpresa, ViewModel.ConsultaProcedimentoEmpresaViewModel>(retorno);
         }
 
+
+
         public EmpresaViewModel Inserir(NovaEmpresaViewModel model)
         {
             Empresa retorno = null;
             try
             {
                 var EmpresaNova = this.mapper.Map<ViewModel.NovaEmpresaViewModel, DTO.Empresa>(model);
+
+                if (model.GrupoId > 0)
+                    EmpresaNova.Grupo = new Grupo() { GrupoID = model.GrupoId };
+
+                if (!string.IsNullOrEmpty(model.NumeroCidade))
+                    EmpresaNova.Cidade = new Cidade() { num_cidade = model.NumeroCidade };
+
                 retorno = this.repository.Insert(EmpresaNova);
             }
             catch (Exception exception)
@@ -247,10 +288,47 @@ namespace api.portal.jenn.Business
         public FilialViewModel InserirFilial(NovaFilialViewModel model)
         {
             Empresa retorno = null;
+            var EmpresaNova = new DTO.Empresa();
+
             try
             {
-                var EmpresaNova = this.mapper.Map<ViewModel.NovaFilialViewModel, DTO.Empresa>(model);
+
+                var detalhe = this.Detalhar(model.Matriz);
+
+                    if(detalhe !=null)
+                        EmpresaNova.MatrizID = detalhe.EmpresaID;
+
+                    EmpresaNova.Ativo = model.Ativo;
+                    EmpresaNova.bairro = model.bairro;
+                    EmpresaNova.cep = model.cep;
+                    EmpresaNova.Cert_Empresa = model.Cert_Empresa;
+                    EmpresaNova.cnpj = model.cnpj;
+                    EmpresaNova.CodigoCnes = model.CodigoCnes;
+                    EmpresaNova.Email = model.Email;
+                    EmpresaNova.Id_classe = model.Id_classe;
+                    EmpresaNova.ImgemFrontEmpresa = model.ImgemFrontEmpresa;
+                    EmpresaNova.Logradouro = model.Logradouro;
+                    EmpresaNova.Nome = model.Nome;
+                    EmpresaNova.numero = model.numero;
+                    EmpresaNova.bairro = model.bairro;
+                    EmpresaNova.Telefone1 = model.Telefone1;
+                    EmpresaNova.Telefone2 = model.Telefone2;
+                    EmpresaNova.TipoEmpresa = model.TipoEmpresa;
+                    EmpresaNova.url_loja = model.url_loja;
+                    EmpresaNova.maps = model.maps;
+                    EmpresaNova.Responsavel = model.Responsavel;
+
+
+                if (model.GrupoId > 0)
+                    EmpresaNova.Grupo = new Grupo() { GrupoID = model.GrupoId };
+
+                if (!string.IsNullOrEmpty(model.NumeroCidade))
+                    EmpresaNova.Cidade = new Cidade() { num_cidade = model.NumeroCidade };
+
+
+
                 retorno = this.repository.Insert(EmpresaNova);
+                
             }
             catch (Exception exception)
             {
@@ -382,7 +460,7 @@ namespace api.portal.jenn.Business
             return this.mapper.Map<DTO.Grupo, ViewModel.GrupoViewModel>(retorno);
         }
 
-        public ConsultaConfirmacaoAgendaViewModel InserirConfirmacaoAgenda(ConfirmacaoAgendaViewModel novaAgenda)
+        public ConsultaNovaConfirmacaoAgendaViewModel InserirConfirmacaoAgenda(NovaConfirmacaoAgendaViewModel novaAgenda)
         {
             ConfirmacaoAgenda retorno = null;
             try
@@ -394,7 +472,7 @@ namespace api.portal.jenn.Business
                 this._logger.LogError($"Ocorreu um erro no metodo [Inserir] [{exception.InnerException}] ;", exception);
                 throw;
             }
-            return this.mapper.Map<DTO.ConfirmacaoAgenda, ViewModel.ConsultaConfirmacaoAgendaViewModel>(retorno);
+            return this.mapper.Map<DTO.ConfirmacaoAgenda, ViewModel.ConsultaNovaConfirmacaoAgendaViewModel>(retorno);
         }
     }
 }
