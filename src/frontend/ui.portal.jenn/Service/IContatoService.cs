@@ -12,5 +12,6 @@ namespace ui.portal.jenn.Service
     {
         CommandInput Converter(HttpMethod Method, string Controle = null, ContatoViewModel model = null);      
         Task<CommandResult> Novo(ContatoViewModel model);
+        Task<CommandResult> SalvarContatoPaciente(ContatoPacienteViewModel modelPaciente);
     }
 }

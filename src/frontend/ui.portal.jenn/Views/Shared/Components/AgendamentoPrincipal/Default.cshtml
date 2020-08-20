@@ -91,11 +91,11 @@
                     <label id="nomeexame">Tipo de Procedimento: @Model.PesquisaViewModel.Produto</label>
                 </div>
                 <div class="form-group col-md-3" style="text-align: end;">
-                    <input checked class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste">
+                    <input asp-for="Contraste"   checked class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste" value="comcontraste">
                     <label style="display: inline-flex;" for="InputComContraste">Com contraste</label>
                 </div>
                 <div class="form-group col-md-3" style="text-align: end;">
-                    <input class="form-control col-md-2" type="radio" id="InputSemContraste" style="height: 30px;display: inline-flex;" name="contraste">
+                    <input asp-for="Contraste"   class="form-control col-md-2" type="radio" id="InputSemContraste" style="height: 30px;display: inline-flex;" name="contraste" value="semcontraste">
                     <label style="display: inline-flex;" for="InputSemContraste">Sem contraste</label>
                 </div>
             </div>
@@ -124,18 +124,18 @@
         <div class="tab">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <input onclick="camposTipoAgendamento()" checked class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparamim">
+                    <input asp-for="PacienteTitular"  onclick="camposTipoAgendamento()" checked class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="PacienteTitular" value="exameparamim">
                     <label style="display: inline-flex;margin: -20px;" for="Proprio">O exame é para mim</label>
                 </div>
                 <div class="form-group col-md-6">
-                    <input onclick="camposTipoAgendamento()" class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparaoutro">
+                    <input  asp-for="PacienteTitular"  onclick="camposTipoAgendamento()" class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="PacienteTitular" value="exameparaoutro">
                     <label style="display: inline-flex;margin: -20px;" for="Outro">O exame é para outra pessoa</label>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="InputPlanos">Plano de saúde</label>
-                    <select class="form-control" style="height: 60%;" id="Planos">
+                    <select  asp-for="PlanoID"  class="form-control" style="height: 60%;" id="Planos">
                         <option value="">Selecione</option>
 
                         @for (int i = 0; i < Model.Convenios.Count; i++)
@@ -145,6 +145,8 @@
 
                     </select>
                 </div>
+                <input asp-for="AgendaID" maxlength="100" type="hidden" class="form-control" id="InputAgendaID">
+                <input asp-for="PesquisaViewModel.IdProcedimentoEmpresa" maxlength="100" type="hidden" class="form-control" id="InputprocedimentoEmpresaID">
                 <div class="form-group col-md-6">
                     <label for="InputCarteirinha">Carteirinha do convênio*</label>
                     <input asp-for="Carteirinha" maxlength="100" type="text" class="form-control" id="InputCarteirinha" aria-describedby="" placeholder="Digite o número da carteirinha" required>

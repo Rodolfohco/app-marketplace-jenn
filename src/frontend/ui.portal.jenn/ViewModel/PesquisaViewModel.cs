@@ -30,6 +30,7 @@ namespace ui.portal.jenn.ViewModel
         public int EmpresaID { get; set; }
 
         public int IdProcedimento { get; set; }
+        public int IdProcedimentoEmpresa { get; set; }
 
     }
 }

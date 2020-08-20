@@ -11,6 +11,9 @@
     pesquisaViewModel.NomeEmpresa = item.matriz != null ? item.matriz.nome : "";
     pesquisaViewModel.Localidade = item.logradouro;
 
+    if (ViewBag.idProcedimento != null)
+        pesquisaViewModel.IdProcedimento = ViewBag.idProcedimento;
+
     pesquisaViewModel.DescricaoProcedimento = "";
     IEnumerable<ProcedimentoEmpresa> procedimentoEmpresas = item.procedimentoEmpresas.ToList();
     List<ConsultaAgendaViewModel> consultaAgendaViewModels = new List<ConsultaAgendaViewModel>();
@@ -28,16 +31,16 @@
                 operador = ", ";
         }
 
-
         if (tipoprocedimento.IndexOf(itemEmp.procedimento.tipoProcedimento.nome + ";") == -1)
         {
             pesquisaViewModel.DescricaoProcedimento += operador + itemEmp.procedimento.tipoProcedimento.nome;
             tipoprocedimento += itemEmp.procedimento.tipoProcedimento.nome + ";";
         }
 
+        if (itemEmp.procedimento.procedimentoID == pesquisaViewModel.IdProcedimento)
+            pesquisaViewModel.IdProcedimentoEmpresa = itemEmp.procedimentoEmpresaID;
 
-
-        if(itemEmp.agendas != null &&itemEmp.agendas.Count() > 0)
+        if (itemEmp.agendas != null &&itemEmp.agendas.Count() > 0)
             consultaAgendaViewModels.AddRange(itemEmp.agendas);
 
         i++;
@@ -58,8 +61,7 @@
 
     pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels.OrderBy(a=>a.hora).ToList();
 
-    if(ViewBag.idProcedimento != null)
-        pesquisaViewModel.IdProcedimento = ViewBag.idProcedimento;
+
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

@@ -171,7 +171,39 @@ namespace ui.portal.jenn.Controllers
         public IActionResult TermosCondicoes() => View();
         public IActionResult SegurancaInformacao() => View();
         public IActionResult Contato() => View();
+        public IActionResult ContatoPaciente(int procedimentoEmpresa)
+        {
+            ContatoPacienteViewModel contatoPacienteViewModel = new ContatoPacienteViewModel();
+            contatoPacienteViewModel.procedimentoID = procedimentoEmpresa;
+            return View(contatoPacienteViewModel);
+        }
 
+        public async Task<IActionResult> ContatoPacienteSalvar(ContatoPacienteViewModel contatoPacienteViewModel)
+        {
+            string mensagem = "";
+
+            CommandResult contato = new CommandResult(false, "", "", null, System.Net.HttpStatusCode.BadRequest);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    contato = await contatoService.SalvarContatoPaciente(contatoPacienteViewModel);
+
+                    if (contato != null && contato.Success)
+                    {
+                        mensagem =  "Olá Agradecemos pelo contato, um dos nossos consultores</br> entrara em contato em breve!";                        
+                    }
+                    else
+                        mensagem  = "Por favor tente um pouco mais tarde, Pedimos desculpas pelo ocorrido";
+                }
+            }
+            catch (Exception)
+            {
+                this._logger.LogError("Ocorreu o Seguinte Erro", contato.Message);
+            }
+
+            return View("FinalizarContatoPaciente", mensagem);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

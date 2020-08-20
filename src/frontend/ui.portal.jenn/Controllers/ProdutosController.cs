@@ -189,20 +189,41 @@ namespace ui.portal.jenn.Controllers
 
          
 
-        public IActionResult Agendamento(int id, int idProcedimento)
+        public IActionResult Agendamento(int id, int idProcedimento, int idAgenda)
         {
             AgendamentoViewModel agendamentoViewModel = new AgendamentoViewModel();
 
             agendamentoViewModel.PesquisaViewModel = produtoService.BuscarEmpresaPorId(id, idProcedimento);
             agendamentoViewModel.Convenios = produtoService.BuscarConvenios();
             ViewBag.idProcedimento = idProcedimento;
+            agendamentoViewModel.AgendaID = idAgenda;
+            agendamentoViewModel.PesquisaViewModel.IdProcedimentoEmpresa = idProcedimento;
 
             return View("Agendamento", agendamentoViewModel);
         }
 
-        public IActionResult FinalizarAgendamento(AgendamentoViewModel model)
+        public async Task<IActionResult> FinalizarAgendamento(AgendamentoViewModel model)
         {
-            string mensagem = "Agendamento enviado com sucesso, em breve entraremos em contato.";
+            string mensagem = "";
+
+            CommandResult agendamento = new CommandResult(true, "", "", null, System.Net.HttpStatusCode.BadRequest);
+            try
+            {
+                    agendamento = await produtoService.SalvarAgendamentoPaciente(model);
+
+                    if (agendamento != null && agendamento.Success)
+                    {
+                        mensagem = "Olá Agradecemos pelo agendamento, um dos nossos consultores entrara em contato em breve!";
+                    }
+                    else
+                        mensagem = "Por favor tente um pouco mais tarde, Pedimos desculpas pelo ocorrido";
+            
+            }
+            catch (Exception)
+            {
+                this._logger.LogError("Ocorreu o Seguinte Erro", agendamento.Message);
+            }
+
             return View("FinalizarAgendamento", mensagem);
         }
 

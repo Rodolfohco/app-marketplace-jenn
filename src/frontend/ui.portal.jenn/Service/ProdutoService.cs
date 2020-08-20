@@ -620,5 +620,98 @@ namespace ui.portal.jenn.Service
             return procedimento;
         }
 
+        public async Task<CommandResult> SalvarAgendamentoPaciente(AgendamentoViewModel model)
+        {
+            try
+            {
+                ConfirmacaoAgendamento confirmacaoAgendamento = new ConfirmacaoAgendamento();
+
+
+                model.CPF = model.CPF == null ? "" : model.CPF;
+                model.CPFSolicitante = model.CPFSolicitante == null ? "" : model.CPFSolicitante;
+
+                if (model.PacienteTitular == "exameparamim")
+                    confirmacaoAgendamento.pacienteTitular = true;
+                else
+                    confirmacaoAgendamento.pacienteTitular = false;
+
+                confirmacaoAgendamento.agendaID = model.AgendaID;
+                confirmacaoAgendamento.alergiaReacoes = model.AlgumaAlergia;
+                confirmacaoAgendamento.altura = model.Altura;
+                confirmacaoAgendamento.carteirinhaConvenio = model.Carteirinha;
+
+                if (model.Contraste == "comcontraste")
+                    confirmacaoAgendamento.contraste = true;
+                else
+                    confirmacaoAgendamento.contraste = false;
+
+                confirmacaoAgendamento.peso = model.Peso;
+                confirmacaoAgendamento.planoID = model.PlanoID;
+                confirmacaoAgendamento.procedimentoEmpresaID = model.PesquisaViewModel.IdProcedimentoEmpresa;
+
+                confirmacaoAgendamento.cliente = new Cliente();
+                confirmacaoAgendamento.cliente.bairro = "";
+                confirmacaoAgendamento.cliente.celular = model.Celular;
+                confirmacaoAgendamento.cliente.cep = "";
+                //confirmacaoAgendamento.cliente.clienteID = model.
+                confirmacaoAgendamento.cliente.cpf_cliente = model.CPFSolicitante == null ? "" : model.CPFSolicitante;
+                confirmacaoAgendamento.cliente.dtaNascimento = Convert.ToDateTime(model.DataNascimento);
+                confirmacaoAgendamento.cliente.logradouro  = "";
+                confirmacaoAgendamento.cliente.nome = model.Nome;
+                confirmacaoAgendamento.cliente.numero = "";
+                confirmacaoAgendamento.cliente.referencia  = "";
+                confirmacaoAgendamento.cliente.sexo  = "";
+                confirmacaoAgendamento.cliente.sobrenome = model.Sobrenome;
+                confirmacaoAgendamento.cliente.telefone  = "";
+
+
+
+                confirmacaoAgendamento.paciente = new Paciente();
+                confirmacaoAgendamento.paciente.bairro  = "";
+                confirmacaoAgendamento.paciente.celular = confirmacaoAgendamento.pacienteTitular == true ? model.Celular : model.CelularPaciente;
+                confirmacaoAgendamento.paciente.cep  = "";
+                //confirmacaoAgendamento.paciente.pacienteID = model.
+                confirmacaoAgendamento.paciente.cpf_paciente = confirmacaoAgendamento.pacienteTitular == true ? model.CPFSolicitante : model.CPF;
+                confirmacaoAgendamento.paciente.dtaNascimento = confirmacaoAgendamento.pacienteTitular == true ? Convert.ToDateTime(model.DataNascimento) : Convert.ToDateTime(model.DataNascimento);
+                confirmacaoAgendamento.paciente.logradouro  = "";
+                confirmacaoAgendamento.paciente.nome = confirmacaoAgendamento.pacienteTitular == true ? model.Nome : model.NomePaciente;
+                confirmacaoAgendamento.paciente.numero  = "";
+                confirmacaoAgendamento.paciente.referencia  = "";
+                confirmacaoAgendamento.paciente.sexo  = "";
+                confirmacaoAgendamento.paciente.sobrenome = confirmacaoAgendamento.pacienteTitular == true ? model.Sobrenome : model.SobrenomePaciente;
+                confirmacaoAgendamento.paciente.telefone  = "";
+
+
+
+                var retorno = await this.service.PostAsync(this.ConverterAgendamento(HttpMethod.Post, "Agenda/ConfirmarAgenda", confirmacaoAgendamento));
+                return retorno;
             }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        private CommandInput ConverterAgendamento(HttpMethod Method, string Controle = null, ConfirmacaoAgendamento model = null)
+        {
+            var parametro = new CommandInput();
+
+            if (model != null)
+            {
+                parametro.Data = new ContatoViewModel();
+                parametro.Data = model;
+            }
+
+            parametro.Metodo = Method;
+
+            if (!string.IsNullOrEmpty(Controle))
+                parametro.UrlAction = Controle;
+            else
+                parametro.UrlAction = this.Controle;
+
+            return parametro;
+        }
+
+    }
 }

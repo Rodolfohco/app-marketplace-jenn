@@ -1,0 +1,19 @@
+﻿@model ui.portal.jenn.ViewModel.ContatoPacienteViewModel
+    <form asp-action="ContatoPacienteSalvar" asp-controller="Home" method="post" asp-antiforgery="true" class="f-pages">
+        <input asp-for="procedimentoID" type="hidden" class="form-control" id="InputProcedimentoEmpresa">
+        <div class="form-group">
+            <label for="InputNome">Nome</label>
+            <input asp-for="nome" type="text" class="form-control" id="InputNome" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
+        </div>
+        <div class="form-group">
+            <label for="InputEmail">Email</label>
+            <input asp-for="email" type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Digite seu email" required>
+        </div>
+        <div class="form-group">
+            <label for="InputTelefone">Telefone</label>
+            <input asp-for="telefone" type="text" class="form-control" id="InputTelefone" aria-describedby="emailHelp" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+
