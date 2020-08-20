@@ -38,7 +38,10 @@
         }
 
         if (itemEmp.procedimento.procedimentoID == pesquisaViewModel.IdProcedimento)
+        {
             pesquisaViewModel.IdProcedimentoEmpresa = itemEmp.procedimentoEmpresaID;
+            pesquisaViewModel.precoProduto = itemEmp.precoProduto;
+        }
 
         if (itemEmp.agendas != null &&itemEmp.agendas.Count() > 0)
             consultaAgendaViewModels.AddRange(itemEmp.agendas);
