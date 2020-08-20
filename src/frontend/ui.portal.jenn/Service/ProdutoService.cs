@@ -340,8 +340,8 @@ namespace ui.portal.jenn.Service
             List<Empresa> listas = dTOEmpresa.data.Where(e=>e.matriz != null).ToList();
             listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             foreach (var item in listas)
-                if (listaFinal.IndexOf(item.bairro) == -1)
-                    listaFinal.Add(item.bairro);
+                if (item.cidade != null && listaFinal.IndexOf(item.cidade.nome) == -1)
+                    listaFinal.Add(item.cidade.nome);
             
             return listaFinal;
 
@@ -361,7 +361,7 @@ namespace ui.portal.jenn.Service
 
             for (int i = 0; i < bairros.Count; i++)
             {
-                lista.AddRange(dTOEmpresa.data.Where(p => p.bairro.ToLower().Contains(bairros[i])).ToList());
+                lista.AddRange(dTOEmpresa.data.Where(p => p.cidade != null && p.cidade.nome.ToLower().Contains(bairros[i])).ToList());
             }
 
             lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();

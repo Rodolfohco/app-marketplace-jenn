@@ -81,7 +81,7 @@ namespace ui.portal.jenn.Controllers
         {
 
             ViewBag.Produto = "Todos os produtos";
-            ViewBag.Localidade = "Bairros";
+            ViewBag.Localidade = "Cidades";
 
 
             List<Empresa> lista = new List<Empresa>();
@@ -178,7 +178,7 @@ namespace ui.portal.jenn.Controllers
             if (bairro.Count() > 0)
             {
                 lista = produtoService.BuscarBairroPorDetalhes(bairro, lista);
-                localidades = "Bairros";
+                localidades = "Cidades";
             }
 
             ViewBag.Produto = produtos == "" ? ViewBag.Produto = "Filtros" : ViewBag.Produto = produtos; ;
