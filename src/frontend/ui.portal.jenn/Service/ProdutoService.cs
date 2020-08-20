@@ -125,7 +125,7 @@ namespace ui.portal.jenn.Service
             listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
 
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
-            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.ToLower().Contains(produtos)).ToList();
 
             foreach (var item in procedimentos)
             {
