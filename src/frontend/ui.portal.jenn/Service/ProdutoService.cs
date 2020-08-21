@@ -247,22 +247,41 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-            //using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
-            //{
-            string JsonString = File.ReadAllText("C:\\Projeto Jenn\\empresa.json");  // Read the contents of the file
-
-            //if (response.IsSuccessStatusCode)
-            //        {
-                        //var JsonString = response.Content.ReadAsStringAsync().Result;
+                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var JsonString = response.Content.ReadAsStringAsync().Result;
                         return JsonConvert.DeserializeObject<DTOEmpresa>(JsonString);
-            //        }
-            //        else
-            //        {
-            //            return null;
-            //    }
-            //}
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
         }
-    }
+
+            private DTOEmpresa getProcedimentoEmpresaLocal()
+            {
+                using (var client = new HttpClient())
+                {
+                    //using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+                    //{
+                    string JsonString = File.ReadAllText("C:\\Projeto Jenn\\empresa.json");  // Read the contents of the file
+
+                    //if (response.IsSuccessStatusCode)
+                    //        {
+                    //var JsonString = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<DTOEmpresa>(JsonString);
+                    //        }
+                    //        else
+                    //        {
+                    //            return null;
+                    //    }
+                    //}
+                }
+            }
 
         private DTOEmpresa BuscarEmpresas()
         {
