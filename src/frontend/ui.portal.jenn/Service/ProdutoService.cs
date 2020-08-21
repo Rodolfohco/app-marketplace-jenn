@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -246,20 +247,22 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
-                {
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var JsonString = response.Content.ReadAsStringAsync().Result;
+            //using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+            //{
+            string JsonString = File.ReadAllText("C:\\Projeto Jenn\\empresa.json");  // Read the contents of the file
+
+            //if (response.IsSuccessStatusCode)
+            //        {
+                        //var JsonString = response.Content.ReadAsStringAsync().Result;
                         return JsonConvert.DeserializeObject<DTOEmpresa>(JsonString);
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
+            //        }
+            //        else
+            //        {
+            //            return null;
+            //    }
+            //}
         }
+    }
 
         private DTOEmpresa BuscarEmpresas()
         {
@@ -325,7 +328,8 @@ namespace ui.portal.jenn.Service
             {
                 TipoProcedimentoViewModel tipoProcedimento = new  TipoProcedimentoViewModel();
                 tipoProcedimento.Nome = item.tipoProcedimento.nome;
-                if(listaFinal.Where(t => t.Nome == tipoProcedimento.Nome).Count() == 0)
+                tipoProcedimento.TipoProcedimentoID = item.tipoProcedimento.tipoProcedimentoID;
+                if (listaFinal.Where(t => t.Nome == tipoProcedimento.Nome).Count() == 0)
                     listaFinal.Add(tipoProcedimento);
             }
               
@@ -711,6 +715,25 @@ namespace ui.portal.jenn.Service
                 parametro.UrlAction = this.Controle;
 
             return parametro;
+        }
+
+        public Dictionary<int,string> BuscarProcedimentosPorTipo(int tipoProcedimentoID)
+        {
+            Dictionary<int, string> listaFinal = new Dictionary<int, string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            procedimentoEmpresas = procedimentoEmpresas.Where(pe => pe.procedimento != null && pe.procedimento.tipoProcedimento != null && pe.procedimento.tipoProcedimento.tipoProcedimentoID == tipoProcedimentoID).ToList();
+
+            foreach (var item in procedimentoEmpresas)
+            {
+                if (item.procedimento != null)
+                    if (!listaFinal.ContainsKey(item.procedimento.procedimentoID))
+                        listaFinal.Add(item.procedimento.procedimentoID, item.procedimento.nome);
+            }
+
+            return listaFinal;
         }
 
     }

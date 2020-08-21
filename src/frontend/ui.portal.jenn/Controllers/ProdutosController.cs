@@ -227,5 +227,14 @@ namespace ui.portal.jenn.Controllers
             return View("FinalizarAgendamento", mensagem);
         }
 
+        public IActionResult TipoProcedimentoLista(int TipoProcedimentoID, string TipoProduto)
+        {
+            ViewBag.TipoProcedimento = TipoProduto;
+            Dictionary<int, string> lista = new Dictionary<int, string>();
+            lista = produtoService.BuscarProcedimentosPorTipo(TipoProcedimentoID);
+
+            return View("TipoProcedimentoLista", lista);
+        }
+
     }
 }
