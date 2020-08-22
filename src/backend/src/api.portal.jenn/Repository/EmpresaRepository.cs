@@ -795,10 +795,9 @@ namespace api.portal.jenn.Repository
 
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    (from item in ctx.ProcedimentoSinonimos.Include(x=> x.Procedimento)
-                     .ThenInclude(z=> z.TipoProcedimento)
-                     .ThenInclude(z=> z.Categoria)
-                     where item.Ativo == Status.Ativo && item.Nome.ToLower().StartsWith(parametro)
+                    (from item in ctx.ProcedimentoSinonimos.Include(x=> x.Procedimento) .ThenInclude(z=> z.TipoProcedimento).ThenInclude(z=> z.Categoria)
+                     join proce in ctx.ProcedimentoEmpresa on item.Procedimento equals proce.Procedimento
+                     where item.Ativo == Status.Ativo &&  item.Nome.ToLower().StartsWith(parametro)
                      select item).AsParallel().ForAll(item =>
                      {
                          retorno.Add(item);

@@ -79,6 +79,10 @@ namespace crud.ui.portal.jenn.Controllers
         public  void GetCombo()
         {
 
+         
+
+
+
             ViewData["TipoProcedimentoID"] = new SelectList(_context.TipoProcedimento.AsEnumerable(), "TipoProcedimentoID", "Nome");
             ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome");
             ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome");
@@ -116,7 +120,7 @@ namespace crud.ui.portal.jenn.Controllers
                     procedimentoEmpresa.TaxaResultado = string.Empty;
 
 
-                procedimentoEmpresa.Ativo = (int)Status.Ativo;
+                procedimentoEmpresa.Ativo = (int)Status.Desativado;
 
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
 
@@ -137,7 +141,7 @@ namespace crud.ui.portal.jenn.Controllers
                         procedimentoEmp.ProcedimentoEmpresaID = 0;
                         procedimentoEmp.Procedimento = proced;
 
-                        procedimentoEmp.Nome_pers = $"{tipo.Nome}-{proced.Nome}";
+                        procedimentoEmp.Nome_pers = proced.Nome;
 
 
 
