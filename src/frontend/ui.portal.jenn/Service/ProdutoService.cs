@@ -115,33 +115,28 @@ namespace ui.portal.jenn.Service
         public List<DTOAutocomplete> BuscarProdutos(string produtos)
         {
             List<DTOAutocomplete> listaFinal = new List<DTOAutocomplete>();
-            DTOEmpresa dTOEmpresa = BuscarEmpresas();
-            List<Empresa> listas = new List<Empresa>();
-            produtos = produtos.ToLower();
+            DTOSinonimos dtoSinonimos = BuscarSinonimos(produtos);
 
-
-            if (dTOEmpresa.data == null)
+            if (dtoSinonimos.data == null)
                 return listaFinal;
 
-            listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            string sim = ";";
 
-            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
-            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.ToLower().Contains(produtos)).ToList();
-
-            foreach (var item in procedimentos)
+            foreach (var item in dtoSinonimos.data)
             {
-                if (listaFinal.Find(n => n.label == item.nome) == null)
+                if (!sim.Contains(";" + item.procedimento.procedimentoID + ";"))
                 {
+                    sim += ";" + item.procedimento.procedimentoID + ";";
                     DTOAutocomplete dTOAutocomplete = new DTOAutocomplete();
-                    dTOAutocomplete.label = item.nome;
-                    dTOAutocomplete.value = item.nome;
-                    dTOAutocomplete.id = item.procedimentoID;
+                    dTOAutocomplete.label = item.procedimento.nome;
+                    dTOAutocomplete.value = item.procedimento.nome;
+                    dTOAutocomplete.id = item.procedimento.procedimentoID;
                     dTOAutocomplete.tipo = 0;
                     listaFinal.Add(dTOAutocomplete);
-                }                    
+
+                }
             }
                 
-
             return listaFinal;
         }
 
@@ -266,22 +261,32 @@ namespace ui.portal.jenn.Service
             {
                 using (var client = new HttpClient())
                 {
-                    //using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
-                    //{
-                    string JsonString = File.ReadAllText("C:\\Projeto Jenn\\empresa.json");  // Read the contents of the file
+                    string JsonString = File.ReadAllText("C:\\Projeto Jenn\\empresa.json");  
 
-                    //if (response.IsSuccessStatusCode)
-                    //        {
-                    //var JsonString = response.Content.ReadAsStringAsync().Result;
                     return JsonConvert.DeserializeObject<DTOEmpresa>(JsonString);
-                    //        }
-                    //        else
-                    //        {
-                    //            return null;
-                    //    }
-                    //}
                 }
             }
+
+
+        private DTOSinonimos getProcedimentoSinonimos(string nome)
+        {
+            using (var client = new HttpClient())
+            {
+                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var JsonString = response.Content.ReadAsStringAsync().Result;
+                        return JsonConvert.DeserializeObject<DTOSinonimos>(JsonString);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
 
         private DTOEmpresa BuscarEmpresas()
         {
@@ -753,6 +758,15 @@ namespace ui.portal.jenn.Service
             }
 
             return listaFinal;
+        }
+
+
+        private DTOSinonimos BuscarSinonimos(string sinonimo)
+        {
+
+            DTOSinonimos dTOSinonimos = getProcedimentoSinonimos(sinonimo);
+
+            return dTOSinonimos;
         }
 
     }
