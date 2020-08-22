@@ -81,7 +81,7 @@ namespace ui.portal.jenn.Controllers
         {
 
             ViewBag.Produto = "Todos os produtos";
-            ViewBag.Localidade = "Bairros";
+            ViewBag.Localidade = "Cidades";
 
 
             List<Empresa> lista = new List<Empresa>();
@@ -178,7 +178,7 @@ namespace ui.portal.jenn.Controllers
             if (bairro.Count() > 0)
             {
                 lista = produtoService.BuscarBairroPorDetalhes(bairro, lista);
-                localidades = "Bairros";
+                localidades = "Cidades";
             }
 
             ViewBag.Produto = produtos == "" ? ViewBag.Produto = "Filtros" : ViewBag.Produto = produtos; ;
@@ -189,21 +189,51 @@ namespace ui.portal.jenn.Controllers
 
          
 
-        public IActionResult Agendamento(int id, int idProcedimento)
+        public IActionResult Agendamento(int id, int idProcedimento, int idAgenda)
         {
             AgendamentoViewModel agendamentoViewModel = new AgendamentoViewModel();
 
             agendamentoViewModel.PesquisaViewModel = produtoService.BuscarEmpresaPorId(id, idProcedimento);
             agendamentoViewModel.Convenios = produtoService.BuscarConvenios();
             ViewBag.idProcedimento = idProcedimento;
+            agendamentoViewModel.AgendaID = idAgenda;
+            agendamentoViewModel.PesquisaViewModel.IdProcedimentoEmpresa = idProcedimento;
 
             return View("Agendamento", agendamentoViewModel);
         }
 
-        public IActionResult FinalizarAgendamento(AgendamentoViewModel model)
+        public async Task<IActionResult> FinalizarAgendamento(AgendamentoViewModel model)
         {
-            string mensagem = "Agendamento enviado com sucesso, em breve entraremos em contato.";
+            string mensagem = "";
+
+            CommandResult agendamento = new CommandResult(true, "", "", null, System.Net.HttpStatusCode.BadRequest);
+            try
+            {
+                    agendamento = await produtoService.SalvarAgendamentoPaciente(model);
+
+                    if (agendamento != null && agendamento.Success)
+                    {
+                        mensagem = "Olá Agradecemos pelo agendamento, um dos nossos consultores entrara em contato em breve!";
+                    }
+                    else
+                        mensagem = "Por favor tente um pouco mais tarde, Pedimos desculpas pelo ocorrido";
+            
+            }
+            catch (Exception)
+            {
+                this._logger.LogError("Ocorreu o Seguinte Erro", agendamento.Message);
+            }
+
             return View("FinalizarAgendamento", mensagem);
+        }
+
+        public IActionResult TipoProcedimentoLista(int TipoProcedimentoID, string TipoProduto)
+        {
+            ViewBag.TipoProcedimento = TipoProduto;
+            Dictionary<int, string> lista = new Dictionary<int, string>();
+            lista = produtoService.BuscarProcedimentosPorTipo(TipoProcedimentoID);
+
+            return View("TipoProcedimentoLista", lista);
         }
 
     }

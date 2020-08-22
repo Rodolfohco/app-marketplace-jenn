@@ -88,14 +88,14 @@
         <div class="tab">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label id="nomeexame">Tipo de Procedimento: @Model.PesquisaViewModel.Produto</label>
+                    <label style="font-size: xx-large;" id="nomeexame">@Model.PesquisaViewModel.Produto</label>
                 </div>
                 <div class="form-group col-md-3" style="text-align: end;">
-                    <input checked class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste">
+                    <input asp-for="Contraste"   checked class="form-control col-md-2" type="radio" id="InputComContraste" style="height: 30px;display: inline-flex;" name="contraste" value="comcontraste">
                     <label style="display: inline-flex;" for="InputComContraste">Com contraste</label>
                 </div>
                 <div class="form-group col-md-3" style="text-align: end;">
-                    <input class="form-control col-md-2" type="radio" id="InputSemContraste" style="height: 30px;display: inline-flex;" name="contraste">
+                    <input asp-for="Contraste"   class="form-control col-md-2" type="radio" id="InputSemContraste" style="height: 30px;display: inline-flex;" name="contraste" value="semcontraste">
                     <label style="display: inline-flex;" for="InputSemContraste">Sem contraste</label>
                 </div>
             </div>
@@ -124,18 +124,18 @@
         <div class="tab">
             <div class="row">
                 <div class="form-group col-md-6">
-                    <input onclick="camposTipoAgendamento()" checked class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparamim">
+                    <input asp-for="PacienteTitular"  onclick="camposTipoAgendamento()" checked class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="PacienteTitular" value="exameparamim">
                     <label style="display: inline-flex;margin: -20px;" for="Proprio">O exame é para mim</label>
                 </div>
                 <div class="form-group col-md-6">
-                    <input onclick="camposTipoAgendamento()" class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="tipoagendamento" value="exameparaoutro">
+                    <input  asp-for="PacienteTitular"  onclick="camposTipoAgendamento()" class="form-control col-md-2" type="radio" id="InputProprio" style="height: 30px;display: inline-flex;" name="PacienteTitular" value="exameparaoutro">
                     <label style="display: inline-flex;margin: -20px;" for="Outro">O exame é para outra pessoa</label>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="InputPlanos">Plano de saúde</label>
-                    <select class="form-control" style="height: 60%;" id="Planos">
+                    <select  asp-for="PlanoID"  class="form-control" style="height: 60%;" id="Planos">
                         <option value="">Selecione</option>
 
                         @for (int i = 0; i < Model.Convenios.Count; i++)
@@ -145,6 +145,8 @@
 
                     </select>
                 </div>
+                <input asp-for="AgendaID" maxlength="100" type="hidden" class="form-control" id="InputAgendaID">
+                <input asp-for="PesquisaViewModel.IdProcedimentoEmpresa" maxlength="100" type="hidden" class="form-control" id="InputprocedimentoEmpresaID">
                 <div class="form-group col-md-6">
                     <label for="InputCarteirinha">Carteirinha do convênio*</label>
                     <input asp-for="Carteirinha" maxlength="100" type="text" class="form-control" id="InputCarteirinha" aria-describedby="" placeholder="Digite o número da carteirinha" required>
@@ -154,37 +156,39 @@
 
 
         <div class="tab">
-            <div style="display:none" class="row exameoutrapessoa">
-                <div class="form-group col-md-6">
-                    <label for="InputCPFSolicitante">CPF do Solicitante*</label>
-                    <input asp-for="CPFSolicitante" maxlength="100" type="text" class="form-control" id="InputCPFSolicitante" placeholder="Digite cpf do solicitante" required>
+                <center style="font-size: xx-large;">Dados do Cliente</center>
+                <div style="display:none" class="row exameoutrapessoa">
+                    <div class="form-group col-md-6">
+                        <label for="InputCPFSolicitante">CPF do Solicitante*</label>
+                        <input asp-for="CPFSolicitante" maxlength="100" type="text" class="form-control" id="InputCPFSolicitante" placeholder="Digite cpf do solicitante" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="InputNome">Nome*</label>
+                        <input asp-for="Nome" maxlength="100" type="text" class="form-control" id="InputNome" placeholder="Digite seu nome" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="InputSobrenome">Sobrenome*</label>
+                        <input asp-for="Sobrenome" maxlength="100" type="text" class="form-control" id="InputSobrenome" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="InputCelular">Celular</label>
+                        <input asp-for="Celular" type="text" class="form-control" id="InputCelular" aria-describedby="" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="InputEmail">Email</label>
+                        <input asp-for="Email" maxlength="100" type="email" class="form-control" id="InputEmail" aria-describedby="" placeholder="Digite seu email" required>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="InputNome">Nome*</label>
-                    <input asp-for="Nome" maxlength="100" type="text" class="form-control" id="InputNome" placeholder="Digite seu nome" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="InputSobrenome">Sobrenome*</label>
-                    <input asp-for="Sobrenome" maxlength="100" type="text" class="form-control" id="InputSobrenome" aria-describedby="emailHelp" placeholder="Digite seu nome" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="InputCelular">Celular</label>
-                    <input asp-for="Celular" type="text" class="form-control" id="InputCelular" aria-describedby="" placeholder="(  )  _ _ _ _ - _ _ _ _ _" required>
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="InputEmail">Email</label>
-                    <input asp-for="Email" maxlength="100" type="email" class="form-control" id="InputEmail" aria-describedby="" placeholder="Digite seu email" required>
-                </div>
-            </div>
-        </div>
 
 
 
         <div class="tab">
+                <center style="font-size: xx-large;">Dados do Paciente</center>
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="InputCpf">CPF do paciente*</label>
@@ -227,9 +231,6 @@
                     <input asp-for="Altura" maxlength="100" type="text" class="form-control" id="InputNome" aria-describedby="" placeholder="Digite sua altura" required>
                 </div>
             </div>
-        </div>
-
-        <div class="tab">
 
             <div class="row">
                 <div class="form-group col-md-12">
@@ -239,22 +240,21 @@
             </div>
         </div>
 
-        @*<button type="submit" class="btn btn-primary">Enviar</button>*@
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)">Próximo</button>
+            @*<button type="submit" class="btn btn-primary">Enviar</button>*@
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Próximo</button>
+                </div>
             </div>
-        </div>
-        <!-- Circles which indicates the steps of the form: -->
-        <div style="text-align:center;margin-top:40px;">
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-        </div>
-    </form>
+            <!-- Circles which indicates the steps of the form: -->
+            <div style="text-align:center;margin-top:40px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+</form>
 
 
     <script>

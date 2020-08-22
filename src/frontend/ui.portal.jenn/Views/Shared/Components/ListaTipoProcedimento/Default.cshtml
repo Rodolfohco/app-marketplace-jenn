@@ -7,7 +7,7 @@
         {
             @foreach (var item in Model)
             {
-                <a href="/Produtos/ListaTipoProduto?TipoProduto=@item.Nome" title="">@item.Nome</a>
+                <a href="/Produtos/TipoProcedimentoLista?TipoProcedimentoID=@item.TipoProcedimentoID&TipoProduto=@item.Nome" title="">@item.Nome</a>
             }
         }
 

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -125,7 +126,7 @@ namespace ui.portal.jenn.Service
             listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
 
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
-            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.Contains(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(produtos))).ToList();
+            List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).Where(p=>p.nome.ToLower().Contains(produtos)).ToList();
 
             foreach (var item in procedimentos)
             {
@@ -261,6 +262,27 @@ namespace ui.portal.jenn.Service
             }
         }
 
+            private DTOEmpresa getProcedimentoEmpresaLocal()
+            {
+                using (var client = new HttpClient())
+                {
+                    //using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+                    //{
+                    string JsonString = File.ReadAllText("C:\\Projeto Jenn\\empresa.json");  // Read the contents of the file
+
+                    //if (response.IsSuccessStatusCode)
+                    //        {
+                    //var JsonString = response.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<DTOEmpresa>(JsonString);
+                    //        }
+                    //        else
+                    //        {
+                    //            return null;
+                    //    }
+                    //}
+                }
+            }
+
         private DTOEmpresa BuscarEmpresas()
         {
             string cacheKey = "DTOEmpresa";
@@ -325,7 +347,8 @@ namespace ui.portal.jenn.Service
             {
                 TipoProcedimentoViewModel tipoProcedimento = new  TipoProcedimentoViewModel();
                 tipoProcedimento.Nome = item.tipoProcedimento.nome;
-                if(listaFinal.Where(t => t.Nome == tipoProcedimento.Nome).Count() == 0)
+                tipoProcedimento.TipoProcedimentoID = item.tipoProcedimento.tipoProcedimentoID;
+                if (listaFinal.Where(t => t.Nome == tipoProcedimento.Nome).Count() == 0)
                     listaFinal.Add(tipoProcedimento);
             }
               
@@ -340,8 +363,8 @@ namespace ui.portal.jenn.Service
             List<Empresa> listas = dTOEmpresa.data.Where(e=>e.matriz != null).ToList();
             listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             foreach (var item in listas)
-                if (listaFinal.IndexOf(item.bairro) == -1)
-                    listaFinal.Add(item.bairro);
+                if (item.cidade != null && listaFinal.IndexOf(item.cidade.nome) == -1)
+                    listaFinal.Add(item.cidade.nome);
             
             return listaFinal;
 
@@ -361,7 +384,7 @@ namespace ui.portal.jenn.Service
 
             for (int i = 0; i < bairros.Count; i++)
             {
-                lista.AddRange(dTOEmpresa.data.Where(p => p.bairro.ToLower().Contains(bairros[i])).ToList());
+                lista.AddRange(dTOEmpresa.data.Where(p => p.cidade != null && p.cidade.nome.ToLower().Contains(bairros[i])).ToList());
             }
 
             lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
@@ -620,5 +643,117 @@ namespace ui.portal.jenn.Service
             return procedimento;
         }
 
+        public async Task<CommandResult> SalvarAgendamentoPaciente(AgendamentoViewModel model)
+        {
+            try
+            {
+                ConfirmacaoAgendamento confirmacaoAgendamento = new ConfirmacaoAgendamento();
+
+
+                model.CPF = model.CPF == null ? "" : model.CPF;
+                model.CPFSolicitante = model.CPFSolicitante == null ? "" : model.CPFSolicitante;
+
+                if (model.PacienteTitular == "exameparamim")
+                    confirmacaoAgendamento.pacienteTitular = true;
+                else
+                    confirmacaoAgendamento.pacienteTitular = false;
+
+                confirmacaoAgendamento.agendaID = model.AgendaID;
+                confirmacaoAgendamento.alergiaReacoes = model.AlgumaAlergia;
+                confirmacaoAgendamento.altura = model.Altura;
+                confirmacaoAgendamento.carteirinhaConvenio = model.Carteirinha;
+
+                if (model.Contraste == "comcontraste")
+                    confirmacaoAgendamento.contraste = true;
+                else
+                    confirmacaoAgendamento.contraste = false;
+
+                confirmacaoAgendamento.peso = model.Peso;
+                confirmacaoAgendamento.planoID = model.PlanoID;
+                confirmacaoAgendamento.procedimentoEmpresaID = model.PesquisaViewModel.IdProcedimentoEmpresa;
+
+                confirmacaoAgendamento.cliente = new Cliente();
+                confirmacaoAgendamento.cliente.bairro = "";
+                confirmacaoAgendamento.cliente.celular = model.Celular;
+                confirmacaoAgendamento.cliente.cep = "";
+                //confirmacaoAgendamento.cliente.clienteID = model.
+                confirmacaoAgendamento.cliente.cpf_cliente = model.CPFSolicitante == null ? "" : model.CPFSolicitante;
+                confirmacaoAgendamento.cliente.dtaNascimento = Convert.ToDateTime(model.DataNascimento);
+                confirmacaoAgendamento.cliente.logradouro  = "";
+                confirmacaoAgendamento.cliente.nome = model.Nome;
+                confirmacaoAgendamento.cliente.numero = "";
+                confirmacaoAgendamento.cliente.referencia  = "";
+                confirmacaoAgendamento.cliente.sexo  = "";
+                confirmacaoAgendamento.cliente.sobrenome = model.Sobrenome;
+                confirmacaoAgendamento.cliente.telefone  = "";
+
+
+
+                confirmacaoAgendamento.paciente = new Paciente();
+                confirmacaoAgendamento.paciente.bairro  = "";
+                confirmacaoAgendamento.paciente.celular = confirmacaoAgendamento.pacienteTitular == true ? model.Celular : model.CelularPaciente;
+                confirmacaoAgendamento.paciente.cep  = "";
+                //confirmacaoAgendamento.paciente.pacienteID = model.
+                confirmacaoAgendamento.paciente.cpf_paciente = confirmacaoAgendamento.pacienteTitular == true ? model.CPFSolicitante : model.CPF;
+                confirmacaoAgendamento.paciente.dtaNascimento = confirmacaoAgendamento.pacienteTitular == true ? Convert.ToDateTime(model.DataNascimento) : Convert.ToDateTime(model.DataNascimento);
+                confirmacaoAgendamento.paciente.logradouro  = "";
+                confirmacaoAgendamento.paciente.nome = confirmacaoAgendamento.pacienteTitular == true ? model.Nome : model.NomePaciente;
+                confirmacaoAgendamento.paciente.numero  = "";
+                confirmacaoAgendamento.paciente.referencia  = "";
+                confirmacaoAgendamento.paciente.sexo  = "";
+                confirmacaoAgendamento.paciente.sobrenome = confirmacaoAgendamento.pacienteTitular == true ? model.Sobrenome : model.SobrenomePaciente;
+                confirmacaoAgendamento.paciente.telefone  = "";
+
+
+
+                var retorno = await this.service.PostAsync(this.ConverterAgendamento(HttpMethod.Post, "Agenda/ConfirmarAgenda", confirmacaoAgendamento));
+                return retorno;
             }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+
+        private CommandInput ConverterAgendamento(HttpMethod Method, string Controle = null, ConfirmacaoAgendamento model = null)
+        {
+            var parametro = new CommandInput();
+
+            if (model != null)
+            {
+                parametro.Data = new ContatoViewModel();
+                parametro.Data = model;
+            }
+
+            parametro.Metodo = Method;
+
+            if (!string.IsNullOrEmpty(Controle))
+                parametro.UrlAction = Controle;
+            else
+                parametro.UrlAction = this.Controle;
+
+            return parametro;
+        }
+
+        public Dictionary<int,string> BuscarProcedimentosPorTipo(int tipoProcedimentoID)
+        {
+            Dictionary<int, string> listaFinal = new Dictionary<int, string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
+            procedimentoEmpresas = procedimentoEmpresas.Where(pe => pe.procedimento != null && pe.procedimento.tipoProcedimento != null && pe.procedimento.tipoProcedimento.tipoProcedimentoID == tipoProcedimentoID).ToList();
+
+            foreach (var item in procedimentoEmpresas)
+            {
+                if (item.procedimento != null)
+                    if (!listaFinal.ContainsKey(item.procedimento.procedimentoID))
+                        listaFinal.Add(item.procedimento.procedimentoID, item.procedimento.nome);
+            }
+
+            return listaFinal;
+        }
+
+    }
 }

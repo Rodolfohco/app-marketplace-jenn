@@ -34,6 +34,8 @@ namespace ui.portal.jenn.Service
         List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null);
         PesquisaViewModel BuscarEmpresaPorId(int id, int idProcedimento);
         Procedimento BuscarProdutosPorId(int produto);
+        Task<CommandResult> SalvarAgendamentoPaciente(AgendamentoViewModel model);
+        Dictionary<int, string> BuscarProcedimentosPorTipo(int tipoProcedimentoID);
     }
    
 }

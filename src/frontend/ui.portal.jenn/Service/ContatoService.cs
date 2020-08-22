@@ -41,11 +41,44 @@ namespace ui.portal.jenn.Service
             return parametro;
         }
 
+        public CommandInput ConverterContatoPaciente(HttpMethod Method, string Controle = null, ContatoPacienteViewModel model = null)
+        {
+            var parametro = new CommandInput();
+
+            if (model != null)
+            {
+                parametro.Data = new ContatoViewModel();
+                parametro.Data = model;
+            }
+
+            parametro.Metodo = Method;
+
+            if (!string.IsNullOrEmpty(Controle))
+                parametro.UrlAction = Controle;
+            else
+                parametro.UrlAction = this.Controle;
+
+            return parametro;
+        }
+
         public async Task<CommandResult> Novo(ContatoViewModel model)
         {
             try
             {
                 var retorno = await this.service.PostAsync(this.Converter(HttpMethod.Post, "Cliente/InserirContato", model));
+                return retorno;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<CommandResult> SalvarContatoPaciente(ContatoPacienteViewModel modelPaciente)
+        {
+            try
+            {
+                var retorno = await this.service.PostAsync(this.ConverterContatoPaciente(HttpMethod.Post, "Cliente/InserirContatoProcedimento", modelPaciente));
                 return retorno;
             }
             catch (Exception e)

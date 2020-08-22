@@ -12,7 +12,7 @@
                     <br>
                     <p>Esta instituição ainda não tem loja virtual.</p>
                     <div class="">
-                        <a style="background-color:#4472c4; " href="" class="btn btn-primary" title="">Solicite contato</a>
+                        <a style="background-color:#4472c4;" href="/Home/ContatoPaciente?procedimentoempresa=@Model.IdProcedimentoEmpresa" class="btn btn-primary" title="">Solicite contato</a>
                     </div>
                 </div>
                 break;
@@ -22,7 +22,7 @@
                     <br>
                     <h4>Preço do exame particular</h4>
                     <br>
-                    @*<h4>R$ 100,00</h4>*@
+                    <h4>R$ @Model.precoProduto,00</h4>
                     <p>Compre online em até 12X</p>
                     <div class="">
                         <a style="background-color:#4472c4; " href="@Model.EnderecoLoja" class="btn btn-primary" title="">Ir para a loja virtual</a>
@@ -64,7 +64,7 @@
                                                         botaoHorario = true;
                                                     }
 
-                                                    <a href="/Produtos/Agendamento?id=@Model.EmpresaID&idProcedimento=@ViewBag.IdProcedimento"><span style="@visivel" class="active @classvisivel empresa_@Model.EmpresaID">@consultaAgendaViewModels[j].hora.Hour :00 </span></a>
+                                                    <a href="/Produtos/Agendamento?id=@Model.EmpresaID&idProcedimento=@ViewBag.IdProcedimento&idAgenda=@consultaAgendaViewModels[i].agendaID"><span style="@visivel" class="active @classvisivel empresa_@Model.EmpresaID">@consultaAgendaViewModels[j].hora.Hour :00 </span></a>
                                                 }
                                             }
                                         </div>
