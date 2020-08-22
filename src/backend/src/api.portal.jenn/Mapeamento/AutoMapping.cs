@@ -129,7 +129,15 @@ namespace api.portal.jenn.Mapeamento
 
             CreateMap<DTO.Procedimento, NovoProcedimentoViewModel>();
             CreateMap<NovoProcedimentoViewModel, DTO.Procedimento>();
+
+
+
+
+            CreateMap<DTO.Procedimento, ProcedimentoSinonimoViewModel>();
+            CreateMap<ProcedimentoSinonimoViewModel, DTO.Procedimento>();
+
             
+
 
             CreateMap<DTO.ProcedimentoEmpresa, ProcedimentoEmpresaViewModel>();
             CreateMap<ProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
@@ -138,11 +146,21 @@ namespace api.portal.jenn.Mapeamento
             CreateMap<ConsultaProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
 
 
+            CreateMap<DTO.ProcedimentoEmpresa, ConsultaProcedimentoEmpresa2ViewModel>();
+            CreateMap<ConsultaProcedimentoEmpresa2ViewModel, DTO.ProcedimentoEmpresa>();
+
+
             CreateMap<DTO.ProcedimentoEmpresa, NovoProcedimentoEmpresaViewModel>();
             CreateMap<NovoProcedimentoEmpresaViewModel, DTO.ProcedimentoEmpresa>();
 
+            CreateMap<DTO.ProcedimentoSinonimo, ConsultaProcedimentoSinonimoViewModel>();
+            CreateMap<ConsultaProcedimentoSinonimoViewModel, DTO.ProcedimentoSinonimo>();
 
-            
+
+            CreateMap<DTO.ProcedimentoSinonimo, NovoProcedimentoSinonimoViewModel>();
+            CreateMap<NovoProcedimentoSinonimoViewModel, DTO.ProcedimentoSinonimo>();
+
+
 
 
             CreateMap<DTO.ProcedimentoPergunta, ProcedimentoPerguntaViewModel>();

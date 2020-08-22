@@ -18,6 +18,14 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="TipoProcedimento">Tipo Procedimento<h11>*</h11></label>
+                    <div class="col-md-8">
+
+                        <select id="TipoProcedimentoID"  name="TipoProcedimentoID"  class="form-control" asp-items="ViewBag.TipoProcedimentoID"></select>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="ProcedimentoID">Procedimento<h11>*</h11></label>
@@ -33,7 +41,7 @@
                         <select id="EmpresaID" asp-for="EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
                     </div>
                 </div>
- 
+
 
 
 
@@ -43,7 +51,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Nome">Nome Procedimento <h11>*</h11></label>
                     <div class="col-md-8">
-                        <input id="Nome" asp-for="Nome_pers" name="Nome_pers" placeholder="" class="form-control input-md"  type="text">
+                        <input id="Nome" asp-for="Nome_pers" name="Nome_pers" placeholder="" class="form-control input-md" type="text">
                         <span asp-validation-for="Nome_pers" class="text-danger"></span>
                     </div>
                 </div>
@@ -52,13 +60,13 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Nome">Preço Procedimento <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="PrecoProduto" id="cnpj" name="PrecoProduto" placeholder="Apenas números" class="form-control input-md"  type="text"   pattern="[0-9]+$">
+                        <input asp-for="PrecoProduto" id="cnpj" name="PrecoProduto" placeholder="Apenas números" class="form-control input-md" type="text" pattern="[0-9]+$">
                         <span asp-validation-for="PrecoProduto" class="text-danger"></span>
                     </div>
 
                     <label class="col-md-2 control-label" for="Nome">Preço Contra Oferta <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="Preco_contra" id="CodigoCnes" name="Preco_contra" placeholder="Apenas números" class="form-control input-md"  type="text"   pattern="[0-9]+$">
+                        <input asp-for="Preco_contra" id="CodigoCnes" name="Preco_contra" placeholder="Apenas números" class="form-control input-md" type="text" pattern="[0-9]+$">
                         <span asp-validation-for="Preco_contra" class="text-danger"></span>
                     </div>
                 </div>
@@ -67,14 +75,14 @@
 
                     <label class="col-md-2 control-label" for="TaxaParcelamento">Taxa Parcelamento <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="TaxaParcelamento" id="TaxaParcelamento" name="TaxaParcelamento" placeholder="Apenas números" class="form-control input-md"  type="number"  min="0" max="100" pattern="[0-9]+$">
+                        <input asp-for="TaxaParcelamento" id="TaxaParcelamento" name="TaxaParcelamento" placeholder="Apenas números" class="form-control input-md" type="number" min="0" max="100" pattern="[0-9]+$">
                         <span asp-validation-for="TaxaParcelamento" class="text-danger"></span>
                     </div>
 
 
                     <label class="col-md-2 control-label" for="TaxaResultado">Taxa Resultado <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="TaxaResultado" id="TaxaResultado" name="TaxaResultado" placeholder="Apenas números" class="form-control input-md"  type="number"   min="0" max="100" pattern="[0-9]+$">
+                        <input asp-for="TaxaResultado" id="TaxaResultado" name="TaxaResultado" placeholder="Apenas números" class="form-control input-md" type="number" min="0" max="100" pattern="[0-9]+$">
                         <span asp-validation-for="TaxaResultado" class="text-danger"></span>
                     </div>
                 </div>
@@ -82,13 +90,13 @@
 
                     <label class="col-md-2 control-label" for="ImagemHome">Imagem Home <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="ImagemHome" id="TaxaParcelamento" name="ImagemHome" class="form-control input-md"  type="url">
+                        <input asp-for="ImagemHome" id="TaxaParcelamento" name="ImagemHome" class="form-control input-md" type="url">
                         <span asp-validation-for="ImagemHome" class="text-danger"></span>
                     </div>
 
                     <label class="col-md-2 control-label" for="ImagemMain">Imagem Main</label>
                     <div class="col-md-3">
-                        <input asp-for="ImagemMain" id="TaxaParcelamento" name="ImagemMain" class="form-control input-md"  type="url">
+                        <input asp-for="ImagemMain" id="TaxaParcelamento" name="ImagemMain" class="form-control input-md" type="url">
                         <span asp-validation-for="ImagemMain" class="text-danger"></span>
                     </div>
                 </div>
@@ -96,30 +104,30 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="ImagemHome">Imagem Thunb <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="ImagemThumb" id="TaxaParcelamento" name="ImagemThumb" class="form-control input-md"  type="url">
+                        <input asp-for="ImagemThumb" id="TaxaParcelamento" name="ImagemThumb" class="form-control input-md" type="url">
                         <span asp-validation-for="ImagemThumb" class="text-danger"></span>
                     </div>
 
                     <label class="col-md-2 control-label" for="Video">Video <h11>*</h11></label>
                     <div class="col-md-3">
-                        <input asp-for="Video" id="Video" name="Video" class="form-control input-md"  type="url">
+                        <input asp-for="Video" id="Video" name="Video" class="form-control input-md" type="url">
                         <span asp-validation-for="Video" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Destaque">Nivel Destaque<h11>*</h11></label>
-                        <div class="col-md-2">
-                            <select asp-for="Destaque" required id="Destaque" name="Destaque" class="form-control">
-                                <option value="">Selecione</option>
-                                <option value="1">Pagina Pesquisa</option>
-                            </select>
-                        </div>
-
+                    <div class="col-md-2">
+                        <select asp-for="Destaque" required id="Destaque" name="Destaque" class="form-control">
+                            <option value="">Selecione</option>
+                            <option value="1">Pagina Pesquisa</option>
+                        </select>
                     </div>
 
-
-
                 </div>
+
+
+
+            </div>
  
                 </div>
             <div class="form-group">

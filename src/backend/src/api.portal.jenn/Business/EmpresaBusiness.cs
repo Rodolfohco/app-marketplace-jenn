@@ -474,5 +474,84 @@ namespace api.portal.jenn.Business
             }
             return this.mapper.Map<DTO.ConfirmacaoAgenda, ViewModel.ConsultaNovaConfirmacaoAgendaViewModel>(retorno);
         }
+
+        public ConsultaProcedimentoEmpresa2ViewModel DetalharProcedimentoEmpresa(int ProcedimentoEmpresaID)
+        {
+            ProcedimentoEmpresa retorno = null;
+            try
+            {
+                retorno = this.repository.DetailProcedimentoEmpresa(ProcedimentoEmpresaID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.ProcedimentoEmpresa, ViewModel.ConsultaProcedimentoEmpresa2ViewModel>(retorno);
+        }
+
+        public ConsultaProcedimentoSinonimoViewModel InsertProcedimentoSinonimo(NovoProcedimentoSinonimoViewModel model)
+        {
+            ProcedimentoSinonimo retorno = null;
+            var param = this.mapper.Map<ViewModel.NovoProcedimentoSinonimoViewModel, DTO.ProcedimentoSinonimo> (model);
+            try
+            {
+                retorno = this.repository.InsertProcedimentoSinonimo(param, model.ProcedimentoID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.ProcedimentoSinonimo, ViewModel.ConsultaProcedimentoSinonimoViewModel>(retorno);
+        }
+
+        public IEnumerable<ConsultaProcedimentoSinonimoViewModel> GetProcedimentoSinonimoID(int ProcedimentoID)
+        {
+            IEnumerable< ProcedimentoSinonimo> retorno = null;
+          
+            try
+            {
+                retorno = this.repository.GetProcedimentoSinonimoId(ProcedimentoID);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoSinonimo>, IEnumerable<ViewModel.ConsultaProcedimentoSinonimoViewModel>>(retorno);
+        }
+
+        public IEnumerable<ConsultaProcedimentoSinonimoViewModel> GetProcedimentoSinonimo()
+        {
+            IEnumerable<ProcedimentoSinonimo> retorno = null;
+
+            try
+            {
+                retorno = this.repository.GetProcedimentoSinonimo( );
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoSinonimo>, IEnumerable<ViewModel.ConsultaProcedimentoSinonimoViewModel>>(retorno);
+        }
+
+        public IEnumerable<ConsultaProcedimentoSinonimoViewModel> GetProcedimentoSinonimoPorNome(string PorNome)
+        {
+            IEnumerable<ProcedimentoSinonimo> retorno = null;
+
+            try
+            {
+                retorno = this.repository.GetProcedimentoSinonimoPorNome(PorNome);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<IEnumerable<DTO.ProcedimentoSinonimo>, IEnumerable<ViewModel.ConsultaProcedimentoSinonimoViewModel>>(retorno);
+        }
     }
 }

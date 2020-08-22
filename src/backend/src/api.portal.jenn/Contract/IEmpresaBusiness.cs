@@ -10,6 +10,18 @@ namespace api.portal.jenn.Contract
 {
     public interface IEmpresaBusiness
     {
+        IEnumerable<ConsultaProcedimentoSinonimoViewModel> GetProcedimentoSinonimoID(int ProcedimentoID);
+
+        IEnumerable<ConsultaProcedimentoSinonimoViewModel> GetProcedimentoSinonimoPorNome(string PorNome);
+
+        IEnumerable<ConsultaProcedimentoSinonimoViewModel> GetProcedimentoSinonimo();
+
+
+
+        ConsultaProcedimentoSinonimoViewModel InsertProcedimentoSinonimo(NovoProcedimentoSinonimoViewModel model);
+
+        ConsultaProcedimentoEmpresa2ViewModel DetalharProcedimentoEmpresa(int ProcedimentoEmpresaID);
+
         #region Metodos
         EmpresaViewModel Inserir(ViewModel.NovaEmpresaViewModel model);
         FotoEmpresaViewModel Inserir(ViewModel.FotoEmpresaViewModel model, int EmpresaID);

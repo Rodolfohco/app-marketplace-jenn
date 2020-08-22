@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -29,12 +30,12 @@ namespace api.portal.jenn.Repository
           IConfiguration _configuration,
           ILogger<EmpresaRepository> _logger,
           EmpresaContextFactory _context)
-            {
+        {
             this.configuration = _configuration;
             this.logger = _logger;
             this.procedimento = _procedimento;
             this.contexto = _context;
-            }
+        }
 
         public void Delete(Expression<Func<Empresa, bool>> where)
         {
@@ -58,7 +59,7 @@ namespace api.portal.jenn.Repository
             }
         }
 
-        public Empresa Detail( string nome, bool lazzLoader = false)
+        public Empresa Detail(string nome, bool lazzLoader = false)
         {
             Empresa retorno = null;
             try
@@ -85,9 +86,9 @@ namespace api.portal.jenn.Repository
                     }
 
                 }
-            }      
-                
-            
+            }
+
+
             catch (Exception exception)
             {
                 this.logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
@@ -175,7 +176,7 @@ namespace api.portal.jenn.Repository
             return retorno;
         }
 
- 
+
         public IEnumerable<Empresa> Get(Expression<Func<Empresa, bool>> where, bool lazzLoader = false)
         {
             List<Empresa> retorno = new List<Empresa>();
@@ -183,7 +184,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                               ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
+                    ctx.Empresas.Where(where).AsParallel().ForAll(item => { retorno.Add(item); });
                 }
             }
             catch (Exception exception)
@@ -203,19 +204,19 @@ namespace api.portal.jenn.Repository
                 {
 
                     retorno = (from p in ctx.Empresas
-                                  join e in ctx.Empresas
-                                  on p.EmpresaID equals e.MatrizID
-                                  where p.Ativo > 0
-                                  select e)
+                               join e in ctx.Empresas
+                               on p.EmpresaID equals e.MatrizID
+                               where p.Ativo > 0
+                               select e)
                                   .Include(c => c.Cidade)
-                                  .ThenInclude(c=> c.Regiao)
-                                  .Include(c=> c.Cidade)
-                                  .ThenInclude(c=> c.Regiao)
-                                  .Include(c=> c.ProcedimentoEmpresas)
-                                  .ThenInclude(c=> c.Procedimento)
-                                  .ThenInclude(c=> c.TipoProcedimento)
+                                  .ThenInclude(c => c.Regiao)
+                                  .Include(c => c.Cidade)
+                                  .ThenInclude(c => c.Regiao)
                                   .Include(c => c.ProcedimentoEmpresas)
-                                  .ThenInclude(c=> c.PagamentoProcedimentoEmpresas)
+                                  .ThenInclude(c => c.Procedimento)
+                                  .ThenInclude(c => c.TipoProcedimento)
+                                  .Include(c => c.ProcedimentoEmpresas)
+                                  .ThenInclude(c => c.PagamentoProcedimentoEmpresas)
                                   .ThenInclude(c => c.Pagamento)
                                   .ToList();
                 }
@@ -237,8 +238,8 @@ namespace api.portal.jenn.Repository
                 {
 
                     ctx.ProcedimentoEmpresa.Include(c => c.Agendas)
-                        .Where(c => c.ProcedimentoEmpresaID==ProcedimentoEmpresaID)
-                        .SelectMany(c=> c.Agendas).ToList()
+                        .Where(c => c.ProcedimentoEmpresaID == ProcedimentoEmpresaID)
+                        .SelectMany(c => c.Agendas).ToList()
                         .AsParallel().ForAll(
                         item =>
                         {
@@ -286,7 +287,7 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     ctx.ProcedimentoEmpresa
-                        .Include(x=> x.Agendas)
+                        .Include(x => x.Agendas)
                         .Include(x => x.Procedimento)
                         .ThenInclude(p => p.TipoProcedimento)
                         .Include(c => c.Empresa)
@@ -317,7 +318,7 @@ namespace api.portal.jenn.Repository
                     ctx.Empresas.Add(model);
 
 
-                  
+
                     ctx.SaveChanges();
                 }
             }
@@ -335,10 +336,10 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                  
-                        var Matriz = ctx.Empresas.Where(x => x.Nome == NomeMatriz).FirstOrDefault();
-                        model.Matriz = Matriz;
-                  
+
+                    var Matriz = ctx.Empresas.Where(x => x.Nome == NomeMatriz).FirstOrDefault();
+                    model.Matriz = Matriz;
+
                     ctx.Empresas.Add(model);
                     ctx.SaveChanges();
                 }
@@ -359,15 +360,13 @@ namespace api.portal.jenn.Repository
                 {
 
 
-
-
                     if (model.MatrizID.HasValue)
                     {
                         var Matriz = ctx.Empresas.Include(X => X.Matriz).Select(x => x.Matriz).Where(c => c.MatrizID == model.MatrizID).FirstOrDefault();
                         model.Matriz = Matriz;
                     }
 
-                    if (model.Grupo!= null && model.Grupo.GrupoID > 0)
+                    if (model.Grupo != null && model.Grupo.GrupoID > 0)
                     {
                         var grupo = ctx.Grupo.Find(model.Grupo.GrupoID);
                         model.Grupo = grupo;
@@ -375,8 +374,8 @@ namespace api.portal.jenn.Repository
 
                     if (model.Cidade != null && !string.IsNullOrEmpty(model.Cidade.num_cidade))
                     {
-                        var Cidade = ctx.Cidades.Where(x => x.num_cidade == model.Cidade.num_cidade.Substring(2)).FirstOrDefault();
-                     
+                        var Cidade = ctx.Cidades.Where(x => x.Uf.num_uf == model.Cidade.num_cidade.Substring(0,2) && x.num_cidade == model.Cidade.num_cidade.Substring(2)).FirstOrDefault();
+
                         if (Cidade != null)
                             model.Cidade = Cidade;
                     }
@@ -420,10 +419,10 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var procedimento = ctx.ProcedimentoEmpresa.Where(c => c.ProcedimentoEmpresaID ==  ProcedimentoID).Include(c => c.PagamentoProcedimentoEmpresas).SingleOrDefault();
+                    var procedimento = ctx.ProcedimentoEmpresa.Where(c => c.ProcedimentoEmpresaID == ProcedimentoID).Include(c => c.PagamentoProcedimentoEmpresas).SingleOrDefault();
                     procedimento.PagamentoProcedimentoEmpresas.Add(model);
                     ctx.Entry(procedimento).State = EntityState.Modified;
-              
+
 
                     ctx.ProcedimentoEmpresa.Update(procedimento);
                     ctx.SaveChanges();
@@ -503,14 +502,14 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    
-                
+
+
                     ProcedimentoEmpresa procedimento = ctx.ProcedimentoEmpresa.Find(model.ProcedimentoEmpresaID);
                     Agenda agenda = ctx.Agenda.Find(model.PlanoID);
-                    
+
                     Plano plano = ctx.Planos.Find(model.PlanoID);
 
-                    Cliente cliente = ctx.Clientes.Where(x=> x.cpf_cliente == model.Cliente.cpf_cliente).FirstOrDefault();
+                    Cliente cliente = ctx.Clientes.Where(x => x.cpf_cliente == model.Cliente.cpf_cliente).FirstOrDefault();
                     Paciente paciente = ctx.Pacientes.Where(x => x.cpf_paciente == model.Paciente.cpf_paciente).FirstOrDefault();
 
 
@@ -588,14 +587,14 @@ namespace api.portal.jenn.Repository
                             ctx.Pacientes.Add(paciente);
                             ctx.SaveChanges();
                         }
-                
+
 
                     }
 
 
 
                     confirmacaoAgenda.Paciente = paciente;
-                    confirmacaoAgenda.Agenda  = agenda;
+                    confirmacaoAgenda.Agenda = agenda;
                     confirmacaoAgenda.Cliente = cliente;
                     confirmacaoAgenda.Plano = plano;
                     confirmacaoAgenda.ProcedimentoEmpresa = procedimento;
@@ -650,7 +649,7 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var procedimentoEmpresa = ctx.ProcedimentoEmpresa.Include(x=> x.PlanoProcedimentoEmpresas).Where(x => x.ProcedimentoEmpresaID == ProcedimentoID).FirstOrDefault();
+                    var procedimentoEmpresa = ctx.ProcedimentoEmpresa.Include(x => x.PlanoProcedimentoEmpresas).Where(x => x.ProcedimentoEmpresaID == ProcedimentoID).FirstOrDefault();
                     procedimentoEmpresa.PlanoProcedimentoEmpresas.Add(model);
                     ctx.Entry(procedimentoEmpresa).State = EntityState.Modified;
                     ctx.ProcedimentoEmpresa.Update(procedimentoEmpresa);
@@ -685,6 +684,133 @@ namespace api.portal.jenn.Repository
                 this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
                 throw;
             }
+        }
+
+        public ProcedimentoEmpresa DetailProcedimentoEmpresa(int ProcedimentoEmpresaID)
+        {
+            ProcedimentoEmpresa retorno = new ProcedimentoEmpresa();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+
+                    retorno = ctx.ProcedimentoEmpresa.Include(c => c.Empresa).Include(C => C.Procedimento).ThenInclude(c => c.TipoProcedimento).Where(c => c.ProcedimentoID == ProcedimentoEmpresaID).FirstOrDefault();
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Get] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+        public ProcedimentoSinonimo InsertProcedimentoSinonimo(ProcedimentoSinonimo model, int ProcedimentoID)
+        {
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    var Procedimento = ctx.Procedimento.Include(x => x.ProcedimentoSinonimos).Where(x => x.ProcedimentoID == ProcedimentoID).FirstOrDefault();
+
+                    Procedimento.ProcedimentoSinonimos.Add(model);
+
+                    ctx.Entry(Procedimento).State = EntityState.Modified;
+
+
+                    ctx.Procedimento.Update(Procedimento);
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
+                throw;
+            }
+            return model;
+        }
+
+        public IEnumerable<ProcedimentoSinonimo> GetProcedimentoSinonimoId(int ProcedimentoID)
+        {
+            List<ProcedimentoSinonimo> retorno = new List<ProcedimentoSinonimo>();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+
+                    ctx.ProcedimentoSinonimos
+                        .Where(x => x.Procedimento.ProcedimentoID == ProcedimentoID && x.Ativo == Status.Ativo)
+                        .Include(x => x.Procedimento).ThenInclude(x => x.TipoProcedimento)
+                        .ThenInclude(x => x.Categoria)
+                     .AsParallel().ForAll(item =>
+                     {
+                         retorno.Add(item);
+                     });
+
+
+
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+        public IEnumerable<ProcedimentoSinonimo> GetProcedimentoSinonimo()
+        {
+            List<ProcedimentoSinonimo> retorno = new List<ProcedimentoSinonimo>();
+            try
+            {
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    ctx.ProcedimentoSinonimos
+                    .Where(x => x.Ativo == Status.Ativo)
+                    .Include(x => x.Procedimento).ThenInclude(x => x.TipoProcedimento).ThenInclude(x => x.Categoria)
+                    .AsParallel().ForAll(item =>
+                    {
+                        retorno.Add(item);
+                    });
+
+
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+        public IEnumerable<ProcedimentoSinonimo> GetProcedimentoSinonimoPorNome(string nome)
+        {
+            List<ProcedimentoSinonimo> retorno = new List<ProcedimentoSinonimo>();
+            try
+            {
+                var parametro = nome.ToLower().Trim();
+
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+                    (from item in ctx.ProcedimentoSinonimos.Include(x=> x.Procedimento)
+                     .ThenInclude(z=> z.TipoProcedimento)
+                     .ThenInclude(z=> z.Categoria)
+                     where item.Ativo == Status.Ativo && item.Nome.ToLower().StartsWith(parametro)
+                     select item).AsParallel().ForAll(item =>
+                     {
+                         retorno.Add(item);
+                     });
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
+                throw;
+            }
+            return retorno;
         }
     }
 }

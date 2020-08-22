@@ -25,18 +25,18 @@ namespace api.portal.jenn.DTO
         [StringLength(400)]
         public string Descricao { get; set; }
 
-        [Required]
+ 
         [Column("imgprod_proced", Order = 3)]
         [StringLength(200)]
         public string ImgProduto_Proc { get; set; }
 
-
-        [Required]
+ 
         [Column("atv_proced", Order = 1)]
-        public int Ativo { get; set; }
+        public Status Ativo { get; set; }
 
         public virtual TipoProcedimento TipoProcedimento { get; set; }
- 
+
+        public virtual ICollection<ProcedimentoSinonimo> ProcedimentoSinonimos { get; set; }
         public virtual ICollection<ProcedimentoEmpresa> ProcedimentoEmpresas{ get; set; }
 
     }

@@ -11,6 +11,13 @@ namespace api.portal.jenn.Contract
 
     public interface IEmpresaRepository
     {
+
+        IEnumerable<ProcedimentoSinonimo> GetProcedimentoSinonimoId(int ProcedimentoID);
+        IEnumerable<ProcedimentoSinonimo> GetProcedimentoSinonimo();
+        IEnumerable<ProcedimentoSinonimo> GetProcedimentoSinonimoPorNome(string nome);
+
+        ProcedimentoSinonimo InsertProcedimentoSinonimo(ProcedimentoSinonimo model, int ProcedimentoID);
+        ProcedimentoEmpresa DetailProcedimentoEmpresa(int ProcedimentoEmpresaID);
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa(int EmpresaID);
         IEnumerable<ProcedimentoEmpresa> GetProcedimentoEmpresa();
         DTO.ProcedimentoEmpresa Insert(DTO.ProcedimentoEmpresa model);

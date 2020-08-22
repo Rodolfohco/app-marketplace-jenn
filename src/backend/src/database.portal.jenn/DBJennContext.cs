@@ -9,6 +9,7 @@ namespace api.portal.jenn.Contexto
     {
         public DBJennContext(DbContextOptions<DBJennContext> option) : base(option)
         {
+
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,18 +39,18 @@ namespace api.portal.jenn.Contexto
 
         public DbSet<CategoriaProcedimento> CategoriaProced { get; set; }
         public DbSet<TipoProcedimento> TipoProcedimento { get; set; }
+        public DbSet<ProcedimentoSinonimo> ProcedimentoSinonimos { get; set; }
+
         public DbSet<Procedimento> Procedimento { get; set; }
         public DbSet<ProcedimentoEmpresa> ProcedimentoEmpresa { get; set; }
         public DbSet<FotoEmpresa> FotoEmpresa { get; set; }
         public DbSet<Grupo> Grupo { get; set; }
 
         public DbSet<Agenda> Agenda { get; set; }
+ 
 
-        public DbSet<CidadeMunicipio> CidadeMunicipios { get; set; }
 
-
-        public DbSet<Estabelicimento> Estabelicimentos { get; set; }
-        public DbSet<ConfirmacaoAgenda> ConfirmacaoAgenda { get; set; }
+           public DbSet<ConfirmacaoAgenda> ConfirmacaoAgenda { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

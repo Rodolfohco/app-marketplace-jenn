@@ -26,8 +26,8 @@ namespace api.portal.jenn.DTO
         public DateTime DataInclusao { get; set; }
 
         
-        [Column("atv_proced", Order =3)]
-        public int Ativo { get; set; }
+        [Column("atv_conv", Order =3)]
+        public Status Ativo { get; set; }
         public virtual ICollection<Plano> Planos { get; set; }
     }
 }
