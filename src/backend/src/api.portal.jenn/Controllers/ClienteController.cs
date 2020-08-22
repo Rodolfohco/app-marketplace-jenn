@@ -20,6 +20,7 @@ namespace api.portal.jenn.Controllers
         private readonly IMemoryCache cahce;
         private readonly ILogger<ClienteController> _logger;
         private readonly IClienteBusiness repositorio;
+        private readonly IEmpresaBusiness EmpresaBusiness;
 
         private readonly IEmailSender _emailSender;
         
@@ -27,8 +28,10 @@ namespace api.portal.jenn.Controllers
             IHostingEnvironment env,
             ILogger<ClienteController> logger,
             IClienteBusiness _repositorio,
+            IEmpresaBusiness _EmpresaBusiness,
             IMemoryCache _cahce)
         {
+            this.EmpresaBusiness = _EmpresaBusiness;
             this._emailSender = emailSender;
             this.repositorio = _repositorio;
             this._logger = logger;
@@ -98,7 +101,22 @@ namespace api.portal.jenn.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var corpo = JsonConvert.SerializeObject(model);
+                    var proce = this.EmpresaBusiness.DetalharProcedimentoEmpresa(model.ProcedimentoID);
+
+                    var Formato = new
+                    {
+                        ContatoSolicitante = JsonConvert.SerializeObject(new { Nome = model.Nome, Email = model.Email, Telefone = model.Telefone, mensagem = model.mensagem_cont }),
+                        Procedimento = JsonConvert.SerializeObject(new { Procedimento = proce.Procedimento.Nome, TipoProcedimento = proce.Procedimento.TipoProcedimento.Nome }),
+                        Empresa = JsonConvert.SerializeObject(new { Empresa = proce.Empresa.Nome, Email = proce.Empresa.Email, telefone = proce.Empresa.Telefone1 })
+                    };
+
+
+
+                    
+
+                   
+
+                    var corpo = JsonConvert.SerializeObject(Formato);
 
                     _emailSender.SendEmailAsync(model.Email, "Socilitação de Contato", corpo, "Jenn Solicitação de Contato", "Jenn").Wait();
                 }

@@ -87,7 +87,7 @@ namespace api.portal.jenn.DTO
         public string Cert_Empresa { get; set; }
 
         [Column("atv_proced", Order = 16)]
-        public int Ativo { get; set; }
+        public Status Ativo { get; set; }
 
         [Column("tipo_emp", Order = 16)]
         public int TipoEmpresa { get; set; }

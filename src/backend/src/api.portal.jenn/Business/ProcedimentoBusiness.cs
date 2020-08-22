@@ -99,8 +99,27 @@ namespace api.portal.jenn.Business
             try
             {
                 var EmpresaNova = this.mapper.Map<ViewModel.ProcedimentoViewModel, DTO.Procedimento>(model);
+                var tipo = this.tipoProcedimentoRepository.Detail(c => c.Nome == model.TipoProcedimento.Nome);
 
-                EmpresaNova.TipoProcedimento = this.tipoProcedimentoRepository.Detail(c => c.Nome == model.TipoProcedimento.Nome);
+
+
+                if (tipo == null)
+                {
+                    EmpresaNova.TipoProcedimento = new TipoProcedimento()
+                    {
+                        Ativo = Status.Ativo,
+                        Nome = model.TipoProcedimento.Nome,
+                        Categoria = new CategoriaProcedimento()
+                        {
+                            Nome = model.TipoProcedimento.Categoria.Nome
+                        }
+                    };
+                }
+                else
+                    EmpresaNova.TipoProcedimento = tipo;
+
+
+
 
                 retorno = this.repository.Insert(EmpresaNova);
             }

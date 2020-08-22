@@ -78,7 +78,7 @@ namespace api.portal.jenn.Controllers
             return resultado;
         }
 
-        [HttpGet ]
+        [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -130,33 +130,138 @@ namespace api.portal.jenn.Controllers
 
         }
 
-            [HttpPost("PagamentoProcedimentoEmpresa")]
-            [ProducesResponseType(200)]
-            [ProducesResponseType(400)]
-            [ProducesResponseType(500)]
-            public ICommandResult PagamentoProcedimentoEmpresa([FromBody] NovoPagamentoProcedimentoEmpresaViewModel model)
+        [HttpPost("PagamentoProcedimentoEmpresa")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult PagamentoProcedimentoEmpresa([FromBody] NovoPagamentoProcedimentoEmpresaViewModel model)
+        {
+            CommandResult resultado = null;
+            try
             {
-                CommandResult resultado = null;
-                try
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
-                    {
-                        var item = this.repositorio.InserirPagamentoProcedimentoEmpresa(model);
+                    var item = this.repositorio.InserirPagamentoProcedimentoEmpresa(model);
 
-                        if (item != null)
-                            resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
-                        else
-                            resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
-                    }
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
                 }
-                catch (Exception e)
-                {
-                    resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
-                }
-                return resultado;
             }
-
-
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
         }
+
+        [HttpPost("NovoProcedimentoSinonimo")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult NovoProcedimentoSinonimo([FromBody] NovoProcedimentoSinonimoViewModel model)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.InsertProcedimentoSinonimo(model);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+
+
+
+        [HttpGet("GetProcedimentoSinonimoPorId")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult GetProcedimentoSinonimoPorId(int ProcedimentoID)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.GetProcedimentoSinonimoID(ProcedimentoID);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+
+        [HttpGet("GetProcedimentoSinonimo")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult GetProcedimentoSinonimo()
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.GetProcedimentoSinonimo();
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+
+
+        [HttpGet("GetProcedimentoSinonimoPorNome")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public ICommandResult GetProcedimentoSinonimoPorNome(string Nome)
+        {
+            CommandResult resultado = null;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var item = this.repositorio.GetProcedimentoSinonimoPorNome(Nome);
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
+                }
+            }
+            catch (Exception e)
+            {
+                resultado = new CommandResult(false, "Falha no processamento, segue detalhes do erro", $"Descrição do erro :[{e.InnerException}]", System.Net.HttpStatusCode.BadRequest);
+            }
+            return resultado;
+        }
+    }
 
 }

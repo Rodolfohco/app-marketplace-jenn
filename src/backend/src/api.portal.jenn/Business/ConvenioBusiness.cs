@@ -77,7 +77,7 @@ namespace api.portal.jenn.Business
                 var ConvenioNovo = this.mapper.Map< ViewModel.ConvenioViewModel, DTO.Convenio>(model);
 
                  
-                ConvenioNovo.Ativo = (int)Status.Ativo;
+                ConvenioNovo.Ativo = DTO.Status.Ativo;
           
             
                 ConvenioNovo.DataInclusao = DateTime.Now;

@@ -73,7 +73,7 @@ namespace api.portal.jenn.Business
                 novo = this.mapper.Map<ViewModel.NovoLogonViewModel, DTO.Logon>(model);
                
 
-                novo.Ativo = (int)Status.Ativo;
+                novo.Ativo =DTO.Status.Ativo;
                 novo.DataInclusao = DateTime.Now;
                
                 retorno = this.repository.Insert(novo);

@@ -1,5 +1,6 @@
 ﻿using api.portal.jenn.DTO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +22,23 @@ namespace api.portal.jenn.ViewModel
     }
 
 
+    public class ProcedimentoSinonimoViewModel
+    {
+
+        public int ProcedimentoID { get; set; }
+
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+
+        public string ImgProduto_Proc { get; set; }
+
+        public int Ativo { get; set; }
+
+        public TipoProcedimentoViewModel TipoProcedimento { get; set; }
+
+ 
+    }
+
 
 
     public class ProcedimentoViewModel
@@ -36,5 +54,7 @@ namespace api.portal.jenn.ViewModel
         public int Ativo { get; set; }
 
         public TipoProcedimentoViewModel TipoProcedimento { get; set; }
+
+        public virtual ICollection<ConsultaProcedimentoSinonimoViewModel> ProcedimentoSinonimos { get; set; }
     }
 }

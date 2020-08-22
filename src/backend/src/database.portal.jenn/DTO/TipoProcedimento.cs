@@ -20,5 +20,13 @@ namespace api.portal.jenn.DTO
         [StringLength(200)]
         public string Nome { get; set; }
         public virtual CategoriaProcedimento Categoria { get; set; }
+
+ 
+        [Column("atv_tipo", Order = 1)]
+        public Status Ativo { get; set; }
+
+
     }
+
+
 }

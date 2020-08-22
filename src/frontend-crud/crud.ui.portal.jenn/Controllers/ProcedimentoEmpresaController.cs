@@ -24,7 +24,7 @@ namespace crud.ui.portal.jenn.Controllers
         // GET: ProcedimentoEmpresa
         public async Task<IActionResult> Index()
         {
-            var dBJennContext = _context.ProcedimentoEmpresa.Include(p => p.Empresa).Include(p => p.Procedimento);
+            var dBJennContext = _context.ProcedimentoEmpresa.Include(p => p.Empresa).Include(p => p.Procedimento).ThenInclude(x=> x.TipoProcedimento);
             return View(await dBJennContext.ToListAsync());
         }
 
@@ -79,14 +79,9 @@ namespace crud.ui.portal.jenn.Controllers
         public  void GetCombo()
         {
 
-           
-      
-
-
+            ViewData["TipoProcedimentoID"] = new SelectList(_context.TipoProcedimento.AsEnumerable(), "TipoProcedimentoID", "Nome");
             ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome");
-
             ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome");
-
         }
 
         // POST: ProcedimentoEmpresa/Create
@@ -94,7 +89,7 @@ namespace crud.ui.portal.jenn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( ProcedimentoEmpresa procedimentoEmpresa)
+        public async Task<IActionResult> Create(ProcedimentoEmpresa procedimentoEmpresa, int TipoProcedimentoID)
         {
             if (ModelState.IsValid)
             {
@@ -112,12 +107,48 @@ namespace crud.ui.portal.jenn.Controllers
                 if (string.IsNullOrEmpty(procedimentoEmpresa.Video))
                     procedimentoEmpresa.Video = string.Empty;
 
+
+                if (string.IsNullOrEmpty(procedimentoEmpresa.TaxaParcelamento))
+                    procedimentoEmpresa.TaxaParcelamento = string.Empty;
+
+
+                if (string.IsNullOrEmpty(procedimentoEmpresa.TaxaResultado))
+                    procedimentoEmpresa.TaxaResultado = string.Empty;
+
+
                 procedimentoEmpresa.Ativo = (int)Status.Ativo;
 
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
 
-                _context.Add(procedimentoEmpresa);
-                await _context.SaveChangesAsync();
+
+                var tipo = _context.TipoProcedimento.Find(TipoProcedimentoID);
+
+
+                var procedimentos = _context.Procedimento.Where(c => c.TipoProcedimento.TipoProcedimentoID == tipo.TipoProcedimentoID).ToList();
+         
+                procedimentos.ForEach(proced =>
+                {
+                    var consulta = _context.ProcedimentoEmpresa.Where(x => x.ProcedimentoID == proced.ProcedimentoID && x.EmpresaID == procedimentoEmpresa.EmpresaID).FirstOrDefault();
+
+                    if (consulta == null)
+                    {
+                        ProcedimentoEmpresa procedimentoEmp = new ProcedimentoEmpresa();
+                        procedimentoEmp = procedimentoEmpresa;
+                        procedimentoEmp.ProcedimentoEmpresaID = 0;
+                        procedimentoEmp.Procedimento = proced;
+
+                        procedimentoEmp.Nome_pers = $"{tipo.Nome}-{proced.Nome}";
+
+
+
+
+                        _context.ProcedimentoEmpresa.Add(procedimentoEmp);
+                        _context.SaveChanges();
+                    }
+                });
+
+
+
                 return RedirectToAction(nameof(Index));
             }
             GetCombo();

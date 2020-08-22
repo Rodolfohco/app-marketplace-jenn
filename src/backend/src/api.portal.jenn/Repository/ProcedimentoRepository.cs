@@ -132,22 +132,13 @@ namespace api.portal.jenn.Repository
             {
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    var tipo = model.TipoProcedimento;
-
-                    model.TipoProcedimento = null;
-
-
-                    ctx.Procedimento.Add(model);
-                    ctx.SaveChanges();
-
-
-
-                    model.TipoProcedimento = tipo;
-
+                    //var tipo = model.TipoProcedimento;
+                    //model.TipoProcedimento = null;
+                    //ctx.Procedimento.Add(model);
+                    //ctx.SaveChanges();
+                    //model.TipoProcedimento = tipo;
                     ctx.Procedimento.Update(model);
                     ctx.SaveChanges();
-
-
                 } 
             }
             catch (Exception exception)

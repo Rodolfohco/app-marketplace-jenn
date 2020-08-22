@@ -165,7 +165,7 @@ namespace api.portal.jenn.ViewModel
         public string Responsavel { get; set; }
         public string Id_classe { get; set; }
         public string Cert_Empresa { get; set; }
-        public int Ativo { get; set; }
+        public Status Ativo { get; set; }
         public int TipoEmpresa { get; set; }
         public string CodigoCnes { get; set; }
         public string url_loja { get; set; }
