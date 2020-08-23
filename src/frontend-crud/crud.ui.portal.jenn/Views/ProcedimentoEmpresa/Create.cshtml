@@ -20,19 +20,28 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="TipoProcedimento">Tipo Procedimento<h11>*</h11></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
 
-                        <select id="TipoProcedimentoID"  name="TipoProcedimentoID"  class="form-control" asp-items="ViewBag.TipoProcedimentoID"></select>
+                        <select id="TipoProcedimentoID" name="TipoProcedimentoID" class="form-control" asp-items="ViewBag.TipoProcedimentoID"></select>
                     </div>
+                    <div class="col-md-3">
+                        <INPUT TYPE="radio" id="ModoID" name="ModoID" VALUE="0" checked> Por Tipo Procedimento
+                    </div>
+
+
                 </div>
 
 
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="ProcedimentoID">Procedimento<h11>*</h11></label>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
 
                         <select id="ProcedimentoID" asp-for="ProcedimentoID" class="form-control" asp-items="ViewBag.ProcedimentoID"></select>
                     </div>
+                    <div class="col-md-3">
+                        <INPUT TYPE="radio" id="ModoID" name="ModoID" VALUE="1"> Por Procedimento
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="EmpresaID">Empresa <h11> * </h11></label>
@@ -42,11 +51,6 @@
                     </div>
                 </div>
 
-
-
-
-
-
                 <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-2 control-label" for="Nome">Nome Procedimento <h11>*</h11></label>
@@ -55,6 +59,17 @@
                         <span asp-validation-for="Nome_pers" class="text-danger"></span>
                     </div>
                 </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Url">Link Loja </label>
+                    <div class="col-md-8">
+                        <input id="Nome" asp-for="proced_url" name="proced_url" placeholder="" class="form-control input-md" type="text">
+                        <span asp-validation-for="proced_url" class="text-danger"></span>
+                    </div>
+                </div>
+
+
 
                 <!-- Text input-->
                 <div class="form-group">
@@ -124,7 +139,18 @@
                         </select>
                     </div>
 
+
+
+                    <label class="col-md-4 control-label" for="ProcedimentoID">Agendamento Procedimento<h11>*</h11></label>
+                    <div class="col-md-2">
+                        <INPUT asp-for="PermiteAgendamento" TYPE="radio" id="PermiteAgendamento" NAME="PermiteAgendamento" VALUE="1"> Sim
+                        <INPUT asp-for="PermiteAgendamento" TYPE="radio" id="PermiteAgendamento" NAME="PermiteAgendamento" checked VALUE="0"> Não
+                    </div>
+
+
                 </div>
+
+            </div>
 
 
 
@@ -140,10 +166,12 @@
                 </div>
             </div>
 
-        </div>
+         
     </fieldset>
 </form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+ 

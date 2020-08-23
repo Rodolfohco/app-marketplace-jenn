@@ -10,22 +10,22 @@ using api.portal.jenn.DTO;
 
 namespace crud.ui.portal.jenn.Controllers
 {
-    public class PlanoProcedimentoEmpresaController : Controller
+    public class PlanoController : Controller
     {
         private readonly DBJennContext _context;
 
-        public PlanoProcedimentoEmpresaController(DBJennContext context)
+        public PlanoController(DBJennContext context)
         {
             _context = context;
         }
 
-        // GET: PlanoProcedimentoEmpresa
+        // GET: Plano
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PlanoProcedimentoEmpresas.ToListAsync());
+            return View(await _context.Planos.Include(x=> x.Convenio).ToListAsync());
         }
 
-        // GET: PlanoProcedimentoEmpresa/Details/5
+        // GET: Plano/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace crud.ui.portal.jenn.Controllers
                 return NotFound();
             }
 
-            var planoProcedimentoEmpresa = await _context.PlanoProcedimentoEmpresas
-                .FirstOrDefaultAsync(m => m.PlanoProcedimentoEmpresaID == id);
-            if (planoProcedimentoEmpresa == null)
+            var plano = await _context.Planos
+                .FirstOrDefaultAsync(m => m.PlanoID == id);
+            if (plano == null)
             {
                 return NotFound();
             }
 
-            return View(planoProcedimentoEmpresa);
+            return View(plano);
         }
 
-        // GET: PlanoProcedimentoEmpresa/Create
+        // GET: Plano/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: PlanoProcedimentoEmpresa/Create
+        // POST: Plano/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlanoProcedimentoEmpresaID")] PlanoProcedimentoEmpresa planoProcedimentoEmpresa)
+        public async Task<IActionResult> Create([Bind("PlanoID,Nome")] Plano plano)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(planoProcedimentoEmpresa);
+                _context.Add(plano);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(planoProcedimentoEmpresa);
+            return View(plano);
         }
 
-        // GET: PlanoProcedimentoEmpresa/Edit/5
+        // GET: Plano/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace crud.ui.portal.jenn.Controllers
                 return NotFound();
             }
 
-            var planoProcedimentoEmpresa = await _context.PlanoProcedimentoEmpresas.FindAsync(id);
-            if (planoProcedimentoEmpresa == null)
+            var plano = await _context.Planos.Include(x=> x.Convenio).Where(x=> x.PlanoID==id).FirstOrDefaultAsync();
+            if (plano == null)
             {
                 return NotFound();
             }
-            return View(planoProcedimentoEmpresa);
+            return View(plano);
         }
 
-        // POST: PlanoProcedimentoEmpresa/Edit/5
+        // POST: Plano/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlanoProcedimentoEmpresaID")] PlanoProcedimentoEmpresa planoProcedimentoEmpresa)
+        public async Task<IActionResult> Edit(int id, [Bind("PlanoID,Nome")] Plano plano)
         {
-            if (id != planoProcedimentoEmpresa.PlanoProcedimentoEmpresaID)
+            if (id != plano.PlanoID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 try
                 {
-                    _context.Update(planoProcedimentoEmpresa);
+                    _context.Update(plano);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlanoProcedimentoEmpresaExists(planoProcedimentoEmpresa.PlanoProcedimentoEmpresaID))
+                    if (!PlanoExists(plano.PlanoID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace crud.ui.portal.jenn.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(planoProcedimentoEmpresa);
+            return View(plano);
         }
 
-        // GET: PlanoProcedimentoEmpresa/Delete/5
+        // GET: Plano/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace crud.ui.portal.jenn.Controllers
                 return NotFound();
             }
 
-            var planoProcedimentoEmpresa = await _context.PlanoProcedimentoEmpresas
-                .FirstOrDefaultAsync(m => m.PlanoProcedimentoEmpresaID == id);
-            if (planoProcedimentoEmpresa == null)
+            var plano = await _context.Planos
+                .FirstOrDefaultAsync(m => m.PlanoID == id);
+            if (plano == null)
             {
                 return NotFound();
             }
 
-            return View(planoProcedimentoEmpresa);
+            return View(plano);
         }
 
-        // POST: PlanoProcedimentoEmpresa/Delete/5
+        // POST: Plano/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var planoProcedimentoEmpresa = await _context.PlanoProcedimentoEmpresas.FindAsync(id);
-            _context.PlanoProcedimentoEmpresas.Remove(planoProcedimentoEmpresa);
+            var plano = await _context.Planos.FindAsync(id);
+            _context.Planos.Remove(plano);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PlanoProcedimentoEmpresaExists(int id)
+        private bool PlanoExists(int id)
         {
-            return _context.PlanoProcedimentoEmpresas.Any(e => e.PlanoProcedimentoEmpresaID == id);
+            return _context.Planos.Any(e => e.PlanoID == id);
         }
     }
 }

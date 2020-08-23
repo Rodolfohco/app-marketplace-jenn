@@ -76,9 +76,19 @@ namespace api.portal.jenn.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var corpo = JsonConvert.SerializeObject(model);
+                    var item = this.repositorio.InseriContato(new NovoContatoViewModel()
+                    {
+                        Email = model.Email,
+                        mensagem_cont = model.mensagem_cont,
+                        Nome = model.Nome,
+                        Telefone = model.Telefone
 
-                    _emailSender.SendEmailAsync(model.Email, "Socilitação de Contato", corpo, "Jenn Solicitação de Contato", "Jenn").Wait();
+                    });
+
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
                 }
             }
             catch (Exception e)
@@ -101,24 +111,19 @@ namespace api.portal.jenn.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var proce = this.EmpresaBusiness.DetalharProcedimentoEmpresa(model.ProcedimentoID);
-
-                    var Formato = new
+                    var item = this.repositorio.InseriContato(new NovoContatoViewModel()
                     {
-                        ContatoSolicitante = JsonConvert.SerializeObject(new { Nome = model.Nome, Email = model.Email, Telefone = model.Telefone, mensagem = model.mensagem_cont }),
-                        Procedimento = JsonConvert.SerializeObject(new { Procedimento = proce.Procedimento.Nome, TipoProcedimento = proce.Procedimento.TipoProcedimento.Nome }),
-                        Empresa = JsonConvert.SerializeObject(new { Empresa = proce.Empresa.Nome, Email = proce.Empresa.Email, telefone = proce.Empresa.Telefone1 })
-                    };
+                        Email = model.Email,
+                        mensagem_cont = model.mensagem_cont+ $"Procedimento {model.ProcedimentoID}",
+                        Nome = model.Nome,
+                        Telefone = model.Telefone
 
+                    });
 
-
-                    
-
-                   
-
-                    var corpo = JsonConvert.SerializeObject(Formato);
-
-                    _emailSender.SendEmailAsync(model.Email, "Socilitação de Contato", corpo, "Jenn Solicitação de Contato", "Jenn").Wait();
+                    if (item != null)
+                        resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
+                    else
+                        resultado = new CommandResult(true, "Processado Com Sucesso", null, System.Net.HttpStatusCode.NoContent);
                 }
             }
             catch (Exception e)

@@ -1,66 +1,68 @@
 ﻿@model IEnumerable<api.portal.jenn.DTO.Procedimento>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Procedimentos";
     Layout = "~/Views/Shared/_LayoutProcedimentos.cshtml";
 }
 
-<h1>Lista de Procedimentos</h1> 
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<h1>Lista de Procedimentos</h1>
 <div class="form-group">
     <a asp-action="Create">Novo Procedimento</a>
-    <table class=" table-active col-md-12 ">
+    <table id="grid" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>
-                    Nome
-                </th>
-                <th>
-                    Descrição
-                </th>
-                
-                <th>
-                    Tipo Procedimento
-                </th>
-                <th>
-                    Status
-                </th>
-                <th></th>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Tipo Procedimento</th>
+                <th> Status</th>
+
+                <th>Controle</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoProcedimento.Nome)
-                </td>
-                <td>
+                <tr>
+                    <td> @Html.DisplayFor(modelItem => item.ProcedimentoID)</td>
+                    <td> @Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TipoProcedimento.Nome)</td>
+                    <td>
+                        @if (item.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo)
+                        {
+                            <i class="	fas fa-handshake"></i>
+                        }
+                        else
+                        {
+                            <i class="	fas fa-handshake-alt-slash"></i>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo)
+                        {
+                            <a asp-action="Desativar" class="fas fa-window-close" title="Desativar" asp-route-id="@item.ProcedimentoID"></a>
+                        }
+                        else
+                        {
+                            <a asp-action="Desativar" class="far fa-window-close" title="Ligar" asp-route-id="@item.ProcedimentoID"></a>
 
-                    @if (item.Ativo > 0)
-                    {
-                        <label class="bg-success">Ativo</label>
-                    }
-                    else
-                    {
-                        <label class="bg-danger">Desativado</label>
-                    }
-                </td>
-                <td>
-                    <div class="col-md-8">
-                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.ProcedimentoID">Editar</a> |
-                         <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.ProcedimentoID">Deletar</a>
-                    </div>
-                </td>
-            </tr>
+                        }|
+
+                        <a asp-action="Edit" asp-route-id="@item.ProcedimentoID" class='far fa-edit'></a>|
+                        <a asp-action="Details" asp-route-id="@item.ProcedimentoID" title="Detalhar este Registro" class='fas fa-glasses'></a> |
+                        <a asp-action="Delete" asp-route-id="@item.ProcedimentoID" title="Excluir este Registro" class='fas fa-eraser'></a>
+                    </td>
+                </tr>
+
             }
+
+
         </tbody>
     </table>
+
+    <br />
+    <br />
 
 </div>

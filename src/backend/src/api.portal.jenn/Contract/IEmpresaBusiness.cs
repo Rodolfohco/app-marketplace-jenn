@@ -58,6 +58,9 @@ namespace api.portal.jenn.Contract
 
         ViewModel.PlanoProcedimentoEmpresaViewModel InserirPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresaViewModel model);
 
+
+        ViewModel.PlanoProcedimentoEmpresaViewModel VincularPlanoProcedimentoEmpresa(VincularPlanoProcedimentoEmpresaViewModel model);
+
         ViewModel.PagamentoProcedimentoEmpresaViewModel InserirPagamentoProcedimentoEmpresa(ViewModel.NovoPagamentoProcedimentoEmpresaViewModel model);
 
         IEnumerable<ConsultaAgendaViewModel> SelecionarAgendaProcedimentoEmpresa(int ProcedimentoID);

@@ -30,6 +30,9 @@ namespace api.portal.jenn.Contract
 
         DTO.PlanoProcedimentoEmpresa InsertPlanoProcedimentoEmpresa(PlanoProcedimentoEmpresa model, int ProcedimentoID);
 
+        DTO.PlanoProcedimentoEmpresa VincularPlanoProcedimentoEmpresa(int PlanoID, int ProcedimentoID, int? ConvenioId = null);
+
+
         DTO.FotoEmpresa Insert(DTO.FotoEmpresa model, int EmpresaID);
         DTO.Grupo Insert(DTO.Grupo model, int EmpresaID);
 

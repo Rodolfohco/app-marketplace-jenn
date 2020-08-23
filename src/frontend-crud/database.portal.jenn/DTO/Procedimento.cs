@@ -1,4 +1,5 @@
-﻿using System;
+﻿using database.portal.jenn.DTO.api.portal.jenn.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,7 +26,7 @@ namespace api.portal.jenn.DTO
         [StringLength(400)]
         public string Descricao { get; set; }
 
-        [Required]
+        
         [Column("imgprod_proced", Order = 3)]
         [StringLength(200)]
         public string ImgProduto_Proc { get; set; }
@@ -33,7 +34,7 @@ namespace api.portal.jenn.DTO
 
         [Required]
         [Column("atv_proced", Order = 1)]
-        public int Ativo { get; set; }
+        public Status Ativo { get; set; }
 
         public virtual TipoProcedimento TipoProcedimento { get; set; }
  

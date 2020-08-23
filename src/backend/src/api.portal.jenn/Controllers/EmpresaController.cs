@@ -76,6 +76,17 @@ namespace api.portal.jenn.Controllers
             try
             {
                 var item = this.repositorio.Selecionar();
+
+
+
+                item.ToList().ForEach(it =>
+                {
+                    it.ProcedimentoEmpresas = it.ProcedimentoEmpresas.Where(x => x.Ativo > 0).ToList();
+                });
+
+
+             
+
                 if (item != null && item.Any())
                     resultado = new CommandResult(true, "Processado Com Sucesso", item, System.Net.HttpStatusCode.OK);
                 else

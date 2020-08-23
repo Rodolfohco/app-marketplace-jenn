@@ -76,9 +76,11 @@ namespace crud.ui.portal.jenn.Controllers
         {
             if (ModelState.IsValid)
             {
-                procedimento.Ativo =(int)Status.Ativo;
+                procedimento.Ativo = Status.Ativo;
                 procedimento.TipoProcedimento = _context.TipoProcedimento.Find(TipoProcedimento);
 
+                if (!string.IsNullOrEmpty(procedimento.ImgProduto_Proc))
+                    procedimento.ImgProduto_Proc = string.Empty;
 
                 _context.Add(procedimento);
                 await _context.SaveChangesAsync();
@@ -109,6 +111,25 @@ namespace crud.ui.portal.jenn.Controllers
             return View(procedimento);
         }
 
+        public async Task<IActionResult> Desativar(int id)
+        {
+
+            var empresa = await _context.Procedimento
+                .FirstOrDefaultAsync(m => m.ProcedimentoID == id);
+
+            if (empresa.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Desativado)
+                empresa.Ativo = database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo;
+            else
+                empresa.Ativo = database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Desativado;
+
+            _context.Procedimento.Update(empresa);
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Index");
+        }
+
+
         // POST: Procedimento/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -125,6 +146,10 @@ namespace crud.ui.portal.jenn.Controllers
             {
                 try
                 {
+                    if (!string.IsNullOrEmpty(procedimento.ImgProduto_Proc))
+                        procedimento.ImgProduto_Proc = string.Empty;
+
+
                     _context.Update(procedimento);
                     await _context.SaveChangesAsync();
                 }

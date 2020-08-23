@@ -140,32 +140,32 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
 
-                    ctx.Empresas
-                                .Include(c => c.Fotos)
-                                .Include(c => c.Grupo)
-                                .Include(c => c.ProcedimentoEmpresas)
-                                .ThenInclude(c => c.PagamentoProcedimentoEmpresas)
-                                .ThenInclude(c => c.Pagamento)
-                                .Include(c => c.ProcedimentoEmpresas)
-                                .ThenInclude(c => c.PlanoProcedimentoEmpresas)
-                                .ThenInclude(c => c.Plano)
-                                .ThenInclude(c => c.Convenio)
-                                .Include(c => c.ProcedimentoEmpresas)
-                                .ThenInclude(c => c.Procedimento)
-                                .ThenInclude(c => c.TipoProcedimento)
-                                .ThenInclude(c => c.Categoria)
-                                .Include(c => c.ProcedimentoEmpresas)
-                                .ThenInclude(c => c.Agendas)
-                                .Include(c => c.Cidade)
-                                .ThenInclude(c => c.Regiao)
-                                .Include(c => c.Cidade)
-                                .ThenInclude(c => c.Uf)
-                                .Where(c => c.Ativo > 0)
-                            .AsParallel().ForAll(
-                        item =>
-                        {
-                            retorno.Add(item);
-                        });
+                    (from item in ctx.Empresas.Where(a => a.Ativo == Status.Ativo)
+                                 .Include(c => c.Fotos)
+                                 .Include(c => c.Grupo)
+                                 .Include(c => c.ProcedimentoEmpresas )
+                                 .ThenInclude(c => c.PagamentoProcedimentoEmpresas)
+                                 .ThenInclude(c => c.Pagamento)
+                                 .Include(c => c.ProcedimentoEmpresas )
+                                 .ThenInclude(c => c.PlanoProcedimentoEmpresas)
+                                 .ThenInclude(c => c.Plano)
+                                 .ThenInclude(c => c.Convenio)
+                                 .Include(c => c.ProcedimentoEmpresas )
+                                 .ThenInclude(c => c.Procedimento)
+                                 .ThenInclude(c => c.TipoProcedimento)
+                                 .ThenInclude(c => c.Categoria)
+                                 .Include(c => c.ProcedimentoEmpresas)
+                                 .ThenInclude(c => c.Agendas)
+                                 .Include(c => c.Cidade)
+                                 .ThenInclude(c => c.Regiao)
+                                 .Include(c => c.Cidade)
+                                 .ThenInclude(c => c.Uf)
+                   
+                     select item).AsParallel().ForAll(
+                                                     item =>
+                                                     {
+                                                         retorno.Add(item);
+                                                     });
                 }
             }
             catch (Exception exception)
@@ -650,6 +650,18 @@ namespace api.portal.jenn.Repository
                 using (var ctx = contexto.CreateDbContext(null))
                 {
                     var procedimentoEmpresa = ctx.ProcedimentoEmpresa.Include(x => x.PlanoProcedimentoEmpresas).Where(x => x.ProcedimentoEmpresaID == ProcedimentoID).FirstOrDefault();
+
+                    var convenio = ctx.Convenios.Where(x => x.Nome == model.Plano.Convenio.Nome).FirstOrDefault();
+
+                    if(convenio!= null)
+                    {
+                      var plano =   convenio.Planos.Where(x => x.Nome == model.Plano.Nome).FirstOrDefault();
+
+                        if (plano != null)
+                            model.Plano = plano;
+
+                    }
+
                     procedimentoEmpresa.PlanoProcedimentoEmpresas.Add(model);
                     ctx.Entry(procedimentoEmpresa).State = EntityState.Modified;
                     ctx.ProcedimentoEmpresa.Update(procedimentoEmpresa);
@@ -795,9 +807,9 @@ namespace api.portal.jenn.Repository
 
                 using (var ctx = contexto.CreateDbContext(null))
                 {
-                    (from item in ctx.ProcedimentoSinonimos.Include(x=> x.Procedimento) .ThenInclude(z=> z.TipoProcedimento).ThenInclude(z=> z.Categoria)
+                    (from item in ctx.ProcedimentoSinonimos.Include(x => x.Procedimento).ThenInclude(z => z.TipoProcedimento).ThenInclude(z => z.Categoria)
                      join proce in ctx.ProcedimentoEmpresa on item.Procedimento equals proce.Procedimento
-                     where item.Ativo == Status.Ativo &&  item.Nome.ToLower().StartsWith(parametro)
+                     where item.Ativo == Status.Ativo && proce.Ativo == Status.Ativo &&  item.Nome.ToLower().StartsWith(parametro)
                      select item).AsParallel().ForAll(item =>
                      {
                          retorno.Add(item);
@@ -807,6 +819,38 @@ namespace api.portal.jenn.Repository
             catch (Exception exception)
             {
                 this.logger.LogError($"Ocorreu um erro no metodo [Insert]  Inner Exception [{exception.InnerException}] {Environment.NewLine} Message [{exception.Message}];", exception);
+                throw;
+            }
+            return retorno;
+        }
+
+        public PlanoProcedimentoEmpresa VincularPlanoProcedimentoEmpresa(int PlanoID, int ProcedimentoID, int? ConvenioId = null)
+        {
+            PlanoProcedimentoEmpresa retorno = null;
+            try
+            {
+                Convenio conv = null;
+                using (var ctx = contexto.CreateDbContext(null))
+                {
+
+                    var procedimentoEmpresa = ctx.ProcedimentoEmpresa.Where(x=> x.ProcedimentoEmpresaID == ProcedimentoID).FirstOrDefault();
+                    var plano = ctx.Planos.Find(PlanoID);
+
+                    if (ConvenioId.HasValue)
+                        conv = ctx.Convenios.Include(x => x.Planos).Where(c => c.ConvenioId == ConvenioId.Value).FirstOrDefault();
+
+                    retorno = new PlanoProcedimentoEmpresa() { Plano = plano, ProcedimentoEmpresa = procedimentoEmpresa };
+
+
+                    ctx.Entry(retorno).State = EntityState.Added;
+                    ctx.PlanoProcedimentoEmpresas.Add(retorno);
+                  
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError($"Ocorreu um erro no metodo [Insert] [{exception.InnerException}] ;", exception);
                 throw;
             }
             return retorno;

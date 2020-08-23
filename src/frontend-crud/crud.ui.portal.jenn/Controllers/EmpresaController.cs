@@ -139,7 +139,7 @@ namespace crud.ui.portal.jenn.Controllers
                     {
                         Group = itemUf,
                         Text = cidade.Nome,
-                        Value = $"{cidade.num_cidade}"
+                        Value = $"{uf.num_uf}{cidade.num_cidade}"
                     });
                 });
             });

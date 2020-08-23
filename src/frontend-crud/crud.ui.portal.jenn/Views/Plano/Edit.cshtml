@@ -1,34 +1,45 @@
 ﻿@model api.portal.jenn.DTO.Plano
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Editar Plano";
+    Layout = "~/Views/Shared/_LayoutConvenio.cshtml";
 }
 
-<h1>Edit</h1>
 
-<h4>Plano</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PlanoID" />
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+<form asp-controller="Plano" asp-action="Edit" method="post" class="form-horizontal">
+    <input type="hidden" asp-for="PlanoID" />
+    
+    <fieldset>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Edição de Plano </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-11 control-label">
+                        <p class="help-block"><h11>*</h11> Campo Obrigatório </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Nome">Nome do Plano <h11>*</h11></label>
+                    <div class="col-md-8">
+                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md" type="text">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Cadastrar"></label>
+                    <div class="col-md-8">
+                        <button id="Cadastrar" name="Cadastrar" class="btn btn-success" type="Submit">Salvar</button>
+                        <a class="btn btn-info" asp-action="Index">Voltar Para a Lista</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

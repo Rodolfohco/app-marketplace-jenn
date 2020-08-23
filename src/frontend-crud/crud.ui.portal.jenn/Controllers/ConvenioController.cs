@@ -10,6 +10,7 @@ using api.portal.jenn.DTO;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using crud.ui.portal.jenn.Enumeradores;
 using database.portal.jenn.DTO.api.portal.jenn.DTO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace crud.ui.portal.jenn.Controllers
 {
@@ -25,7 +26,9 @@ namespace crud.ui.portal.jenn.Controllers
         // GET: Convenio
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Convenios.ToListAsync());
+            var convenio = _context.Convenios;
+
+            return View(await convenio.ToListAsync()) ;
         }
 
         // GET: Convenio/Details/5
@@ -55,23 +58,25 @@ namespace crud.ui.portal.jenn.Controllers
         
 
         
-        public async Task<JsonResult> NovoPlano(int ConvenioID, Plano plano)
+    
+
+        public async Task<IActionResult> Desativar(int id)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    convenio.Ativo = (int)Status.Ativo;
-            //    convenio.DataInclusao = DateTime.Now;
+
+            var empresa = await _context.Convenios
+                .FirstOrDefaultAsync(m => m.ConvenioId == id);
+
+            if (empresa.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Desativado)
+                empresa.Ativo = database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo;
+            else
+                empresa.Ativo = database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Desativado;
+
+            _context.Convenios.Update(empresa);
+            _context.SaveChanges();
 
 
-            //    _context.Add(convenio);
-            //    await _context.SaveChangesAsync();
-            //   // return RedirectToAction(nameof(Index));
-            //}
-            return new JsonResult(ConvenioID);
+            return RedirectToAction("Index");
         }
-
-        
-
 
 
 
@@ -85,9 +90,14 @@ namespace crud.ui.portal.jenn.Controllers
         {
             if (ModelState.IsValid)
             {
-                convenio.Ativo = (int)Status.Ativo;
+                convenio.Ativo = Status.Ativo;
                 convenio.DataInclusao = DateTime.Now;
 
+                if (convenio.Planos == null)
+                {
+                    convenio.Planos = new List<Plano>();
+                    convenio.Planos.Add(new Plano() { Nome = "Plano Padrão" });
+                }
 
                 _context.Add(convenio);
                 await _context.SaveChangesAsync();
@@ -104,7 +114,7 @@ namespace crud.ui.portal.jenn.Controllers
                 return NotFound();
             }
 
-            var convenio = await _context.Convenios.FindAsync(id);
+            var convenio = await _context.Convenios.Include(c=> c.Planos).Where(c=> c.ConvenioId == id).FirstOrDefaultAsync();
             if (convenio == null)
             {
                 return NotFound();
@@ -130,7 +140,7 @@ namespace crud.ui.portal.jenn.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                { 
                     _context.Update(convenio);
                     await _context.SaveChangesAsync();
                 }
@@ -144,6 +154,24 @@ namespace crud.ui.portal.jenn.Controllers
                     {
                         throw;
                     }
+                }
+                finally
+                {
+
+
+
+                    if (convenio.Planos == null)
+                    {
+                        var consulta = _context.Convenios.Where(x => x.ConvenioId == convenio.ConvenioId).Include(x => x.Planos).FirstOrDefault();
+                        if (consulta.Planos.Count() == 0)
+                        {
+                            convenio.Planos = new List<Plano>();
+                            convenio.Planos.Add(new Plano() { Nome = "Plano Padrão" });
+                            _context.Update(convenio);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
                 }
                 return RedirectToAction(nameof(Index));
             }

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace api.portal.jenn.ViewModel
 {
-        public class NovoProcedimentoEmpresaViewModel
+   
+
+    public class NovoProcedimentoEmpresaViewModel
     {
 
         public DateTime DataInclusao { get; set; }
@@ -34,6 +36,9 @@ namespace api.portal.jenn.ViewModel
         public int ProcedimentoID { get; set; }
         public int EmpresaID { get; set; }
         public int? Destaque { get; set; }
+        public StatusAgenda PermiteAgendamento { get; set; }
+        public string proced_url { get; set; }
+
     }
     public class ProcedimentoEmpresaViewModel
     {
@@ -61,6 +66,8 @@ namespace api.portal.jenn.ViewModel
         public int Ativo { get; set; }
 
         public int? Destaque { get; set; }
+        public StatusAgenda PermiteAgendamento { get; set; }
+        public string proced_url { get; set; }
         public virtual ProcedimentoViewModel Procedimento { get; set; }
 
         public virtual EmpresaViewModel Empresa { get; set; }
@@ -96,6 +103,10 @@ namespace api.portal.jenn.ViewModel
         public int Ativo { get; set; }
 
         public int? Destaque { get; set; }
+
+        public StatusAgenda PermiteAgendamento { get; set; }
+        public string proced_url { get; set; }
+
 
         public virtual EmpresaViewModel Empresa { get; set; }
         public virtual ProcedimentoViewModel Procedimento { get; set; }
@@ -133,6 +144,9 @@ namespace api.portal.jenn.ViewModel
         public int Ativo { get; set; }
 
         public int? Destaque { get; set; }
+
+        public StatusAgenda PermiteAgendamento { get; set; }
+        public string proced_url { get; set; }
         public virtual ProcedimentoViewModel Procedimento { get; set; }
 
         public virtual ICollection<ConsultaAgendaViewModel> Agendas { get; set; }
