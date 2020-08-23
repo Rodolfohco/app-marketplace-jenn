@@ -152,7 +152,7 @@ namespace ui.portal.jenn.Service
             if (dTOEmpresa.data == null)
                 return listaFinal;
 
-            listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            listas = dTOEmpresa.data.ToList();
              
             if(produtos != null)
             {
@@ -207,7 +207,7 @@ namespace ui.portal.jenn.Service
             if(dTOEmpresa.data == null)
                 return listasEmpresas;
 
-            lista = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            lista = dTOEmpresa.data.ToList();
 
             if (produto != null)
             {
@@ -342,7 +342,7 @@ namespace ui.portal.jenn.Service
             if (dTOEmpresa.data == null)
                 return listaFinal;
 
-            List<Empresa> listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            List<Empresa> listas = dTOEmpresa.data.ToList();
 
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
@@ -405,7 +405,7 @@ namespace ui.portal.jenn.Service
             if (dTOEmpresa.data == null)
                 return listaFinal;
 
-            List<Empresa> listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            List<Empresa> listas = dTOEmpresa.data.ToList();
 
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<Procedimento> procedimentos = procedimentoEmpresas.Select(p => p.procedimento).ToList();
@@ -429,7 +429,7 @@ namespace ui.portal.jenn.Service
             if (dTOEmpresa.data == null)
                 return listaFinal;
 
-            List<Empresa> listas = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            List<Empresa> listas = dTOEmpresa.data.ToList();
 
             List<ProcedimentoEmpresa> procedimentoEmpresas = listas.SelectMany(pe => pe.procedimentoEmpresas).ToList();
             List<PagamentoProcedimentoEmpresa> pagamentoProcedimentoEmpresas = procedimentoEmpresas.SelectMany(p => p.pagamentoProcedimentoEmpresas).ToList();
@@ -639,7 +639,7 @@ namespace ui.portal.jenn.Service
             if (dTOEmpresa.data == null)
                 return procedimento;
 
-            lista = dTOEmpresa.data.Where(e => e.matriz != null).ToList();
+            lista = dTOEmpresa.data.ToList();
             ProcedimentoEmpresa procedimentoEmpresas = lista.SelectMany(pe=>pe.procedimentoEmpresas).Where(p=>p.procedimento.procedimentoID == produto).FirstOrDefault();
 
             if (procedimentoEmpresas != null)
