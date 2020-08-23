@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -115,7 +116,7 @@ namespace ui.portal.jenn.Service
         public List<DTOAutocomplete> BuscarProdutos(string produtos)
         {
             List<DTOAutocomplete> listaFinal = new List<DTOAutocomplete>();
-            DTOSinonimos dtoSinonimos = BuscarSinonimos(produtos);
+           DTOSinonimos dtoSinonimos = BuscarSinonimos(produtos);
 
             if (dtoSinonimos.data == null)
                 return listaFinal;
@@ -242,7 +243,9 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+                string url = "https://localhost:44323/";
+
+                using (var response = client.GetAsync(url + "api/Empresa").Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -272,7 +275,9 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
+                string url = "https://localhost:44323/";
+
+                using (var response = client.GetAsync(url + "api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {

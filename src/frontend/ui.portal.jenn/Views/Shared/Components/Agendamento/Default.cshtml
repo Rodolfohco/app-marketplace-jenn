@@ -18,16 +18,34 @@
                 break;
             case 1:
                 //Plano básico
-                <div class="calendar">
-                    <br>
-                    <h4>Preço do exame particular</h4>
-                    <br>
-                    <h4>R$ @Model.precoProduto,00</h4>
-                    <p>Compre online em até 12X</p>
-                    <div class="">
-                        <a style="background-color:#4472c4; " href="@Model.EnderecoLoja" class="btn btn-primary" title="">Ir para a loja virtual</a>
-                    </div>
+    <div class="calendar">
+
+        @if (Model.precoProduto != null && Model.precoProduto != 0)
+        {
+            <br>
+            <h4>Preço do exame particular</h4>
+            <br>
+            <h4>R$ @Model.precoProduto,00</h4>
+            <p>Compre online em até 12X</p>
+        }
+
+        @if (Model.EnderecoLoja != null && Model.EnderecoLoja != "" && Model.permiteAgendamento)
+        {
+            <div class="">
+                <a style="background-color:#4472c4; " href="@Model.EnderecoLoja" class="btn btn-primary" title="">Ir para a loja virtual</a>
+            </div>
+        }
+        else
+        {
+            if (!Model.permiteAgendamento)
+            {
+                <div style="padding-top: 35%;" class="">
+                    <p>Exame não necessita de agendamento.</p>
                 </div>
+            }
+        }
+
+    </div>
                 break;
             case 2:
                 //Plano VIP
@@ -36,41 +54,51 @@
                     <p>Entenda como a sugestão de agenda funciona.</p>
                     <div class="slider-time">
                         @{
-                            DateTime diaAtual = DateTime.Now;
-                            string[] mesArray = new string[12] { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
-                            string[] semanaArray = new string[7] { "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
                             bool botaoHorario = false;
-
-                            for (int i = 0; i < 6; i++)
+                            if (!Model.permiteAgendamento)
                             {
+                                <div style="padding-top: 35%;"  class="">
+                                    <p>Este exame não necessita de agendamento.</p>
+                                </div>
+                            }
+                            else
+                            {
+                                DateTime diaAtual = DateTime.Now;
+                                string[] mesArray = new string[12] { "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ" };
+                                string[] semanaArray = new string[7] { "DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB" };
+                                
 
-                                <div>
-                                    <div class="box-time">
-                                        <h5>@semanaArray[Convert.ToInt32(diaAtual.DayOfWeek)]</h5>
-                                        <p>@diaAtual.Day/@mesArray[diaAtual.Month - 1]</p>
-                                        <div class="content-time">
-                                            @{
+                                for (int i = 0; i < 6; i++)
+                                {
 
-                                                List<ConsultaAgendaViewModel> consultaAgendaViewModels = Model.consultaAgendaViewModels.Where(c => c.mes == diaAtual.Month && c.dia == diaAtual.Day).ToList();
-                                                for (int j = 0; j < consultaAgendaViewModels.Count; j++)
-                                                {
-                                                    string visivel = "";
-                                                    string classvisivel = "";
+                                    <div>
+                                        <div class="box-time">
+                                            <h5>@semanaArray[Convert.ToInt32(diaAtual.DayOfWeek)]</h5>
+                                            <p>@diaAtual.Day/@mesArray[diaAtual.Month - 1]</p>
+                                            <div class="content-time">
+                                                @{
 
-                                                    if (j >= 4)
+                                                    List<ConsultaAgendaViewModel> consultaAgendaViewModels = Model.consultaAgendaViewModels.Where(c => c.mes == diaAtual.Month && c.dia == diaAtual.Day).ToList();
+                                                    for (int j = 0; j < consultaAgendaViewModels.Count; j++)
                                                     {
-                                                        visivel = "display:none";
-                                                        classvisivel = "invisivel";
-                                                        botaoHorario = true;
-                                                    }
+                                                        string visivel = "";
+                                                        string classvisivel = "";
 
-                                                    <a href="/Produtos/Agendamento?id=@Model.EmpresaID&idProcedimento=@ViewBag.IdProcedimento&idAgenda=@consultaAgendaViewModels[i].agendaID"><span style="@visivel" class="active @classvisivel empresa_@Model.EmpresaID">@consultaAgendaViewModels[j].hora.Hour :00 </span></a>
+                                                        if (j >= 4)
+                                                        {
+                                                            visivel = "display:none";
+                                                            classvisivel = "invisivel";
+                                                            botaoHorario = true;
+                                                        }
+
+                                                        <a href="/Produtos/Agendamento?id=@Model.EmpresaID&idProcedimento=@ViewBag.IdProcedimento&idAgenda=@consultaAgendaViewModels[i].agendaID"><span style="@visivel" class="active @classvisivel empresa_@Model.EmpresaID">@consultaAgendaViewModels[j].hora.Hour :00 </span></a>
+                                                    }
                                                 }
-                                            }
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                diaAtual = diaAtual.AddDays(1);
+                                    diaAtual = diaAtual.AddDays(1);
+                                }
                             }
                         }
 
