@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -115,7 +116,7 @@ namespace ui.portal.jenn.Service
         public List<DTOAutocomplete> BuscarProdutos(string produtos)
         {
             List<DTOAutocomplete> listaFinal = new List<DTOAutocomplete>();
-            DTOSinonimos dtoSinonimos = BuscarSinonimos(produtos);
+           DTOSinonimos dtoSinonimos = BuscarSinonimos(produtos);
 
             if (dtoSinonimos.data == null)
                 return listaFinal;
@@ -242,7 +243,9 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/Empresa").Result)
+                string url = "https://localhost:44323/";
+
+                using (var response = client.GetAsync(url + "api/Empresa").Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -272,7 +275,9 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                using (var response = client.GetAsync("http://api.examesemcasa.com.br/api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
+                string url = "https://localhost:44323/";
+
+                using (var response = client.GetAsync(url + "api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -365,7 +370,7 @@ namespace ui.portal.jenn.Service
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
             
-            List<Empresa> listas = dTOEmpresa.data.Where(e=>e.matriz != null).ToList();
+            List<Empresa> listas = dTOEmpresa.data.ToList();
             listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             foreach (var item in listas)
                 if (item.cidade != null && listaFinal.IndexOf(item.cidade.nome) == -1)
@@ -575,7 +580,7 @@ namespace ui.portal.jenn.Service
 
                 if(empresa != null)
                 {
-                    pesquisaViewModel.NomeEmpresa = empresa.matriz != null ? empresa.matriz.nome : "";
+                    pesquisaViewModel.NomeEmpresa = empresa.matriz != null ? empresa.matriz.nome : empresa.fantasia;
                     pesquisaViewModel.Localidade = empresa.logradouro;
 
                     pesquisaViewModel.DescricaoProcedimento = "";

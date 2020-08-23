@@ -32,6 +32,8 @@ namespace ui.portal.jenn.ViewModel
         public int IdProcedimento { get; set; }
         public int IdProcedimentoEmpresa { get; set; }
         public int precoProduto { get; set; }
+        public bool permiteAgendamento { get; set; }
+        public string Cidade { get; set; }
 
     }
 }

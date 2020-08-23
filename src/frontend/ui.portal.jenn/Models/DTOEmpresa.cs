@@ -112,6 +112,8 @@ public class ProcedimentoEmpresa
     public object[] procedimentoPerguntas { get; set; }
     public PagamentoProcedimentoEmpresa[] pagamentoProcedimentoEmpresas { get; set; }
     public List<ConsultaAgendaViewModel> agendas { get; set; }
+    public bool permiteAgendamento { get; set; }
+    public string proced_url { get; set; }
 }
 
 public class Procedimento

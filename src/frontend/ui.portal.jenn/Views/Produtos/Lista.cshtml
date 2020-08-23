@@ -41,6 +41,8 @@
         {
             pesquisaViewModel.IdProcedimentoEmpresa = itemEmp.procedimentoEmpresaID;
             pesquisaViewModel.precoProduto = itemEmp.precoProduto;
+            pesquisaViewModel.EnderecoLoja = itemEmp.proced_url;
+            pesquisaViewModel.permiteAgendamento = itemEmp.permiteAgendamento;
         }
 
         if (itemEmp.agendas != null &&itemEmp.agendas.Count() > 0)
@@ -54,7 +56,6 @@
     pesquisaViewModel.Opiniao = item.avaliacoes.Count();
     pesquisaViewModel.NomeUnidade =  item.nome;
     pesquisaViewModel.EnderecoCompleto =  item.logradouro + ", " + item.numero + " - " + item.bairro;
-    pesquisaViewModel.EnderecoLoja = item.url_loja;
     pesquisaViewModel.UrlImagem =  item.imgemFrontEmpresa;
     pesquisaViewModel.UrlMaps = item.maps;
     pesquisaViewModel.TipoEmpresa = item.TipoEmpresa;
@@ -64,7 +65,7 @@
 
     pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels.OrderBy(a=>a.hora).ToList();
 
-
+    pesquisaViewModel.Cidade = item.cidade != null ? item.cidade.nome : "";
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }

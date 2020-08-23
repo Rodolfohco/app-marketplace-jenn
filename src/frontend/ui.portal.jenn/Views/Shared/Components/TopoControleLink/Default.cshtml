@@ -2,9 +2,9 @@
 @model ui.portal.jenn.ViewModel.InformacaoTopo
 
 <form method="post" asp-controller="Home" id="form_topo" asp-action="Logout">
-    <ul class="nav navigation">
+    <ul class="nav navigation" style="max-width: 610px;">
 
-        <li class="nav-item"><a class="nav-link" href="@Url.Action( "CentralAjuda", "Home")" title="Precisa de ajuda">Precisa de ajuda</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://www-jenn-com-br.rds.land/contato" title="Precisa de ajuda">Precisa de ajuda?</a></li>
 
         @if (Model.Logado)
         {
@@ -14,14 +14,14 @@
 
                 </a>
             </li>
-            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Olá,  @Model.Nome</a></li>
+            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços?">Olá,  @Model.Nome</a></li>
            
         }
         else
         {
             <li class="nav-item"><a class="nav-link" href="@Url.Action( "Cadastrar", "Home")" title="Cadastrar">Cadastrar</a></li>
             <li class="nav-item"><a class="nav-link" href="@Url.Action("Autenticar", "Home")" title="Entrar">Entrar</a></li>
-            <li class="nav-item last-nav"><a class="nav-link" href="" title="Você presta serviços">Você presta serviços</a></li>
+            <li class="nav-item last-nav"><a class="nav-link" href="http://www-jenn-com-br.rds.land/contato" title="Você presta serviços?">Você presta serviços?</a></li>
         }
     </ul>
     <div class="mobile-nav-button">
