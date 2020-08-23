@@ -19,9 +19,8 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Cnes</th>
                 <th><div style="width:450px; Word-wrap: break-Word">Nome </div></th>
-                <th>E-mail</th>
+                <th>Fantasia</th>
                 <th>Status</th>
                 <th>Controle</th>
             </tr>
@@ -29,38 +28,36 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td> @Html.DisplayFor(modelItem => item.EmpresaID)</td>
-                    <td> @Html.DisplayFor(modelItem => item.CodigoCnes)</td>
-                    <td><div style="width:450px; Word-wrap: break-Word"> @Html.DisplayFor(modelItem => item.Nome)</div></td>
-                    <td> @Html.DisplayFor(modelItem => item.Email)</td>
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.CodigoCnes)</td>
+                <td><div style="width:450px; Word-wrap: break-Word"> @Html.DisplayFor(modelItem => item.Nome)</div></td>
+                <td><div style="width:450px; Word-wrap: break-Word"> @Html.DisplayFor(modelItem => item.Fantasia)</div></td>
 
-                    <td>
-                        @if (item.Ativo == 1)
-                        {
-                            <i class="	fas fa-handshake"></i>
-                        }
-                        else
-                        {
-                            <i class="	fas fa-handshake-alt-slash"></i>
-                        }
-                    </td>
-                    <td>
-                        @if (item.Ativo == 1)
-                        {
-                            <a asp-action="Desativar" class="fas fa-window-close" title="Desativar Empresa" asp-route-id="@item.EmpresaID"></a>
-                        }
-                        else
-                        {
-                            <a asp-action="Desativar" class="far fa-window-close" title="Ligar Empresa" asp-route-id="@item.EmpresaID"></a>
+                <td>
+                    @if (item.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo)
+                    {
+                        <i class="	fas fa-handshake"></i>
+                    }
+                    else
+                    {
+                        <i class="	fas fa-handshake-alt-slash"></i>
+                    }
+                </td>
+                <td>
+                    @if (item.Ativo ==  database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo)
+                    {
+                        <a asp-action="Desativar" class="fas fa-window-close" title="Desativar Empresa" asp-route-id="@item.EmpresaID"></a>
+                    }
+                    else
+                    {
+                        <a asp-action="Desativar" class="far fa-window-close" title="Ligar Empresa" asp-route-id="@item.EmpresaID"></a>
 
-                        }|
-                        <a asp-action="Edit" asp-route-id="@item.EmpresaID" class='far fa-edit'></a>|
-
-                        <a asp-action="Details" asp-route-id="@item.EmpresaID" title="Detalhar este Registro" class='fas fa-glasses'></a> |
-                        <a asp-action="Delete" asp-route-id="@item.EmpresaID" title="Excluir este Registro" class='fas fa-eraser'></a>
-                    </td>
-                </tr>
+                    }|
+                    <a asp-action="Edit" asp-route-id="@item.EmpresaID" class='far fa-edit'></a>|
+                    <a asp-action="Details" asp-route-id="@item.EmpresaID" title="Detalhar este Registro" class='fas fa-glasses'></a> |
+                    <a asp-action="Delete" asp-route-id="@item.EmpresaID" title="Excluir este Registro" class='fas fa-eraser'></a>
+                </td>
+            </tr>
 
             }
 

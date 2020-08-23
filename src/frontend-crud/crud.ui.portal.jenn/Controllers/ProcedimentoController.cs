@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using api.portal.jenn.Contexto;
 using api.portal.jenn.DTO;
 using crud.ui.portal.jenn.Enumeradores;
+using database.portal.jenn.DTO.api.portal.jenn.DTO;
 
 namespace crud.ui.portal.jenn.Controllers
 {

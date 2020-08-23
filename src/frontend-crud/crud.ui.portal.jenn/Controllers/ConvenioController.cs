@@ -9,6 +9,7 @@ using api.portal.jenn.Contexto;
 using api.portal.jenn.DTO;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using crud.ui.portal.jenn.Enumeradores;
+using database.portal.jenn.DTO.api.portal.jenn.DTO;
 
 namespace crud.ui.portal.jenn.Controllers
 {

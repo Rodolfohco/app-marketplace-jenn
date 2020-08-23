@@ -9,6 +9,7 @@ using api.portal.jenn.Contexto;
 using api.portal.jenn.DTO;
 using crud.ui.portal.jenn.Enumeradores;
 using System.Data;
+using database.portal.jenn.DTO.api.portal.jenn.DTO;
 
 namespace crud.ui.portal.jenn.Controllers
 {
@@ -84,7 +85,7 @@ namespace crud.ui.portal.jenn.Controllers
 
 
             ViewData["TipoProcedimentoID"] = new SelectList(_context.TipoProcedimento.AsEnumerable(), "TipoProcedimentoID", "Nome");
-            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome");
+            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c=> c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome");
             ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome");
         }
 
@@ -120,7 +121,7 @@ namespace crud.ui.portal.jenn.Controllers
                     procedimentoEmpresa.TaxaResultado = string.Empty;
 
 
-                procedimentoEmpresa.Ativo = (int)Status.Desativado;
+                procedimentoEmpresa.Ativo = (int) Status.Desativado;
 
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
 

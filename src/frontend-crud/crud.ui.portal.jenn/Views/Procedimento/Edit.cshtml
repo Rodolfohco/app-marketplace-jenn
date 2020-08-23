@@ -4,85 +4,86 @@
     Layout = "~/Views/Shared/_LayoutProcedimentos.cshtml";
 }
 
-    <form asp-controller="Procedimento" asp-action="Edit" method="post" class="form-horizontal">
-        <input type="hidden" asp-for="ProcedimentoID" />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <fieldset>
-            <div class="panel panel-primary">
-                <div class="panel-heading">Alteraração Procedimento</div>
+<form asp-controller="Procedimento" asp-action="Edit" method="post" class="form-horizontal">
+    <input type="hidden" asp-for="ProcedimentoID" />
+  
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <fieldset>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Alteraração Procedimento</div>
 
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="col-md-11 control-label">
-                            <p class="help-block"><h11>*</h11> Campo Obrigatório </p>
-                        </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-11 control-label">
+                        <p class="help-block"><h11>*</h11> Campo Obrigatório </p>
                     </div>
+                </div>
 
 
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
-                        <div class="col-md-8">
-                            <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md"  type="text">
-                            <span asp-validation-for="Nome" class="text-danger"></span>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Nome">Nome <h11>*</h11></label>
+                    <div class="col-md-8">
+                        <input id="Nome" asp-for="Nome" name="Nome" placeholder="" class="form-control input-md" type="text">
+                        <span asp-validation-for="Nome" class="text-danger"></span>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="Descricao">Descrição <h11>*</h11></label>
-                        <div class="col-md-8">
-                            <input asp-for="Descricao" class="form-control" type="text" multiple />
-                            <span asp-validation-for="Descricao" class="text-danger"></span>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Descricao">Descrição <h11>*</h11></label>
+                    <div class="col-md-8">
+                        <input asp-for="Descricao" class="form-control" type="text" multiple />
+                        <span asp-validation-for="Descricao" class="text-danger"></span>
                     </div>
+                </div>
 
 
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="ImgProduto_Proc">Imagem <h11>*</h11></label>
-                        <div class="col-md-8">
-                            <input asp-for="ImgProduto_Proc" class="form-control" />
-                            <span asp-validation-for="ImgProduto_Proc" class="text-danger"></span>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="ImgProduto_Proc">Imagem <h11>*</h11></label>
+                    <div class="col-md-8">
+                        <input asp-for="ImgProduto_Proc" class="form-control" />
+                        <span asp-validation-for="ImgProduto_Proc" class="text-danger"></span>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="Tipo"> Tipo <h11>*</h11></label>
-                        <div class="col-md-8">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Tipo"> Tipo <h11>*</h11></label>
+                    <div class="col-md-8">
 
-                            <select class="form-control input-md" asp-for="TipoProcedimento"
-                                    asp-items="@ViewBag.TipoProcedimento"></select>
+                        <select class="form-control input-md" asp-for="TipoProcedimento"
+                                asp-items="@ViewBag.TipoProcedimento"></select>
 
-                            <span asp-validation-for="TipoProcedimento" class="text-danger"></span>
-                        </div>
+                        <span asp-validation-for="TipoProcedimento" class="text-danger"></span>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="Ativo">Status <h11>*</h11></label>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <label class="radio-inline" for="radios-0">
-                                        <input type="radio" asp-for="Ativo" value="0" />
-                                        Desativar
-                                    </label>
-                                    <label class="radio-inline" for="radios-1">
-                                        <input type="radio" asp-for="Ativo" value="1" />
-                                        Ativo
-                                    </label>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="Cadastrar"></label>
-                        <div class="col-md-8">
-                            <button id="Cadastrar" name="Salvar" class="btn btn-success" type="Submit">Salvar</button>
-                            <a class="btn btn-info" asp-action="Index">Voltar Para a Lista de Procedimentos</a>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Ativo">Status <h11>*</h11></label>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <label class="radio-inline" for="radios-0">
+                                    <input type="radio" name="Ativo" asp-for="Ativo" value="0" />
+                                    Desativar
+                                </label>
+                                <label class="radio-inline" for="radios-1">
+                                    <input type="radio"   name="Ativo"  asp-for="Ativo" value="1" />
+                                    Ativo
+                                </label>
+                            </span>
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Cadastrar"></label>
+                    <div class="col-md-8">
+                        <button id="Cadastrar" name="Salvar" class="btn btn-success" type="Submit">Salvar</button>
+                        <a class="btn btn-info" asp-action="Index">Voltar Para a Lista de Procedimentos</a>
+                    </div>
                 </div>
-        </fieldset>
-    </form>
+            </div>
+        </div>
+    </fieldset>
+</form>
 
 
 @section Scripts {

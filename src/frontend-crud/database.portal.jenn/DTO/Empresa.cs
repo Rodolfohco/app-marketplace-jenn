@@ -1,4 +1,5 @@
-﻿    using System;
+﻿using database.portal.jenn.DTO.api.portal.jenn.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,8 +37,12 @@ namespace api.portal.jenn.DTO
         [Column("nome_emp", Order = 2)]
         [Display(Name = "Nome")]
         [StringLength(200)]
-        public string Nome { get; set; }        
-      
+        public string Nome { get; set; }
+       
+        [Column("fantasia_emp", Order = 2)]
+        [StringLength(100)]
+        public string Fantasia { get; set; }
+
         [Required]
         [Column("tel_emp1", Order = 4)]
         [StringLength(20)]
@@ -92,7 +97,7 @@ namespace api.portal.jenn.DTO
         public string Cert_Empresa { get; set; }
 
         [Column("atv_proced", Order = 16)]
-        public int Ativo { get; set; }
+        public Status Ativo { get; set; }
 
         [Column("tipo_emp", Order = 16)]
         public int TipoEmpresa { get; set; }

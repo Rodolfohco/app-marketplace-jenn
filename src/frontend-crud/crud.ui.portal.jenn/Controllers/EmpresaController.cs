@@ -10,6 +10,7 @@ using api.portal.jenn.DTO;
 using System.Security.Cryptography.X509Certificates;
 using System.Runtime.InteropServices.ComTypes;
 using crud.ui.portal.jenn.Enumeradores;
+using database.portal.jenn.DTO.api.portal.jenn.DTO;
 
 namespace crud.ui.portal.jenn.Controllers
 {
@@ -25,7 +26,7 @@ namespace crud.ui.portal.jenn.Controllers
         // GET: Empresa
         public async Task<IActionResult> Index()
         {
-            var dBJennContext = _context.Empresas.Include(e => e.Matriz);
+            var dBJennContext = _context.Empresas;
             return View(await dBJennContext.ToListAsync());
         }
 
@@ -54,10 +55,10 @@ namespace crud.ui.portal.jenn.Controllers
                 .Include(e => e.Matriz)
                 .FirstOrDefaultAsync(m => m.EmpresaID == id);
 
-            if (empresa.Ativo == 0)
-                empresa.Ativo = 1;
+            if (empresa.Ativo ==  database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Desativado)
+                empresa.Ativo = database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo;
             else
-                empresa.Ativo = 0;
+                empresa.Ativo = database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Desativado;
 
             _context.Empresas.Update(empresa);
             _context.SaveChanges();
@@ -168,7 +169,7 @@ namespace crud.ui.portal.jenn.Controllers
        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmpresaID,MatrizID,CodigoCnes,cnpj,Nome,Telefone1,Telefone2,num_cidade ,ImgemFrontEmpresa,Email,Logradouro,numero,bairro,cep,maps,Responsavel,Id_classe,Cert_Empresa,Ativo,TipoEmpresa,url_loja")] Empresa empresa)
+        public async Task<IActionResult> Create([Bind("EmpresaID,MatrizID,CodigoCnes,cnpj,Nome,Fantasia,Telefone1,Telefone2,num_cidade ,ImgemFrontEmpresa,Email,Logradouro,numero,bairro,cep,maps,Responsavel,Id_classe,Cert_Empresa,Ativo,TipoEmpresa,url_loja")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
@@ -199,7 +200,7 @@ namespace crud.ui.portal.jenn.Controllers
                     empresa.Email = string.Empty;
 
 
-                empresa.Ativo = (int)Status.Ativo;
+                empresa.Ativo =  Status.Ativo;
 
                
 
@@ -246,7 +247,7 @@ namespace crud.ui.portal.jenn.Controllers
       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmpresaID,MatrizID,CodigoCnes,cnpj,Nome,Telefone1,Telefone2,ImgemFrontEmpresa,Email,Logradouro,numero,num_cidade,bairro,cep,maps,Responsavel,Id_classe,Cert_Empresa,Ativo,TipoEmpresa,url_loja")] Empresa empresa)
+        public async Task<IActionResult> Edit(int id, [Bind("EmpresaID,MatrizID,CodigoCnes,cnpj,Nome,Fantasia,Telefone1,Telefone2,ImgemFrontEmpresa,Email,Logradouro,numero,num_cidade,bairro,cep,maps,Responsavel,Id_classe,Cert_Empresa,Ativo,TipoEmpresa,url_loja")] Empresa empresa)
         {
             if (id != empresa.EmpresaID)
             {
