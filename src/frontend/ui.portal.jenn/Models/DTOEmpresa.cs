@@ -18,6 +18,7 @@ public class Empresa
     public int empresaID { get; set; }
     public string cnpj { get; set; }
     public string nome { get; set; }
+    public string fantasia { get; set; }
     public int? matrizID { get; set; }
     public string telefone1 { get; set; }
     public string telefone2 { get; set; }

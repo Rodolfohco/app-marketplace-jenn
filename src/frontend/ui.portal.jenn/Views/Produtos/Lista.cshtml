@@ -8,7 +8,7 @@
 @foreach (var item in Model)
 {
     ui.portal.jenn.ViewModel.PesquisaViewModel pesquisaViewModel = new ui.portal.jenn.ViewModel.PesquisaViewModel();
-    pesquisaViewModel.NomeEmpresa = item.matriz != null ? item.matriz.nome :item.nome;
+    pesquisaViewModel.NomeEmpresa = item.fantasia;
     pesquisaViewModel.Localidade = item.logradouro;
 
     if (ViewBag.idProcedimento != null)
