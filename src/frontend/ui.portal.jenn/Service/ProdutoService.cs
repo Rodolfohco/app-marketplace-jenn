@@ -365,7 +365,7 @@ namespace ui.portal.jenn.Service
             List<string> listaFinal = new List<string>();
             DTOEmpresa dTOEmpresa = BuscarEmpresas();
             
-            List<Empresa> listas = dTOEmpresa.data.Where(e=>e.matriz != null).ToList();
+            List<Empresa> listas = dTOEmpresa.data.ToList();
             listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             foreach (var item in listas)
                 if (item.cidade != null && listaFinal.IndexOf(item.cidade.nome) == -1)
@@ -575,7 +575,7 @@ namespace ui.portal.jenn.Service
 
                 if(empresa != null)
                 {
-                    pesquisaViewModel.NomeEmpresa = empresa.matriz != null ? empresa.matriz.nome : "";
+                    pesquisaViewModel.NomeEmpresa = empresa.matriz != null ? empresa.matriz.nome : empresa.fantasia;
                     pesquisaViewModel.Localidade = empresa.logradouro;
 
                     pesquisaViewModel.DescricaoProcedimento = "";
