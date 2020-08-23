@@ -243,7 +243,7 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                string url = "https://localhost:44323/";
+                string url = "http://api.examesemcasa.com.br/";
 
                 using (var response = client.GetAsync(url + "api/Empresa").Result)
                 {
@@ -275,7 +275,7 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                string url = "https://localhost:44323/";
+                string url = "http://api.examesemcasa.com.br/";
 
                 using (var response = client.GetAsync(url + "api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
                 {
