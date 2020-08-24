@@ -50,7 +50,7 @@ public class Cidade
     public int cidadeID { get; set; }
     public string nome { get; set; }
     public Regiao[] regiao { get; set; }
-    public Uf[] ufs { get; set; }
+    public Uf uf { get; set; }
 }
 
 public class Regiao
