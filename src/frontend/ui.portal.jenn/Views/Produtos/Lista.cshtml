@@ -66,6 +66,7 @@
     pesquisaViewModel.consultaAgendaViewModels = consultaAgendaViewModels.OrderBy(a=>a.hora).ToList();
 
     pesquisaViewModel.Cidade = item.cidade != null ? item.cidade.nome : "";
+    pesquisaViewModel.Cidade = item.cidade != null && item.cidade.uf != null ? pesquisaViewModel.Cidade + "-" + item.cidade.uf.nome : "";
 
     @await Component.InvokeAsync("ProcedimentoLista", pesquisaViewModel)
 }
