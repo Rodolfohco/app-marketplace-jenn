@@ -13,6 +13,7 @@
                         type: 'Get',
                         url: "Produtos/BuscarProdutos",
                         success: function (data) {
+                            console.log(data);
                             response(data);
                             $("#txtIdProcedimento").val("");
                         },

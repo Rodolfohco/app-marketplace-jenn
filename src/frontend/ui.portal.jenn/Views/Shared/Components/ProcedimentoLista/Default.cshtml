@@ -47,9 +47,9 @@
                             <div class="row">
                                 <div class="col-xl-12 divconvenio">
                                     <input onkeyup="autocompleteConvenio(this)" type="text" class="form-control" placeholder="Pesquisar..." />
-                                    @foreach (var item in Model.Convenios)
+                                    @foreach (var item in Model.Convenios.Select(x=> x.nome).Distinct().ToList())
                                     {
-                                        <a onclick="selecionarConvenio('@item.nome', this)" href="#" class="convenio" padding: 3%;" data-convenio="@item.nome.ToLower()">@item.nome</a>
+                                        <a onclick="selecionarConvenio('@item', this)" href="#" class="convenio" padding: 3%;" data-convenio="@item.ToLower()">@item</a>
                                         <br>
                                     }
                                 </div>

@@ -232,8 +232,11 @@ namespace crud.ui.portal.jenn.Controllers
             ViewBag.Tipo = (empresa.MatrizID.HasValue);
             GetCombo(false);
 
-            if(empresa.Cidade!=null)
-            empresa.num_cidade = empresa.Cidade.num_cidade;
+            if (empresa.Cidade != null)
+            {
+                empresa.num_cidade = $"{empresa.Cidade.Uf.num_uf}{empresa.Cidade.num_cidade}";
+            }
+
 
 
             if (empresa.MatrizID.HasValue)
