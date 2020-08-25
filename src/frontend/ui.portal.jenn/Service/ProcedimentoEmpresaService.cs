@@ -72,7 +72,8 @@ namespace ui.portal.jenn.Service
             IEnumerable<ProcedimentoEmpresaViewModel> retorno = Enumerable.Empty<ProcedimentoEmpresaViewModel>();
             try
             {
-                
+                if (!this.cache.TryGetValue("cache_Procedimento_empresa", out retorno))
+                {
                     var retornoHttp = await this.service.GetAsync(this.Converter(HttpMethod.Get, "", null));
 
                     if (retornoHttp.Status == HttpStatusCode.OK)
@@ -83,14 +84,13 @@ namespace ui.portal.jenn.Service
                             retorno = JsonConvert.DeserializeObject<IEnumerable<ProcedimentoEmpresaViewModel>>(json);
                         }
                     }
-               
-
+                    this.cache.Set("cache_Procedimento_empresa", retorno);
+                }
                 return retorno;
-
             }
-            catch (Exception e)
+            finally
             {
-                throw e;
+
             }
         }
     }
