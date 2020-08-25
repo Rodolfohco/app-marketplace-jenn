@@ -27,8 +27,8 @@
         
         i++;
     });
-
-    window.location.href = "/Produtos/ListarPorPagamentos?" + param;
-
+     
+    var id = $("#idProcedimento").val();
+    window.location.href = "/Produtos/ListarPorPagamentos?idProcedimento=" + id + "&" + param;
 
 }

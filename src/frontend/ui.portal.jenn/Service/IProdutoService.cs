@@ -25,13 +25,13 @@ namespace ui.portal.jenn.Service
         List<Empresa> BuscarTipoProdutosDetalhes(string tipoproduto);
         List<TipoProcedimentoViewModel> BuscarTipoProdutos();
         List<string> BuscarBairros();
-        List<Empresa> BuscarBairroPorDetalhes(List<string> bairros, List<Empresa> empresas = null);
+        List<Empresa> BuscarBairroPorDetalhes(List<string> bairros, List<Empresa> empresas = null, int idProcedimento = 0);
         List<string> BuscarProcedimentos();
         List<string> BuscarPagamentos();
         List<Empresa> BuscarServicosPorDetalhes(List<string> servicos, List<Empresa> empresas = null);
-        List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null);
+        List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null, int idProcedimento = 0);
         List<string> BuscarConvenios();
-        List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null);
+        List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null, int idProcedimento = 0);
         PesquisaViewModel BuscarEmpresaPorId(int id, int idProcedimento);
         Procedimento BuscarProdutosPorId(int produto);
         Task<CommandResult> SalvarAgendamentoPaciente(AgendamentoViewModel model);

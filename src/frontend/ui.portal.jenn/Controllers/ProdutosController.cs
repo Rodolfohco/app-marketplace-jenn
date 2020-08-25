@@ -77,15 +77,20 @@ namespace ui.portal.jenn.Controllers
             return View("Lista",lista);
         }
 
-        public IActionResult ListarPorBairros(List<string> bairro)
+        public IActionResult ListarPorBairros(int idProcedimento, List<string> bairro)
         {
 
             ViewBag.Produto = "Todos os produtos";
             ViewBag.Localidade = "Cidades";
-
+            ViewBag.idProcedimento = idProcedimento;
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarBairroPorDetalhes(bairro);
+            lista = produtoService.BuscarBairroPorDetalhes(bairro, null, idProcedimento);
+
+            if (lista.Count > 0)
+                if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
+                    if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
 
             return View("Lista", lista);
         }
@@ -117,39 +122,51 @@ namespace ui.portal.jenn.Controllers
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarServicosPorDetalhes(procedimento);
+            lista = produtoService.BuscarServicosPorDetalhes(procedimento, null);
 
             return View("Lista", lista);
         }
 
-        public IActionResult ListarPorPagamentos(List<string> pagamento)
+        public IActionResult ListarPorPagamentos(int idProcedimento, List<string> pagamento)
         {
 
             ViewBag.Produto = "Pagamentos";
             ViewBag.Localidade = "Todas a localidades";
+            ViewBag.idProcedimento = idProcedimento;
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarPagamentosPorDetalhes(pagamento);
+            lista = produtoService.BuscarPagamentosPorDetalhes(pagamento, null, idProcedimento);
+
+            if (lista.Count > 0)
+                if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
+                    if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
 
             return View("Lista", lista);
         }
 
-        public IActionResult ListarPorConvenio(List<string> conveniopesquisas)
+        public IActionResult ListarPorConvenio(int idProcedimento, List<string> conveniopesquisas)
         {
 
             ViewBag.Produto = "Convenios";
             ViewBag.Localidade = "Todas a localidades";
+            ViewBag.idProcedimento = idProcedimento;
 
 
             List<Empresa> lista = new List<Empresa>();
-            lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas);
+            lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas,null, idProcedimento);
+
+            if (lista.Count > 0)
+                if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
+                    if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
 
             return View("Lista", lista);
         }
 
         [HttpGet]
-        public IActionResult ListarPorFiltros(List<string> bairro = null, List<string> procedimento = null, List<string> pagamento = null, List<string> conveniopesquisas = null)
+        public IActionResult ListarPorFiltros(int idProcedimento, List<string> bairro = null, List<string> procedimento = null, List<string> pagamento = null, List<string> conveniopesquisas = null)
         {
 
             List<Empresa> lista = new List<Empresa>();
@@ -158,31 +175,41 @@ namespace ui.portal.jenn.Controllers
 
             if (conveniopesquisas.Count() > 0)
             {
-                lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas);
+                lista = produtoService.BuscarConvenioPorDetalhes(conveniopesquisas, null, idProcedimento);
                 produtos += " Convenios ";
             }
 
             if (pagamento.Count() > 0)
             {
-                lista = produtoService.BuscarPagamentosPorDetalhes(pagamento, lista);
+                lista = produtoService.BuscarPagamentosPorDetalhes(pagamento, lista, idProcedimento);
                 produtos += " Pagamentos ";
             }
+
+            if (bairro.Count() > 0)
+            {
+                lista = produtoService.BuscarBairroPorDetalhes(bairro, lista, idProcedimento);
+                localidades = "Cidades";
+            }
+
+            ViewBag.Produto = produtos == "" ? ViewBag.Produto = "Filtros" : ViewBag.Produto = produtos;
 
             if (procedimento.Count() > 0)
             {
                 lista = produtoService.BuscarServicosPorDetalhes(procedimento, lista);
                 produtos += " Serviços ";
             }
-
-
-            if (bairro.Count() > 0)
+            else
             {
-                lista = produtoService.BuscarBairroPorDetalhes(bairro, lista);
-                localidades = "Cidades";
-            }
+                if (lista.Count > 0)
+                    if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
+                        if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
+                            ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
 
-            ViewBag.Produto = produtos == "" ? ViewBag.Produto = "Filtros" : ViewBag.Produto = produtos; ;
+            }
+                        
             ViewBag.Localidade = localidades == "" ? ViewBag.Localidade = "Todas as Localidades" : ViewBag.Localidade = localidades;
+            ViewBag.idProcedimento = idProcedimento;
+
 
             return View("Lista", lista);
         }

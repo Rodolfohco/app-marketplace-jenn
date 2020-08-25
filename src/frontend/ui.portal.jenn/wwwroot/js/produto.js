@@ -94,7 +94,10 @@
                     array = [];
                 parametros += param + "[" + array.length + "]=" + valor;
             }
-            window.location.href = "/Produtos/ListarPorFiltros?" + parametros;
+
+
+            var id = $("#idProcedimento").val();
+            window.location.href = "/Produtos/ListarPorFiltros?idProcedimento=" + id + "&"  + parametros;
         });
 
 

@@ -243,8 +243,8 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                //string url = "https://localhost:44323/";
-                string url = "http://api.examesemcasa.com.br/";
+                string url = "https://localhost:44323/";
+                //string url = "http://api.examesemcasa.com.br/";
 
                 using (var response = client.GetAsync(url + "api/Empresa").Result)
                 {
@@ -276,8 +276,8 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                //string url = "https://localhost:44323/";
-                string url = "http://api.examesemcasa.com.br/";
+                string url = "https://localhost:44323/";
+                //string url = "http://api.examesemcasa.com.br/";
 
                 using (var response = client.GetAsync(url + "api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
                 {
@@ -382,9 +382,10 @@ namespace ui.portal.jenn.Service
 
         }
 
-        public List<Empresa> BuscarBairroPorDetalhes(List<string> bairros, List<Empresa> empresas = null)
+        public List<Empresa> BuscarBairroPorDetalhes(List<string> bairros, List<Empresa> empresas = null, int idProcedimento = 0)
         {
             List<Empresa> lista = new List<Empresa>();
+            List<Empresa> listasEmpresas = new List<Empresa>();
             DTOEmpresa dTOEmpresa = new DTOEmpresa();
 
             if (empresas != null && empresas.Count() > 0)
@@ -401,7 +402,17 @@ namespace ui.portal.jenn.Service
 
             lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
 
-            return lista;
+            lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
+            {
+                if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.procedimentoID == idProcedimento).Count() > 0)
+                {                    
+                   if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
+                            listasEmpresas.Add(empresa);
+                    
+                }
+            }));
+
+            return listasEmpresas;
         }
 
         public List<string> BuscarProcedimentos()
@@ -483,7 +494,7 @@ namespace ui.portal.jenn.Service
         }
 
  
-        public List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null)
+        public List<Empresa> BuscarPagamentosPorDetalhes(List<string> pagamentos, List<Empresa> empresas = null, int idProcedimento = 0)
         {
             List<Empresa> lista = new List<Empresa>();
             DTOEmpresa dTOEmpresa = new DTOEmpresa();
@@ -496,14 +507,18 @@ namespace ui.portal.jenn.Service
 
             dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
             {
-                if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
+
+                if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.procedimentoID == idProcedimento).Count() > 0)
                 {
-                    for (int i = 0; i < pagamentos.Count; i++)
+                    if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
                     {
-                        if (empresa.procedimentoEmpresas.SelectMany(x => x.pagamentoProcedimentoEmpresas).Select(x => x.pagamento).Where(c => c.nome.ToLower().Contains(pagamentos[i])).Count() > 0)
+                        for (int i = 0; i < pagamentos.Count; i++)
                         {
-                            if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
-                                lista.Add(empresa);
+                            if (empresa.procedimentoEmpresas.SelectMany(x => x.pagamentoProcedimentoEmpresas).Select(x => x.pagamento).Where(c => c.nome.ToLower().Contains(pagamentos[i])).Count() > 0)
+                            {
+                                if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
+                                    lista.Add(empresa);
+                            }
                         }
                     }
                 }
@@ -535,7 +550,7 @@ namespace ui.portal.jenn.Service
         }
 
 
-        public List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null)
+        public List<Empresa> BuscarConvenioPorDetalhes(List<string> convenios, List<Empresa> empresas = null, int idProcedimento = 0)
         {
             List<Empresa> lista = new List<Empresa>();
             DTOEmpresa dTOEmpresa = new DTOEmpresa();
@@ -549,16 +564,19 @@ namespace ui.portal.jenn.Service
 
             dTOEmpresa.data.ToList().ForEach(new Action<Empresa>(delegate (Empresa empresa)
             {
-                if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
+                if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.procedimentoID == idProcedimento).Count() > 0)
                 {
-                    if (empresa.procedimentoEmpresas.SelectMany(x => x.planoProcedimentoEmpresas).Count() > 0)
+                    if (empresa.procedimentoEmpresas != null && empresa.procedimentoEmpresas.Count() > 0)
                     {
-                        for (int i = 0; i < convenios.Count; i++)
+                        if (empresa.procedimentoEmpresas.SelectMany(x => x.planoProcedimentoEmpresas).Count() > 0)
                         {
-                            if (empresa.procedimentoEmpresas.SelectMany(x => x.planoProcedimentoEmpresas).Select(x => x.plano.convenio).Where(c => c.nome.ToLower().Contains(convenios[i])).Count() > 0)
+                            for (int i = 0; i < convenios.Count; i++)
                             {
-                                if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
-                                    lista.Add(empresa);
+                                if (empresa.procedimentoEmpresas.SelectMany(x => x.planoProcedimentoEmpresas).Select(x => x.plano.convenio).Where(c => c.nome.ToLower().Contains(convenios[i])).Count() > 0)
+                                {
+                                    if (lista.Find(n => n.empresaID == empresa.empresaID) == null)
+                                        lista.Add(empresa);
+                                }
                             }
                         }
                     }

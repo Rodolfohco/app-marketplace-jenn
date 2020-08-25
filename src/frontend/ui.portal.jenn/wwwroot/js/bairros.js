@@ -26,6 +26,8 @@
         i++;
     });
 
-    window.location.href = "/Produtos/ListarPorBairros?" + param;
+
+    var id = $("#idProcedimento").val();
+    window.location.href = "/Produtos/ListarPorBairros?idProcedimento=" + id + "&" + param;
 
 }

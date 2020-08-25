@@ -26,5 +26,6 @@
         i++;
     });
 
-    window.location.href = "/Produtos/ListarPorConvenio?" + param;
+    var id = $("#idProcedimento").val();
+    window.location.href = "/Produtos/ListarPorConvenio?idProcedimento=" + id  + "&" + param;
 }
