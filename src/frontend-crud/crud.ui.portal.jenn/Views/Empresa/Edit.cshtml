@@ -1,11 +1,10 @@
 ﻿@model api.portal.jenn.DTO.Empresa
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-
-
+ 
+@{
+    ViewData["Title"] = $"Editar a Empresa - {Model.Nome} ";
+    Layout = "~/Views/Shared/_LayoutEmpresa.cshtml";
+}
 
 <form asp-controller="Empresa" asp-action="Edit" asp-antiforgery="true" method="post" class="form-horizontal">
     <input type="hidden" asp-for="Ativo" />
@@ -249,11 +248,8 @@
         </div>
     </fieldset>
 </form>
-
-<script src="~/js/empresa.js"></script>
-
+<br />
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
- 

@@ -6,56 +6,72 @@
     Layout = "~/Views/Shared/_LayoutConvenio.cshtml";
 }
 
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <h1>Lista de Convenios</h1>
 
 <div class="form-group">
     <a asp-action="Create">Novo Convenio</a>
-    <table class=" table  col-md-12 ">
-        <thead>
-            <tr>
-                <th>
-                  Convenio
-                </th>
-                <th>
-                  Data da Inclusão
-                </th>
-                <th>
-                   Status
-                </th>
-                <th></th>   
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(model => item.DataInclusao)
-                </td>
-                <td>
 
-                    @if (item.Ativo > 0)
-                        {
-                    <label class="bg-success">Ativo</label>
-                        }
-                        else
-                        {
-                    <label class="bg-danger">Desativado</label>
-                        }
-                </td>
-                <td>
-                    <div class="col-md-8">
-                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.ConvenioId">Editar</a> |
-                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ConvenioId">Detalhar</a> |
-                        <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.ConvenioId">Deletar</a>
-                    </div>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="form-group">
+
+        <div class="col-md-3">
+        </div>
+        <table id="grid" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Convenio</th>
+                    <th>Data Inclusao</th>
+                    <th>Status</th>
+                    <th>Controle</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(modelItem => item.ConvenioId)</td>
+                        <td><div style="width:450px; Word-wrap: break-Word"> @Html.DisplayFor(modelItem => item.Nome)</div></td>
+                        <td>@Html.DisplayFor(modelItem => item.DataInclusao)</td>
+
+                        <td>
+                            @if (item.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo)
+                            {
+                                <i class="	fas fa-handshake"></i>
+                            }
+                            else
+                            {
+                                <i class="	fas fa-handshake-alt-slash"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Ativo == database.portal.jenn.DTO.api.portal.jenn.DTO.Status.Ativo)
+                            {
+                                <a asp-action="Desativar" class="fas fa-window-close" title="Desativar" asp-route-id="@item.ConvenioId"></a>
+                            }
+                            else
+                            {
+                                <a asp-action="Desativar" class="far fa-window-close" title="Ligar" asp-route-id="@item.ConvenioId"></a>
+
+                            }|
+                            <a asp-action="Edit" asp-route-id="@item.ConvenioId" class='far fa-edit'></a>|
+                            <a asp-action="Details" asp-route-id="@item.ConvenioId" title="Detalhar este Registro" class='fas fa-glasses'></a> |
+                            <a asp-action="Delete" asp-route-id="@item.ConvenioId" title="Excluir este Registro" class='fas fa-eraser'></a>
+                        </td>
+                    </tr>
+
+                }
+
+
+            </tbody>
+        </table>
+
+    </div>
+    <br />
+    <br />
+
+
+ 
 
 </div>
 

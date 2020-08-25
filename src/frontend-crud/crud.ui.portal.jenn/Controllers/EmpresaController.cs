@@ -139,7 +139,7 @@ namespace crud.ui.portal.jenn.Controllers
                     {
                         Group = itemUf,
                         Text = cidade.Nome,
-                        Value = $"{cidade.num_cidade}"
+                        Value = $"{uf.num_uf}{cidade.num_cidade}"
                     });
                 });
             });
@@ -232,8 +232,11 @@ namespace crud.ui.portal.jenn.Controllers
             ViewBag.Tipo = (empresa.MatrizID.HasValue);
             GetCombo(false);
 
-            if(empresa.Cidade!=null)
-            empresa.num_cidade = empresa.Cidade.num_cidade;
+            if (empresa.Cidade != null)
+            {
+                empresa.num_cidade = $"{empresa.Cidade.Uf.num_uf}{empresa.Cidade.num_cidade}";
+            }
+
 
 
             if (empresa.MatrizID.HasValue)

@@ -553,5 +553,21 @@ namespace api.portal.jenn.Business
             }
             return this.mapper.Map<IEnumerable<DTO.ProcedimentoSinonimo>, IEnumerable<ViewModel.ConsultaProcedimentoSinonimoViewModel>>(retorno);
         }
+
+        public PlanoProcedimentoEmpresaViewModel VincularPlanoProcedimentoEmpresa(VincularPlanoProcedimentoEmpresaViewModel model)
+        {
+            PlanoProcedimentoEmpresa retorno = null;
+        
+            try
+            {
+                retorno = this.repository.VincularPlanoProcedimentoEmpresa(model.PlanoID, model.ProcedimentoEmpresaID, null);
+            }
+            catch (Exception exception)
+            {
+                this._logger.LogError($"Ocorreu um erro no metodo [Detail] [{exception.InnerException}] ;", exception);
+                throw;
+            }
+            return this.mapper.Map<DTO.PlanoProcedimentoEmpresa, ViewModel.PlanoProcedimentoEmpresaViewModel>(retorno);
+        }
     }
 }

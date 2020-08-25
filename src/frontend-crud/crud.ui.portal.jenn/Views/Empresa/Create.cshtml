@@ -1,6 +1,12 @@
 ﻿@model api.portal.jenn.DTO.Empresa
 
 
+@{
+    ViewData["Title"] = "Criar nova Empresa";
+    Layout = "~/Views/Shared/_LayoutEmpresa.cshtml";
+}
+
+
 <form asp-controller="Empresa" asp-action="Create" asp-antiforgery="true" method="post" class="form-horizontal">
     <fieldset>
         <div class="panel panel-primary">
@@ -225,8 +231,8 @@
         </div>
     </fieldset>
 </form>
-
-<script src="~/js/empresa.js"></script>
+<br />
+<br />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

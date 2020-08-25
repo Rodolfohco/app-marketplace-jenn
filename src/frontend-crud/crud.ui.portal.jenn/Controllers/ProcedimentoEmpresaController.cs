@@ -53,7 +53,7 @@ namespace crud.ui.portal.jenn.Controllers
         public IActionResult Create()
         {
             GetCombo();
-            return View();
+            return View(new ProcedimentoEmpresa());
         }
 
         public async Task<IActionResult> Desativar(int id)
@@ -79,32 +79,23 @@ namespace crud.ui.portal.jenn.Controllers
         }
         public  void GetCombo()
         {
-
-         
-
-
-
             ViewData["TipoProcedimentoID"] = new SelectList(_context.TipoProcedimento.AsEnumerable(), "TipoProcedimentoID", "Nome");
             ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c=> c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome");
             ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome");
         }
 
-        // POST: ProcedimentoEmpresa/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProcedimentoEmpresa procedimentoEmpresa, int TipoProcedimentoID)
+        public async Task<IActionResult> Create(ProcedimentoEmpresa procedimentoEmpresa, int TipoProcedimentoID, int ModoID )
         {
             if (ModelState.IsValid)
             {
                 if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemHome))
                     procedimentoEmpresa.ImagemHome = string.Empty;
 
-
                 if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemMain))
                     procedimentoEmpresa.ImagemMain = string.Empty;
-
 
                 if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemThumb))
                     procedimentoEmpresa.ImagemThumb = string.Empty;
@@ -112,48 +103,61 @@ namespace crud.ui.portal.jenn.Controllers
                 if (string.IsNullOrEmpty(procedimentoEmpresa.Video))
                     procedimentoEmpresa.Video = string.Empty;
 
-
                 if (string.IsNullOrEmpty(procedimentoEmpresa.TaxaParcelamento))
                     procedimentoEmpresa.TaxaParcelamento = string.Empty;
-
 
                 if (string.IsNullOrEmpty(procedimentoEmpresa.TaxaResultado))
                     procedimentoEmpresa.TaxaResultado = string.Empty;
 
-
-                procedimentoEmpresa.Ativo = (int) Status.Desativado;
-
+                procedimentoEmpresa.Ativo = (int) Status.Ativo;
                 procedimentoEmpresa.DataInclusao = DateTime.Now;
 
-
-                var tipo = _context.TipoProcedimento.Find(TipoProcedimentoID);
-
-
-                var procedimentos = _context.Procedimento.Where(c => c.TipoProcedimento.TipoProcedimentoID == tipo.TipoProcedimentoID).ToList();
-         
-                procedimentos.ForEach(proced =>
+                if (ModoID == 0)
                 {
-                    var consulta = _context.ProcedimentoEmpresa.Where(x => x.ProcedimentoID == proced.ProcedimentoID && x.EmpresaID == procedimentoEmpresa.EmpresaID).FirstOrDefault();
+                    var tipo = _context.TipoProcedimento.Find(TipoProcedimentoID);
+                    var procedimentos = _context
+                        .Procedimento
+                        .Where(c => c.TipoProcedimento.TipoProcedimentoID == tipo.TipoProcedimentoID)
+                        .ToList();
 
-                    if (consulta == null)
+                    procedimentos.ForEach(proced =>
                     {
-                        ProcedimentoEmpresa procedimentoEmp = new ProcedimentoEmpresa();
-                        procedimentoEmp = procedimentoEmpresa;
-                        procedimentoEmp.ProcedimentoEmpresaID = 0;
-                        procedimentoEmp.Procedimento = proced;
+                        var consulta = _context.ProcedimentoEmpresa
+                        .Where(x => x.ProcedimentoID == proced.ProcedimentoID && x.EmpresaID == procedimentoEmpresa.EmpresaID)
+                        .FirstOrDefault();
 
-                        procedimentoEmp.Nome_pers = proced.Nome;
+                        if (consulta == null)
+                        {
+                            ProcedimentoEmpresa procedimentoEmp = new ProcedimentoEmpresa();
+                            procedimentoEmp = procedimentoEmpresa;
+                            procedimentoEmp.ProcedimentoEmpresaID = 0;
+                            procedimentoEmp.Procedimento = proced;
+                            procedimentoEmp.Nome_pers = proced.Nome;
+                            _context.ProcedimentoEmpresa.Add(procedimentoEmp);
+                        }
+                    });
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemHome))
+                        procedimentoEmpresa.ImagemHome = string.Empty;
 
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemMain))
+                        procedimentoEmpresa.ImagemMain = string.Empty;
 
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.ImagemThumb))
+                        procedimentoEmpresa.ImagemThumb = string.Empty;
 
+                    if (string.IsNullOrEmpty(procedimentoEmpresa.Video))
+                        procedimentoEmpresa.Video = string.Empty;
 
-                        _context.ProcedimentoEmpresa.Add(procedimentoEmp);
-                        _context.SaveChanges();
-                    }
-                });
+                    procedimentoEmpresa.Ativo = (int)Status.Ativo;
+                    procedimentoEmpresa.DataInclusao = DateTime.Now;
 
-
-
+                    _context.ProcedimentoEmpresa.Add(procedimentoEmpresa);
+                }
+ 
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             GetCombo();
@@ -174,12 +178,9 @@ namespace crud.ui.portal.jenn.Controllers
                 return NotFound();
             }
 
-            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.MatrizID.HasValue && c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome", procedimentoEmpresa.EmpresaID);
-
+            ViewData["EmpresaID"] = new SelectList(_context.Empresas.Where(c => c.Ativo > 0).AsEnumerable(), "EmpresaID", "Nome", procedimentoEmpresa.EmpresaID);
             ViewData["ProcedimentoID"] = new SelectList(_context.Procedimento.Where(x => x.Ativo > 0).ToList(), "ProcedimentoID", "Nome", procedimentoEmpresa.ProcedimentoID);
-
-
-                  return View(procedimentoEmpresa);
+            return View(procedimentoEmpresa);
         }
 
         // POST: ProcedimentoEmpresa/Edit/5

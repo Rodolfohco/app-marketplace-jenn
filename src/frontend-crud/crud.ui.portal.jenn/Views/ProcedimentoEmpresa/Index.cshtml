@@ -34,7 +34,16 @@
                 <td> @Html.DisplayFor(modelItem => item.Procedimento.TipoProcedimento.Nome)</td>
                 <td> @Html.DisplayFor(modelItem => item.Nome_pers)</td>
 
-                <td> @Html.DisplayFor(modelItem => item.Destaque)</td>
+                <td>
+                    @if (item.Destaque == 0)
+                    {
+                        <a title="Sem Destaque">S/ Destaque</a> 
+                    }
+                    else
+                    {
+                        <a title="Destaque tela Pesquisa">Pesquisa</a>
+                    }
+                </td>
                 <td> @Html.DisplayFor(modelItem => item.Empresa.Nome)</td>
                 <td>
                     @if (item.Ativo == 1)

@@ -56,7 +56,6 @@ namespace api.portal.jenn.ViewModel
         public string Email { get; set; }
 
 
-        [Required]
         [StringLength(800)]
         [Display(Name = "Mensagem")]
         [DataType(DataType.MultilineText)]

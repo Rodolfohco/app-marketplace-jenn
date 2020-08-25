@@ -1,4 +1,5 @@
 ﻿
+using database.portal.jenn.DTO.api.portal.jenn.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -65,6 +66,15 @@ namespace api.portal.jenn.DTO
         [Column("cod_proced", Order = 15)]
         public int ProcedimentoID { get; set; }
         public virtual Procedimento Procedimento { get; set; }
+
+        [Column("agend_proced", Order = 3)]
+        public StatusAgenda PermiteAgendamento { get; set; }
+
+
+        [Column("url_proced", Order = 3)]
+        [StringLength(200)]
+        public string proced_url { get; set; }
+
 
 
         [ForeignKey("cod_emp")]

@@ -61,6 +61,17 @@ namespace api.portal.jenn.DTO
         [StringLength(100)]
         public string Video { get; set; }
 
+        [Column("agend_proced", Order = 3)]
+        public StatusAgenda PermiteAgendamento { get; set; }
+
+
+        [Column("url_proced", Order = 3)]
+        [StringLength(200)]
+        public string proced_url { get; set; }
+
+
+
+
         [Column("atv_proced", Order = 14)]
         public Status Ativo { get; set; }
 

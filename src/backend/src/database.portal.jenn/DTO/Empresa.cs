@@ -33,8 +33,13 @@ namespace api.portal.jenn.DTO
         [Required]
         [Column("nome_emp", Order = 2)]
         [StringLength(200)]
-        public string Nome { get; set; }        
-      
+        public string Nome { get; set; }
+
+
+        [Column("fantasia_emp", Order = 2)]
+        [StringLength(100)]
+        public string Fantasia{ get; set; }
+
         [Required]
         [Column("tel_emp1", Order = 4)]
         [StringLength(20)]

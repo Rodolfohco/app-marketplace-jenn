@@ -1,36 +1,57 @@
 ﻿@model IEnumerable<api.portal.jenn.DTO.Plano>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Lista de Planos";
+    Layout = "~/Views/Shared/_LayoutConvenio.cshtml";
 }
 
-<h1>Index</h1>
+
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<h1>Lista de Planos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Novo Plano</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PlanoID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PlanoID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PlanoID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="form-group">
+
+    <div class="col-md-3">
+    </div>
+    <table id="grid" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Convenio</th>
+                <th>Nome</th>
+
+                <th>Controle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @Html.DisplayFor(modelItem => item.PlanoID)</td>
+                    <td><div style="width:350px; Word-wrap: break-Word"> @Html.DisplayFor(modelItem => item.Convenio.Nome)</div></td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+
+                    <td>
+
+                        <a asp-action="Edit" asp-route-id="@item.PlanoID" class='far fa-edit'></a>|
+                        <a asp-action="Details" asp-route-id="@item.PlanoID" title="Detalhar este Registro" class='fas fa-glasses'></a> |
+                        <a asp-action="Delete" asp-route-id="@item.PlanoID" title="Excluir este Registro" class='fas fa-eraser'></a>
+                    </td>
+                </tr>
+
+            }
+
+
+        </tbody>
+    </table>
+
+</div>
+<br />
+<br />
+
+
+

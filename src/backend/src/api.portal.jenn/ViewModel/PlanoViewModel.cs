@@ -41,6 +41,14 @@ namespace api.portal.jenn.ViewModel
 
     }
 
+    public class VincularPlanoProcedimentoEmpresaViewModel
+    {
+        public int PlanoID { get; set; }
+
+        public int ProcedimentoEmpresaID { get; set; }
+
+    }
+
 
     public class PlanoProcedimentoEmpresaViewModel
     {
