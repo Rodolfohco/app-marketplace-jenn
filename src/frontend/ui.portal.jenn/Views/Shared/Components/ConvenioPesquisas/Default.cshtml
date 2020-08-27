@@ -31,15 +31,19 @@
                 countpagina++;
             }
 
-            <div style="text-align:center">
-                <a onclick="anterior('conveniopesquisas')" class="btn">
-                    <img src="/img/exames/seta-esq.png">
-                </a>
+            if (i > qntporpagina)
+            {
+                <div style="text-align:center">
+                    <a onclick="anterior('conveniopesquisas')" class="btn">
+                        <img src="/img/exames/seta-esq.png">
+                    </a>
 
-                <a onclick="proximo('conveniopesquisas')" class="btn">
-                    <img src="/img/exames/seta-dir.png">
-                </a>
-            </div>
+                    <a onclick="proximo('conveniopesquisas')" class="btn">
+                        <img src="/img/exames/seta-dir.png">
+                    </a>
+                </div>
+            }
+
 
 
             <div style="margin-top:0" class="action-list botoesfiltro">

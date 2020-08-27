@@ -80,22 +80,22 @@ function selecionarConvenio(valor, elementos) {
 }
 
 function proximo(id) {
-    var paginaatual = $("[data-bairro-pageatual]").attr("data-bairro-pageatual");
+    var paginaatual = $("[data-" + id + "-pageatual]").attr("data-" + id + "-pageatual");
     paginaatual++;
     if ($("[data-" + id + "-page=" + paginaatual + "]").length > 0) {
         $("[data-" + id + "-page]").hide();
         $("[data-" + id + "-page=" + paginaatual + "]").show();
-        $("[data-bairro-pageatual]").attr("data-bairro-pageatual", paginaatual);
+        $("[data-" + id + "-pageatual]").attr("data-" + id + "-pageatual", paginaatual);
     }    
 }
 
 
 function anterior(id) {
-    var paginaatual = $("[data-bairro-pageatual]").attr("data-bairro-pageatual");
+    var paginaatual = $("[data-" + id + "-pageatual]").attr("data-" + id + "-pageatual");
     paginaatual--;
     if ($("[data-" + id + "-page=" + paginaatual + "]").length > 0) {
         $("[data-" + id + "-page]").hide();
         $("[data-" + id + "-page=" + paginaatual + "]").show();
-        $("[data-bairro-pageatual]").attr("data-bairro-pageatual", paginaatual);
+        $("[data-" + id + "-pageatual]").attr("data-" + id + "-pageatual", paginaatual);
     }
 }
