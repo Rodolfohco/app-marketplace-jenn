@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,18 @@ namespace ui.portal.jenn.ViewComponents
 
     public class ProcedimentoListaViewComponent : ViewComponent
     {
+
+        private readonly IConfiguration _configuration;
+        public ProcedimentoListaViewComponent(IConfiguration configuration)
+        {
+            this._configuration = configuration;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync(
             PesquisaViewModel model)
         {
-            //var valores = await Task.FromResult(sequencia.Split(new char[] { '|' }));
+
+            model.UrlImagem = string.Format(this._configuration.GetValue<string>("urlImagem"), model.UrlImagem);
             return View(model);
         }
     }

@@ -52,7 +52,13 @@ namespace crud.ui.portal.jenn
                     }
                   );
             }
-            
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(3);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
 
 
@@ -74,6 +80,9 @@ namespace crud.ui.portal.jenn
             services.AddHttpClient();
 
             services.AddControllersWithViews();
+
+            services.AddMemoryCache();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +104,7 @@ namespace crud.ui.portal.jenn
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

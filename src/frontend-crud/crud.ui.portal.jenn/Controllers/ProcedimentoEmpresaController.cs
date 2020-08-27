@@ -10,23 +10,50 @@ using api.portal.jenn.DTO;
 using crud.ui.portal.jenn.Enumeradores;
 using System.Data;
 using database.portal.jenn.DTO.api.portal.jenn.DTO;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace crud.ui.portal.jenn.Controllers
 {
     public class ProcedimentoEmpresaController : Controller
     {
         private readonly DBJennContext _context;
-
-        public ProcedimentoEmpresaController(DBJennContext context)
+        private readonly IMemoryCache cache;
+        public ProcedimentoEmpresaController(DBJennContext context, IMemoryCache memoryCache)
         {
             _context = context;
+
+            this.cache = memoryCache;
         }
 
         // GET: ProcedimentoEmpresa
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(bool atualizar=false)
         {
-            var dBJennContext = _context.ProcedimentoEmpresa.Include(p => p.Empresa).Include(p => p.Procedimento).ThenInclude(x=> x.TipoProcedimento);
-            return View(await dBJennContext.ToListAsync());
+            List<ProcedimentoEmpresa> retorno = new List<ProcedimentoEmpresa>();
+
+            if (atualizar)
+            {
+                var dBJennContext = _context.ProcedimentoEmpresa.Include(p => p.Empresa).Include(p => p.Procedimento).ThenInclude(x => x.TipoProcedimento);
+
+                retorno = await dBJennContext.ToListAsync();
+
+                this.cache.Remove("cache_Procedimento_empresa");
+                this.cache.Set("cache_Procedimento_empresa", retorno);
+
+            }
+
+            if (!this.cache.TryGetValue("cache_Procedimento_empresa", out retorno))
+            {
+                var dBJennContext = _context.ProcedimentoEmpresa.Include(p => p.Empresa).Include(p => p.Procedimento).ThenInclude(x => x.TipoProcedimento);
+
+                retorno = await dBJennContext.ToListAsync();
+
+                this.cache.Set("cache_Procedimento_empresa", retorno);
+            }
+
+            return View(retorno);
+
+
+
         }
 
         // GET: ProcedimentoEmpresa/Details/5

@@ -11,24 +11,55 @@ using System.Security.Cryptography.X509Certificates;
 using System.Runtime.InteropServices.ComTypes;
 using crud.ui.portal.jenn.Enumeradores;
 using database.portal.jenn.DTO.api.portal.jenn.DTO;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace crud.ui.portal.jenn.Controllers
 {
     public class EmpresaController : Controller
     {
         private readonly DBJennContext _context;
+        private readonly IMemoryCache cache;
 
-        public EmpresaController(DBJennContext context)
+        public EmpresaController(DBJennContext context, IMemoryCache memoryCache)
         {
             _context = context;
+
+            this.cache = memoryCache;
+
         }
 
-        // GET: Empresa
-        public async Task<IActionResult> Index()
+ 
+        public async Task<IActionResult> Index(int? atualizar = null)
         {
-            var dBJennContext = _context.Empresas;
-            return View(await dBJennContext.ToListAsync());
+            List<Empresa> retorno = new List<Empresa>();
+
+            if (atualizar.HasValue  && atualizar.Value>0)
+            {
+                var dBJennContext = _context.Empresas;
+
+                retorno = await dBJennContext.ToListAsync();
+
+                this.cache.Remove("cache__empresa");
+                this.cache.Set("cache__empresa", retorno);
+
+            }
+
+            if (!this.cache.TryGetValue("cache__empresa", out retorno))
+            {
+                var dBJennContext = _context.Empresas;
+
+                retorno = await dBJennContext.ToListAsync();
+
+                this.cache.Set("cache__empresa", retorno);
+            }
+
+            return View(retorno);
+
+
+
         }
+
+
 
         // GET: Empresa/Details/5
         public async Task<IActionResult> Details(int? id)

@@ -20,20 +20,20 @@ namespace api.portal.jenn.DTO
         [Column("cod_matriz_emp", Order = 3)]
         public int? MatrizID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Informe o Codigo Cnes")]
         [Column("cnes_emp", Order = 1)]
         [StringLength(20)]
         [Display(Name ="Cnes")]
         public string CodigoCnes { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Informe o CNPJ")]
         [Column("cnpj_emp", Order = 1)]
         [StringLength(14)]
         [Display(Name = "CNPJ")]
         public string cnpj { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Informe o Nome da Empresa")]
         [Column("nome_emp", Order = 2)]
         [Display(Name = "Nome")]
         [StringLength(200)]
@@ -43,7 +43,7 @@ namespace api.portal.jenn.DTO
         [StringLength(100)]
         public string Fantasia { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Informe o Telefone")]
         [Column("tel_emp1", Order = 4)]
         [StringLength(20)]
         [Display(Name = "Telefone")]
