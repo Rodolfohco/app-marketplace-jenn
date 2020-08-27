@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="shortcut icon" type="image/png" href="/img/logo-jenn.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/icones/favicon.ico">
 
     <title>Jenn</title>
 </head>
@@ -59,23 +59,89 @@
                 <div class="col-xl-8">
                     <h2>Perguntas Frequentes</h2>
                     <div class="tabs">
-                        <div class="tab">
+                        @*<div class="tab">
                             <input type="checkbox" id="chck1">
                             <label class="tab-label" for="chck1">Convênios</label>
                             <div class="tab-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                                    A sugestão de agenda é uma facilidade que a Jenn traz ao paciente, nesta funcionalidade o paciente informa a data e hora que gostaria de ser atendido,
                                 </p>
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                                    clínica ou laboratório recebe a sugestão e confirma ou sugere a data mais próxima de forma online e sem burocracia.
+                                </p>
+                                <p>
+                                    <mark>   É importante destacar que a data sugerida não é um agendamento podendo sofrer alterações de acordo com a disponibilidade do estabelecimento de saúde.</mark>
+                                    A funcionalidade de sugestão de agenda está disponível apenas para estabelecimentos verificados pela Jenn.
+                                </p>
+
+                            </div>
+                        </div>*@
+                        <div class="tab">
+                            <input type="checkbox" id="chck2">
+                            <label class="tab-label" for="chck2">O que é a sugestão de agenda?</label>
+                            <div class="tab-content">
+                                <p>
+                                    A sugestão de agenda é uma facilidade que a Jenn traz ao paciente, nesta funcionalidade o paciente informa a data e hora que gostaria de ser atendido,
+                                </p>
+                                <p>
+                                    clínica ou laboratório recebe a sugestão e confirma ou sugere a data mais próxima de forma online e sem burocracia.
+                                </p>
+                                <p>
+                                    <strong>   É importante destacar que a data sugerida não é um agendamento podendo sofrer alterações de acordo com a disponibilidade do estabelecimento de saúde.</strong>
+                                    A funcionalidade de sugestão de agenda está disponível apenas para estabelecimentos verificados pela Jenn.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="tab">
+                            <input type="checkbox" id="chck3">
+                            <label class="tab-label" for="chck3">Posso escolher qualquer horário?</label>
+                            <div class="tab-content">
+                                <p>
+                                    Na sugestão de agenda você pode escolher qualquer horário, mas a confirmação da agenda depende do estabelecimento de saúde,
+                                </p>
+                                <p>
+                                    dessa maneira a data sugeria poderá ser alterada pelo estabelecimento de saúde.
                                 </p>
                             </div>
                         </div>
                         <div class="tab">
-                            <input type="checkbox" id="chck2">
-                            <label class="tab-label" for="chck2">Posso escolher qualquer horário?</label>
+                            <input type="checkbox" id="chck4">
+                            <label class="tab-label" for="chck4">Quais os planos de saúde aceitos?</label>
+                            <div class="tab-content">
+                                <p>
+                                    Cada estabelecimento tem sua própria lista de planos de saúde aceitos, por isso consulte a lista na Jenn antes do agendamento.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab">
+                            <input type="checkbox" id="chck5">
+                            <label class="tab-label" for="chck5">O pagamento é seguro?</label>
+                            <div class="tab-content">
+                                <p>
+                                    O pagamento online é seguro e 100% garantido pelo parceiro Pagseguro, um dos maiores gateways de pagamentos da américa latina,
+                                </p>
+                                <p>
+                                    os pagamentos são integralmente pagos ao laboratório.
+                                </p>
+                                                        </div>
+                        </div>
+                        <div class="tab">
+                            <input type="checkbox" id="chck6">
+                            <label class="tab-label" for="chck6">Como comprar os exames online?</label>
+                            <div class="tab-content">
+                                <p>
+                                    Quando o estabelecimento oferece a compra de exames online a opção será exibida no momento do agendamento.
+                                </p>
+                                <p> Ao optar por essa modalidade após o agendamento você será direcionado ao modulo de pagamento no ambiente da loja virtual do estabelecimento.  </p>
+                                <p>Basta finalizar o pagamento e em seguida você receberá um voucher referente ao exame.  </p>
+                                <p>Você pode imprimir o voucher e se direcionar ao laboratório ou se preferir não imprimir, basta apresentar seu documento como número de CPF para ser atendido.  </p>
+                                
+                            </div>
+                        </div>
+                        @*<div   class="tab">
+                            <input type="checkbox" id="chck7">
+                            <label class="tab-label" for="chck7">Como fazer uma reclamação da clínica?</label>
                             <div class="tab-content">
                                 <p>
                                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
@@ -86,63 +152,7 @@
                                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
                                 </p>
                             </div>
-                        </div>
-                        <div class="tab">
-                            <input type="checkbox" id="chck2">
-                            <label class="tab-label" for="chck2">Quais convênios são aceitos?</label>
-                            <div class="tab-content">
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="checkbox" id="chck2">
-                            <label class="tab-label" for="chck2">O pagamento é seguro?</label>
-                            <div class="tab-content">
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="checkbox" id="chck2">
-                            <label class="tab-label" for="chck2">Como posso sugerir uma clinica não atendida?</label>
-                            <div class="tab-content">
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="checkbox" id="chck2">
-                            <label class="tab-label" for="chck2">Como fazer uma reclamação da clínica?</label>
-                            <div class="tab-content">
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
-                                </p>
-                            </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
 
@@ -171,6 +181,7 @@
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
                 </div>
+             </div>
         </section>
     </main>
 

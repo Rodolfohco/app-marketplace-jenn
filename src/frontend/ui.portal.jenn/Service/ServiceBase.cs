@@ -15,7 +15,7 @@ using ui.portal.jenn.Handler;
 
 namespace ui.portal.jenn.Service
 {
-    public class ServiceBase:IDisposable
+    public class ServiceBase : IDisposable
     {
 
         private HttpClient httpClient;
@@ -54,10 +54,10 @@ namespace ui.portal.jenn.Service
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var responseStream = await httpResponse.Content.ReadAsStringAsync();
-                    retorno =  JsonConvert.DeserializeObject<CommandResult>(responseStream);
+                    retorno = JsonConvert.DeserializeObject<CommandResult>(responseStream);
                 }
                 else
-                    retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(),"", null,
+                    retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(), "", null,
                         httpResponse.StatusCode);
             }
             return retorno;
@@ -78,7 +78,7 @@ namespace ui.portal.jenn.Service
                         retorno = JsonConvert.DeserializeObject<CommandResult>(responseStream);
                     }
                     else
-                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(),"", null, HttpStatusCode.BadRequest);
+                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(), "", null, HttpStatusCode.BadRequest);
                 }
             }
             catch (Exception exception)
@@ -95,21 +95,22 @@ namespace ui.portal.jenn.Service
         {
             CommandResult retorno;
             try
-            {               
-                var httpResponse =   this.httpClient.GetAsync($"api/{model.UrlAction}").Result;
+            {
+                var httpResponse = await this.httpClient.GetAsync($"api/{model.UrlAction}");
                 {
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         var responseStream = await httpResponse.Content.ReadAsStringAsync();
-                            retorno = JsonConvert.DeserializeObject<CommandResult>(responseStream);
+                        retorno = JsonConvert.DeserializeObject<CommandResult>(responseStream);
                     }
                     else
-                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(),"", null, HttpStatusCode.BadRequest );
+                        retorno = new CommandResult(false, httpResponse.RequestMessage.ToString(), "", null, HttpStatusCode.BadRequest);
                 }
             }
+
             catch (Exception exception)
-                {
-                this.logger.LogError($"Ocorreu o Seguinte Erro [{exception.Message}]", exception);
+            {
+                this.logger.LogError($"Ocorreu o Seguinte Erro [{exception.Message}] Inner Exception [{exception.InnerException}]", exception);
                 throw;
             }
             return retorno;

@@ -456,8 +456,13 @@ namespace ui.portal.jenn.Service
                 {                    
                    if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
                             listasEmpresas.Add(empresa);
+
+           
+
                     
                 }
+
+               
             }));
 
             return listasEmpresas;
