@@ -15,6 +15,7 @@ public class DTOEmpresa
 
 public class Empresa
 {
+    public string codigoCnes { get; set; }
     public int empresaID { get; set; }
     public string cnpj { get; set; }
     public string nome { get; set; }

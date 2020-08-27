@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ui.portal.jenn.Handler;
@@ -21,10 +22,13 @@ namespace ui.portal.jenn.Controllers
         private readonly ILogger<ProdutosController> _logger;
         private readonly IProdutoService produtoService;
         private readonly ICommandResult resultado;
-        public ProdutosController(ILogger<ProdutosController> logger, IProdutoService _produtoService)
+        private readonly IConfiguration configuration;
+        public ProdutosController(ILogger<ProdutosController> logger, IProdutoService _produtoService, IConfiguration _configuration)
         {
             this._logger = logger;
+            this.configuration = _configuration;
             this.produtoService = _produtoService;
+
         }
 
         public IActionResult localidade(string local, string produto)

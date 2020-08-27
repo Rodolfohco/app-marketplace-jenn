@@ -1,71 +1,73 @@
 ﻿@model ui.portal.jenn.ViewModel.PesquisaViewModel
-<div class="card card-exame">
-    <div class="row">
-        <div class="col-xl-3 col-md-6 col-12">
-            <img src="@Model.UrlImagem" alt="" style="bottom:initial" />
-        </div>
-        <div class="col-xl-6 col-md-6 col-12">
-            <h3>@Model.NomeEmpresa <img src="~/img/icon-check.png" /> </h3>
-            <p>@Model.DescricaoProcedimento</p>
-            <div class="rating">
-                <fieldset class="rating">
-                    <span>
-                        <input type="radio" id="rating_0" name="rating" value="0" checked />
-                        <label for="rating_1"><span>1 star</span></label>
-                        <input type="radio" id="rating_1" name="rating" value="1" />
-                        <label for="rating_2"><span>2 stars</span></label>
-                        <input type="radio" id="rating_2" name="rating" value="2" />
-                        <label for="rating_3"><span>3 stars</span></label>
-                        <input type="radio" id="rating_3" name="rating" value="3" />
-                        <label for="rating_4"><span>4 stars</span></label>
-                        <input type="radio" id="rating_4" name="rating" value="4" />
-                        <label for="rating_5"><span>5 stars</span></label>
-                        <input type="radio" id="rating_5" name="rating" value="5" />
-                    </span>
-                </fieldset>
-                <a href="">@Model.Opiniao opiniões</a>
+
+    <div class="card card-exame">
+        <div class="row">
+            <div class="col-xl-3 col-md-6 col-12">
+                <img src="@Model.UrlImagem" alt="" style="bottom:initial" />
             </div>
-            <div class="info">
-                <div class="ico">
-                    <img src="~/img/exames/icon-loc.png" />
+            <div class="col-xl-6 col-md-6 col-12">
+                <h3>@Model.NomeEmpresa <img src="~/img/icon-check.png" /> </h3>
+                <p>@Model.DescricaoProcedimento</p>
+                <div class="rating">
+                    <fieldset class="rating">
+                        <span>
+                            <input type="radio" id="rating_0" name="rating" value="0" checked />
+                            <label for="rating_1"><span>1 star</span></label>
+                            <input type="radio" id="rating_1" name="rating" value="1" />
+                            <label for="rating_2"><span>2 stars</span></label>
+                            <input type="radio" id="rating_2" name="rating" value="2" />
+                            <label for="rating_3"><span>3 stars</span></label>
+                            <input type="radio" id="rating_3" name="rating" value="3" />
+                            <label for="rating_4"><span>4 stars</span></label>
+                            <input type="radio" id="rating_4" name="rating" value="4" />
+                            <label for="rating_5"><span>5 stars</span></label>
+                            <input type="radio" id="rating_5" name="rating" value="5" />
+                        </span>
+                    </fieldset>
+                    <a href="">@Model.Opiniao opiniões</a>
                 </div>
-                <div class="content-info">
-                    <h4>@Model.NomeUnidade</h4>
-                    <p>
-                        @Model.EnderecoCompleto <a href="@Model.UrlMaps" target="_blank">Mapa</a>
-                                    <br />    @Model.Cidade
-                                    </p>
+                <div class="info">
+                    <div class="ico">
+                        <img src="~/img/exames/icon-loc.png" />
+                    </div>
+                    <div class="content-info">
+                        <h4>@Model.NomeUnidade</h4>
+                        <p>
+                            @Model.EnderecoCompleto <a href="@Model.UrlMaps" target="_blank">Mapa</a>
+                            <br />    @Model.Cidade
+                        </p>
+
+                    </div>
                 </div>
-            </div>
-            <div class="btn-content">
-                <!--<a href="@Model.EnderecoLoja" class="btn btn-primary" title="">PARTICULAR</a>-->
-                <a href="" class="btn btn-primary btn-convenio" title="">CONVÊNIOS</a>
-                <h4 style="display: inline-block; padding: 2%;" class="h3convenio"></h4>
-                <div class="box-convenios">
-                    <form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xl-12 divconvenio">
-                                    <input onkeyup="autocompleteConvenio(this)" type="text" class="form-control" placeholder="Pesquisar..." />
-                                    @foreach (var item in Model.Convenios.Select(x=> x.nome).Distinct().ToList())
-                                    {
-                                        <a onclick="selecionarConvenio('@item', this)" href="#" class="convenio" padding: 3%;" data-convenio="@item.ToLower()">@item</a>
-                                        <br>
-                                    }
+                <div class="btn-content">
+                    <!--<a href="@Model.EnderecoLoja" class="btn btn-primary" title="">PARTICULAR</a>-->
+                    <a href="" class="btn btn-primary btn-convenio" title="">CONVÊNIOS</a>
+                    <h4 style="display: inline-block; padding: 2%;" class="h3convenio"></h4>
+                    <div class="box-convenios">
+                        <form>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xl-12 divconvenio">
+                                        <input onkeyup="autocompleteConvenio(this)" type="text" class="form-control" placeholder="Pesquisar..." />
+                                        @foreach (var item in Model.Convenios.Select(x => x.nome).Distinct().ToList())
+                                        {
+                                            <a onclick="selecionarConvenio('@item', this)" href="#" class="convenio" padding: 3%;" data-convenio="@item.ToLower()">@item</a>
+                                            <br>
+                                        }
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
             </div>
-
+            <!--Agenda-->
+            @await Component.InvokeAsync("Agendamento", Model)
         </div>
-        <!--Agenda-->
-        @await Component.InvokeAsync("Agendamento", Model)
     </div>
-</div>
 
 
-<script src="/js/general.js"></script>
+    <script src="/js/general.js"></script>
