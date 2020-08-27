@@ -243,8 +243,8 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                //string url = "https://localhost:44323/";
-                string url = "http://api.examesemcasa.com.br/";
+                string url = "https://localhost:44323/";
+                //string url = "http://api.examesemcasa.com.br/";
 
                 using (var response = client.GetAsync(url + "api/Empresa").Result)
                 {
@@ -276,8 +276,8 @@ namespace ui.portal.jenn.Service
         {
             using (var client = new HttpClient())
             {
-                //string url = "https://localhost:44323/";
-                string url = "http://api.examesemcasa.com.br/";
+                string url = "https://localhost:44323/";
+                //string url = "http://api.examesemcasa.com.br/";
 
                 using (var response = client.GetAsync(url + "api/ProcedimentoEmpresa/GetProcedimentoSinonimoPorNome?Nome=" + nome).Result)
                 {
@@ -375,11 +375,59 @@ namespace ui.portal.jenn.Service
             List<Empresa> listas = dTOEmpresa.data.ToList();
             listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
             foreach (var item in listas)
-                if (item.cidade != null && listaFinal.IndexOf(item.cidade.nome) == -1)
-                    listaFinal.Add(item.cidade.nome);
+                if (listaFinal.IndexOf(item.bairro) == -1)
+                    listaFinal.Add(item.bairro);
             
             return listaFinal;
 
+        }
+
+        public List<string> BuscarCidades()
+        {
+            List<string> listaFinal = new List<string>();
+            DTOEmpresa dTOEmpresa = BuscarEmpresas();
+
+            List<Empresa> listas = dTOEmpresa.data.ToList();
+            listas = listas.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
+            foreach (var item in listas)
+                if (item.cidade != null && listaFinal.IndexOf(item.cidade.nome) == -1)
+                    listaFinal.Add(item.cidade.nome);
+
+            return listaFinal;
+
+        }
+
+        public List<Empresa> BuscarCidadePorDetalhes(List<string> cidades, List<Empresa> empresas = null, int idProcedimento = 0)
+        {
+            List<Empresa> lista = new List<Empresa>();
+            List<Empresa> listasEmpresas = new List<Empresa>();
+            DTOEmpresa dTOEmpresa = new DTOEmpresa();
+
+            if (empresas != null && empresas.Count() > 0)
+                dTOEmpresa.data = empresas;
+            else
+                dTOEmpresa = BuscarEmpresas();
+
+
+
+            for (int i = 0; i < cidades.Count; i++)
+            {
+                lista.AddRange(dTOEmpresa.data.Where(p => p.cidade != null && p.cidade.nome.ToLower().Contains(cidades[i])).ToList());
+            }
+
+            lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();
+
+            lista.ForEach(new Action<Empresa>(delegate (Empresa empresa)
+            {
+                if (empresa.procedimentoEmpresas.Select(x => x.procedimento).Where(c => c.procedimentoID == idProcedimento).Count() > 0)
+                {
+                    if (listasEmpresas.Find(n => n.empresaID == empresa.empresaID) == null)
+                        listasEmpresas.Add(empresa);
+
+                }
+            }));
+
+            return listasEmpresas;
         }
 
         public List<Empresa> BuscarBairroPorDetalhes(List<string> bairros, List<Empresa> empresas = null, int idProcedimento = 0)
@@ -397,7 +445,7 @@ namespace ui.portal.jenn.Service
 
             for (int i = 0; i < bairros.Count; i++)
             {
-                lista.AddRange(dTOEmpresa.data.Where(p => p.cidade != null && p.cidade.nome.ToLower().Contains(bairros[i])).ToList());
+                lista.AddRange(dTOEmpresa.data.Where(p => p.bairro != null && p.bairro.ToLower().Contains(bairros[i])).ToList());
             }
 
             lista = lista.Where(p => p.procedimentoEmpresas.Count() > 0).ToList();

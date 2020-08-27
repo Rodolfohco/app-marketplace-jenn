@@ -1,7 +1,7 @@
 ﻿@model List<string>
 @using System.Text.RegularExpressions;
 
-<div class="content-select">
+<div data-conveniopesquisas-pageatual="1"   class="content-select">
     <div class="search">
         <input onkeyup="pesquisar(this, 'checkconveniopesquisas_','data-conveniopesquisas')" class="pesquisaconveniopesquisas" type="text" placeholder="Pesquisar" />
     </div>
@@ -9,22 +9,44 @@
         @if (Model.Any())
         {
             int i = 0;
+            int qntporpagina = 4;
+            int pagina = 1;
+            int countpagina = 1;
+            string visivel = "";
             @foreach (var item in Model)
             {
-                <div class="content-list">
-                    <input  data-controller="conveniopesquisas"  onclick="apliqueCount('checkconveniopesquisas_','apliqueconveniopesquisas', this)"   class="form-check-input checkconveniopesquisas_@i" type="checkbox" value="" data-conveniopesquisas="@item.ToLower()" data-conveniopesquisas-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
+                if (countpagina > qntporpagina)
+                {
+                    countpagina = 1;
+                    pagina++;
+                    visivel = "display:none;";
+                }
+                <div style="@visivel" data-conveniopesquisas-page="@pagina" class="content-list">
+                    <input data-controller="conveniopesquisas" onclick="apliqueCount('checkconveniopesquisas_','apliqueconveniopesquisas',this)" class="form-check-input checkconveniopesquisas_@i" type="checkbox" value="" data-conveniopesquisas="@item.ToLower()" data-conveniopesquisas-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
                     <label class="form-check-label" for="defaultCheck1">
                         @item
                     </label>
                 </div>
                 i++;
+                countpagina++;
             }
 
-            <div class="action-list botoesfiltro">
+            <div style="text-align:center">
+                <a onclick="anterior('conveniopesquisas')" class="btn">
+                    <img src="/img/exames/seta-esq.png">
+                </a>
+
+                <a onclick="proximo('conveniopesquisas')" class="btn">
+                    <img src="/img/exames/seta-dir.png">
+                </a>
+            </div>
+
+
+            <div style="margin-top:0" class="action-list botoesfiltro">
                 <a href="" class="link">
                     Cancelar
                 </a>
-                <a  data-count="0" onclick="buscarporconveniopesquisas()"  class="btn btn-secondary apliqueconveniopesquisas">
+                <a data-count="0" onclick="buscarporconveniopesquisas()" class="btn btn-secondary apliqueconveniopesquisas">
                     Aplique(0)
                 </a>
             </div>

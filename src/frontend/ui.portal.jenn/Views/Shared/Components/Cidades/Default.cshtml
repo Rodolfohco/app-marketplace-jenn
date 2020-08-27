@@ -1,9 +1,9 @@
 ﻿@model List<string>
 @using System.Text.RegularExpressions;
 
-<div data-bairro-pageatual="1"  class="content-select">
+<div data-cidade-pageatual="1"   class="content-select">
     <div class="search">
-        <input onkeyup="pesquisar(this, 'checkbairro_','data-bairro')" class="pesquisabairro" type="text" placeholder="Pesquisar" />
+        <input onkeyup="pesquisar(this, 'checkcidade_','data-cidade')" class="pesquisacidade" type="text" placeholder="Pesquisar" />
     </div>
     <div class="list-check">
         @if (Model.Any())
@@ -21,8 +21,8 @@
                     pagina++;
                     visivel = "display:none;";
                 }
-                <div style="@visivel" data-bairro-page="@pagina" class="content-list">
-                    <input data-controller="bairro" onclick="apliqueCount('checkbairro_','apliqueBairro',this)" class="form-check-input checkbairro_@i" type="checkbox" value="" data-bairro="@item.ToLower()" data-bairro-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
+                <div style="@visivel" data-cidade-page="@pagina" class="content-list">
+                    <input data-controller="cidade" onclick="apliqueCount('checkcidade_','apliqueCidade',this)" class="form-check-input checkcidade_@i" type="checkbox" value="" data-cidade="@item.ToLower()" data-cidade-encode="@Regex.Replace(item.ToLower(), "[^0-9a-zA-Z]+", "")">
                     <label class="form-check-label" for="defaultCheck1">
                         @item
                     </label>
@@ -31,22 +31,22 @@
                 countpagina++;
             }
 
-            <div style="text-align:center" >
-                <a onclick="anterior('bairro')" class="btn">
+            <div style="text-align:center">
+                <a onclick="anterior('cidade')" class="btn">
                     <img src="/img/exames/seta-esq.png">
-                </a> 
+                </a>
 
-                <a  onclick="proximo('bairro')" class="btn">
+                <a onclick="proximo('cidade')" class="btn">
                     <img src="/img/exames/seta-dir.png">
                 </a>
             </div>
-            
+
 
             <div style="margin-top:0" class="action-list botoesfiltro">
                 <a href="" class="link">
                     Cancelar
                 </a>
-                <a data-count="0" onclick="buscarBairros()" class="btn btn-secondary apliqueBairro">
+                <a data-count="0" onclick="buscarCidades()" class="btn btn-secondary apliqueCidade">
                     Aplique(0)
                 </a>
             </div>
@@ -55,4 +55,4 @@
 </div>
 
 <script src="/js/general.js"></script>
-<script src="/js/bairros.js"></script>
+<script src="/js/cidades.js"></script>

@@ -64,21 +64,21 @@
                     </div>
                     <div class="col-select">
                         <div class="item-select">
-                            <span>Cidades</span>
+                            <span>Bairros</span>
                         </div>
                         @await Component.InvokeAsync("Bairros")
+                    </div>
+                    <div class="col-select">
+                        <div class="item-select">
+                            <span>Cidades</span>
+                        </div>
+                        @await Component.InvokeAsync("Cidades")
                     </div>
                     <div class="col-select">
                         <div class="item-select">
                             <span>Serviços</span>
                         </div>
                         @await Component.InvokeAsync("Servicos")
-                    </div>
-                    <div class="col-select">
-                        <div class="item-select">
-                            <span>Forma de pagamento</span>
-                        </div>
-                        @await Component.InvokeAsync("Pagamentos")
                     </div>
                     <div id="todosfiltros" class="col-select">
                         <div class="item-select item-filtro">
@@ -96,9 +96,17 @@
 
                             <div class="accordion">
                                 <input id="toggle2" type="radio" class="accordion-toggle" name="toggle" />
-                                <label for="toggle2">Cidades</label>
+                                <label for="toggle2">Bairros</label>
                                 <section>
                                     @await Component.InvokeAsync("Bairros")
+                                </section>
+                            </div>
+
+                            <div class="accordion">
+                                <input id="toggle4" type="radio" class="accordion-toggle" name="toggle" />
+                                <label for="toggle4">Cidades</label>
+                                <section>
+                                    @await Component.InvokeAsync("Cidades")
                                 </section>
                             </div>
 
@@ -110,15 +118,8 @@
                                 </section>
                             </div>
 
-                            <div class="accordion">
-                                <input id="toggle4" type="radio" class="accordion-toggle" name="toggle" />
-                                <label for="toggle4">Forma de pagamento</label>
-                                <section>
-                                    @await Component.InvokeAsync("Pagamentos")
-                                </section>
-                            </div>
 
-                            <div style="padding-top: 50%;" class="action-list">
+                            <div style="padding-top: 65%; background-color: white;" class="action-list">
                                 <a id="botaofiltrartodos" href="#" class="btn btn-secondary">
                                     Aplique(0)
                                 </a>

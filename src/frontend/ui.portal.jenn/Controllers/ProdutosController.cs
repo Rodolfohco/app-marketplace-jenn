@@ -77,11 +77,29 @@ namespace ui.portal.jenn.Controllers
             return View("Lista",lista);
         }
 
-        public IActionResult ListarPorBairros(int idProcedimento, List<string> bairro)
+        public IActionResult ListarPorCidades(int idProcedimento, List<string> cidade)
         {
 
             ViewBag.Produto = "Todos os produtos";
             ViewBag.Localidade = "Cidades";
+            ViewBag.idProcedimento = idProcedimento;
+
+            List<Empresa> lista = new List<Empresa>();
+            lista = produtoService.BuscarCidadePorDetalhes(cidade, null, idProcedimento);
+
+            if (lista.Count > 0)
+                if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
+                    if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
+
+            return View("Lista", lista);
+        }
+
+        public IActionResult ListarPorBairros(int idProcedimento, List<string> bairro)
+        {
+
+            ViewBag.Produto = "Todos os produtos";
+            ViewBag.Localidade = "Bairros";
             ViewBag.idProcedimento = idProcedimento;
 
             List<Empresa> lista = new List<Empresa>();
@@ -94,8 +112,6 @@ namespace ui.portal.jenn.Controllers
 
             return View("Lista", lista);
         }
-        
-
 
         public IActionResult Busca(string Produto)
         {

@@ -46,7 +46,9 @@ function pesquisar(elemento, idcheck, dataid) {
         $("[class*='" + idcheck + "']").parents(".content-list").hide();
         $("[" + dataid + "*='" + valor + "']").parents(".content-list").show();
     } else {
-        $("[class*='" + idcheck + "']").parents(".content-list").show();
+        $("[class*='" + idcheck + "']").parents(".content-list").hide();
+        var paginaatual = $("[" + dataid + "-pageatual]").attr("" + dataid + "-pageatual");
+        $("[class*='" + idcheck + "']").parents(".content-list[" + dataid + "-page=" + paginaatual + "]").show();
     }
 }
 
@@ -75,4 +77,25 @@ function selecionarConvenio(valor, elementos) {
 
     $(".box-convenios.box-ativo").removeClass("box-ativo");
     $(".btn.btn-primary.btn-convenio.btn-ativo").removeClass("btn-ativo");
+}
+
+function proximo(id) {
+    var paginaatual = $("[data-bairro-pageatual]").attr("data-bairro-pageatual");
+    paginaatual++;
+    if ($("[data-" + id + "-page=" + paginaatual + "]").length > 0) {
+        $("[data-" + id + "-page]").hide();
+        $("[data-" + id + "-page=" + paginaatual + "]").show();
+        $("[data-bairro-pageatual]").attr("data-bairro-pageatual", paginaatual);
+    }    
+}
+
+
+function anterior(id) {
+    var paginaatual = $("[data-bairro-pageatual]").attr("data-bairro-pageatual");
+    paginaatual--;
+    if ($("[data-" + id + "-page=" + paginaatual + "]").length > 0) {
+        $("[data-" + id + "-page]").hide();
+        $("[data-" + id + "-page=" + paginaatual + "]").show();
+        $("[data-bairro-pageatual]").attr("data-bairro-pageatual", paginaatual);
+    }
 }
