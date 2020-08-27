@@ -90,8 +90,8 @@ namespace ui.portal.jenn.Controllers
             if (lista.Count > 0)
                 if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
                     if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
-                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
-
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.Where(c => c.procedimento.procedimentoID == idProcedimento).FirstOrDefault().procedimento.nome;
+           
             return View("Lista", lista);
         }
         
@@ -141,7 +141,7 @@ namespace ui.portal.jenn.Controllers
             if (lista.Count > 0)
                 if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
                     if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
-                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.Where(c => c.procedimento.procedimentoID == idProcedimento).FirstOrDefault().procedimento.nome;
 
             return View("Lista", lista);
         }
@@ -160,7 +160,7 @@ namespace ui.portal.jenn.Controllers
             if (lista.Count > 0)
                 if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
                     if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
-                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
+                        ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.Where(c => c.procedimento.procedimentoID == idProcedimento).FirstOrDefault().procedimento.nome;
 
             return View("Lista", lista);
         }
@@ -203,7 +203,7 @@ namespace ui.portal.jenn.Controllers
                 if (lista.Count > 0)
                     if (lista.FirstOrDefault().procedimentoEmpresas.Count() > 0)
                         if (lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento != null)
-                            ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.FirstOrDefault().procedimento.nome;
+                            ViewBag.Produto = lista.FirstOrDefault().procedimentoEmpresas.Where(c => c.procedimento.procedimentoID == idProcedimento).FirstOrDefault().procedimento.nome;
 
             }
                         
@@ -259,6 +259,18 @@ namespace ui.portal.jenn.Controllers
             ViewBag.TipoProcedimento = TipoProduto;
             Dictionary<int, string> lista = new Dictionary<int, string>();
             lista = produtoService.BuscarProcedimentosPorTipo(TipoProcedimentoID);
+
+            if (lista.Count == 1)
+            {
+                PesquisaViewModel model = new PesquisaViewModel();
+
+                model.IdProcedimento = lista.FirstOrDefault().Key;
+
+                model.Produto = lista.FirstOrDefault().Value;
+                return RedirectToAction("Lista", "Produtos", model);
+            }
+
+
 
             return View("TipoProcedimentoLista", lista);
         }
